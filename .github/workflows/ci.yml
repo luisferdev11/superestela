@@ -36,20 +36,36 @@ jobs:
 
   web:
     runs-on: ubuntu-latest
-    # packages/web/ arrives with the Next.js scaffold. Until then this job has
-    # nothing to do, and a job with nothing to do must not fail the build.
-    if: ${{ hashFiles('packages/web/package.json') != '' }}
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+
+      # packages/web/ arrives with the Next.js scaffold. Until then this job has
+      # nothing to do, and a job with nothing to do must not fail the build.
+      # The check lives in a step rather than in the job's `if`, because
+      # hashFiles() needs a checked-out workspace and a job-level `if` runs
+      # before there is one - which invalidates the whole workflow file.
+      - id: scaffold
+        run: |
+          if [ -f packages/web/package.json ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "packages/web/ no existe todavia; nada que revisar." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - if: steps.scaffold.outputs.exists == 'true'
+        uses: pnpm/action-setup@v4
         with:
           version: 10
-      - uses: actions/setup-node@v4
+      - if: steps.scaffold.outputs.exists == 'true'
+        uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: pnpm
           cache-dependency-path: packages/web/pnpm-lock.yaml
-      - working-directory: packages/web
+      - if: steps.scaffold.outputs.exists == 'true'
+        working-directory: packages/web
         run: pnpm install --frozen-lockfile
-      - working-directory: packages/web
+      - if: steps.scaffold.outputs.exists == 'true'
+        working-directory: packages/web
         run: pnpm lint && pnpm typecheck && pnpm test
