@@ -44,7 +44,9 @@ line-length = 100
 target-version = "py312"
 src = ["packages"]
 # Notebooks are exploration only and never imported (CONVENTIONS.md section 8.5).
-extend-exclude = ["notebooks"]
+# Markdown is excluded because ruff would otherwise reformat the code samples
+# inside our own documentation, where the terse form is the point.
+extend-exclude = ["notebooks", "*.md"]
 
 [tool.ruff.lint]
 select = [
