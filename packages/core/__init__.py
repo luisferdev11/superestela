@@ -1,0 +1,1 @@
+"""SuperEstela core package."""
