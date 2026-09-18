@@ -1,0 +1,1000 @@
+{
+  "audit": {
+    "n_pitches": 635002,
+    "n_games": 2127,
+    "n_pitchers": 1134,
+    "n_batters": 864,
+    "seasons": [
+      2024,
+      2025,
+      2026
+    ],
+    "defects": [
+      {
+        "field": "is_hit_by_pitch",
+        "issue": "flag is all-zero while PitchCall records HBP events",
+        "evidence": "0 flagged vs 2280 HitByPitch in PitchCall",
+        "severity": "high",
+        "action": "rebuild flag from PitchCall"
+      },
+      {
+        "field": "EffectiveVelo",
+        "issue": "stored as string while every other velocity is float64",
+        "evidence": "dtype=str",
+        "severity": "medium",
+        "action": "cast to float in ingestion"
+      },
+      {
+        "field": "y0",
+        "issue": "constant, carries zero information",
+        "evidence": "634988/635002 rows equal 50.0 ft",
+        "severity": "low",
+        "action": "drop from feature space"
+      },
+      {
+        "field": "Outs",
+        "issue": "impossible value 3 before a pitch",
+        "evidence": "8 rows",
+        "severity": "medium",
+        "action": "range assertion, quarantine rows"
+      },
+      {
+        "field": "altitude_category",
+        "issue": "null environment label",
+        "evidence": "3020 rows",
+        "severity": "high",
+        "action": "impute from measured density index"
+      },
+      {
+        "field": "PitcherThrows / BatterSide",
+        "issue": "None / Undefined handedness",
+        "evidence": "1421 pitcher rows",
+        "severity": "medium",
+        "action": "impute from pitcher mode, else drop"
+      },
+      {
+        "field": "AutoPitchType",
+        "issue": "rare / junk labels beyond the 8 documented classes",
+        "evidence": "Sweeper=588, Other=61, OneSeamFastBall=1, TwoSeamFastBall=1, Knuckleball=1",
+        "severity": "medium",
+        "action": "collapse into documented taxonomy"
+      },
+      {
+        "field": "stadium identity",
+        "issue": "no stadium id; only a 3-level altitude bucket",
+        "evidence": "altitude_category in {No, Medium, Extreme}",
+        "severity": "high",
+        "action": "derive a continuous density index from ball physics"
+      }
+    ]
+  },
+  "density": {
+    "No Altitude": {
+      "n": 292657,
+      "density_ratio": 1.0,
+      "magnus_ratio": 1.0,
+      "per_game_mean": 0.9999,
+      "per_game_sd": 0.0405,
+      "per_game_n": 1004
+    },
+    "Medium Altitude": {
+      "n": 154825,
+      "density_ratio": 0.9027,
+      "magnus_ratio": 0.8133,
+      "per_game_mean": 0.903,
+      "per_game_sd": 0.0385,
+      "per_game_n": 509
+    },
+    "Extreme Altitude": {
+      "n": 181544,
+      "density_ratio": 0.8577,
+      "magnus_ratio": 0.7543,
+      "per_game_mean": 0.858,
+      "per_game_sd": 0.0321,
+      "per_game_n": 604
+    }
+  },
+  "within_pitcher": {
+    "Four-Seam": {
+      "pitch": "Four-Seam",
+      "n_pitchers": 268,
+      "min_pitches_each": 50,
+      "hb_note": "hb is |HorzBreak| so RHP/LHP do not cancel",
+      "ivb": {
+        "sea_level_mean": 16.95,
+        "altitude_mean": 13.19,
+        "delta_mean": -3.77,
+        "delta_sd": 0.95,
+        "pct_pitchers_losing": 100.0
+      },
+      "hb": {
+        "sea_level_mean": 9.81,
+        "altitude_mean": 7.09,
+        "delta_mean": -2.72,
+        "delta_sd": 1.1,
+        "pct_pitchers_losing": 98.5
+      },
+      "velo": {
+        "sea_level_mean": 91.84,
+        "altitude_mean": 91.94,
+        "delta_mean": 0.1,
+        "delta_sd": 0.57,
+        "pct_pitchers_losing": 39.9
+      },
+      "spin": {
+        "sea_level_mean": 2327.72,
+        "altitude_mean": 2328.73,
+        "delta_mean": 1.01,
+        "delta_sd": 67.2,
+        "pct_pitchers_losing": 50.7
+      },
+      "heterogeneity": {
+        "corr_sea_ivb_vs_delta": -0.518,
+        "quartiles": [
+          {
+            "quartile": "Q1",
+            "n": 67,
+            "sea_level_ivb": 14.63,
+            "delta_ivb": -3.06
+          },
+          {
+            "quartile": "Q2",
+            "n": 67,
+            "sea_level_ivb": 16.42,
+            "delta_ivb": -3.74
+          },
+          {
+            "quartile": "Q3",
+            "n": 67,
+            "sea_level_ivb": 17.45,
+            "delta_ivb": -3.99
+          },
+          {
+            "quartile": "Q4",
+            "n": 67,
+            "sea_level_ivb": 19.3,
+            "delta_ivb": -4.27
+          }
+        ]
+      }
+    },
+    "Sinker": {
+      "pitch": "Sinker",
+      "n_pitchers": 126,
+      "min_pitches_each": 50,
+      "hb_note": "hb is |HorzBreak| so RHP/LHP do not cancel",
+      "ivb": {
+        "sea_level_mean": 10.08,
+        "altitude_mean": 7.9,
+        "delta_mean": -2.17,
+        "delta_sd": 1.79,
+        "pct_pitchers_losing": 92.1
+      },
+      "hb": {
+        "sea_level_mean": 16.01,
+        "altitude_mean": 11.79,
+        "delta_mean": -4.22,
+        "delta_sd": 1.03,
+        "pct_pitchers_losing": 100.0
+      },
+      "velo": {
+        "sea_level_mean": 91.23,
+        "altitude_mean": 91.36,
+        "delta_mean": 0.13,
+        "delta_sd": 0.61,
+        "pct_pitchers_losing": 49.2
+      },
+      "spin": {
+        "sea_level_mean": 2265.35,
+        "altitude_mean": 2263.57,
+        "delta_mean": -1.78,
+        "delta_sd": 56.74,
+        "pct_pitchers_losing": 51.6
+      },
+      "heterogeneity": {
+        "corr_sea_ivb_vs_delta": -0.892,
+        "quartiles": [
+          {
+            "quartile": "Q1",
+            "n": 32,
+            "sea_level_ivb": 5.29,
+            "delta_ivb": -0.15
+          },
+          {
+            "quartile": "Q2",
+            "n": 31,
+            "sea_level_ivb": 9.83,
+            "delta_ivb": -2.11
+          },
+          {
+            "quartile": "Q3",
+            "n": 31,
+            "sea_level_ivb": 11.63,
+            "delta_ivb": -2.9
+          },
+          {
+            "quartile": "Q4",
+            "n": 32,
+            "sea_level_ivb": 13.6,
+            "delta_ivb": -3.56
+          }
+        ]
+      }
+    },
+    "Slider": {
+      "pitch": "Slider",
+      "n_pitchers": 179,
+      "min_pitches_each": 50,
+      "hb_note": "hb is |HorzBreak| so RHP/LHP do not cancel",
+      "ivb": {
+        "sea_level_mean": 3.27,
+        "altitude_mean": 2.52,
+        "delta_mean": -0.74,
+        "delta_sd": 1.39,
+        "pct_pitchers_losing": 73.2
+      },
+      "hb": {
+        "sea_level_mean": 5.5,
+        "altitude_mean": 4.17,
+        "delta_mean": -1.33,
+        "delta_sd": 1.6,
+        "pct_pitchers_losing": 81.6
+      },
+      "velo": {
+        "sea_level_mean": 83.6,
+        "altitude_mean": 84.11,
+        "delta_mean": 0.5,
+        "delta_sd": 0.79,
+        "pct_pitchers_losing": 25.7
+      },
+      "spin": {
+        "sea_level_mean": 2424.2,
+        "altitude_mean": 2458.16,
+        "delta_mean": 33.96,
+        "delta_sd": 110.25,
+        "pct_pitchers_losing": 41.3
+      },
+      "heterogeneity": {
+        "corr_sea_ivb_vs_delta": -0.612,
+        "quartiles": [
+          {
+            "quartile": "Q1",
+            "n": 45,
+            "sea_level_ivb": -0.2,
+            "delta_ivb": 0.31
+          },
+          {
+            "quartile": "Q2",
+            "n": 45,
+            "sea_level_ivb": 2.54,
+            "delta_ivb": -0.37
+          },
+          {
+            "quartile": "Q3",
+            "n": 44,
+            "sea_level_ivb": 4.25,
+            "delta_ivb": -0.97
+          },
+          {
+            "quartile": "Q4",
+            "n": 45,
+            "sea_level_ivb": 6.5,
+            "delta_ivb": -1.95
+          }
+        ]
+      }
+    },
+    "Changeup": {
+      "pitch": "Changeup",
+      "n_pitchers": 76,
+      "min_pitches_each": 50,
+      "hb_note": "hb is |HorzBreak| so RHP/LHP do not cancel",
+      "ivb": {
+        "sea_level_mean": 7.41,
+        "altitude_mean": 5.08,
+        "delta_mean": -2.32,
+        "delta_sd": 1.73,
+        "pct_pitchers_losing": 90.8
+      },
+      "hb": {
+        "sea_level_mean": 14.01,
+        "altitude_mean": 9.72,
+        "delta_mean": -4.29,
+        "delta_sd": 1.36,
+        "pct_pitchers_losing": 100.0
+      },
+      "velo": {
+        "sea_level_mean": 82.45,
+        "altitude_mean": 81.94,
+        "delta_mean": -0.51,
+        "delta_sd": 1.04,
+        "pct_pitchers_losing": 71.1
+      },
+      "spin": {
+        "sea_level_mean": 1844.08,
+        "altitude_mean": 1843.42,
+        "delta_mean": -0.66,
+        "delta_sd": 103.44,
+        "pct_pitchers_losing": 53.9
+      },
+      "heterogeneity": {
+        "corr_sea_ivb_vs_delta": -0.601,
+        "quartiles": [
+          {
+            "quartile": "Q1",
+            "n": 19,
+            "sea_level_ivb": 2.72,
+            "delta_ivb": -0.92
+          },
+          {
+            "quartile": "Q2",
+            "n": 19,
+            "sea_level_ivb": 6.45,
+            "delta_ivb": -1.81
+          },
+          {
+            "quartile": "Q3",
+            "n": 19,
+            "sea_level_ivb": 8.45,
+            "delta_ivb": -3.12
+          },
+          {
+            "quartile": "Q4",
+            "n": 19,
+            "sea_level_ivb": 12.0,
+            "delta_ivb": -3.44
+          }
+        ]
+      }
+    },
+    "Curveball": {
+      "pitch": "Curveball",
+      "n_pitchers": 43,
+      "min_pitches_each": 50,
+      "hb_note": "hb is |HorzBreak| so RHP/LHP do not cancel",
+      "ivb": {
+        "sea_level_mean": -9.11,
+        "altitude_mean": -7.07,
+        "delta_mean": 2.03,
+        "delta_sd": 2.0,
+        "pct_pitchers_losing": 14.0
+      },
+      "hb": {
+        "sea_level_mean": 10.27,
+        "altitude_mean": 7.14,
+        "delta_mean": -3.13,
+        "delta_sd": 1.49,
+        "pct_pitchers_losing": 100.0
+      },
+      "velo": {
+        "sea_level_mean": 77.01,
+        "altitude_mean": 77.01,
+        "delta_mean": 0.01,
+        "delta_sd": 0.68,
+        "pct_pitchers_losing": 41.9
+      },
+      "spin": {
+        "sea_level_mean": 2507.59,
+        "altitude_mean": 2526.77,
+        "delta_mean": 19.17,
+        "delta_sd": 68.88,
+        "pct_pitchers_losing": 44.2
+      },
+      "heterogeneity": {
+        "corr_sea_ivb_vs_delta": -0.902,
+        "quartiles": [
+          {
+            "quartile": "Q1",
+            "n": 11,
+            "sea_level_ivb": -14.36,
+            "delta_ivb": 3.67
+          },
+          {
+            "quartile": "Q2",
+            "n": 11,
+            "sea_level_ivb": -11.05,
+            "delta_ivb": 3.19
+          },
+          {
+            "quartile": "Q3",
+            "n": 10,
+            "sea_level_ivb": -8.13,
+            "delta_ivb": 1.49
+          },
+          {
+            "quartile": "Q4",
+            "n": 11,
+            "sea_level_ivb": -2.79,
+            "delta_ivb": -0.26
+          }
+        ]
+      }
+    }
+  },
+  "pitch_profiles": {
+    "Changeup": {
+      "levels": {
+        "No Altitude": {
+          "velo": 83.37,
+          "ivb": 7.29,
+          "abs_hb": 13.46,
+          "spin": 1801.98,
+          "speed_drop": 6.62,
+          "whiff_per_swing": 29.21,
+          "chase": 37.29,
+          "gb_pct": 31.34,
+          "exit_velo": 78.79,
+          "hard_hit": 15.76,
+          "hr_per_bip": 3.63
+        },
+        "Medium Altitude": {
+          "velo": 83.0,
+          "ivb": 5.89,
+          "abs_hb": 10.15,
+          "spin": 1799.08,
+          "speed_drop": 5.86,
+          "whiff_per_swing": 30.17,
+          "chase": 35.8,
+          "gb_pct": 31.78,
+          "exit_velo": 80.29,
+          "hard_hit": 19.19,
+          "hr_per_bip": 4.84
+        },
+        "Extreme Altitude": {
+          "velo": 83.03,
+          "ivb": 5.2,
+          "abs_hb": 9.47,
+          "spin": 1834.29,
+          "speed_drop": 5.53,
+          "whiff_per_swing": 27.93,
+          "chase": 35.01,
+          "gb_pct": 34.13,
+          "exit_velo": 80.33,
+          "hard_hit": 19.56,
+          "hr_per_bip": 4.81
+        }
+      },
+      "delta_extreme_vs_sea": {
+        "velo": -0.34,
+        "ivb": -2.08,
+        "abs_hb": -3.99,
+        "spin": 32.31,
+        "speed_drop": -1.08,
+        "whiff_per_swing": -1.28,
+        "chase": -2.27,
+        "gb_pct": 2.79,
+        "exit_velo": 1.55,
+        "hard_hit": 3.79,
+        "hr_per_bip": 1.18
+      }
+    },
+    "Curveball": {
+      "levels": {
+        "No Altitude": {
+          "velo": 77.54,
+          "ivb": -8.05,
+          "abs_hb": 9.5,
+          "spin": 2519.93,
+          "speed_drop": 5.99,
+          "whiff_per_swing": 33.0,
+          "chase": 32.91,
+          "gb_pct": 33.03,
+          "exit_velo": 78.81,
+          "hard_hit": 15.16,
+          "hr_per_bip": 3.02
+        },
+        "Medium Altitude": {
+          "velo": 78.04,
+          "ivb": -7.08,
+          "abs_hb": 7.54,
+          "spin": 2534.41,
+          "speed_drop": 5.41,
+          "whiff_per_swing": 32.95,
+          "chase": 33.34,
+          "gb_pct": 32.14,
+          "exit_velo": 79.99,
+          "hard_hit": 18.42,
+          "hr_per_bip": 4.55
+        },
+        "Extreme Altitude": {
+          "velo": 77.81,
+          "ivb": -6.36,
+          "abs_hb": 7.16,
+          "spin": 2543.75,
+          "speed_drop": 5.12,
+          "whiff_per_swing": 32.78,
+          "chase": 34.85,
+          "gb_pct": 34.29,
+          "exit_velo": 80.09,
+          "hard_hit": 17.33,
+          "hr_per_bip": 4.15
+        }
+      },
+      "delta_extreme_vs_sea": {
+        "velo": 0.27,
+        "ivb": 1.68,
+        "abs_hb": -2.33,
+        "spin": 23.83,
+        "speed_drop": -0.87,
+        "whiff_per_swing": -0.23,
+        "chase": 1.95,
+        "gb_pct": 1.27,
+        "exit_velo": 1.28,
+        "hard_hit": 2.17,
+        "hr_per_bip": 1.13
+      }
+    },
+    "Cutter": {
+      "levels": {
+        "No Altitude": {
+          "velo": 88.29,
+          "ivb": 10.81,
+          "abs_hb": 2.79,
+          "spin": 2426.86,
+          "speed_drop": 6.68,
+          "whiff_per_swing": 22.16,
+          "chase": 35.09,
+          "gb_pct": 26.76,
+          "exit_velo": 78.46,
+          "hard_hit": 14.76,
+          "hr_per_bip": 4.09
+        },
+        "Medium Altitude": {
+          "velo": 88.93,
+          "ivb": 9.37,
+          "abs_hb": 2.72,
+          "spin": 2396.84,
+          "speed_drop": 6.14,
+          "whiff_per_swing": 23.17,
+          "chase": 35.48,
+          "gb_pct": 28.68,
+          "exit_velo": 79.32,
+          "hard_hit": 15.74,
+          "hr_per_bip": 3.8
+        },
+        "Extreme Altitude": {
+          "velo": 88.62,
+          "ivb": 8.21,
+          "abs_hb": 2.42,
+          "spin": 2354.49,
+          "speed_drop": 5.8,
+          "whiff_per_swing": 21.85,
+          "chase": 35.21,
+          "gb_pct": 30.81,
+          "exit_velo": 79.36,
+          "hard_hit": 17.5,
+          "hr_per_bip": 4.3
+        }
+      },
+      "delta_extreme_vs_sea": {
+        "velo": 0.33,
+        "ivb": -2.6,
+        "abs_hb": -0.38,
+        "spin": -72.37,
+        "speed_drop": -0.88,
+        "whiff_per_swing": -0.32,
+        "chase": 0.12,
+        "gb_pct": 4.04,
+        "exit_velo": 0.9,
+        "hard_hit": 2.74,
+        "hr_per_bip": 0.21
+      }
+    },
+    "Four-Seam": {
+      "levels": {
+        "No Altitude": {
+          "velo": 91.59,
+          "ivb": 17.11,
+          "abs_hb": 9.45,
+          "spin": 2320.42,
+          "speed_drop": 7.67,
+          "whiff_per_swing": 21.43,
+          "chase": 34.67,
+          "gb_pct": 19.55,
+          "exit_velo": 79.28,
+          "hard_hit": 13.51,
+          "hr_per_bip": 4.31
+        },
+        "Medium Altitude": {
+          "velo": 91.83,
+          "ivb": 14.22,
+          "abs_hb": 7.56,
+          "spin": 2336.49,
+          "speed_drop": 6.77,
+          "whiff_per_swing": 18.57,
+          "chase": 32.56,
+          "gb_pct": 23.4,
+          "exit_velo": 80.54,
+          "hard_hit": 16.71,
+          "hr_per_bip": 4.64
+        },
+        "Extreme Altitude": {
+          "velo": 91.97,
+          "ivb": 13.07,
+          "abs_hb": 7.22,
+          "spin": 2320.42,
+          "speed_drop": 6.35,
+          "whiff_per_swing": 18.07,
+          "chase": 31.78,
+          "gb_pct": 25.77,
+          "exit_velo": 80.64,
+          "hard_hit": 16.85,
+          "hr_per_bip": 4.49
+        }
+      },
+      "delta_extreme_vs_sea": {
+        "velo": 0.38,
+        "ivb": -4.05,
+        "abs_hb": -2.23,
+        "spin": 0.0,
+        "speed_drop": -1.32,
+        "whiff_per_swing": -3.36,
+        "chase": -2.88,
+        "gb_pct": 6.22,
+        "exit_velo": 1.36,
+        "hard_hit": 3.34,
+        "hr_per_bip": 0.18
+      }
+    },
+    "Sinker": {
+      "levels": {
+        "No Altitude": {
+          "velo": 91.06,
+          "ivb": 10.04,
+          "abs_hb": 15.59,
+          "spin": 2245.58,
+          "speed_drop": 7.52,
+          "whiff_per_swing": 15.22,
+          "chase": 33.01,
+          "gb_pct": 31.16,
+          "exit_velo": 80.15,
+          "hard_hit": 17.06,
+          "hr_per_bip": 2.88
+        },
+        "Medium Altitude": {
+          "velo": 91.07,
+          "ivb": 8.81,
+          "abs_hb": 12.51,
+          "spin": 2256.95,
+          "speed_drop": 6.65,
+          "whiff_per_swing": 14.27,
+          "chase": 31.61,
+          "gb_pct": 33.38,
+          "exit_velo": 82.18,
+          "hard_hit": 21.18,
+          "hr_per_bip": 3.21
+        },
+        "Extreme Altitude": {
+          "velo": 91.36,
+          "ivb": 7.98,
+          "abs_hb": 11.77,
+          "spin": 2266.18,
+          "speed_drop": 6.28,
+          "whiff_per_swing": 13.62,
+          "chase": 30.1,
+          "gb_pct": 36.02,
+          "exit_velo": 81.64,
+          "hard_hit": 20.67,
+          "hr_per_bip": 3.38
+        }
+      },
+      "delta_extreme_vs_sea": {
+        "velo": 0.3,
+        "ivb": -2.06,
+        "abs_hb": -3.82,
+        "spin": 20.61,
+        "speed_drop": -1.24,
+        "whiff_per_swing": -1.6,
+        "chase": -2.91,
+        "gb_pct": 4.86,
+        "exit_velo": 1.49,
+        "hard_hit": 3.62,
+        "hr_per_bip": 0.5
+      }
+    },
+    "Slider": {
+      "levels": {
+        "No Altitude": {
+          "velo": 83.34,
+          "ivb": 2.9,
+          "abs_hb": 5.74,
+          "spin": 2397.84,
+          "speed_drop": 6.37,
+          "whiff_per_swing": 32.56,
+          "chase": 36.72,
+          "gb_pct": 28.93,
+          "exit_velo": 78.31,
+          "hard_hit": 15.07,
+          "hr_per_bip": 3.66
+        },
+        "Medium Altitude": {
+          "velo": 84.18,
+          "ivb": 2.57,
+          "abs_hb": 4.51,
+          "spin": 2447.51,
+          "speed_drop": 5.92,
+          "whiff_per_swing": 31.54,
+          "chase": 35.53,
+          "gb_pct": 29.65,
+          "exit_velo": 79.58,
+          "hard_hit": 17.46,
+          "hr_per_bip": 4.21
+        },
+        "Extreme Altitude": {
+          "velo": 83.99,
+          "ivb": 2.34,
+          "abs_hb": 4.03,
+          "spin": 2432.24,
+          "speed_drop": 5.67,
+          "whiff_per_swing": 30.95,
+          "chase": 35.77,
+          "gb_pct": 31.38,
+          "exit_velo": 79.45,
+          "hard_hit": 17.89,
+          "hr_per_bip": 4.56
+        }
+      },
+      "delta_extreme_vs_sea": {
+        "velo": 0.65,
+        "ivb": -0.56,
+        "abs_hb": -1.71,
+        "spin": 34.41,
+        "speed_drop": -0.7,
+        "whiff_per_swing": -1.62,
+        "chase": -0.95,
+        "gb_pct": 2.45,
+        "exit_velo": 1.14,
+        "hard_hit": 2.81,
+        "hr_per_bip": 0.9
+      }
+    }
+  },
+  "league_environment": {
+    "2024": {
+      "Extreme Altitude": {
+        "pitches": 66561,
+        "runs_per_100_pitches": 4.124,
+        "hr_per_100_bip": 3.84,
+        "whiff_per_swing": 24.04
+      },
+      "Medium Altitude": {
+        "pitches": 60930,
+        "runs_per_100_pitches": 4.014,
+        "hr_per_100_bip": 4.2,
+        "whiff_per_swing": 24.19
+      },
+      "No Altitude": {
+        "pitches": 115633,
+        "runs_per_100_pitches": 2.99,
+        "hr_per_100_bip": 3.52,
+        "whiff_per_swing": 24.75
+      }
+    },
+    "2025": {
+      "Extreme Altitude": {
+        "pitches": 72720,
+        "runs_per_100_pitches": 4.801,
+        "hr_per_100_bip": 4.48,
+        "whiff_per_swing": 22.16
+      },
+      "Medium Altitude": {
+        "pitches": 65970,
+        "runs_per_100_pitches": 4.256,
+        "hr_per_100_bip": 4.56,
+        "whiff_per_swing": 23.96
+      },
+      "No Altitude": {
+        "pitches": 116487,
+        "runs_per_100_pitches": 3.274,
+        "hr_per_100_bip": 4.0,
+        "whiff_per_swing": 24.76
+      }
+    },
+    "2026": {
+      "Extreme Altitude": {
+        "pitches": 42263,
+        "runs_per_100_pitches": 4.595,
+        "hr_per_100_bip": 4.6,
+        "whiff_per_swing": 23.26
+      },
+      "Medium Altitude": {
+        "pitches": 27925,
+        "runs_per_100_pitches": 4.007,
+        "hr_per_100_bip": 3.61,
+        "whiff_per_swing": 23.75
+      },
+      "No Altitude": {
+        "pitches": 60537,
+        "runs_per_100_pitches": 2.93,
+        "hr_per_100_bip": 3.24,
+        "whiff_per_swing": 25.02
+      }
+    }
+  },
+  "translator": {
+    "magnus_ratio_measured": 0.7543,
+    "by_pitch": {
+      "Four-Seam": {
+        "n_pitchers": 328,
+        "n_train": 262,
+        "n_test": 66,
+        "ivb": {
+          "slope": 0.727,
+          "intercept": 0.917,
+          "holdout_rmse_empirical_in": 0.85,
+          "holdout_rmse_physics_in": 0.92,
+          "holdout_rmse_naive_in": 3.88,
+          "holdout_r2_empirical": 0.657,
+          "physics_bias_in": -0.35,
+          "improvement_vs_naive": 4.6
+        },
+        "hb": {
+          "slope": 0.729,
+          "intercept": -0.074,
+          "holdout_rmse_empirical_in": 0.95,
+          "holdout_rmse_physics_in": 0.97,
+          "holdout_rmse_naive_in": 2.92,
+          "holdout_r2_empirical": 0.776,
+          "physics_bias_in": 0.19,
+          "improvement_vs_naive": 3.1
+        }
+      },
+      "Sinker": {
+        "n_pitchers": 159,
+        "n_train": 127,
+        "n_test": 32,
+        "ivb": {
+          "slope": 0.578,
+          "intercept": 2.07,
+          "holdout_rmse_empirical_in": 0.93,
+          "holdout_rmse_physics_in": 1.42,
+          "holdout_rmse_naive_in": 2.83,
+          "holdout_r2_empirical": 0.848,
+          "physics_bias_in": -0.56,
+          "improvement_vs_naive": 3.0
+        },
+        "hb": {
+          "slope": 0.685,
+          "intercept": 0.831,
+          "holdout_rmse_empirical_in": 0.96,
+          "holdout_rmse_physics_in": 0.99,
+          "holdout_rmse_naive_in": 4.16,
+          "holdout_r2_empirical": 0.252,
+          "physics_bias_in": 0.13,
+          "improvement_vs_naive": 4.3
+        }
+      },
+      "Slider": {
+        "n_pitchers": 226,
+        "n_train": 180,
+        "n_test": 46,
+        "ivb": {
+          "slope": 0.701,
+          "intercept": 0.244,
+          "holdout_rmse_empirical_in": 1.04,
+          "holdout_rmse_physics_in": 1.07,
+          "holdout_rmse_naive_in": 1.58,
+          "holdout_r2_empirical": 0.712,
+          "physics_bias_in": -0.04,
+          "improvement_vs_naive": 1.5
+        },
+        "hb": {
+          "slope": 0.59,
+          "intercept": 0.981,
+          "holdout_rmse_empirical_in": 0.96,
+          "holdout_rmse_physics_in": 1.06,
+          "holdout_rmse_naive_in": 1.93,
+          "holdout_r2_empirical": 0.689,
+          "physics_bias_in": 0.02,
+          "improvement_vs_naive": 2.0
+        }
+      },
+      "Changeup": {
+        "n_pitchers": 104,
+        "n_train": 83,
+        "n_test": 21,
+        "ivb": {
+          "slope": 0.71,
+          "intercept": -0.087,
+          "holdout_rmse_empirical_in": 1.37,
+          "holdout_rmse_physics_in": 1.47,
+          "holdout_rmse_naive_in": 2.93,
+          "holdout_r2_empirical": 0.856,
+          "physics_bias_in": 0.59,
+          "improvement_vs_naive": 2.1
+        },
+        "hb": {
+          "slope": 0.767,
+          "intercept": -0.964,
+          "holdout_rmse_empirical_in": 0.94,
+          "holdout_rmse_physics_in": 1.36,
+          "holdout_rmse_naive_in": 4.66,
+          "holdout_r2_empirical": 0.852,
+          "physics_bias_in": 1.03,
+          "improvement_vs_naive": 5.0
+        }
+      },
+      "Curveball": {
+        "n_pitchers": 64,
+        "n_train": 51,
+        "n_test": 13,
+        "ivb": {
+          "slope": 0.623,
+          "intercept": -1.321,
+          "holdout_rmse_empirical_in": 1.45,
+          "holdout_rmse_physics_in": 1.52,
+          "holdout_rmse_naive_in": 3.15,
+          "holdout_r2_empirical": 0.521,
+          "physics_bias_in": 0.47,
+          "improvement_vs_naive": 2.2
+        },
+        "hb": {
+          "slope": 0.71,
+          "intercept": 0.05,
+          "holdout_rmse_empirical_in": 1.18,
+          "holdout_rmse_physics_in": 1.41,
+          "holdout_rmse_naive_in": 3.91,
+          "holdout_r2_empirical": 0.702,
+          "physics_bias_in": 0.76,
+          "improvement_vs_naive": 3.3
+        }
+      }
+    }
+  },
+  "stuff_plus_v0": {
+    "n_pitches_modelled": 619882,
+    "cv": "GroupKFold(4) by pitcher_anon_id",
+    "oof_rmse": 0.2189,
+    "null_rmse": 0.21921,
+    "oof_r2": 0.00283,
+    "note": "v0 baseline for prototype realism - not the final model"
+  },
+  "cohort": {
+    "seal_thresholds_runs_per_100": {
+      "resistente_max": 0.37,
+      "fragil_min": 1.69
+    },
+    "n_cards": 286,
+    "n_traps": 44
+  },
+  "target_learnability": {
+    "P(whiff | swing)": {
+      "n": 290817,
+      "base_rate": 0.2401,
+      "oof_auc": 0.6371
+    },
+    "P(chase | out of zone)": {
+      "n": 401607,
+      "base_rate": 0.3421,
+      "oof_auc": 0.5443
+    },
+    "P(groundball | batted)": {
+      "n": 220611,
+      "base_rate": 0.2819,
+      "oof_auc": 0.6063
+    },
+    "P(hard hit 95+ | batted)": {
+      "n": 178760,
+      "base_rate": 0.1662,
+      "oof_auc": 0.5676
+    }
+  },
+  "hypotheses": {
+    "H1_low_density_reduces_break": {
+      "verdict": "CONFIRMED",
+      "evidence": "Within-pitcher four-seam IVB -3.77\" (16.95\" -> 13.19\"), 100.0% of 268 pitchers lose ride."
+    },
+    "H2_speed_differential_pitches_gain": {
+      "verdict": "REFUTED",
+      "evidence": "Changeup loses the largest absolute horizontal break (-3.99\"), whiff/swing -1.28 pp, chase -2.27 pp, HR/BIP +1.18 pp. The altitude-proof pitch is the curveball: whiff/swing -0.23 pp, chase +1.95 pp."
+    },
+    "H3_groundballs_more_valuable": {
+      "verdict": "CONFIRMED_WITH_NUANCE",
+      "evidence": "GB% rises at altitude for every pitch type: {'Changeup': 2.79, 'Curveball': 1.27, 'Cutter': 4.04, 'Four-Seam': 6.22, 'Sinker': 4.86, 'Slider': 2.45}. Mechanism: the flattened fastball induces more ground balls, but run scoring still rises sharply."
+    },
+    "H4_spin_rate_insufficient": {
+      "verdict": "CONFIRMED",
+      "evidence": "Spin rate is essentially unchanged across environments ({'Changeup': 32.31, 'Curveball': 23.83, 'Cutter': -72.37, 'Four-Seam': 0.0, 'Sinker': 20.61, 'Slider': 34.41}) while break collapses 20-30%. Spin does not survive as a proxy for movement at altitude."
+    }
+  }
+}
