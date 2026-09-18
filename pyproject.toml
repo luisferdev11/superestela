@@ -1,0 +1,96 @@
+[project]
+name = "superestela"
+version = "0.1.0"
+description = "Stuff+ for the Liga Mexicana de Beisbol, with altitude in the model."
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.0",
+    "pandas>=2.2",
+    "pyarrow>=17.0",
+    "pandera>=0.20",
+]
+
+[project.optional-dependencies]
+models = ["scikit-learn>=1.5", "mlflow>=2.16"]
+api = ["fastapi>=0.115", "uvicorn[standard]>=0.30"]
+dev = [
+    "pytest>=8.3",
+    "pytest-cov>=5.0",
+    "hypothesis>=6.112",
+    "mypy>=1.11",
+    "ruff>=0.6",
+    "pandas-stubs>=2.2",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+# Each directory under packages/ is importable by its own name, which is what
+# docs/07 documents: `python -m contracts.validate`, `from core.density import ...`
+[tool.hatch.build.targets.wheel]
+packages = ["packages/core", "packages/contracts", "packages/models", "packages/api"]
+
+[tool.pytest.ini_options]
+testpaths = ["packages"]
+pythonpath = ["packages"]
+addopts = "-q"
+
+# --------------------------------------------------------------------------
+# ruff - lint and format. Replaces black, isort and flake8 (CONVENTIONS.md 3).
+# --------------------------------------------------------------------------
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["packages"]
+# Notebooks are exploration only and never imported (CONVENTIONS.md section 8.5).
+extend-exclude = ["notebooks"]
+
+[tool.ruff.lint]
+select = [
+    "E", "W",    # pycodestyle
+    "F",         # pyflakes
+    "I",         # isort
+    "N",         # pep8-naming
+    "UP",        # pyupgrade
+    "B",         # bugbear (catches mutable defaults - CONVENTIONS 3.3)
+    "ANN",       # type hints mandatory - CONVENTIONS 3.1
+    "D",         # docstrings - CONVENTIONS 3.4
+    "PD",        # pandas-vet (no inplace, no chained assignment - CONVENTIONS 3.7)
+    "SIM", "RUF", "TID",
+    "T20",       # no stray print() in library code
+]
+ignore = [
+    "D203", "D213",  # mutually exclusive with D211/D212
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/**" = ["ANN", "D", "T20"]
+"analysis/**" = ["ANN", "D", "T20", "N", "PD", "RUF", "E501"]  # v0 baseline, frozen as written
+
+[tool.ruff.format]
+quote-style = "double"
+
+# --------------------------------------------------------------------------
+# mypy --strict (CONVENTIONS.md 3.1)
+# --------------------------------------------------------------------------
+[tool.mypy]
+python_version = "3.12"
+strict = true
+mypy_path = "packages"
+namespace_packages = true
+explicit_package_bases = true
+exclude = ["analysis/", "notebooks/"]
+
+[[tool.mypy.overrides]]
+module = ["sklearn.*", "mlflow.*", "pandera.*"]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["*.tests.*"]
+disallow_untyped_defs = false
+disallow_untyped_calls = false
+disallow_untyped_decorators = false
