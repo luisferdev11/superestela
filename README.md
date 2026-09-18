@@ -73,7 +73,21 @@ defaults de cualquier herramienta o agente.
 
 Una rama por tarea, PR obligatorio, CI verde para fusionar, y una revisión por PR
 —no por control, sino porque es como cuatro personas se quedan en el mismo
-código. Sincronización lunes, miércoles y viernes. Los contratos con el equipo de
+código.
+
+> **Pendiente, para el día que entre el equipo.** `main` está protegida: CI verde
+> obligatorio, sin force-push, sin borrar la rama, y los administradores incluidos.
+> Pero el número de revisiones requeridas está en **0**, porque hoy hay una sola
+> persona en el repositorio y una revisión que nadie puede dar es un candado sin
+> llave. **Al invitar al equipo, súbelo a 1:**
+>
+> ```bash
+> gh api -X PATCH repos/luisferdev11/superestela/branches/main/protection/required_pull_request_reviews \
+>   -F required_approving_review_count=1
+> ```
+>
+> Está escrito aquí y no en la cabeza de nadie porque una protección a medias que
+> todos creen completa es peor que no tenerla. Sincronización lunes, miércoles y viernes. Los contratos con el equipo de
 datos y su cadencia están en [`docs/07`](docs/07-INGENIERIA-Y-EQUIPO.md) §1.
 
 El calendario hacia la entrega del **15 de octubre** está en
