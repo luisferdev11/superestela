@@ -1,0 +1,51 @@
+# Development stack. Three services and no more: docs/07 section 3.1.
+# Kubernetes is deliberately absent; the reasoning is in docs/07 section 3.2.
+services:
+  api:
+    build:
+      context: .
+      dockerfile: packages/api/Dockerfile
+    ports: ["8000:8000"]
+    environment:
+      DATABASE_URL: postgresql://superestela:superestela@postgres:5432/superestela
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./packages:/app/packages:ro
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: superestela
+      POSTGRES_PASSWORD: superestela
+      POSTGRES_DB: superestela
+    # 5433 on the host on purpose: a local Postgres on the default port is
+    # common, and a compose file that collides with it wastes someone an hour.
+    ports: ["5433:5432"]
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U superestela"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # Every run the data team records lands here. Without the tracking server up
+  # on day one, the taxonomy of docs/05 section 4 is a document rather than a
+  # habit - and a run that was never recorded is not evidence.
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.16.2
+    command: >
+      mlflow server
+      --host 0.0.0.0 --port 5000
+      --backend-store-uri sqlite:////mlflow/mlflow.db
+      --default-artifact-root /mlflow/artifacts
+    ports: ["5000:5000"]
+    volumes:
+      - mlflow_data:/mlflow
+
+volumes:
+  postgres_data:
+  mlflow_data:

@@ -1,0 +1,12 @@
+# Cada área la revisa quien la conoce. docs/07 seccion 2.2.
+# Las cuentas del equipo se agregan al invitarlos al repositorio.
+
+*                       @luisferdev11
+
+/packages/models/       @luisferdev11
+/packages/core/         @luisferdev11
+/packages/web/          @luisferdev11
+/packages/contracts/    @luisferdev11
+
+# CONVENTIONS.md cambia solo por PR, con el motivo escrito (seccion 10).
+/CONVENTIONS.md         @luisferdev11

@@ -1,0 +1,10 @@
+data/
+notebooks/
+analysis/outputs/
+.git/
+.venv/
+node_modules/
+**/__pycache__/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/

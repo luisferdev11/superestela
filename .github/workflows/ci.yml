@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# Least privilege: CI reads the code and writes comments, nothing else.
+permissions:
+  contents: read
+  pull-requests: write
+
+# A new push supersedes the run in flight. Four people on one repo for four
+# weeks cannot afford to queue behind stale runs.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv sync --all-extras
+      - name: ruff check
+        run: uv run ruff check .
+      - name: ruff format
+        run: uv run ruff format --check .
+      - name: mypy --strict
+        run: uv run mypy packages/
+      - name: pytest
+        run: uv run pytest --cov=packages --cov-report=term-missing
+
+  web:
+    runs-on: ubuntu-latest
+    # packages/web/ arrives with the Next.js scaffold. Until then this job has
+    # nothing to do, and a job with nothing to do must not fail the build.
+    if: ${{ hashFiles('packages/web/package.json') != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: packages/web/pnpm-lock.yaml
+      - working-directory: packages/web
+        run: pnpm install --frozen-lockfile
+      - working-directory: packages/web
+        run: pnpm lint && pnpm typecheck && pnpm test
