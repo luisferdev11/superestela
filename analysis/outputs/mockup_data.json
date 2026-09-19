@@ -9,8 +9,9 @@
       "stuff_plus_sea": 112.3,
       "stuff_plus_delta": -5.6,
       "stuff_plus_hh_ci95": 1.4,
-      "altitude_tax_runs_per_100": -1.83,
-      "altitude_tax_se": 1.68,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -3.06,
+      "altitude_tax_se": 2.82,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.95,
       "arsenal": [
@@ -45,7 +46,6 @@
           "whiff_per_swing": 40.8
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -57,8 +57,9 @@
       "stuff_plus_sea": 116.1,
       "stuff_plus_delta": -10.2,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 2.0,
-      "altitude_tax_se": 1.17,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 3.35,
+      "altitude_tax_se": 1.96,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.32,
       "arsenal": [
@@ -123,7 +124,6 @@
           "whiff_per_swing": 20.0
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": true
     },
     {
@@ -135,8 +135,9 @@
       "stuff_plus_sea": 113.1,
       "stuff_plus_delta": -7.2,
       "stuff_plus_hh_ci95": 1.6,
-      "altitude_tax_runs_per_100": 0.87,
-      "altitude_tax_se": 2.37,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 1.46,
+      "altitude_tax_se": 3.97,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.5,
       "arsenal": [
@@ -186,7 +187,6 @@
           "whiff_per_swing": 15.0
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -198,8 +198,9 @@
       "stuff_plus_sea": 110.6,
       "stuff_plus_delta": -5.4,
       "stuff_plus_hh_ci95": 1.7,
-      "altitude_tax_runs_per_100": 0.69,
-      "altitude_tax_se": 1.38,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 1.16,
+      "altitude_tax_se": 2.31,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.65,
       "arsenal": [
@@ -264,7 +265,6 @@
           "whiff_per_swing": 46.7
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -276,8 +276,9 @@
       "stuff_plus_sea": 110.2,
       "stuff_plus_delta": -6.5,
       "stuff_plus_hh_ci95": 1.1,
-      "altitude_tax_runs_per_100": 0.11,
-      "altitude_tax_se": 1.29,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 0.19,
+      "altitude_tax_se": 2.15,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.4,
       "arsenal": [
@@ -327,7 +328,6 @@
           "whiff_per_swing": 11.1
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -339,8 +339,9 @@
       "stuff_plus_sea": 108.6,
       "stuff_plus_delta": -5.1,
       "stuff_plus_hh_ci95": 1.1,
-      "altitude_tax_runs_per_100": 1.45,
-      "altitude_tax_se": 2.01,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 2.43,
+      "altitude_tax_se": 3.36,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.3,
       "arsenal": [
@@ -405,7 +406,6 @@
           "whiff_per_swing": 38.5
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -417,8 +417,9 @@
       "stuff_plus_sea": 108.6,
       "stuff_plus_delta": -5.5,
       "stuff_plus_hh_ci95": 2.2,
-      "altitude_tax_runs_per_100": -1.21,
-      "altitude_tax_se": 1.76,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -2.02,
+      "altitude_tax_se": 2.96,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.77,
       "arsenal": [
@@ -468,7 +469,6 @@
           "whiff_per_swing": 26.3
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -480,8 +480,9 @@
       "stuff_plus_sea": 111.5,
       "stuff_plus_delta": -8.6,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 0.9,
-      "altitude_tax_se": 1.94,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 1.51,
+      "altitude_tax_se": 3.24,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.27,
       "arsenal": [
@@ -531,7 +532,6 @@
           "whiff_per_swing": 13.3
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -543,8 +543,9 @@
       "stuff_plus_sea": 107.2,
       "stuff_plus_delta": -4.3,
       "stuff_plus_hh_ci95": 1.2,
-      "altitude_tax_runs_per_100": -4.15,
-      "altitude_tax_se": 2.45,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -6.95,
+      "altitude_tax_se": 4.11,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.9,
       "arsenal": [
@@ -579,7 +580,6 @@
           "whiff_per_swing": 28.3
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -591,8 +591,9 @@
       "stuff_plus_sea": 107.1,
       "stuff_plus_delta": -4.3,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 0.39,
-      "altitude_tax_se": 1.47,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 0.65,
+      "altitude_tax_se": 2.47,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.0,
       "arsenal": [
@@ -642,7 +643,6 @@
           "whiff_per_swing": 30.4
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -654,8 +654,9 @@
       "stuff_plus_sea": 111.9,
       "stuff_plus_delta": -9.4,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": -1.41,
-      "altitude_tax_se": 1.59,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": -2.36,
+      "altitude_tax_se": 2.66,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.15,
       "arsenal": [
@@ -720,7 +721,6 @@
           "whiff_per_swing": 27.3
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -732,8 +732,9 @@
       "stuff_plus_sea": 113.3,
       "stuff_plus_delta": -11.0,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": 0.15,
-      "altitude_tax_se": 1.04,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 0.25,
+      "altitude_tax_se": 1.75,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.14,
       "arsenal": [
@@ -813,7 +814,6 @@
           "whiff_per_swing": 26.7
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": true
     },
     {
@@ -825,8 +825,9 @@
       "stuff_plus_sea": 106.1,
       "stuff_plus_delta": -3.9,
       "stuff_plus_hh_ci95": 1.4,
-      "altitude_tax_runs_per_100": 0.49,
-      "altitude_tax_se": 1.28,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 0.81,
+      "altitude_tax_se": 2.15,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.37,
       "arsenal": [
@@ -876,7 +877,6 @@
           "whiff_per_swing": 23.5
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -888,8 +888,9 @@
       "stuff_plus_sea": 108.9,
       "stuff_plus_delta": -6.9,
       "stuff_plus_hh_ci95": 1.1,
-      "altitude_tax_runs_per_100": 3.48,
-      "altitude_tax_se": 1.89,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 5.83,
+      "altitude_tax_se": 3.16,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.45,
       "arsenal": [
@@ -939,7 +940,6 @@
           "whiff_per_swing": 17.4
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -951,8 +951,9 @@
       "stuff_plus_sea": 108.4,
       "stuff_plus_delta": -6.4,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 0.09,
-      "altitude_tax_se": 1.45,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 0.14,
+      "altitude_tax_se": 2.42,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.1,
       "arsenal": [
@@ -1017,7 +1018,6 @@
           "whiff_per_swing": 20.0
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -1029,8 +1029,9 @@
       "stuff_plus_sea": 103.7,
       "stuff_plus_delta": -1.8,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": 0.1,
-      "altitude_tax_se": 1.37,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 0.17,
+      "altitude_tax_se": 2.3,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.55,
       "arsenal": [
@@ -1065,7 +1066,6 @@
           "whiff_per_swing": 26.1
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -1077,8 +1077,9 @@
       "stuff_plus_sea": 107.7,
       "stuff_plus_delta": -6.0,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 2.21,
-      "altitude_tax_se": 1.26,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 3.7,
+      "altitude_tax_se": 2.1,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.67,
       "arsenal": [
@@ -1128,7 +1129,6 @@
           "whiff_per_swing": 25.9
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -1140,8 +1140,9 @@
       "stuff_plus_sea": 107.0,
       "stuff_plus_delta": -5.4,
       "stuff_plus_hh_ci95": 1.1,
-      "altitude_tax_runs_per_100": -5.1,
-      "altitude_tax_se": 1.62,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -8.54,
+      "altitude_tax_se": 2.71,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 1.83,
       "arsenal": [
@@ -1191,7 +1192,6 @@
           "whiff_per_swing": 22.2
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -1203,8 +1203,9 @@
       "stuff_plus_sea": 111.2,
       "stuff_plus_delta": -10.0,
       "stuff_plus_hh_ci95": 1.2,
-      "altitude_tax_runs_per_100": -1.33,
-      "altitude_tax_se": 1.96,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -2.23,
+      "altitude_tax_se": 3.29,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.35,
       "arsenal": [
@@ -1269,7 +1270,6 @@
           "whiff_per_swing": 12.5
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": true
     },
     {
@@ -1281,8 +1281,9 @@
       "stuff_plus_sea": 107.5,
       "stuff_plus_delta": -6.5,
       "stuff_plus_hh_ci95": 1.8,
-      "altitude_tax_runs_per_100": 3.56,
-      "altitude_tax_se": 2.11,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 5.97,
+      "altitude_tax_se": 3.53,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.22,
       "arsenal": [
@@ -1347,7 +1348,6 @@
           "whiff_per_swing": 76.5
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -1359,8 +1359,9 @@
       "stuff_plus_sea": 111.6,
       "stuff_plus_delta": -10.7,
       "stuff_plus_hh_ci95": 1.1,
-      "altitude_tax_runs_per_100": 2.55,
-      "altitude_tax_se": 1.21,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 4.27,
+      "altitude_tax_se": 2.03,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 2.3,
       "arsenal": [
@@ -1410,7 +1411,6 @@
           "whiff_per_swing": 20.6
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": true
     },
     {
@@ -1422,8 +1422,9 @@
       "stuff_plus_sea": 109.9,
       "stuff_plus_delta": -9.2,
       "stuff_plus_hh_ci95": 1.2,
-      "altitude_tax_runs_per_100": 2.18,
-      "altitude_tax_se": 2.16,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 3.65,
+      "altitude_tax_se": 3.63,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.2,
       "arsenal": [
@@ -1458,7 +1459,6 @@
           "whiff_per_swing": 45.9
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -1470,8 +1470,9 @@
       "stuff_plus_sea": 109.6,
       "stuff_plus_delta": -9.0,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 0.85,
-      "altitude_tax_se": 1.12,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 1.43,
+      "altitude_tax_se": 1.88,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.83,
       "arsenal": [
@@ -1551,7 +1552,6 @@
           "whiff_per_swing": 61.5
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -1563,8 +1563,9 @@
       "stuff_plus_sea": 108.5,
       "stuff_plus_delta": -8.1,
       "stuff_plus_hh_ci95": 1.4,
-      "altitude_tax_runs_per_100": 1.35,
-      "altitude_tax_se": 1.5,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 2.27,
+      "altitude_tax_se": 2.51,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.47,
       "arsenal": [
@@ -1614,7 +1615,6 @@
           "whiff_per_swing": 14.3
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -1626,8 +1626,9 @@
       "stuff_plus_sea": 106.7,
       "stuff_plus_delta": -6.3,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 2.66,
-      "altitude_tax_se": 1.9,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 4.46,
+      "altitude_tax_se": 3.18,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.27,
       "arsenal": [
@@ -1692,7 +1693,6 @@
           "whiff_per_swing": 9.1
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -1704,8 +1704,9 @@
       "stuff_plus_sea": 104.0,
       "stuff_plus_delta": -4.1,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": -1.74,
-      "altitude_tax_se": 1.45,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -2.92,
+      "altitude_tax_se": 2.43,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.4,
       "arsenal": [
@@ -1800,7 +1801,6 @@
           "whiff_per_swing": 23.1
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -1812,8 +1812,9 @@
       "stuff_plus_sea": 109.6,
       "stuff_plus_delta": -9.8,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": -0.31,
-      "altitude_tax_se": 1.21,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -0.51,
+      "altitude_tax_se": 2.02,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.4,
       "arsenal": [
@@ -1863,7 +1864,6 @@
           "whiff_per_swing": 18.5
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -1875,8 +1875,9 @@
       "stuff_plus_sea": 105.6,
       "stuff_plus_delta": -5.8,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 3.63,
-      "altitude_tax_se": 1.4,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 6.09,
+      "altitude_tax_se": 2.35,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 2.83,
       "arsenal": [
@@ -1926,7 +1927,6 @@
           "whiff_per_swing": 23.1
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -1938,8 +1938,9 @@
       "stuff_plus_sea": 105.5,
       "stuff_plus_delta": -5.9,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 0.38,
-      "altitude_tax_se": 2.07,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 0.64,
+      "altitude_tax_se": 3.46,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.23,
       "arsenal": [
@@ -2004,7 +2005,6 @@
           "whiff_per_swing": 15.4
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -2016,8 +2016,9 @@
       "stuff_plus_sea": 108.4,
       "stuff_plus_delta": -9.0,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": -0.51,
-      "altitude_tax_se": 1.59,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -0.85,
+      "altitude_tax_se": 2.66,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.73,
       "arsenal": [
@@ -2082,7 +2083,6 @@
           "whiff_per_swing": 17.6
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -2094,8 +2094,9 @@
       "stuff_plus_sea": 107.7,
       "stuff_plus_delta": -8.3,
       "stuff_plus_hh_ci95": 1.2,
-      "altitude_tax_runs_per_100": 1.07,
-      "altitude_tax_se": 1.8,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 1.8,
+      "altitude_tax_se": 3.02,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.27,
       "arsenal": [
@@ -2145,7 +2146,6 @@
           "whiff_per_swing": 4.0
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -2157,8 +2157,9 @@
       "stuff_plus_sea": 108.2,
       "stuff_plus_delta": -9.1,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": 1.66,
-      "altitude_tax_se": 1.7,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 2.77,
+      "altitude_tax_se": 2.85,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.6,
       "arsenal": [
@@ -2193,7 +2194,6 @@
           "whiff_per_swing": 54.8
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -2205,8 +2205,9 @@
       "stuff_plus_sea": 108.3,
       "stuff_plus_delta": -9.2,
       "stuff_plus_hh_ci95": 1.8,
-      "altitude_tax_runs_per_100": 0.73,
-      "altitude_tax_se": 1.69,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 1.23,
+      "altitude_tax_se": 2.83,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.37,
       "arsenal": [
@@ -2256,7 +2257,6 @@
           "whiff_per_swing": 33.3
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -2268,8 +2268,9 @@
       "stuff_plus_sea": 106.8,
       "stuff_plus_delta": -7.8,
       "stuff_plus_hh_ci95": 1.3,
-      "altitude_tax_runs_per_100": 3.94,
-      "altitude_tax_se": 2.07,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 6.6,
+      "altitude_tax_se": 3.47,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.45,
       "arsenal": [
@@ -2304,7 +2305,6 @@
           "whiff_per_swing": 13.8
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -2316,8 +2316,9 @@
       "stuff_plus_sea": 104.8,
       "stuff_plus_delta": -5.8,
       "stuff_plus_hh_ci95": 1.4,
-      "altitude_tax_runs_per_100": -1.0,
-      "altitude_tax_se": 1.65,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -1.67,
+      "altitude_tax_se": 2.77,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.4,
       "arsenal": [
@@ -2352,7 +2353,6 @@
           "whiff_per_swing": 0.0
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -2364,8 +2364,9 @@
       "stuff_plus_sea": 109.0,
       "stuff_plus_delta": -10.0,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 3.15,
-      "altitude_tax_se": 1.63,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 5.29,
+      "altitude_tax_se": 2.73,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.57,
       "arsenal": [
@@ -2415,7 +2416,6 @@
           "whiff_per_swing": 6.1
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": true
     },
     {
@@ -2427,8 +2427,9 @@
       "stuff_plus_sea": 107.0,
       "stuff_plus_delta": -8.1,
       "stuff_plus_hh_ci95": 0.5,
-      "altitude_tax_runs_per_100": -0.41,
-      "altitude_tax_se": 1.39,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -0.68,
+      "altitude_tax_se": 2.33,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.75,
       "arsenal": [
@@ -2463,7 +2464,6 @@
           "whiff_per_swing": 36.5
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -2475,8 +2475,9 @@
       "stuff_plus_sea": 100.8,
       "stuff_plus_delta": -1.8,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 2.15,
-      "altitude_tax_se": 2.09,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 3.61,
+      "altitude_tax_se": 3.5,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.6,
       "arsenal": [
@@ -2526,7 +2527,6 @@
           "whiff_per_swing": 15.0
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -2538,8 +2538,9 @@
       "stuff_plus_sea": 103.0,
       "stuff_plus_delta": -4.2,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 0.99,
-      "altitude_tax_se": 1.3,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 1.66,
+      "altitude_tax_se": 2.17,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.35,
       "arsenal": [
@@ -2604,7 +2605,6 @@
           "whiff_per_swing": 21.6
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -2616,8 +2616,9 @@
       "stuff_plus_sea": 109.8,
       "stuff_plus_delta": -11.1,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 0.44,
-      "altitude_tax_se": 1.75,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 0.73,
+      "altitude_tax_se": 2.94,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.23,
       "arsenal": [
@@ -2697,7 +2698,6 @@
           "whiff_per_swing": 15.4
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": true
     },
     {
@@ -2709,8 +2709,9 @@
       "stuff_plus_sea": 103.9,
       "stuff_plus_delta": -5.1,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 1.22,
-      "altitude_tax_se": 1.42,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 2.05,
+      "altitude_tax_se": 2.38,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.7,
       "arsenal": [
@@ -2760,7 +2761,6 @@
           "whiff_per_swing": 38.1
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -2772,8 +2772,9 @@
       "stuff_plus_sea": 107.5,
       "stuff_plus_delta": -8.7,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": 1.65,
-      "altitude_tax_se": 1.46,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 2.77,
+      "altitude_tax_se": 2.44,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.03,
       "arsenal": [
@@ -2838,7 +2839,6 @@
           "whiff_per_swing": 30.8
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -2850,8 +2850,9 @@
       "stuff_plus_sea": 107.0,
       "stuff_plus_delta": -8.3,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": 4.72,
-      "altitude_tax_se": 2.43,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 7.91,
+      "altitude_tax_se": 4.07,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.53,
       "arsenal": [
@@ -2901,7 +2902,6 @@
           "whiff_per_swing": 42.9
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -2913,8 +2913,9 @@
       "stuff_plus_sea": 105.2,
       "stuff_plus_delta": -6.6,
       "stuff_plus_hh_ci95": 0.5,
-      "altitude_tax_runs_per_100": -0.88,
-      "altitude_tax_se": 1.36,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": -1.48,
+      "altitude_tax_se": 2.28,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.8,
       "arsenal": [
@@ -2964,7 +2965,6 @@
           "whiff_per_swing": 22.2
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -2976,8 +2976,9 @@
       "stuff_plus_sea": 101.8,
       "stuff_plus_delta": -3.4,
       "stuff_plus_hh_ci95": 1.2,
-      "altitude_tax_runs_per_100": -1.39,
-      "altitude_tax_se": 1.95,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": -2.32,
+      "altitude_tax_se": 3.27,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.8,
       "arsenal": [
@@ -3027,7 +3028,6 @@
           "whiff_per_swing": 18.8
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -3039,8 +3039,9 @@
       "stuff_plus_sea": 107.1,
       "stuff_plus_delta": -8.6,
       "stuff_plus_hh_ci95": 1.7,
-      "altitude_tax_runs_per_100": 0.95,
-      "altitude_tax_se": 1.72,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 1.6,
+      "altitude_tax_se": 2.89,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 0.5,
       "arsenal": [
@@ -3075,7 +3076,6 @@
           "whiff_per_swing": 25.0
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -3087,8 +3087,9 @@
       "stuff_plus_sea": 107.0,
       "stuff_plus_delta": -8.7,
       "stuff_plus_hh_ci95": 1.4,
-      "altitude_tax_runs_per_100": 1.83,
-      "altitude_tax_se": 1.53,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 3.06,
+      "altitude_tax_se": 2.56,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.87,
       "arsenal": [
@@ -3138,7 +3139,6 @@
           "whiff_per_swing": 75.0
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -3150,8 +3150,9 @@
       "stuff_plus_sea": 109.3,
       "stuff_plus_delta": -10.9,
       "stuff_plus_hh_ci95": 0.5,
-      "altitude_tax_runs_per_100": 1.36,
-      "altitude_tax_se": 1.36,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 2.29,
+      "altitude_tax_se": 2.28,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.23,
       "arsenal": [
@@ -3201,7 +3202,6 @@
           "whiff_per_swing": 29.6
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": true
     },
     {
@@ -3213,8 +3213,9 @@
       "stuff_plus_sea": 103.2,
       "stuff_plus_delta": -4.9,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": 1.89,
-      "altitude_tax_se": 1.27,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 3.16,
+      "altitude_tax_se": 2.13,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.8,
       "arsenal": [
@@ -3264,7 +3265,6 @@
           "whiff_per_swing": 41.7
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -3276,8 +3276,9 @@
       "stuff_plus_sea": 105.6,
       "stuff_plus_delta": -7.3,
       "stuff_plus_hh_ci95": 1.2,
-      "altitude_tax_runs_per_100": 2.76,
-      "altitude_tax_se": 2.53,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 4.62,
+      "altitude_tax_se": 4.25,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.7,
       "arsenal": [
@@ -3312,7 +3313,6 @@
           "whiff_per_swing": 28.6
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -3324,8 +3324,9 @@
       "stuff_plus_sea": 112.2,
       "stuff_plus_delta": -14.0,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": -0.04,
-      "altitude_tax_se": 2.21,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -0.07,
+      "altitude_tax_se": 3.7,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.35,
       "arsenal": [
@@ -3360,7 +3361,6 @@
           "whiff_per_swing": 19.2
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": true
     },
     {
@@ -3372,8 +3372,9 @@
       "stuff_plus_sea": 105.8,
       "stuff_plus_delta": -7.7,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": 1.06,
-      "altitude_tax_se": 0.77,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 1.78,
+      "altitude_tax_se": 1.28,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.22,
       "arsenal": [
@@ -3468,7 +3469,6 @@
           "whiff_per_swing": 11.1
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -3480,8 +3480,9 @@
       "stuff_plus_sea": 106.5,
       "stuff_plus_delta": -8.4,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": -0.4,
-      "altitude_tax_se": 1.32,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -0.67,
+      "altitude_tax_se": 2.21,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.17,
       "arsenal": [
@@ -3531,7 +3532,6 @@
           "whiff_per_swing": 24.1
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -3543,8 +3543,9 @@
       "stuff_plus_sea": 102.1,
       "stuff_plus_delta": -4.0,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": 2.11,
-      "altitude_tax_se": 1.43,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 3.54,
+      "altitude_tax_se": 2.39,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.38,
       "arsenal": [
@@ -3609,7 +3610,6 @@
           "whiff_per_swing": 30.0
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -3621,8 +3621,9 @@
       "stuff_plus_sea": 112.6,
       "stuff_plus_delta": -14.5,
       "stuff_plus_hh_ci95": 1.1,
-      "altitude_tax_runs_per_100": 3.0,
-      "altitude_tax_se": 1.46,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 5.03,
+      "altitude_tax_se": 2.45,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 2.33,
       "arsenal": [
@@ -3672,7 +3673,6 @@
           "whiff_per_swing": 57.1
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": true
     },
     {
@@ -3684,8 +3684,9 @@
       "stuff_plus_sea": 102.9,
       "stuff_plus_delta": -5.0,
       "stuff_plus_hh_ci95": 1.5,
-      "altitude_tax_runs_per_100": 4.15,
-      "altitude_tax_se": 2.55,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 6.95,
+      "altitude_tax_se": 4.28,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.23,
       "arsenal": [
@@ -3735,7 +3736,6 @@
           "whiff_per_swing": 25.0
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -3747,8 +3747,9 @@
       "stuff_plus_sea": 107.4,
       "stuff_plus_delta": -9.4,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": -2.73,
-      "altitude_tax_se": 2.26,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -4.58,
+      "altitude_tax_se": 3.8,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.97,
       "arsenal": [
@@ -3798,7 +3799,6 @@
           "whiff_per_swing": 18.8
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -3810,8 +3810,9 @@
       "stuff_plus_sea": 105.3,
       "stuff_plus_delta": -7.3,
       "stuff_plus_hh_ci95": 1.2,
-      "altitude_tax_runs_per_100": 0.92,
-      "altitude_tax_se": 1.63,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 1.55,
+      "altitude_tax_se": 2.72,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.85,
       "arsenal": [
@@ -3846,7 +3847,6 @@
           "whiff_per_swing": 43.3
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -3858,8 +3858,9 @@
       "stuff_plus_sea": 108.1,
       "stuff_plus_delta": -10.3,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": 2.45,
-      "altitude_tax_se": 1.64,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 4.1,
+      "altitude_tax_se": 2.75,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.57,
       "arsenal": [
@@ -3909,7 +3910,6 @@
           "whiff_per_swing": 12.5
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": true
     },
     {
@@ -3921,8 +3921,9 @@
       "stuff_plus_sea": 105.9,
       "stuff_plus_delta": -8.1,
       "stuff_plus_hh_ci95": 1.4,
-      "altitude_tax_runs_per_100": 2.54,
-      "altitude_tax_se": 2.06,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 4.26,
+      "altitude_tax_se": 3.45,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.45,
       "arsenal": [
@@ -3957,7 +3958,6 @@
           "whiff_per_swing": 35.3
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -3969,8 +3969,9 @@
       "stuff_plus_sea": 106.4,
       "stuff_plus_delta": -8.7,
       "stuff_plus_hh_ci95": 0.5,
-      "altitude_tax_runs_per_100": 0.64,
-      "altitude_tax_se": 1.7,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 1.07,
+      "altitude_tax_se": 2.85,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.93,
       "arsenal": [
@@ -4035,7 +4036,6 @@
           "whiff_per_swing": 7.0
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -4047,8 +4047,9 @@
       "stuff_plus_sea": 105.9,
       "stuff_plus_delta": -8.1,
       "stuff_plus_hh_ci95": 2.1,
-      "altitude_tax_runs_per_100": -1.77,
-      "altitude_tax_se": 2.6,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": -2.97,
+      "altitude_tax_se": 4.36,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.77,
       "arsenal": [
@@ -4098,7 +4099,6 @@
           "whiff_per_swing": 28.6
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -4110,8 +4110,9 @@
       "stuff_plus_sea": 103.2,
       "stuff_plus_delta": -5.4,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 1.8,
-      "altitude_tax_se": 2.1,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 3.02,
+      "altitude_tax_se": 3.52,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.37,
       "arsenal": [
@@ -4161,7 +4162,6 @@
           "whiff_per_swing": 11.1
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -4173,8 +4173,9 @@
       "stuff_plus_sea": 104.4,
       "stuff_plus_delta": -6.6,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 2.46,
-      "altitude_tax_se": 1.67,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 4.12,
+      "altitude_tax_se": 2.8,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.88,
       "arsenal": [
@@ -4254,7 +4255,6 @@
           "whiff_per_swing": 14.3
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -4266,8 +4266,9 @@
       "stuff_plus_sea": 105.3,
       "stuff_plus_delta": -7.7,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 1.58,
-      "altitude_tax_se": 1.42,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 2.64,
+      "altitude_tax_se": 2.39,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.0,
       "arsenal": [
@@ -4302,7 +4303,6 @@
           "whiff_per_swing": 46.9
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -4314,8 +4314,9 @@
       "stuff_plus_sea": 108.7,
       "stuff_plus_delta": -11.1,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 0.13,
-      "altitude_tax_se": 1.41,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 0.22,
+      "altitude_tax_se": 2.36,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 4.63,
       "arsenal": [
@@ -4365,7 +4366,6 @@
           "whiff_per_swing": 29.4
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": true
     },
     {
@@ -4377,8 +4377,9 @@
       "stuff_plus_sea": 102.5,
       "stuff_plus_delta": -5.0,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": -1.01,
-      "altitude_tax_se": 1.72,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -1.69,
+      "altitude_tax_se": 2.89,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.6,
       "arsenal": [
@@ -4428,7 +4429,6 @@
           "whiff_per_swing": 36.0
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -4440,8 +4440,9 @@
       "stuff_plus_sea": 102.4,
       "stuff_plus_delta": -4.9,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": -0.49,
-      "altitude_tax_se": 1.24,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": -0.82,
+      "altitude_tax_se": 2.08,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.85,
       "arsenal": [
@@ -4506,7 +4507,6 @@
           "whiff_per_swing": 40.0
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -4518,8 +4518,9 @@
       "stuff_plus_sea": 108.1,
       "stuff_plus_delta": -10.6,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 0.49,
-      "altitude_tax_se": 1.6,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 0.83,
+      "altitude_tax_se": 2.68,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.8,
       "arsenal": [
@@ -4569,7 +4570,6 @@
           "whiff_per_swing": 26.3
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": true
     },
     {
@@ -4581,8 +4581,9 @@
       "stuff_plus_sea": 104.0,
       "stuff_plus_delta": -6.6,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 1.29,
-      "altitude_tax_se": 1.24,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 2.17,
+      "altitude_tax_se": 2.08,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.72,
       "arsenal": [
@@ -4662,7 +4663,6 @@
           "whiff_per_swing": 9.1
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -4674,8 +4674,9 @@
       "stuff_plus_sea": 105.7,
       "stuff_plus_delta": -8.5,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": 4.05,
-      "altitude_tax_se": 1.61,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 6.78,
+      "altitude_tax_se": 2.69,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 2.4,
       "arsenal": [
@@ -4710,7 +4711,6 @@
           "whiff_per_swing": 23.1
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -4722,8 +4722,9 @@
       "stuff_plus_sea": 102.9,
       "stuff_plus_delta": -5.7,
       "stuff_plus_hh_ci95": 1.1,
-      "altitude_tax_runs_per_100": 5.44,
-      "altitude_tax_se": 1.91,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 9.11,
+      "altitude_tax_se": 3.2,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 1.9,
       "arsenal": [
@@ -4788,7 +4789,6 @@
           "whiff_per_swing": 6.2
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -4800,8 +4800,9 @@
       "stuff_plus_sea": 111.3,
       "stuff_plus_delta": -14.1,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 0.33,
-      "altitude_tax_se": 1.61,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 0.55,
+      "altitude_tax_se": 2.7,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.23,
       "arsenal": [
@@ -4851,7 +4852,6 @@
           "whiff_per_swing": 29.6
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": true
     },
     {
@@ -4863,8 +4863,9 @@
       "stuff_plus_sea": 109.8,
       "stuff_plus_delta": -12.6,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": -0.41,
-      "altitude_tax_se": 2.09,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": -0.68,
+      "altitude_tax_se": 3.5,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.75,
       "arsenal": [
@@ -4899,7 +4900,6 @@
           "whiff_per_swing": 45.5
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": true
     },
     {
@@ -4911,8 +4911,9 @@
       "stuff_plus_sea": 104.4,
       "stuff_plus_delta": -7.2,
       "stuff_plus_hh_ci95": 1.1,
-      "altitude_tax_runs_per_100": 0.71,
-      "altitude_tax_se": 1.63,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 1.19,
+      "altitude_tax_se": 2.72,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 0.4,
       "arsenal": [
@@ -4962,7 +4963,6 @@
           "whiff_per_swing": 47.8
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -4974,8 +4974,9 @@
       "stuff_plus_sea": 106.3,
       "stuff_plus_delta": -9.2,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 0.93,
-      "altitude_tax_se": 1.76,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 1.56,
+      "altitude_tax_se": 2.96,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.62,
       "arsenal": [
@@ -5055,7 +5056,6 @@
           "whiff_per_swing": 34.6
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -5067,8 +5067,9 @@
       "stuff_plus_sea": 111.9,
       "stuff_plus_delta": -14.8,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": -2.83,
-      "altitude_tax_se": 2.5,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -4.74,
+      "altitude_tax_se": 4.19,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.1,
       "arsenal": [
@@ -5103,7 +5104,6 @@
           "whiff_per_swing": 17.6
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": true
     },
     {
@@ -5115,8 +5115,9 @@
       "stuff_plus_sea": 102.8,
       "stuff_plus_delta": -5.7,
       "stuff_plus_hh_ci95": 1.1,
-      "altitude_tax_runs_per_100": 3.45,
-      "altitude_tax_se": 1.48,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 5.78,
+      "altitude_tax_se": 2.48,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 2.03,
       "arsenal": [
@@ -5166,7 +5167,6 @@
           "whiff_per_swing": 29.4
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -5178,8 +5178,9 @@
       "stuff_plus_sea": 105.2,
       "stuff_plus_delta": -8.1,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 1.38,
-      "altitude_tax_se": 1.32,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 2.31,
+      "altitude_tax_se": 2.21,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.4,
       "arsenal": [
@@ -5229,7 +5230,6 @@
           "whiff_per_swing": 16.1
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -5241,8 +5241,9 @@
       "stuff_plus_sea": 105.1,
       "stuff_plus_delta": -8.2,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 1.03,
-      "altitude_tax_se": 2.07,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 1.73,
+      "altitude_tax_se": 3.47,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.08,
       "arsenal": [
@@ -5307,7 +5308,6 @@
           "whiff_per_swing": 27.3
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -5319,8 +5319,9 @@
       "stuff_plus_sea": 104.7,
       "stuff_plus_delta": -7.7,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 2.54,
-      "altitude_tax_se": 1.49,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 4.26,
+      "altitude_tax_se": 2.49,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.78,
       "arsenal": [
@@ -5400,7 +5401,6 @@
           "whiff_per_swing": 38.5
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -5412,8 +5412,9 @@
       "stuff_plus_sea": 103.8,
       "stuff_plus_delta": -6.8,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": -0.13,
-      "altitude_tax_se": 1.17,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": -0.22,
+      "altitude_tax_se": 1.95,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.78,
       "arsenal": [
@@ -5493,7 +5494,6 @@
           "whiff_per_swing": 48.0
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -5505,8 +5505,9 @@
       "stuff_plus_sea": 103.9,
       "stuff_plus_delta": -7.0,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": -2.89,
-      "altitude_tax_se": 1.4,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -4.84,
+      "altitude_tax_se": 2.35,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 1.95,
       "arsenal": [
@@ -5571,7 +5572,6 @@
           "whiff_per_swing": 37.5
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -5583,8 +5583,9 @@
       "stuff_plus_sea": 105.2,
       "stuff_plus_delta": -8.3,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 4.39,
-      "altitude_tax_se": 2.2,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 7.36,
+      "altitude_tax_se": 3.68,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 1.57,
       "arsenal": [
@@ -5634,7 +5635,6 @@
           "whiff_per_swing": 23.1
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -5646,8 +5646,9 @@
       "stuff_plus_sea": 108.7,
       "stuff_plus_delta": -11.9,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": -0.17,
-      "altitude_tax_se": 1.21,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -0.28,
+      "altitude_tax_se": 2.02,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.97,
       "arsenal": [
@@ -5697,7 +5698,6 @@
           "whiff_per_swing": 50.0
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": true
     },
     {
@@ -5709,8 +5709,9 @@
       "stuff_plus_sea": 107.3,
       "stuff_plus_delta": -10.5,
       "stuff_plus_hh_ci95": 1.2,
-      "altitude_tax_runs_per_100": 4.13,
-      "altitude_tax_se": 2.14,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 6.92,
+      "altitude_tax_se": 3.59,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.57,
       "arsenal": [
@@ -5775,7 +5776,6 @@
           "whiff_per_swing": 15.4
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": true
     },
     {
@@ -5787,8 +5787,9 @@
       "stuff_plus_sea": 100.5,
       "stuff_plus_delta": -3.7,
       "stuff_plus_hh_ci95": 1.4,
-      "altitude_tax_runs_per_100": 3.87,
-      "altitude_tax_se": 1.99,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 6.49,
+      "altitude_tax_se": 3.34,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.67,
       "arsenal": [
@@ -5838,7 +5839,6 @@
           "whiff_per_swing": 50.0
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -5850,8 +5850,9 @@
       "stuff_plus_sea": 107.5,
       "stuff_plus_delta": -10.9,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 3.85,
-      "altitude_tax_se": 1.51,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 6.44,
+      "altitude_tax_se": 2.54,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 3.53,
       "arsenal": [
@@ -5916,7 +5917,6 @@
           "whiff_per_swing": 12.1
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": true
     },
     {
@@ -5928,8 +5928,9 @@
       "stuff_plus_sea": 110.8,
       "stuff_plus_delta": -14.3,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 0.82,
-      "altitude_tax_se": 1.34,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 1.37,
+      "altitude_tax_se": 2.25,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.07,
       "arsenal": [
@@ -5994,7 +5995,6 @@
           "whiff_per_swing": 23.1
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": true
     },
     {
@@ -6006,8 +6006,9 @@
       "stuff_plus_sea": 106.0,
       "stuff_plus_delta": -9.4,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 0.27,
-      "altitude_tax_se": 2.15,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 0.45,
+      "altitude_tax_se": 3.61,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.33,
       "arsenal": [
@@ -6072,7 +6073,6 @@
           "whiff_per_swing": 41.7
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -6084,8 +6084,9 @@
       "stuff_plus_sea": 106.5,
       "stuff_plus_delta": -9.8,
       "stuff_plus_hh_ci95": 1.2,
-      "altitude_tax_runs_per_100": 3.52,
-      "altitude_tax_se": 2.32,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 5.9,
+      "altitude_tax_se": 3.88,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.93,
       "arsenal": [
@@ -6135,7 +6136,6 @@
           "whiff_per_swing": 29.4
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -6147,8 +6147,9 @@
       "stuff_plus_sea": 106.0,
       "stuff_plus_delta": -9.4,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 3.64,
-      "altitude_tax_se": 1.45,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 6.09,
+      "altitude_tax_se": 2.43,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 2.2,
       "arsenal": [
@@ -6183,7 +6184,6 @@
           "whiff_per_swing": 45.0
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -6195,8 +6195,9 @@
       "stuff_plus_sea": 108.5,
       "stuff_plus_delta": -12.0,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 0.35,
-      "altitude_tax_se": 1.8,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 0.59,
+      "altitude_tax_se": 3.02,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.5,
       "arsenal": [
@@ -6246,7 +6247,6 @@
           "whiff_per_swing": 32.7
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": true
     },
     {
@@ -6258,8 +6258,9 @@
       "stuff_plus_sea": 102.8,
       "stuff_plus_delta": -6.3,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 3.06,
-      "altitude_tax_se": 1.29,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 5.13,
+      "altitude_tax_se": 2.16,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 2.27,
       "arsenal": [
@@ -6309,7 +6310,6 @@
           "whiff_per_swing": 25.0
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -6321,8 +6321,9 @@
       "stuff_plus_sea": 99.2,
       "stuff_plus_delta": -2.7,
       "stuff_plus_hh_ci95": 1.3,
-      "altitude_tax_runs_per_100": -1.76,
-      "altitude_tax_se": 2.39,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -2.96,
+      "altitude_tax_se": 4.0,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.35,
       "arsenal": [
@@ -6387,7 +6388,6 @@
           "whiff_per_swing": 26.3
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -6399,8 +6399,9 @@
       "stuff_plus_sea": 101.5,
       "stuff_plus_delta": -5.0,
       "stuff_plus_hh_ci95": 1.8,
-      "altitude_tax_runs_per_100": 2.31,
-      "altitude_tax_se": 1.86,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 3.87,
+      "altitude_tax_se": 3.12,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.47,
       "arsenal": [
@@ -6450,7 +6451,6 @@
           "whiff_per_swing": 16.1
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -6462,8 +6462,9 @@
       "stuff_plus_sea": 108.0,
       "stuff_plus_delta": -11.5,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 1.26,
-      "altitude_tax_se": 1.25,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 2.11,
+      "altitude_tax_se": 2.1,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.0,
       "arsenal": [
@@ -6543,7 +6544,6 @@
           "whiff_per_swing": 20.0
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": true
     },
     {
@@ -6555,8 +6555,9 @@
       "stuff_plus_sea": 101.2,
       "stuff_plus_delta": -4.6,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": -3.88,
-      "altitude_tax_se": 2.0,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -6.5,
+      "altitude_tax_se": 3.35,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.53,
       "arsenal": [
@@ -6621,7 +6622,6 @@
           "whiff_per_swing": 40.0
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -6633,8 +6633,9 @@
       "stuff_plus_sea": 109.7,
       "stuff_plus_delta": -13.2,
       "stuff_plus_hh_ci95": 1.1,
-      "altitude_tax_runs_per_100": -1.26,
-      "altitude_tax_se": 1.79,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -2.11,
+      "altitude_tax_se": 2.99,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.5,
       "arsenal": [
@@ -6669,7 +6670,6 @@
           "whiff_per_swing": 16.7
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": true
     },
     {
@@ -6681,8 +6681,9 @@
       "stuff_plus_sea": 105.4,
       "stuff_plus_delta": -9.0,
       "stuff_plus_hh_ci95": 1.1,
-      "altitude_tax_runs_per_100": 0.95,
-      "altitude_tax_se": 1.33,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 1.59,
+      "altitude_tax_se": 2.22,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.68,
       "arsenal": [
@@ -6762,7 +6763,6 @@
           "whiff_per_swing": 18.8
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -6774,8 +6774,9 @@
       "stuff_plus_sea": 103.3,
       "stuff_plus_delta": -7.0,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 1.67,
-      "altitude_tax_se": 1.93,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 2.8,
+      "altitude_tax_se": 3.23,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.2,
       "arsenal": [
@@ -6840,7 +6841,6 @@
           "whiff_per_swing": 12.5
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -6852,8 +6852,9 @@
       "stuff_plus_sea": 104.6,
       "stuff_plus_delta": -8.2,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 5.65,
-      "altitude_tax_se": 2.03,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 9.47,
+      "altitude_tax_se": 3.4,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 4.23,
       "arsenal": [
@@ -6903,7 +6904,6 @@
           "whiff_per_swing": 32.0
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -6915,8 +6915,9 @@
       "stuff_plus_sea": 106.1,
       "stuff_plus_delta": -9.7,
       "stuff_plus_hh_ci95": 0.4,
-      "altitude_tax_runs_per_100": -0.11,
-      "altitude_tax_se": 1.29,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -0.18,
+      "altitude_tax_se": 2.17,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.4,
       "arsenal": [
@@ -6981,7 +6982,6 @@
           "whiff_per_swing": 37.5
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -6993,8 +6993,9 @@
       "stuff_plus_sea": 101.9,
       "stuff_plus_delta": -5.6,
       "stuff_plus_hh_ci95": 0.4,
-      "altitude_tax_runs_per_100": -1.99,
-      "altitude_tax_se": 1.06,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -3.34,
+      "altitude_tax_se": 1.78,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 0.65,
       "arsenal": [
@@ -7059,7 +7060,6 @@
           "whiff_per_swing": 15.4
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -7071,8 +7071,9 @@
       "stuff_plus_sea": 107.0,
       "stuff_plus_delta": -10.7,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 1.38,
-      "altitude_tax_se": 2.12,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 2.31,
+      "altitude_tax_se": 3.55,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.37,
       "arsenal": [
@@ -7122,7 +7123,6 @@
           "whiff_per_swing": 23.1
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": true
     },
     {
@@ -7134,8 +7134,9 @@
       "stuff_plus_sea": 100.4,
       "stuff_plus_delta": -4.0,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": 1.0,
-      "altitude_tax_se": 1.76,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 1.68,
+      "altitude_tax_se": 2.94,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.64,
       "arsenal": [
@@ -7215,7 +7216,6 @@
           "whiff_per_swing": 20.8
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -7227,8 +7227,9 @@
       "stuff_plus_sea": 105.6,
       "stuff_plus_delta": -9.4,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 2.73,
-      "altitude_tax_se": 1.9,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 4.57,
+      "altitude_tax_se": 3.18,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.3,
       "arsenal": [
@@ -7263,7 +7264,6 @@
           "whiff_per_swing": 9.1
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -7275,8 +7275,9 @@
       "stuff_plus_sea": 97.2,
       "stuff_plus_delta": -1.0,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": -2.46,
-      "altitude_tax_se": 2.12,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -4.13,
+      "altitude_tax_se": 3.55,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 0.92,
       "arsenal": [
@@ -7356,7 +7357,6 @@
           "whiff_per_swing": 0.0
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -7368,8 +7368,9 @@
       "stuff_plus_sea": 105.9,
       "stuff_plus_delta": -9.6,
       "stuff_plus_hh_ci95": 0.5,
-      "altitude_tax_runs_per_100": 1.55,
-      "altitude_tax_se": 0.86,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 2.6,
+      "altitude_tax_se": 1.43,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.16,
       "arsenal": [
@@ -7449,7 +7450,6 @@
           "whiff_per_swing": 21.7
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -7461,8 +7461,9 @@
       "stuff_plus_sea": 103.4,
       "stuff_plus_delta": -7.3,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": -2.99,
-      "altitude_tax_se": 2.06,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -5.02,
+      "altitude_tax_se": 3.46,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.73,
       "arsenal": [
@@ -7512,7 +7513,6 @@
           "whiff_per_swing": 21.1
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -7524,8 +7524,9 @@
       "stuff_plus_sea": 103.8,
       "stuff_plus_delta": -7.7,
       "stuff_plus_hh_ci95": 1.1,
-      "altitude_tax_runs_per_100": 1.55,
-      "altitude_tax_se": 1.51,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 2.59,
+      "altitude_tax_se": 2.53,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.45,
       "arsenal": [
@@ -7590,7 +7591,6 @@
           "whiff_per_swing": 5.6
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -7602,8 +7602,9 @@
       "stuff_plus_sea": 102.7,
       "stuff_plus_delta": -6.7,
       "stuff_plus_hh_ci95": 1.5,
-      "altitude_tax_runs_per_100": 3.82,
-      "altitude_tax_se": 2.31,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 6.4,
+      "altitude_tax_se": 3.87,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.45,
       "arsenal": [
@@ -7638,7 +7639,6 @@
           "whiff_per_swing": 35.0
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -7650,8 +7650,9 @@
       "stuff_plus_sea": 104.1,
       "stuff_plus_delta": -8.1,
       "stuff_plus_hh_ci95": 0.4,
-      "altitude_tax_runs_per_100": 2.84,
-      "altitude_tax_se": 1.05,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 4.76,
+      "altitude_tax_se": 1.76,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 1.53,
       "arsenal": [
@@ -7731,7 +7732,6 @@
           "whiff_per_swing": 0.0
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -7743,8 +7743,9 @@
       "stuff_plus_sea": 106.1,
       "stuff_plus_delta": -10.2,
       "stuff_plus_hh_ci95": 1.1,
-      "altitude_tax_runs_per_100": 3.24,
-      "altitude_tax_se": 2.27,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 5.43,
+      "altitude_tax_se": 3.81,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.8,
       "arsenal": [
@@ -7779,7 +7780,6 @@
           "whiff_per_swing": 27.6
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": true
     },
     {
@@ -7791,8 +7791,9 @@
       "stuff_plus_sea": 107.8,
       "stuff_plus_delta": -11.9,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": -0.15,
-      "altitude_tax_se": 1.5,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -0.25,
+      "altitude_tax_se": 2.51,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.55,
       "arsenal": [
@@ -7857,7 +7858,6 @@
           "whiff_per_swing": 31.2
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": true
     },
     {
@@ -7869,8 +7869,9 @@
       "stuff_plus_sea": 104.0,
       "stuff_plus_delta": -8.2,
       "stuff_plus_hh_ci95": 1.3,
-      "altitude_tax_runs_per_100": 3.75,
-      "altitude_tax_se": 1.8,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 6.28,
+      "altitude_tax_se": 3.02,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 2.5,
       "arsenal": [
@@ -7935,7 +7936,6 @@
           "whiff_per_swing": 28.6
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -7947,8 +7947,9 @@
       "stuff_plus_sea": 103.6,
       "stuff_plus_delta": -8.0,
       "stuff_plus_hh_ci95": 1.1,
-      "altitude_tax_runs_per_100": 0.94,
-      "altitude_tax_se": 1.59,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 1.57,
+      "altitude_tax_se": 2.67,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 0.57,
       "arsenal": [
@@ -7998,7 +7999,6 @@
           "whiff_per_swing": 31.6
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -8010,8 +8010,9 @@
       "stuff_plus_sea": 104.0,
       "stuff_plus_delta": -8.4,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": -2.16,
-      "altitude_tax_se": 1.88,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": -3.62,
+      "altitude_tax_se": 3.15,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.65,
       "arsenal": [
@@ -8061,7 +8062,6 @@
           "whiff_per_swing": 52.2
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -8073,8 +8073,9 @@
       "stuff_plus_sea": 105.3,
       "stuff_plus_delta": -9.7,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": -0.05,
-      "altitude_tax_se": 1.52,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -0.08,
+      "altitude_tax_se": 2.56,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.23,
       "arsenal": [
@@ -8124,7 +8125,6 @@
           "whiff_per_swing": 22.2
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -8136,8 +8136,9 @@
       "stuff_plus_sea": 105.4,
       "stuff_plus_delta": -9.8,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 0.99,
-      "altitude_tax_se": 1.92,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 1.67,
+      "altitude_tax_se": 3.22,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.17,
       "arsenal": [
@@ -8202,7 +8203,6 @@
           "whiff_per_swing": 31.6
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -8214,8 +8214,9 @@
       "stuff_plus_sea": 105.9,
       "stuff_plus_delta": -10.2,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 0.35,
-      "altitude_tax_se": 1.29,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 0.59,
+      "altitude_tax_se": 2.17,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.7,
       "arsenal": [
@@ -8265,7 +8266,6 @@
           "whiff_per_swing": 28.6
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": true
     },
     {
@@ -8277,8 +8277,9 @@
       "stuff_plus_sea": 103.9,
       "stuff_plus_delta": -8.4,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": 4.27,
-      "altitude_tax_se": 1.62,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 7.16,
+      "altitude_tax_se": 2.71,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 1.4,
       "arsenal": [
@@ -8328,7 +8329,6 @@
           "whiff_per_swing": 28.6
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -8340,8 +8340,9 @@
       "stuff_plus_sea": 101.2,
       "stuff_plus_delta": -5.7,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 1.05,
-      "altitude_tax_se": 1.23,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 1.75,
+      "altitude_tax_se": 2.06,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 0.72,
       "arsenal": [
@@ -8406,7 +8407,6 @@
           "whiff_per_swing": 30.8
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -8418,8 +8418,9 @@
       "stuff_plus_sea": 104.1,
       "stuff_plus_delta": -8.6,
       "stuff_plus_hh_ci95": 0.4,
-      "altitude_tax_runs_per_100": 5.05,
-      "altitude_tax_se": 1.24,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 8.47,
+      "altitude_tax_se": 2.07,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 2.74,
       "arsenal": [
@@ -8514,7 +8515,6 @@
           "whiff_per_swing": 14.3
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -8526,8 +8526,9 @@
       "stuff_plus_sea": 107.9,
       "stuff_plus_delta": -12.5,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 1.56,
-      "altitude_tax_se": 1.65,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 2.62,
+      "altitude_tax_se": 2.77,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.35,
       "arsenal": [
@@ -8592,7 +8593,6 @@
           "whiff_per_swing": 8.3
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": true
     },
     {
@@ -8604,8 +8604,9 @@
       "stuff_plus_sea": 101.1,
       "stuff_plus_delta": -5.7,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": 0.81,
-      "altitude_tax_se": 1.51,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 1.35,
+      "altitude_tax_se": 2.53,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.27,
       "arsenal": [
@@ -8670,7 +8671,6 @@
           "whiff_per_swing": 55.0
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -8682,8 +8682,9 @@
       "stuff_plus_sea": 105.2,
       "stuff_plus_delta": -9.9,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 1.57,
-      "altitude_tax_se": 1.12,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 2.62,
+      "altitude_tax_se": 1.88,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 0.77,
       "arsenal": [
@@ -8748,7 +8749,6 @@
           "whiff_per_swing": 53.3
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -8760,8 +8760,9 @@
       "stuff_plus_sea": 108.2,
       "stuff_plus_delta": -12.9,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": 1.11,
-      "altitude_tax_se": 1.19,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 1.87,
+      "altitude_tax_se": 1.99,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.83,
       "arsenal": [
@@ -8826,7 +8827,6 @@
           "whiff_per_swing": 14.3
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": true
     },
     {
@@ -8838,8 +8838,9 @@
       "stuff_plus_sea": 101.1,
       "stuff_plus_delta": -5.8,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": 1.65,
-      "altitude_tax_se": 1.23,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 2.76,
+      "altitude_tax_se": 2.06,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.78,
       "arsenal": [
@@ -8919,7 +8920,6 @@
           "whiff_per_swing": 47.6
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -8931,8 +8931,9 @@
       "stuff_plus_sea": 107.6,
       "stuff_plus_delta": -12.3,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": 4.4,
-      "altitude_tax_se": 1.99,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 7.38,
+      "altitude_tax_se": 3.33,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 1.45,
       "arsenal": [
@@ -8967,7 +8968,6 @@
           "whiff_per_swing": 29.2
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": true
     },
     {
@@ -8979,8 +8979,9 @@
       "stuff_plus_sea": 104.6,
       "stuff_plus_delta": -9.3,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 1.48,
-      "altitude_tax_se": 1.49,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 2.48,
+      "altitude_tax_se": 2.5,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.48,
       "arsenal": [
@@ -9060,7 +9061,6 @@
           "whiff_per_swing": 45.5
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -9072,8 +9072,9 @@
       "stuff_plus_sea": 105.5,
       "stuff_plus_delta": -10.1,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": -1.0,
-      "altitude_tax_se": 1.9,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": -1.68,
+      "altitude_tax_se": 3.18,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.8,
       "arsenal": [
@@ -9108,7 +9109,6 @@
           "whiff_per_swing": 21.2
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -9120,8 +9120,9 @@
       "stuff_plus_sea": 109.1,
       "stuff_plus_delta": -13.9,
       "stuff_plus_hh_ci95": 0.4,
-      "altitude_tax_runs_per_100": 1.86,
-      "altitude_tax_se": 0.9,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 3.12,
+      "altitude_tax_se": 1.51,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 2.88,
       "arsenal": [
@@ -9186,7 +9187,6 @@
           "whiff_per_swing": 23.5
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": true
     },
     {
@@ -9198,8 +9198,9 @@
       "stuff_plus_sea": 103.2,
       "stuff_plus_delta": -8.0,
       "stuff_plus_hh_ci95": 0.4,
-      "altitude_tax_runs_per_100": 2.06,
-      "altitude_tax_se": 1.12,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 3.46,
+      "altitude_tax_se": 1.87,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.02,
       "arsenal": [
@@ -9279,7 +9280,6 @@
           "whiff_per_swing": 14.3
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -9291,8 +9291,9 @@
       "stuff_plus_sea": 105.6,
       "stuff_plus_delta": -10.4,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": 1.33,
-      "altitude_tax_se": 1.79,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 2.22,
+      "altitude_tax_se": 2.99,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.1,
       "arsenal": [
@@ -9357,7 +9358,6 @@
           "whiff_per_swing": 23.3
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -9369,8 +9369,9 @@
       "stuff_plus_sea": 107.2,
       "stuff_plus_delta": -12.0,
       "stuff_plus_hh_ci95": 1.5,
-      "altitude_tax_runs_per_100": 1.93,
-      "altitude_tax_se": 2.18,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 3.24,
+      "altitude_tax_se": 3.65,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.7,
       "arsenal": [
@@ -9420,7 +9421,6 @@
           "whiff_per_swing": 15.8
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": true
     },
     {
@@ -9432,8 +9432,9 @@
       "stuff_plus_sea": 104.8,
       "stuff_plus_delta": -9.7,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": -1.36,
-      "altitude_tax_se": 1.34,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -2.27,
+      "altitude_tax_se": 2.24,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.65,
       "arsenal": [
@@ -9498,7 +9499,6 @@
           "whiff_per_swing": 30.8
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -9510,8 +9510,9 @@
       "stuff_plus_sea": 102.6,
       "stuff_plus_delta": -7.5,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 0.6,
-      "altitude_tax_se": 1.47,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 1.0,
+      "altitude_tax_se": 2.46,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.9,
       "arsenal": [
@@ -9576,7 +9577,6 @@
           "whiff_per_swing": 7.3
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -9588,8 +9588,9 @@
       "stuff_plus_sea": 102.6,
       "stuff_plus_delta": -7.5,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 1.05,
-      "altitude_tax_se": 1.4,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 1.77,
+      "altitude_tax_se": 2.35,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.8,
       "arsenal": [
@@ -9639,7 +9640,6 @@
           "whiff_per_swing": 21.4
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -9651,8 +9651,9 @@
       "stuff_plus_sea": 104.0,
       "stuff_plus_delta": -8.9,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": -1.62,
-      "altitude_tax_se": 1.45,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": -2.71,
+      "altitude_tax_se": 2.43,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.23,
       "arsenal": [
@@ -9717,7 +9718,6 @@
           "whiff_per_swing": 52.4
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -9729,8 +9729,9 @@
       "stuff_plus_sea": 102.4,
       "stuff_plus_delta": -7.3,
       "stuff_plus_hh_ci95": 0.5,
-      "altitude_tax_runs_per_100": 0.87,
-      "altitude_tax_se": 1.25,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 1.46,
+      "altitude_tax_se": 2.09,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.47,
       "arsenal": [
@@ -9795,7 +9796,6 @@
           "whiff_per_swing": 9.1
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -9807,8 +9807,9 @@
       "stuff_plus_sea": 108.4,
       "stuff_plus_delta": -13.3,
       "stuff_plus_hh_ci95": 1.5,
-      "altitude_tax_runs_per_100": 1.69,
-      "altitude_tax_se": 1.76,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 2.83,
+      "altitude_tax_se": 2.95,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.4,
       "arsenal": [
@@ -9858,7 +9859,6 @@
           "whiff_per_swing": 28.6
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": true
     },
     {
@@ -9870,8 +9870,9 @@
       "stuff_plus_sea": 105.3,
       "stuff_plus_delta": -10.1,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": 0.12,
-      "altitude_tax_se": 1.74,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 0.2,
+      "altitude_tax_se": 2.92,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.28,
       "arsenal": [
@@ -9936,7 +9937,6 @@
           "whiff_per_swing": 14.3
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -9948,8 +9948,9 @@
       "stuff_plus_sea": 100.3,
       "stuff_plus_delta": -5.3,
       "stuff_plus_hh_ci95": 1.1,
-      "altitude_tax_runs_per_100": 1.71,
-      "altitude_tax_se": 2.02,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 2.87,
+      "altitude_tax_se": 3.39,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.4,
       "arsenal": [
@@ -10029,7 +10030,6 @@
           "whiff_per_swing": 7.1
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -10041,8 +10041,9 @@
       "stuff_plus_sea": 102.4,
       "stuff_plus_delta": -7.4,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 5.66,
-      "altitude_tax_se": 1.72,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 9.49,
+      "altitude_tax_se": 2.89,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 2.9,
       "arsenal": [
@@ -10107,7 +10108,6 @@
           "whiff_per_swing": 3.1
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -10119,8 +10119,9 @@
       "stuff_plus_sea": 103.0,
       "stuff_plus_delta": -8.0,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 0.36,
-      "altitude_tax_se": 1.64,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 0.59,
+      "altitude_tax_se": 2.74,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.9,
       "arsenal": [
@@ -10155,7 +10156,6 @@
           "whiff_per_swing": 35.2
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -10167,8 +10167,9 @@
       "stuff_plus_sea": 101.2,
       "stuff_plus_delta": -6.3,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 1.19,
-      "altitude_tax_se": 1.08,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 2.0,
+      "altitude_tax_se": 1.81,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.6,
       "arsenal": [
@@ -10233,7 +10234,6 @@
           "whiff_per_swing": 34.1
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -10245,8 +10245,9 @@
       "stuff_plus_sea": 99.9,
       "stuff_plus_delta": -5.0,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": 1.0,
-      "altitude_tax_se": 1.33,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 1.67,
+      "altitude_tax_se": 2.22,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.17,
       "arsenal": [
@@ -10341,7 +10342,6 @@
           "whiff_per_swing": 0.0
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -10353,8 +10353,9 @@
       "stuff_plus_sea": 105.0,
       "stuff_plus_delta": -10.0,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 0.13,
-      "altitude_tax_se": 1.91,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 0.21,
+      "altitude_tax_se": 3.21,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.28,
       "arsenal": [
@@ -10419,7 +10420,6 @@
           "whiff_per_swing": 35.1
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -10431,8 +10431,9 @@
       "stuff_plus_sea": 110.0,
       "stuff_plus_delta": -15.2,
       "stuff_plus_hh_ci95": 0.5,
-      "altitude_tax_runs_per_100": 3.54,
-      "altitude_tax_se": 1.3,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 5.93,
+      "altitude_tax_se": 2.18,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 4.27,
       "arsenal": [
@@ -10482,7 +10483,6 @@
           "whiff_per_swing": 28.6
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": true
     },
     {
@@ -10494,8 +10494,9 @@
       "stuff_plus_sea": 105.0,
       "stuff_plus_delta": -10.2,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": -1.46,
-      "altitude_tax_se": 1.28,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -2.44,
+      "altitude_tax_se": 2.15,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.28,
       "arsenal": [
@@ -10575,7 +10576,6 @@
           "whiff_per_swing": 10.5
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -10587,8 +10587,9 @@
       "stuff_plus_sea": 102.2,
       "stuff_plus_delta": -7.4,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": 2.02,
-      "altitude_tax_se": 2.12,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 3.39,
+      "altitude_tax_se": 3.54,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.8,
       "arsenal": [
@@ -10638,7 +10639,6 @@
           "whiff_per_swing": 9.7
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -10650,8 +10650,9 @@
       "stuff_plus_sea": 105.3,
       "stuff_plus_delta": -10.6,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": 0.66,
-      "altitude_tax_se": 1.44,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 1.11,
+      "altitude_tax_se": 2.41,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.0,
       "arsenal": [
@@ -10716,7 +10717,6 @@
           "whiff_per_swing": 34.4
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -10728,8 +10728,9 @@
       "stuff_plus_sea": 107.6,
       "stuff_plus_delta": -12.9,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": 1.66,
-      "altitude_tax_se": 1.01,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 2.77,
+      "altitude_tax_se": 1.69,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.88,
       "arsenal": [
@@ -10809,7 +10810,6 @@
           "whiff_per_swing": 12.5
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": true
     },
     {
@@ -10821,8 +10821,9 @@
       "stuff_plus_sea": 107.8,
       "stuff_plus_delta": -13.1,
       "stuff_plus_hh_ci95": 1.5,
-      "altitude_tax_runs_per_100": 0.56,
-      "altitude_tax_se": 1.96,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 0.94,
+      "altitude_tax_se": 3.29,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.43,
       "arsenal": [
@@ -10872,7 +10873,6 @@
           "whiff_per_swing": 25.0
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": true
     },
     {
@@ -10884,8 +10884,9 @@
       "stuff_plus_sea": 95.9,
       "stuff_plus_delta": -1.3,
       "stuff_plus_hh_ci95": 1.4,
-      "altitude_tax_runs_per_100": 0.87,
-      "altitude_tax_se": 1.5,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 1.47,
+      "altitude_tax_se": 2.52,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.3,
       "arsenal": [
@@ -10965,7 +10966,6 @@
           "whiff_per_swing": 8.3
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -10977,8 +10977,9 @@
       "stuff_plus_sea": 101.0,
       "stuff_plus_delta": -6.4,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 4.22,
-      "altitude_tax_se": 1.4,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 7.08,
+      "altitude_tax_se": 2.35,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 2.83,
       "arsenal": [
@@ -11043,7 +11044,6 @@
           "whiff_per_swing": 27.3
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -11055,8 +11055,9 @@
       "stuff_plus_sea": 102.7,
       "stuff_plus_delta": -8.1,
       "stuff_plus_hh_ci95": 0.4,
-      "altitude_tax_runs_per_100": -1.24,
-      "altitude_tax_se": 1.31,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -2.08,
+      "altitude_tax_se": 2.2,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 0.93,
       "arsenal": [
@@ -11121,7 +11122,6 @@
           "whiff_per_swing": 50.0
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -11133,8 +11133,9 @@
       "stuff_plus_sea": 104.7,
       "stuff_plus_delta": -10.2,
       "stuff_plus_hh_ci95": 0.5,
-      "altitude_tax_runs_per_100": 0.21,
-      "altitude_tax_se": 1.1,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 0.36,
+      "altitude_tax_se": 1.85,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.3,
       "arsenal": [
@@ -11229,7 +11230,6 @@
           "whiff_per_swing": 26.7
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -11241,8 +11241,9 @@
       "stuff_plus_sea": 101.2,
       "stuff_plus_delta": -6.6,
       "stuff_plus_hh_ci95": 1.2,
-      "altitude_tax_runs_per_100": -5.69,
-      "altitude_tax_se": 1.79,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -9.53,
+      "altitude_tax_se": 3.0,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 1.45,
       "arsenal": [
@@ -11277,7 +11278,6 @@
           "whiff_per_swing": 20.0
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -11289,8 +11289,9 @@
       "stuff_plus_sea": 100.7,
       "stuff_plus_delta": -6.4,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": -1.33,
-      "altitude_tax_se": 2.04,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -2.23,
+      "altitude_tax_se": 3.43,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.34,
       "arsenal": [
@@ -11370,7 +11371,6 @@
           "whiff_per_swing": 58.3
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -11382,8 +11382,9 @@
       "stuff_plus_sea": 104.0,
       "stuff_plus_delta": -9.6,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": -0.65,
-      "altitude_tax_se": 1.13,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -1.09,
+      "altitude_tax_se": 1.9,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.1,
       "arsenal": [
@@ -11478,7 +11479,6 @@
           "whiff_per_swing": 60.0
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -11490,8 +11490,9 @@
       "stuff_plus_sea": 104.3,
       "stuff_plus_delta": -9.8,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 0.39,
-      "altitude_tax_se": 1.63,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 0.66,
+      "altitude_tax_se": 2.73,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.56,
       "arsenal": [
@@ -11571,7 +11572,6 @@
           "whiff_per_swing": 33.9
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -11583,8 +11583,9 @@
       "stuff_plus_sea": 103.1,
       "stuff_plus_delta": -8.8,
       "stuff_plus_hh_ci95": 1.1,
-      "altitude_tax_runs_per_100": 1.97,
-      "altitude_tax_se": 1.83,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 3.31,
+      "altitude_tax_se": 3.06,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 0.87,
       "arsenal": [
@@ -11634,7 +11635,6 @@
           "whiff_per_swing": 26.7
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -11646,8 +11646,9 @@
       "stuff_plus_sea": 96.1,
       "stuff_plus_delta": -1.8,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": 4.52,
-      "altitude_tax_se": 1.37,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 7.57,
+      "altitude_tax_se": 2.3,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 2.27,
       "arsenal": [
@@ -11712,7 +11713,6 @@
           "whiff_per_swing": 18.2
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -11724,8 +11724,9 @@
       "stuff_plus_sea": 104.4,
       "stuff_plus_delta": -10.2,
       "stuff_plus_hh_ci95": 1.4,
-      "altitude_tax_runs_per_100": 1.66,
-      "altitude_tax_se": 1.76,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 2.78,
+      "altitude_tax_se": 2.96,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.3,
       "arsenal": [
@@ -11775,7 +11776,6 @@
           "whiff_per_swing": 16.7
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -11787,8 +11787,9 @@
       "stuff_plus_sea": 106.9,
       "stuff_plus_delta": -12.7,
       "stuff_plus_hh_ci95": 1.2,
-      "altitude_tax_runs_per_100": 1.54,
-      "altitude_tax_se": 1.28,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 2.58,
+      "altitude_tax_se": 2.14,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.27,
       "arsenal": [
@@ -11853,7 +11854,6 @@
           "whiff_per_swing": 47.1
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": true
     },
     {
@@ -11865,8 +11865,9 @@
       "stuff_plus_sea": 100.5,
       "stuff_plus_delta": -6.4,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": -2.34,
-      "altitude_tax_se": 1.44,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -3.93,
+      "altitude_tax_se": 2.41,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.98,
       "arsenal": [
@@ -11931,7 +11932,6 @@
           "whiff_per_swing": 20.0
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -11943,8 +11943,9 @@
       "stuff_plus_sea": 107.1,
       "stuff_plus_delta": -13.0,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 3.9,
-      "altitude_tax_se": 1.05,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 6.53,
+      "altitude_tax_se": 1.77,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 2.78,
       "arsenal": [
@@ -12024,7 +12025,6 @@
           "whiff_per_swing": 44.4
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": true
     },
     {
@@ -12036,8 +12036,9 @@
       "stuff_plus_sea": 100.9,
       "stuff_plus_delta": -6.9,
       "stuff_plus_hh_ci95": 1.6,
-      "altitude_tax_runs_per_100": 3.41,
-      "altitude_tax_se": 2.19,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 5.72,
+      "altitude_tax_se": 3.67,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.07,
       "arsenal": [
@@ -12087,7 +12088,6 @@
           "whiff_per_swing": 46.2
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -12099,8 +12099,9 @@
       "stuff_plus_sea": 102.7,
       "stuff_plus_delta": -8.5,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 0.57,
-      "altitude_tax_se": 1.78,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 0.95,
+      "altitude_tax_se": 2.99,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.33,
       "arsenal": [
@@ -12165,7 +12166,6 @@
           "whiff_per_swing": 30.4
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -12177,8 +12177,9 @@
       "stuff_plus_sea": 109.3,
       "stuff_plus_delta": -15.2,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 2.42,
-      "altitude_tax_se": 1.41,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 4.06,
+      "altitude_tax_se": 2.36,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.85,
       "arsenal": [
@@ -12228,7 +12229,6 @@
           "whiff_per_swing": 5.0
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": true
     },
     {
@@ -12240,8 +12240,9 @@
       "stuff_plus_sea": 100.5,
       "stuff_plus_delta": -6.4,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": -0.01,
-      "altitude_tax_se": 1.66,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -0.01,
+      "altitude_tax_se": 2.79,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.7,
       "arsenal": [
@@ -12321,7 +12322,6 @@
           "whiff_per_swing": 22.2
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -12333,8 +12333,9 @@
       "stuff_plus_sea": 106.8,
       "stuff_plus_delta": -12.7,
       "stuff_plus_hh_ci95": 0.4,
-      "altitude_tax_runs_per_100": 1.79,
-      "altitude_tax_se": 0.94,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 3.0,
+      "altitude_tax_se": 1.58,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.88,
       "arsenal": [
@@ -12429,7 +12430,6 @@
           "whiff_per_swing": 0.0
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": true
     },
     {
@@ -12441,8 +12441,9 @@
       "stuff_plus_sea": 101.1,
       "stuff_plus_delta": -7.1,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 5.67,
-      "altitude_tax_se": 1.69,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 9.5,
+      "altitude_tax_se": 2.83,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 2.15,
       "arsenal": [
@@ -12507,7 +12508,6 @@
           "whiff_per_swing": 18.2
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -12519,8 +12519,9 @@
       "stuff_plus_sea": 102.2,
       "stuff_plus_delta": -8.1,
       "stuff_plus_hh_ci95": 0.4,
-      "altitude_tax_runs_per_100": 2.32,
-      "altitude_tax_se": 1.01,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 3.88,
+      "altitude_tax_se": 1.69,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 3.08,
       "arsenal": [
@@ -12615,7 +12616,6 @@
           "whiff_per_swing": 28.6
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -12627,8 +12627,9 @@
       "stuff_plus_sea": 107.0,
       "stuff_plus_delta": -13.0,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 0.48,
-      "altitude_tax_se": 1.46,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 0.8,
+      "altitude_tax_se": 2.45,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.43,
       "arsenal": [
@@ -12678,7 +12679,6 @@
           "whiff_per_swing": 25.0
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": true
     },
     {
@@ -12690,8 +12690,9 @@
       "stuff_plus_sea": 109.9,
       "stuff_plus_delta": -15.9,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 2.83,
-      "altitude_tax_se": 1.27,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 4.74,
+      "altitude_tax_se": 2.12,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 2.88,
       "arsenal": [
@@ -12756,7 +12757,6 @@
           "whiff_per_swing": 23.1
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": true
     },
     {
@@ -12768,8 +12768,9 @@
       "stuff_plus_sea": 102.7,
       "stuff_plus_delta": -8.7,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 0.52,
-      "altitude_tax_se": 1.52,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 0.88,
+      "altitude_tax_se": 2.55,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.7,
       "arsenal": [
@@ -12834,7 +12835,6 @@
           "whiff_per_swing": 11.1
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -12846,8 +12846,9 @@
       "stuff_plus_sea": 102.9,
       "stuff_plus_delta": -9.0,
       "stuff_plus_hh_ci95": 1.1,
-      "altitude_tax_runs_per_100": 0.75,
-      "altitude_tax_se": 2.43,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 1.26,
+      "altitude_tax_se": 4.07,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.4,
       "arsenal": [
@@ -12897,7 +12898,6 @@
           "whiff_per_swing": 20.0
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -12909,8 +12909,9 @@
       "stuff_plus_sea": 103.0,
       "stuff_plus_delta": -9.0,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 2.89,
-      "altitude_tax_se": 1.59,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 4.85,
+      "altitude_tax_se": 2.67,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 4.8,
       "arsenal": [
@@ -12975,7 +12976,6 @@
           "whiff_per_swing": 36.4
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -12987,8 +12987,9 @@
       "stuff_plus_sea": 98.8,
       "stuff_plus_delta": -4.9,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 1.67,
-      "altitude_tax_se": 1.98,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 2.79,
+      "altitude_tax_se": 3.33,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.3,
       "arsenal": [
@@ -13038,7 +13039,6 @@
           "whiff_per_swing": 27.3
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -13050,8 +13050,9 @@
       "stuff_plus_sea": 102.8,
       "stuff_plus_delta": -9.0,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 3.46,
-      "altitude_tax_se": 1.63,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 5.8,
+      "altitude_tax_se": 2.73,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 2.15,
       "arsenal": [
@@ -13101,7 +13102,6 @@
           "whiff_per_swing": 36.4
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -13113,8 +13113,9 @@
       "stuff_plus_sea": 99.7,
       "stuff_plus_delta": -5.9,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": -1.34,
-      "altitude_tax_se": 1.66,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -2.25,
+      "altitude_tax_se": 2.78,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.85,
       "arsenal": [
@@ -13179,7 +13180,6 @@
           "whiff_per_swing": 10.0
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -13191,8 +13191,9 @@
       "stuff_plus_sea": 105.5,
       "stuff_plus_delta": -11.8,
       "stuff_plus_hh_ci95": 1.1,
-      "altitude_tax_runs_per_100": 0.55,
-      "altitude_tax_se": 2.71,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 0.92,
+      "altitude_tax_se": 4.55,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.67,
       "arsenal": [
@@ -13257,7 +13258,6 @@
           "whiff_per_swing": 26.7
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -13269,8 +13269,9 @@
       "stuff_plus_sea": 104.8,
       "stuff_plus_delta": -11.1,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": 1.08,
-      "altitude_tax_se": 1.58,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 1.8,
+      "altitude_tax_se": 2.64,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.7,
       "arsenal": [
@@ -13335,7 +13336,6 @@
           "whiff_per_swing": 21.4
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -13347,8 +13347,9 @@
       "stuff_plus_sea": 103.7,
       "stuff_plus_delta": -10.0,
       "stuff_plus_hh_ci95": 0.4,
-      "altitude_tax_runs_per_100": -0.85,
-      "altitude_tax_se": 1.54,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": -1.43,
+      "altitude_tax_se": 2.58,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.93,
       "arsenal": [
@@ -13398,7 +13399,6 @@
           "whiff_per_swing": 32.0
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -13410,8 +13410,9 @@
       "stuff_plus_sea": 101.2,
       "stuff_plus_delta": -7.5,
       "stuff_plus_hh_ci95": 1.3,
-      "altitude_tax_runs_per_100": 1.34,
-      "altitude_tax_se": 2.01,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 2.24,
+      "altitude_tax_se": 3.37,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 4.0,
       "arsenal": [
@@ -13476,7 +13477,6 @@
           "whiff_per_swing": 50.0
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -13488,8 +13488,9 @@
       "stuff_plus_sea": 101.4,
       "stuff_plus_delta": -7.8,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": -0.24,
-      "altitude_tax_se": 1.55,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -0.4,
+      "altitude_tax_se": 2.6,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 0.87,
       "arsenal": [
@@ -13539,7 +13540,6 @@
           "whiff_per_swing": 62.5
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -13551,8 +13551,9 @@
       "stuff_plus_sea": 100.6,
       "stuff_plus_delta": -7.0,
       "stuff_plus_hh_ci95": 0.5,
-      "altitude_tax_runs_per_100": -0.44,
-      "altitude_tax_se": 1.3,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -0.73,
+      "altitude_tax_se": 2.18,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.52,
       "arsenal": [
@@ -13632,7 +13633,6 @@
           "whiff_per_swing": 20.7
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -13644,8 +13644,9 @@
       "stuff_plus_sea": 106.5,
       "stuff_plus_delta": -13.0,
       "stuff_plus_hh_ci95": 1.8,
-      "altitude_tax_runs_per_100": -0.53,
-      "altitude_tax_se": 1.75,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -0.89,
+      "altitude_tax_se": 2.94,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.9,
       "arsenal": [
@@ -13695,7 +13696,6 @@
           "whiff_per_swing": 20.0
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": true
     },
     {
@@ -13707,8 +13707,9 @@
       "stuff_plus_sea": 103.1,
       "stuff_plus_delta": -9.6,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": -1.03,
-      "altitude_tax_se": 1.19,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -1.72,
+      "altitude_tax_se": 1.99,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.6,
       "arsenal": [
@@ -13788,7 +13789,6 @@
           "whiff_per_swing": 15.0
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -13800,8 +13800,9 @@
       "stuff_plus_sea": 106.9,
       "stuff_plus_delta": -13.4,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": 5.5,
-      "altitude_tax_se": 1.85,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 9.22,
+      "altitude_tax_se": 3.09,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 2.9,
       "arsenal": [
@@ -13836,7 +13837,6 @@
           "whiff_per_swing": 5.6
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": true
     },
     {
@@ -13848,8 +13848,9 @@
       "stuff_plus_sea": 101.6,
       "stuff_plus_delta": -8.1,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": -0.06,
-      "altitude_tax_se": 1.34,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": -0.09,
+      "altitude_tax_se": 2.24,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.82,
       "arsenal": [
@@ -13914,7 +13915,6 @@
           "whiff_per_swing": 22.2
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -13926,8 +13926,9 @@
       "stuff_plus_sea": 100.8,
       "stuff_plus_delta": -7.3,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": -0.64,
-      "altitude_tax_se": 1.3,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -1.07,
+      "altitude_tax_se": 2.17,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.62,
       "arsenal": [
@@ -14007,7 +14008,6 @@
           "whiff_per_swing": 17.6
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -14019,8 +14019,9 @@
       "stuff_plus_sea": 99.7,
       "stuff_plus_delta": -6.3,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": -3.03,
-      "altitude_tax_se": 2.07,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": -5.08,
+      "altitude_tax_se": 3.47,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.82,
       "arsenal": [
@@ -14115,7 +14116,6 @@
           "whiff_per_swing": 28.6
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -14127,8 +14127,9 @@
       "stuff_plus_sea": 102.8,
       "stuff_plus_delta": -9.3,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 2.91,
-      "altitude_tax_se": 1.3,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 4.87,
+      "altitude_tax_se": 2.17,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 4.04,
       "arsenal": [
@@ -14208,7 +14209,6 @@
           "whiff_per_swing": 41.7
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -14220,8 +14220,9 @@
       "stuff_plus_sea": 102.0,
       "stuff_plus_delta": -8.7,
       "stuff_plus_hh_ci95": 1.3,
-      "altitude_tax_runs_per_100": 0.28,
-      "altitude_tax_se": 1.56,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 0.47,
+      "altitude_tax_se": 2.61,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.27,
       "arsenal": [
@@ -14271,7 +14272,6 @@
           "whiff_per_swing": 30.0
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -14283,8 +14283,9 @@
       "stuff_plus_sea": 97.7,
       "stuff_plus_delta": -4.3,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": -0.27,
-      "altitude_tax_se": 2.31,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -0.44,
+      "altitude_tax_se": 3.87,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.87,
       "arsenal": [
@@ -14334,7 +14335,6 @@
           "whiff_per_swing": 9.1
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -14346,8 +14346,9 @@
       "stuff_plus_sea": 99.5,
       "stuff_plus_delta": -6.3,
       "stuff_plus_hh_ci95": 1.3,
-      "altitude_tax_runs_per_100": 1.38,
-      "altitude_tax_se": 2.03,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 2.31,
+      "altitude_tax_se": 3.4,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.2,
       "arsenal": [
@@ -14397,7 +14398,6 @@
           "whiff_per_swing": 33.3
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -14409,8 +14409,9 @@
       "stuff_plus_sea": 104.8,
       "stuff_plus_delta": -11.6,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": -2.11,
-      "altitude_tax_se": 1.56,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -3.54,
+      "altitude_tax_se": 2.62,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.37,
       "arsenal": [
@@ -14460,7 +14461,6 @@
           "whiff_per_swing": 39.3
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -14472,8 +14472,9 @@
       "stuff_plus_sea": 101.1,
       "stuff_plus_delta": -7.9,
       "stuff_plus_hh_ci95": 1.1,
-      "altitude_tax_runs_per_100": 2.49,
-      "altitude_tax_se": 1.81,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 4.17,
+      "altitude_tax_se": 3.03,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.38,
       "arsenal": [
@@ -14538,7 +14539,6 @@
           "whiff_per_swing": 16.7
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -14550,8 +14550,9 @@
       "stuff_plus_sea": 101.5,
       "stuff_plus_delta": -8.4,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": -0.93,
-      "altitude_tax_se": 1.51,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -1.56,
+      "altitude_tax_se": 2.54,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.42,
       "arsenal": [
@@ -14646,7 +14647,6 @@
           "whiff_per_swing": 0.0
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -14658,8 +14658,9 @@
       "stuff_plus_sea": 98.0,
       "stuff_plus_delta": -4.8,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": 0.76,
-      "altitude_tax_se": 1.25,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 1.27,
+      "altitude_tax_se": 2.1,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.82,
       "arsenal": [
@@ -14754,7 +14755,6 @@
           "whiff_per_swing": 27.8
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -14766,8 +14766,9 @@
       "stuff_plus_sea": 99.1,
       "stuff_plus_delta": -5.9,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 0.43,
-      "altitude_tax_se": 2.14,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 0.73,
+      "altitude_tax_se": 3.59,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.47,
       "arsenal": [
@@ -14832,7 +14833,6 @@
           "whiff_per_swing": 7.7
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -14844,8 +14844,9 @@
       "stuff_plus_sea": 97.6,
       "stuff_plus_delta": -4.5,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": -0.94,
-      "altitude_tax_se": 0.99,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -1.58,
+      "altitude_tax_se": 1.65,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.42,
       "arsenal": [
@@ -14925,7 +14926,6 @@
           "whiff_per_swing": 9.1
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -14937,8 +14937,9 @@
       "stuff_plus_sea": 101.6,
       "stuff_plus_delta": -8.4,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": 0.47,
-      "altitude_tax_se": 1.88,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 0.79,
+      "altitude_tax_se": 3.16,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.05,
       "arsenal": [
@@ -15003,7 +15004,6 @@
           "whiff_per_swing": 0.0
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -15015,8 +15015,9 @@
       "stuff_plus_sea": 100.9,
       "stuff_plus_delta": -7.9,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 2.36,
-      "altitude_tax_se": 1.74,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 3.95,
+      "altitude_tax_se": 2.91,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 5.0,
       "arsenal": [
@@ -15066,7 +15067,6 @@
           "whiff_per_swing": 36.8
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -15078,8 +15078,9 @@
       "stuff_plus_sea": 100.8,
       "stuff_plus_delta": -7.7,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": 3.41,
-      "altitude_tax_se": 1.32,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 5.72,
+      "altitude_tax_se": 2.21,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 2.5,
       "arsenal": [
@@ -15144,7 +15145,6 @@
           "whiff_per_swing": 13.3
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -15156,8 +15156,9 @@
       "stuff_plus_sea": 101.2,
       "stuff_plus_delta": -8.2,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": -0.53,
-      "altitude_tax_se": 1.76,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -0.89,
+      "altitude_tax_se": 2.96,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.83,
       "arsenal": [
@@ -15207,7 +15208,6 @@
           "whiff_per_swing": 25.0
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -15219,8 +15219,9 @@
       "stuff_plus_sea": 99.7,
       "stuff_plus_delta": -6.9,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": -0.5,
-      "altitude_tax_se": 1.67,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -0.84,
+      "altitude_tax_se": 2.8,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.15,
       "arsenal": [
@@ -15285,7 +15286,6 @@
           "whiff_per_swing": 19.4
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -15297,8 +15297,9 @@
       "stuff_plus_sea": 102.0,
       "stuff_plus_delta": -9.3,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 2.12,
-      "altitude_tax_se": 2.07,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 3.55,
+      "altitude_tax_se": 3.47,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.5,
       "arsenal": [
@@ -15348,7 +15349,6 @@
           "whiff_per_swing": 19.0
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -15360,8 +15360,9 @@
       "stuff_plus_sea": 103.1,
       "stuff_plus_delta": -10.5,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": -0.76,
-      "altitude_tax_se": 1.28,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -1.27,
+      "altitude_tax_se": 2.14,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.7,
       "arsenal": [
@@ -15426,7 +15427,6 @@
           "whiff_per_swing": 33.3
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -15438,8 +15438,9 @@
       "stuff_plus_sea": 102.7,
       "stuff_plus_delta": -10.1,
       "stuff_plus_hh_ci95": 1.2,
-      "altitude_tax_runs_per_100": -2.69,
-      "altitude_tax_se": 1.65,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -4.51,
+      "altitude_tax_se": 2.76,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.25,
       "arsenal": [
@@ -15474,7 +15475,6 @@
           "whiff_per_swing": 10.0
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -15486,8 +15486,9 @@
       "stuff_plus_sea": 98.0,
       "stuff_plus_delta": -5.6,
       "stuff_plus_hh_ci95": 1.7,
-      "altitude_tax_runs_per_100": 0.78,
-      "altitude_tax_se": 2.5,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 1.3,
+      "altitude_tax_se": 4.19,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.43,
       "arsenal": [
@@ -15537,7 +15538,6 @@
           "whiff_per_swing": 20.0
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -15549,8 +15549,9 @@
       "stuff_plus_sea": 100.5,
       "stuff_plus_delta": -8.0,
       "stuff_plus_hh_ci95": 1.2,
-      "altitude_tax_runs_per_100": 0.67,
-      "altitude_tax_se": 1.7,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 1.13,
+      "altitude_tax_se": 2.84,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.82,
       "arsenal": [
@@ -15615,7 +15616,6 @@
           "whiff_per_swing": 16.7
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -15627,8 +15627,9 @@
       "stuff_plus_sea": 101.4,
       "stuff_plus_delta": -9.0,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 4.27,
-      "altitude_tax_se": 2.49,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 7.16,
+      "altitude_tax_se": 4.18,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.7,
       "arsenal": [
@@ -15663,7 +15664,6 @@
           "whiff_per_swing": 9.1
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -15675,8 +15675,9 @@
       "stuff_plus_sea": 99.4,
       "stuff_plus_delta": -7.0,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": -0.12,
-      "altitude_tax_se": 1.06,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -0.19,
+      "altitude_tax_se": 1.77,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.64,
       "arsenal": [
@@ -15771,7 +15772,6 @@
           "whiff_per_swing": 16.7
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -15783,8 +15783,9 @@
       "stuff_plus_sea": 106.5,
       "stuff_plus_delta": -14.2,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": 2.32,
-      "altitude_tax_se": 1.82,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 3.89,
+      "altitude_tax_se": 3.04,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 5.1,
       "arsenal": [
@@ -15834,7 +15835,6 @@
           "whiff_per_swing": 23.1
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": true
     },
     {
@@ -15846,8 +15846,9 @@
       "stuff_plus_sea": 102.4,
       "stuff_plus_delta": -10.1,
       "stuff_plus_hh_ci95": 1.4,
-      "altitude_tax_runs_per_100": 3.44,
-      "altitude_tax_se": 2.3,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 5.77,
+      "altitude_tax_se": 3.85,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.97,
       "arsenal": [
@@ -15897,7 +15898,6 @@
           "whiff_per_swing": 19.2
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -15909,8 +15909,9 @@
       "stuff_plus_sea": 100.6,
       "stuff_plus_delta": -8.3,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 1.31,
-      "altitude_tax_se": 1.8,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 2.19,
+      "altitude_tax_se": 3.01,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.33,
       "arsenal": [
@@ -15975,7 +15976,6 @@
           "whiff_per_swing": 25.0
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -15987,8 +15987,9 @@
       "stuff_plus_sea": 102.0,
       "stuff_plus_delta": -9.6,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 1.42,
-      "altitude_tax_se": 2.04,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 2.38,
+      "altitude_tax_se": 3.42,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.1,
       "arsenal": [
@@ -16053,7 +16054,6 @@
           "whiff_per_swing": 29.0
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -16065,8 +16065,9 @@
       "stuff_plus_sea": 103.4,
       "stuff_plus_delta": -11.1,
       "stuff_plus_hh_ci95": 1.5,
-      "altitude_tax_runs_per_100": 4.63,
-      "altitude_tax_se": 2.74,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 7.76,
+      "altitude_tax_se": 4.58,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.93,
       "arsenal": [
@@ -16131,7 +16132,6 @@
           "whiff_per_swing": 14.3
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -16143,8 +16143,9 @@
       "stuff_plus_sea": 102.3,
       "stuff_plus_delta": -10.1,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": -0.39,
-      "altitude_tax_se": 1.52,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": -0.65,
+      "altitude_tax_se": 2.55,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.95,
       "arsenal": [
@@ -16209,7 +16210,6 @@
           "whiff_per_swing": 32.0
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -16221,8 +16221,9 @@
       "stuff_plus_sea": 100.3,
       "stuff_plus_delta": -8.1,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 1.25,
-      "altitude_tax_se": 1.48,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 2.1,
+      "altitude_tax_se": 2.48,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.64,
       "arsenal": [
@@ -16302,7 +16303,6 @@
           "whiff_per_swing": 17.9
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -16314,8 +16314,9 @@
       "stuff_plus_sea": 100.4,
       "stuff_plus_delta": -8.2,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 3.22,
-      "altitude_tax_se": 1.65,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 5.39,
+      "altitude_tax_se": 2.77,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 0.93,
       "arsenal": [
@@ -16365,7 +16366,6 @@
           "whiff_per_swing": 0.0
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -16377,8 +16377,9 @@
       "stuff_plus_sea": 100.3,
       "stuff_plus_delta": -8.0,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": -1.89,
-      "altitude_tax_se": 1.96,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": -3.17,
+      "altitude_tax_se": 3.28,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.17,
       "arsenal": [
@@ -16443,7 +16444,6 @@
           "whiff_per_swing": 14.3
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -16455,8 +16455,9 @@
       "stuff_plus_sea": 100.8,
       "stuff_plus_delta": -8.6,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 2.7,
-      "altitude_tax_se": 2.12,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 4.53,
+      "altitude_tax_se": 3.55,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 0.88,
       "arsenal": [
@@ -16521,7 +16522,6 @@
           "whiff_per_swing": 13.3
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -16533,8 +16533,9 @@
       "stuff_plus_sea": 102.1,
       "stuff_plus_delta": -10.0,
       "stuff_plus_hh_ci95": 1.1,
-      "altitude_tax_runs_per_100": 1.44,
-      "altitude_tax_se": 1.87,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 2.41,
+      "altitude_tax_se": 3.14,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.78,
       "arsenal": [
@@ -16614,7 +16615,6 @@
           "whiff_per_swing": 21.4
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -16626,8 +16626,9 @@
       "stuff_plus_sea": 99.5,
       "stuff_plus_delta": -7.5,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 0.61,
-      "altitude_tax_se": 2.37,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 1.02,
+      "altitude_tax_se": 3.97,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.15,
       "arsenal": [
@@ -16692,7 +16693,6 @@
           "whiff_per_swing": 27.8
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -16704,8 +16704,9 @@
       "stuff_plus_sea": 103.4,
       "stuff_plus_delta": -11.4,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": 2.69,
-      "altitude_tax_se": 1.24,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 4.51,
+      "altitude_tax_se": 2.08,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 3.05,
       "arsenal": [
@@ -16740,7 +16741,6 @@
           "whiff_per_swing": 30.4
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -16752,8 +16752,9 @@
       "stuff_plus_sea": 104.3,
       "stuff_plus_delta": -12.3,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": 4.63,
-      "altitude_tax_se": 2.15,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 7.76,
+      "altitude_tax_se": 3.6,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 1.52,
       "arsenal": [
@@ -16833,7 +16834,6 @@
           "whiff_per_swing": 50.0
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -16845,8 +16845,9 @@
       "stuff_plus_sea": 98.4,
       "stuff_plus_delta": -6.4,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 2.66,
-      "altitude_tax_se": 1.4,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 4.45,
+      "altitude_tax_se": 2.34,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.15,
       "arsenal": [
@@ -16911,7 +16912,6 @@
           "whiff_per_swing": 33.3
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -16923,8 +16923,9 @@
       "stuff_plus_sea": 100.9,
       "stuff_plus_delta": -9.1,
       "stuff_plus_hh_ci95": 0.4,
-      "altitude_tax_runs_per_100": 1.3,
-      "altitude_tax_se": 0.95,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 2.18,
+      "altitude_tax_se": 1.59,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.78,
       "arsenal": [
@@ -17019,7 +17020,6 @@
           "whiff_per_swing": 42.9
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -17031,8 +17031,9 @@
       "stuff_plus_sea": 99.2,
       "stuff_plus_delta": -7.3,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 1.64,
-      "altitude_tax_se": 1.96,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 2.75,
+      "altitude_tax_se": 3.29,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.26,
       "arsenal": [
@@ -17112,7 +17113,6 @@
           "whiff_per_swing": 28.6
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -17124,8 +17124,9 @@
       "stuff_plus_sea": 102.6,
       "stuff_plus_delta": -10.7,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": 2.04,
-      "altitude_tax_se": 2.03,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 3.42,
+      "altitude_tax_se": 3.4,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 4.35,
       "arsenal": [
@@ -17160,7 +17161,6 @@
           "whiff_per_swing": 25.0
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -17172,8 +17172,9 @@
       "stuff_plus_sea": 99.2,
       "stuff_plus_delta": -7.3,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": -2.32,
-      "altitude_tax_se": 1.99,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -3.89,
+      "altitude_tax_se": 3.33,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.1,
       "arsenal": [
@@ -17223,7 +17224,6 @@
           "whiff_per_swing": 23.5
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -17235,8 +17235,9 @@
       "stuff_plus_sea": 97.6,
       "stuff_plus_delta": -5.9,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": 0.2,
-      "altitude_tax_se": 2.21,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 0.34,
+      "altitude_tax_se": 3.71,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.6,
       "arsenal": [
@@ -17271,7 +17272,6 @@
           "whiff_per_swing": 15.4
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -17283,8 +17283,9 @@
       "stuff_plus_sea": 105.5,
       "stuff_plus_delta": -13.8,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 0.67,
-      "altitude_tax_se": 1.92,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 1.12,
+      "altitude_tax_se": 3.22,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.35,
       "arsenal": [
@@ -17319,7 +17320,6 @@
           "whiff_per_swing": 26.1
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -17331,8 +17331,9 @@
       "stuff_plus_sea": 101.6,
       "stuff_plus_delta": -9.9,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": -0.94,
-      "altitude_tax_se": 1.87,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -1.58,
+      "altitude_tax_se": 3.14,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.17,
       "arsenal": [
@@ -17412,7 +17413,6 @@
           "whiff_per_swing": 12.5
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -17424,8 +17424,9 @@
       "stuff_plus_sea": 102.4,
       "stuff_plus_delta": -10.7,
       "stuff_plus_hh_ci95": 0.5,
-      "altitude_tax_runs_per_100": 0.99,
-      "altitude_tax_se": 1.0,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 1.66,
+      "altitude_tax_se": 1.68,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.64,
       "arsenal": [
@@ -17520,7 +17521,6 @@
           "whiff_per_swing": 47.1
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -17532,8 +17532,9 @@
       "stuff_plus_sea": 104.3,
       "stuff_plus_delta": -12.7,
       "stuff_plus_hh_ci95": 1.2,
-      "altitude_tax_runs_per_100": 2.63,
-      "altitude_tax_se": 1.79,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 4.41,
+      "altitude_tax_se": 3.0,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.4,
       "arsenal": [
@@ -17613,7 +17614,6 @@
           "whiff_per_swing": 16.7
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -17625,8 +17625,9 @@
       "stuff_plus_sea": 104.9,
       "stuff_plus_delta": -13.3,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 0.67,
-      "altitude_tax_se": 1.79,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 1.13,
+      "altitude_tax_se": 3.0,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.0,
       "arsenal": [
@@ -17661,7 +17662,6 @@
           "whiff_per_swing": 25.0
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -17673,8 +17673,9 @@
       "stuff_plus_sea": 103.0,
       "stuff_plus_delta": -11.4,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": -1.43,
-      "altitude_tax_se": 1.87,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -2.4,
+      "altitude_tax_se": 3.13,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.35,
       "arsenal": [
@@ -17709,7 +17710,6 @@
           "whiff_per_swing": 38.9
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -17721,8 +17721,9 @@
       "stuff_plus_sea": 101.5,
       "stuff_plus_delta": -10.0,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 3.79,
-      "altitude_tax_se": 2.36,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 6.36,
+      "altitude_tax_se": 3.96,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.1,
       "arsenal": [
@@ -17757,7 +17758,6 @@
           "whiff_per_swing": 7.7
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -17769,8 +17769,9 @@
       "stuff_plus_sea": 104.4,
       "stuff_plus_delta": -12.7,
       "stuff_plus_hh_ci95": 1.1,
-      "altitude_tax_runs_per_100": -1.07,
-      "altitude_tax_se": 1.84,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -1.79,
+      "altitude_tax_se": 3.09,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.62,
       "arsenal": [
@@ -17835,7 +17836,6 @@
           "whiff_per_swing": 0.0
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -17847,8 +17847,9 @@
       "stuff_plus_sea": 103.4,
       "stuff_plus_delta": -11.8,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 2.01,
-      "altitude_tax_se": 1.34,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 3.37,
+      "altitude_tax_se": 2.24,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.78,
       "arsenal": [
@@ -17913,7 +17914,6 @@
           "whiff_per_swing": 30.0
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -17925,8 +17925,9 @@
       "stuff_plus_sea": 99.9,
       "stuff_plus_delta": -8.4,
       "stuff_plus_hh_ci95": 1.1,
-      "altitude_tax_runs_per_100": -0.51,
-      "altitude_tax_se": 2.17,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": -0.85,
+      "altitude_tax_se": 3.63,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 0.7,
       "arsenal": [
@@ -17976,7 +17977,6 @@
           "whiff_per_swing": 5.6
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -17988,8 +17988,9 @@
       "stuff_plus_sea": 101.2,
       "stuff_plus_delta": -9.7,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": 4.84,
-      "altitude_tax_se": 1.77,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 8.11,
+      "altitude_tax_se": 2.96,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 2.58,
       "arsenal": [
@@ -18069,7 +18070,6 @@
           "whiff_per_swing": 20.0
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -18081,8 +18081,9 @@
       "stuff_plus_sea": 100.2,
       "stuff_plus_delta": -8.7,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 1.52,
-      "altitude_tax_se": 1.69,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 2.55,
+      "altitude_tax_se": 2.83,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.44,
       "arsenal": [
@@ -18162,7 +18163,6 @@
           "whiff_per_swing": 33.3
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -18174,8 +18174,9 @@
       "stuff_plus_sea": 99.4,
       "stuff_plus_delta": -8.0,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": 1.88,
-      "altitude_tax_se": 1.52,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 3.15,
+      "altitude_tax_se": 2.54,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.77,
       "arsenal": [
@@ -18240,7 +18241,6 @@
           "whiff_per_swing": 30.0
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -18252,8 +18252,9 @@
       "stuff_plus_sea": 101.5,
       "stuff_plus_delta": -10.1,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": 1.24,
-      "altitude_tax_se": 2.25,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 2.08,
+      "altitude_tax_se": 3.77,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 4.23,
       "arsenal": [
@@ -18303,7 +18304,6 @@
           "whiff_per_swing": 13.0
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -18315,8 +18315,9 @@
       "stuff_plus_sea": 104.6,
       "stuff_plus_delta": -13.2,
       "stuff_plus_hh_ci95": 0.3,
-      "altitude_tax_runs_per_100": 0.26,
-      "altitude_tax_se": 1.12,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 0.44,
+      "altitude_tax_se": 1.88,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.75,
       "arsenal": [
@@ -18396,7 +18397,6 @@
           "whiff_per_swing": 30.4
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -18408,8 +18408,9 @@
       "stuff_plus_sea": 98.8,
       "stuff_plus_delta": -7.5,
       "stuff_plus_hh_ci95": 1.1,
-      "altitude_tax_runs_per_100": 0.43,
-      "altitude_tax_se": 1.63,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 0.73,
+      "altitude_tax_se": 2.72,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.3,
       "arsenal": [
@@ -18459,7 +18460,6 @@
           "whiff_per_swing": 23.1
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -18471,8 +18471,9 @@
       "stuff_plus_sea": 101.1,
       "stuff_plus_delta": -9.8,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": 0.99,
-      "altitude_tax_se": 1.81,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": 1.66,
+      "altitude_tax_se": 3.03,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.23,
       "arsenal": [
@@ -18522,7 +18523,6 @@
           "whiff_per_swing": 23.1
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -18534,8 +18534,9 @@
       "stuff_plus_sea": 101.2,
       "stuff_plus_delta": -9.8,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": -2.3,
-      "altitude_tax_se": 2.0,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -3.86,
+      "altitude_tax_se": 3.36,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.8,
       "arsenal": [
@@ -18585,7 +18586,6 @@
           "whiff_per_swing": 35.0
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -18597,8 +18597,9 @@
       "stuff_plus_sea": 101.5,
       "stuff_plus_delta": -10.2,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": -0.12,
-      "altitude_tax_se": 1.38,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": -0.2,
+      "altitude_tax_se": 2.32,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.75,
       "arsenal": [
@@ -18663,7 +18664,6 @@
           "whiff_per_swing": 14.3
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -18675,8 +18675,9 @@
       "stuff_plus_sea": 102.1,
       "stuff_plus_delta": -10.9,
       "stuff_plus_hh_ci95": 1.3,
-      "altitude_tax_runs_per_100": 0.74,
-      "altitude_tax_se": 1.74,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 1.23,
+      "altitude_tax_se": 2.91,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.63,
       "arsenal": [
@@ -18726,7 +18727,6 @@
           "whiff_per_swing": 26.3
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -18738,8 +18738,9 @@
       "stuff_plus_sea": 98.4,
       "stuff_plus_delta": -7.3,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": 3.72,
-      "altitude_tax_se": 1.42,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 6.24,
+      "altitude_tax_se": 2.38,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 2.16,
       "arsenal": [
@@ -18819,7 +18820,6 @@
           "whiff_per_swing": 41.2
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -18831,8 +18831,9 @@
       "stuff_plus_sea": 99.0,
       "stuff_plus_delta": -7.8,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 1.15,
-      "altitude_tax_se": 1.05,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 1.92,
+      "altitude_tax_se": 1.76,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.6,
       "arsenal": [
@@ -18897,7 +18898,6 @@
           "whiff_per_swing": 11.8
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -18909,8 +18909,9 @@
       "stuff_plus_sea": 99.9,
       "stuff_plus_delta": -8.8,
       "stuff_plus_hh_ci95": 1.5,
-      "altitude_tax_runs_per_100": 1.32,
-      "altitude_tax_se": 1.41,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 2.21,
+      "altitude_tax_se": 2.36,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.92,
       "arsenal": [
@@ -18990,7 +18991,6 @@
           "whiff_per_swing": 37.5
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -19002,8 +19002,9 @@
       "stuff_plus_sea": 101.6,
       "stuff_plus_delta": -10.6,
       "stuff_plus_hh_ci95": 1.2,
-      "altitude_tax_runs_per_100": 2.37,
-      "altitude_tax_se": 1.49,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 3.98,
+      "altitude_tax_se": 2.5,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.85,
       "arsenal": [
@@ -19038,7 +19039,6 @@
           "whiff_per_swing": 28.0
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -19050,8 +19050,9 @@
       "stuff_plus_sea": 98.7,
       "stuff_plus_delta": -7.8,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 1.06,
-      "altitude_tax_se": 1.86,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 1.78,
+      "altitude_tax_se": 3.12,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.3,
       "arsenal": [
@@ -19116,7 +19117,6 @@
           "whiff_per_swing": 16.7
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -19128,8 +19128,9 @@
       "stuff_plus_sea": 97.7,
       "stuff_plus_delta": -6.8,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": -0.43,
-      "altitude_tax_se": 1.89,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -0.72,
+      "altitude_tax_se": 3.17,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.7,
       "arsenal": [
@@ -19179,7 +19180,6 @@
           "whiff_per_swing": 42.9
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -19191,8 +19191,9 @@
       "stuff_plus_sea": 97.1,
       "stuff_plus_delta": -6.5,
       "stuff_plus_hh_ci95": 0.4,
-      "altitude_tax_runs_per_100": 1.89,
-      "altitude_tax_se": 1.21,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 3.17,
+      "altitude_tax_se": 2.03,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.55,
       "arsenal": [
@@ -19257,7 +19258,6 @@
           "whiff_per_swing": 18.8
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -19269,8 +19269,9 @@
       "stuff_plus_sea": 103.7,
       "stuff_plus_delta": -13.1,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": 0.37,
-      "altitude_tax_se": 2.84,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 0.62,
+      "altitude_tax_se": 4.76,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 4.2,
       "arsenal": [
@@ -19305,7 +19306,6 @@
           "whiff_per_swing": 35.7
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -19317,8 +19317,9 @@
       "stuff_plus_sea": 101.5,
       "stuff_plus_delta": -10.9,
       "stuff_plus_hh_ci95": 1.8,
-      "altitude_tax_runs_per_100": 0.21,
-      "altitude_tax_se": 1.87,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 0.36,
+      "altitude_tax_se": 3.13,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.77,
       "arsenal": [
@@ -19368,7 +19369,6 @@
           "whiff_per_swing": 41.7
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -19380,8 +19380,9 @@
       "stuff_plus_sea": 100.6,
       "stuff_plus_delta": -10.0,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": 0.67,
-      "altitude_tax_se": 1.09,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 1.12,
+      "altitude_tax_se": 1.83,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.37,
       "arsenal": [
@@ -19446,7 +19447,6 @@
           "whiff_per_swing": 20.0
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -19458,8 +19458,9 @@
       "stuff_plus_sea": 96.2,
       "stuff_plus_delta": -5.7,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": -1.08,
-      "altitude_tax_se": 1.88,
+      "role": "reliever",
+      "altitude_tax_runs_per_9": -1.8,
+      "altitude_tax_se": 3.15,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.45,
       "arsenal": [
@@ -19509,7 +19510,6 @@
           "whiff_per_swing": 10.0
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -19521,8 +19521,9 @@
       "stuff_plus_sea": 97.7,
       "stuff_plus_delta": -7.4,
       "stuff_plus_hh_ci95": 1.4,
-      "altitude_tax_runs_per_100": -2.01,
-      "altitude_tax_se": 2.15,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -3.38,
+      "altitude_tax_se": 3.61,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.27,
       "arsenal": [
@@ -19572,7 +19573,6 @@
           "whiff_per_swing": 58.8
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -19584,8 +19584,9 @@
       "stuff_plus_sea": 97.0,
       "stuff_plus_delta": -6.7,
       "stuff_plus_hh_ci95": 0.9,
-      "altitude_tax_runs_per_100": 1.06,
-      "altitude_tax_se": 1.62,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 1.78,
+      "altitude_tax_se": 2.71,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.18,
       "arsenal": [
@@ -19665,7 +19666,6 @@
           "whiff_per_swing": 8.7
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -19677,8 +19677,9 @@
       "stuff_plus_sea": 99.9,
       "stuff_plus_delta": -9.9,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": 2.16,
-      "altitude_tax_se": 1.28,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 3.61,
+      "altitude_tax_se": 2.14,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.93,
       "arsenal": [
@@ -19728,7 +19729,6 @@
           "whiff_per_swing": 12.5
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -19740,8 +19740,9 @@
       "stuff_plus_sea": 103.5,
       "stuff_plus_delta": -13.7,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 2.7,
-      "altitude_tax_se": 1.23,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 4.53,
+      "altitude_tax_se": 2.06,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 2.02,
       "arsenal": [
@@ -19806,7 +19807,6 @@
           "whiff_per_swing": 35.7
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -19818,8 +19818,9 @@
       "stuff_plus_sea": 99.3,
       "stuff_plus_delta": -9.3,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": -1.89,
-      "altitude_tax_se": 1.61,
+      "role": "starter",
+      "altitude_tax_runs_per_9": -3.16,
+      "altitude_tax_se": 2.7,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.83,
       "arsenal": [
@@ -19884,7 +19885,6 @@
           "whiff_per_swing": 33.3
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -19896,8 +19896,9 @@
       "stuff_plus_sea": 100.5,
       "stuff_plus_delta": -10.8,
       "stuff_plus_hh_ci95": 1.2,
-      "altitude_tax_runs_per_100": -0.99,
-      "altitude_tax_se": 2.22,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": -1.66,
+      "altitude_tax_se": 3.73,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.15,
       "arsenal": [
@@ -19962,7 +19963,6 @@
           "whiff_per_swing": 57.1
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -19974,8 +19974,9 @@
       "stuff_plus_sea": 99.0,
       "stuff_plus_delta": -9.3,
       "stuff_plus_hh_ci95": 1.2,
-      "altitude_tax_runs_per_100": 3.39,
-      "altitude_tax_se": 2.29,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 5.67,
+      "altitude_tax_se": 3.84,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.9,
       "arsenal": [
@@ -20010,7 +20011,6 @@
           "whiff_per_swing": 16.7
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -20022,8 +20022,9 @@
       "stuff_plus_sea": 102.7,
       "stuff_plus_delta": -13.1,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 4.33,
-      "altitude_tax_se": 1.76,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 7.25,
+      "altitude_tax_se": 2.94,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 3.7,
       "arsenal": [
@@ -20088,7 +20089,6 @@
           "whiff_per_swing": 13.3
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -20100,8 +20100,9 @@
       "stuff_plus_sea": 101.2,
       "stuff_plus_delta": -11.7,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 1.83,
-      "altitude_tax_se": 1.64,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 3.06,
+      "altitude_tax_se": 2.74,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.3,
       "arsenal": [
@@ -20166,7 +20167,6 @@
           "whiff_per_swing": 21.4
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -20178,8 +20178,9 @@
       "stuff_plus_sea": 98.9,
       "stuff_plus_delta": -9.5,
       "stuff_plus_hh_ci95": 0.5,
-      "altitude_tax_runs_per_100": 0.07,
-      "altitude_tax_se": 0.98,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 0.11,
+      "altitude_tax_se": 1.65,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.64,
       "arsenal": [
@@ -20259,7 +20260,6 @@
           "whiff_per_swing": 44.2
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -20271,8 +20271,9 @@
       "stuff_plus_sea": 98.4,
       "stuff_plus_delta": -9.3,
       "stuff_plus_hh_ci95": 0.8,
-      "altitude_tax_runs_per_100": 2.48,
-      "altitude_tax_se": 2.0,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 4.15,
+      "altitude_tax_se": 3.34,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.3,
       "arsenal": [
@@ -20337,7 +20338,6 @@
           "whiff_per_swing": 14.3
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -20349,8 +20349,9 @@
       "stuff_plus_sea": 99.1,
       "stuff_plus_delta": -10.0,
       "stuff_plus_hh_ci95": 1.0,
-      "altitude_tax_runs_per_100": 5.51,
-      "altitude_tax_se": 2.4,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 9.23,
+      "altitude_tax_se": 4.02,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 3.0,
       "arsenal": [
@@ -20400,7 +20401,6 @@
           "whiff_per_swing": 22.2
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -20412,8 +20412,9 @@
       "stuff_plus_sea": 98.6,
       "stuff_plus_delta": -9.9,
       "stuff_plus_hh_ci95": 0.5,
-      "altitude_tax_runs_per_100": 0.51,
-      "altitude_tax_se": 1.52,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 0.86,
+      "altitude_tax_se": 2.54,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 1.75,
       "arsenal": [
@@ -20508,7 +20509,6 @@
           "whiff_per_swing": 23.1
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     },
     {
@@ -20520,8 +20520,9 @@
       "stuff_plus_sea": 101.4,
       "stuff_plus_delta": -12.7,
       "stuff_plus_hh_ci95": 0.5,
-      "altitude_tax_runs_per_100": 4.27,
-      "altitude_tax_se": 1.36,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 7.16,
+      "altitude_tax_se": 2.28,
       "altitude_tax_significant": true,
       "mean_ivb_loss_in": 3.55,
       "arsenal": [
@@ -20571,7 +20572,6 @@
           "whiff_per_swing": 11.5
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -20583,8 +20583,9 @@
       "stuff_plus_sea": 101.4,
       "stuff_plus_delta": -12.8,
       "stuff_plus_hh_ci95": 0.5,
-      "altitude_tax_runs_per_100": 0.27,
-      "altitude_tax_se": 1.12,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 0.45,
+      "altitude_tax_se": 1.87,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 2.54,
       "arsenal": [
@@ -20664,7 +20665,6 @@
           "whiff_per_swing": 35.1
         }
       ],
-      "altitude_seal": "Resistente",
       "altitude_trap": false
     },
     {
@@ -20676,8 +20676,9 @@
       "stuff_plus_sea": 98.6,
       "stuff_plus_delta": -10.0,
       "stuff_plus_hh_ci95": 0.6,
-      "altitude_tax_runs_per_100": 1.72,
-      "altitude_tax_se": 1.28,
+      "role": "starter",
+      "altitude_tax_runs_per_9": 2.88,
+      "altitude_tax_se": 2.15,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 4.08,
       "arsenal": [
@@ -20757,7 +20758,6 @@
           "whiff_per_swing": 0.0
         }
       ],
-      "altitude_seal": "Fragil",
       "altitude_trap": false
     },
     {
@@ -20769,8 +20769,9 @@
       "stuff_plus_sea": 103.2,
       "stuff_plus_delta": -14.9,
       "stuff_plus_hh_ci95": 0.7,
-      "altitude_tax_runs_per_100": 0.56,
-      "altitude_tax_se": 1.84,
+      "role": "late_inning_reliever",
+      "altitude_tax_runs_per_9": 0.94,
+      "altitude_tax_se": 3.09,
       "altitude_tax_significant": false,
       "mean_ivb_loss_in": 3.92,
       "arsenal": [
@@ -20835,7 +20836,6 @@
           "whiff_per_swing": 27.3
         }
       ],
-      "altitude_seal": "Neutral",
       "altitude_trap": false
     }
   ],
