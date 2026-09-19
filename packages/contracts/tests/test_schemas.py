@@ -5,7 +5,13 @@ import pytest
 
 from contracts import fixtures
 from contracts.mapping import VENDOR_TO_CANONICAL, normalize_columns
-from contracts.schemas import MIN_PITCHES_FOR_SCORE, PitcherAggregates, PitchScores
+from contracts.schemas import (
+    MIN_APPEARANCES_FOR_ROLE,
+    MIN_PITCHES_FOR_SCORE,
+    ROLES,
+    PitcherAggregates,
+    PitchScores,
+)
 
 
 def test_a_well_formed_delivery_is_accepted():
@@ -56,3 +62,26 @@ def test_the_glossary_covers_every_vendor_name_we_rename():
 def test_minimum_sample_is_the_documented_product_rule():
     # docs/07 section 1.2. If this number moves, the UI copy moves with it.
     assert MIN_PITCHES_FOR_SCORE == 100
+
+
+def test_a_role_outside_the_enum_is_rejected():
+    with pytest.raises(pa_errors.SchemaError):
+        PitcherAggregates.validate(fixtures.invalid_role())
+
+
+def test_closer_is_not_a_role_we_can_derive():
+    # There is no score column in the dataset, so a save situation cannot be
+    # identified. Naming the role anyway would be asserting what we measured
+    # nothing about.
+    assert "closer" not in ROLES
+    assert "late_inning_reliever" in ROLES
+
+
+def test_role_may_be_null_for_pitchers_with_too_few_appearances():
+    df = fixtures.valid_pitcher_aggregates()
+    df.loc[0, "role"] = None
+    PitcherAggregates.validate(df)
+
+
+def test_minimum_appearances_threshold_is_declared():
+    assert MIN_APPEARANCES_FOR_ROLE == 5

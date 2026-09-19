@@ -15,6 +15,8 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
+from contracts.schemas import ROLES
+
 FIXTURE_SEED = 7
 FIXTURE_MODEL_VERSION = "1.2.0+a3f9c1e"
 
@@ -55,7 +57,8 @@ def valid_pitcher_aggregates(n: int = 60, seed: int = FIXTURE_SEED) -> pd.DataFr
             "stuff_plus_hh_ci95": float(rng.uniform(1.0, 6.0)),
             "stuff_plus_sea": float(np.clip(rng.normal(100.0, 10.0), 40.0, 160.0)),
             "stuff_plus_sea_ci95": float(rng.uniform(1.0, 6.0)),
-            "altitude_tax_per_100": float(rng.normal(0.8, 0.5)),
+            "role": str(rng.choice(ROLES)),
+            "altitude_tax_per_9": float(rng.normal(1.8, 0.9)),
             "altitude_tax_se": float(rng.uniform(0.1, 0.4)),
             "altitude_tax_significant": bool(rng.integers(0, 2)),
             "arsenal": [{"pitch_type": "Four-Seam", "usage": 0.55}],
@@ -106,3 +109,14 @@ def vendor_named_columns(seed: int = FIXTURE_SEED) -> pd.DataFrame:
     `contracts.mapping` exists to do.
     """
     return valid_pitch_scores(seed=seed).rename(columns={"pitch_id": "PitchUID"})
+
+
+def invalid_role(seed: int = FIXTURE_SEED) -> pd.DataFrame:
+    """Aggregates claiming a role the data cannot support. Rejected.
+
+    "closer" is the realistic mistake here: it is the word everyone reaches
+    for, and the dataset has no score column to justify it.
+    """
+    df = valid_pitcher_aggregates(seed=seed)
+    df.loc[0, "role"] = "closer"
+    return df

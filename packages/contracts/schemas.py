@@ -37,6 +37,15 @@ DENSITY_INDEX_MIN, DENSITY_INDEX_MAX = 0.70, 1.05
 
 ENVIRONMENTS = ["sea_level", "medium_altitude", "extreme_altitude"]
 
+# Never "closer". A closer is defined by entering a save situation, and the
+# dataset carries no score, so the role cannot be derived - only asserted.
+# What the data does support is "came in late", which is what this says.
+ROLES = ["starter", "reliever", "late_inning_reliever"]
+
+# Minimum appearances before a role is assigned at all. Below this the entry
+# inning is one or two games of noise.
+MIN_APPEARANCES_FOR_ROLE = 5
+
 
 class PitchScores(pa.DataFrameModel):
     """Contract A - one row per scored pitch.
@@ -90,13 +99,30 @@ class PitcherAggregates(pa.DataFrameModel):
 
     n_pitches: Series[int] = pa.Field(ge=0, nullable=False)
 
+    # Null below MIN_APPEARANCES_FOR_ROLE. Comparing a starter to a reliever on
+    # average Stuff+ compares two different jobs, so the deployment board needs
+    # this to group before it ranks.
+    role: Series[str] = pa.Field(isin=ROLES, nullable=True)
+
     stuff_plus_hh: Series[float] = pa.Field(ge=STUFF_PLUS_MIN, le=STUFF_PLUS_MAX, nullable=True)
     stuff_plus_hh_ci95: Series[float] = pa.Field(ge=0.0, nullable=True)
     stuff_plus_sea: Series[float] = pa.Field(ge=STUFF_PLUS_MIN, le=STUFF_PLUS_MAX, nullable=True)
     stuff_plus_sea_ci95: Series[float] = pa.Field(ge=0.0, nullable=True)
 
-    altitude_tax_per_100: Series[float] = pa.Field(nullable=True)
+    # Extra runs conceded per NINE INNINGS at altitude. Per nine and not per
+    # hundred pitches because nine innings is the unit baseball already reads;
+    # "runs per 100 pitches" is a unit nobody thinks in and it cost us a
+    # conversation with the data team to discover that.
+    #
+    # Conservative by construction: it is built from per-pitch linear weights,
+    # which price the outcome of each pitch but never see sequencing. Measured
+    # against actual runs allowed it recovers +1.77 of the observed +2.70 RA/9,
+    # about 65%. Report it as a floor on the effect, never as the whole of it.
+    altitude_tax_per_9: Series[float] = pa.Field(nullable=True)
     altitude_tax_se: Series[float] = pa.Field(gt=0.0, nullable=True)
+    # False for 246 of 286 pitchers in the v0 cohort. Product MUST render
+    # "no concluyente" rather than a number when this is False - the same
+    # instinct as MIN_PITCHES_FOR_SCORE, applied to a different statistic.
     altitude_tax_significant: Series[bool] = pa.Field(nullable=False)
 
     # List of per-pitch-type dicts: usage, velo, ivb, hb, spin, stuff_plus, whiff.
