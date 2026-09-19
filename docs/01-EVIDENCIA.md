@@ -189,6 +189,38 @@ Una diferencia de 0.07" entre un modelo calibrado y las leyes de la aerodinámic
 
 Tres temporadas independientes, mismo signo, misma magnitud. El entorno ofensivo de la altitud no es ruido de una temporada.
 
+### 8.1 En la unidad que el béisbol lee
+
+Carreras por 100 lanzamientos es una unidad de trabajo, no de conversación. Las mismas carreras, contadas contra entradas reales (`OutsOnPlay`), en las 35,000 entradas del dataset:
+
+| Entorno | Entradas | RA/9 | Lanzamientos por entrada |
+|---|---|---|---|
+| Nivel del mar | 16,809 | **4.84** | 17.41 |
+| Altitud media | 8,405 | 6.82 | 18.42 |
+| Altitud extrema | 9,752 | **7.55** | 18.62 |
+
+**+2.71 carreras por cada 9 entradas. +56%.** Ese es el caso de negocio en una línea, y es una cifra observada — no sale de ningún modelo.
+
+> **Es RA/9, no ERA, y la distinción importa.** Separar carreras limpias de sucias necesita atribución de error que el dataset no trae. Ante un jurado de sabermetría, la precisión del nombre vale más que la familiaridad del nombre equivocado.
+
+### 8.2 Lo que el Impuesto de Altitud captura, y lo que no
+
+El Impuesto se construye con pesos lineales por lanzamiento: valora el resultado de cada pitch, pero no ve el **secuenciamiento** —más corredores en base hacen que cada hit valga más—. Medido contra las carreras reales:
+
+| | Carreras por 9 entradas |
+|---|---|
+| Impuesto modelado, promedio de la cohorte | +1.77 |
+| Diferencia observada de RA/9 | **+2.71** |
+| Fracción del efecto capturada | **65%** |
+
+Se reporta como **cota inferior** del efecto, y se dice así. Un estimador conservador que se presenta como conservador es un activo; el mismo estimador presentado como completo es una cifra que el jurado desarma.
+
+### 8.3 El Impuesto individual casi nunca es significativo
+
+De los 286 lanzadores de la cohorte, **solo 40 tienen un Impuesto significativo** al 95%. Para los otros 246 la banda cruza el cero.
+
+Es sólido a nivel de liga y débil a nivel de individuo, y las dos cosas son ciertas a la vez. **El producto muestra "no concluyente" en esos 246**, por la misma razón por la que calla debajo de 100 lanzamientos: es preferible callar que aparentar precisión que no se tiene.
+
 ---
 
 ## 9. Qué target debe modelar el equipo de datos

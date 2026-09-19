@@ -34,12 +34,12 @@ método, y pandas 1.5 ni siquiera acompaña bien a Python 3.12.
 Desde aquí, `uv.lock` hace la reproducción exacta: dos corridas consecutivas del
 pipeline dan salidas idénticas byte a byte, ya verificado.
 
-## Consecuencia que hay que atender
+## Consecuencia atendida el 18 de septiembre
 
-`docs/00-PRODUCTO.md` §Trampa de Altitud y `docs/02-DESIGN-BRIEF.md` citan
-**"47 de 286"**. La corrida que respalda ese número ya no existe; la que existe
-dice 44. Por la regla 1 de `CONVENTIONS.md` §8, la cifra publicada tiene que
-alcanzar a su corrida.
+`docs/00-PRODUCTO.md` §Trampa de Altitud y `docs/02-DESIGN-BRIEF.md` citaban
+**"47 de 286"**. La corrida que respaldaba ese número ya no existe; la que existe
+dice 44. **Corregido** en ambos documentos, junto con los cambios de
+[ADR 0003](0003-metricas-de-producto.md).
 
 Y el hallazgo de fondo, que es más importante que el número: **una clasificación
 con umbral duro mueve al 5% de la cohorte ante un cambio de librería.** El

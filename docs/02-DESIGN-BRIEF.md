@@ -31,7 +31,7 @@ Lo que **no** es: gradientes, glassmorphism, ilustraciones deportivas genéricas
 | **Rojo Diablos** | Acento primario, el equipo. Usar con disciplina: acciones, identidad, el dato más importante de la pantalla. Nunca como fondo amplio. |
 | **Escala de altitud** | El gradiente conceptual del producto: de nivel del mar a 2,240 m. Es el sistema cromático que codifica entorno en toda la app. Sea level y altitud deben ser distinguibles de un vistazo y consistentes en las 6 pantallas. |
 | **Neutros** | La mayor parte de la interfaz. Superficies, tablas, texto. Alto contraste, poca saturación. |
-| **Semánticos** | `Resistente` / `Neutral` / `Frágil` y la bandera de Trampa. Deben leerse sin depender solo del color (accesibilidad). |
+| **Semánticos** | La bandera de Trampa, el signo del Impuesto y el estado *no concluyente*. Deben leerse sin depender solo del color (accesibilidad). |
 
 Requisito: funcionar en **tema claro y oscuro**. La presentación puede ser en proyector, sala iluminada o pantalla personal.
 
@@ -58,13 +58,13 @@ Tabla densa y ordenable, 286 pitchers reales.
 | **Stuff+ HH** | 92.0 ± 0.7 | El número principal. Siempre con su banda |
 | Stuff+ nivel del mar | 111.1 | La referencia engañosa |
 | **Δ** | −19.1 | Codificado en la escala de altitud |
-| **Impuesto de Altitud** | +3.54 ± 1.30 | Carreras/100 pitches. Marcar significancia |
-| **Sello** | `Frágil` | 95 Resistente · 96 Neutral · 95 Frágil |
-| **Trampa** | 🚩 | 47 de 286 |
+| **Impuesto de Altitud** | +5.93 ± 2.18 | Carreras por 9 entradas. **Solo 40 de 286 son significativos; los otros 246 dicen *no concluyente*, no un número** |
+| **Rol** | `Abridor` | Inferido de la entrada de ingreso. Agrupa antes de rankear |
+| **Trampa** | 🚩 | 44 de 286 |
 
-Rangos reales: Stuff+ HH **87.8 – 107.1** · Impuesto **−5.69 a +5.67**.
+Rangos reales: Stuff+ HH **87.8 – 107.1** · Impuesto **−9.53 a +9.50** carreras/9 entradas.
 
-Controles: filtro por mano, sello, tipo de pitch dominante; toggle **"ordenar por Stuff+ nivel del mar"** — que produce un orden visiblemente distinto. **Ese contraste es la demostración del producto en un solo clic.**
+Controles: filtro por mano, rol, tipo de pitch dominante; toggle **"ordenar por Stuff+ nivel del mar"** — que produce un orden visiblemente distinto. **Ese contraste es la demostración del producto en un solo clic.**
 
 ---
 
@@ -75,8 +75,8 @@ Controles: filtro por mano, sello, tipo de pitch dominante; toggle **"ordenar po
 Caso real, `pitcher_00069` — el ejemplo canónico:
 
 - Stuff+ HH **92.0 ± 0.7** · nivel del mar **111.1** · Δ **−19.1**
-- Impuesto de Altitud **+3.54 ± 1.30 carreras/100 pitches** (significativo)
-- Sello **Frágil** · 🚩 **Trampa de Altitud**
+- Impuesto de Altitud **+5.93 ± 2.18 carreras por 9 entradas** (significativo — es de los 40 que sí lo son)
+- Rol **Abridor** · 🚩 **Trampa de Altitud**
 - Pérdida media de IVB: **4.27"** · 540 pitches en altitud, 520 a nivel del mar
 
 Arsenal (datos reales):
@@ -122,7 +122,13 @@ Salida **lado a lado, siempre**: Harp Helú vs nivel del mar. Stuff+, movimiento
 
 **Pregunta:** *¿Qué le arreglo a este pitcher?*
 
-Recomendaciones priorizadas y cuantificadas en Stuff+ HH **y en carreras**. Cada una con su mecanismo físico. Deriva del contraste entre el arsenal actual y los perfiles resistentes de la cohorte.
+**No son tarjetas.** Son dos o tres frases, cuantificadas, con su mecanismo físico — porque un pitching coach no consume tarjetas, escucha una razón y la repite en el bullpen. La plantilla es fija:
+
+> *Qué se degrada* — cuál lanzamiento pierde más y cuántas pulgadas.
+> *Qué aguanta* — cuál conserva su forma y por qué físicamente.
+> *Qué cambia* — qué reparto de uso lo compensa, en puntos de Stuff+ HH y en carreras por 9 entradas.
+
+Deriva del contraste entre el arsenal actual y los perfiles resistentes de la cohorte.
 
 Ejemplo real del dataset: `pitcher_00566` sobrevive la altitud (Δ −5.2) apoyándose en un slider al **45.2% de uso**, mientras `pitcher_00069` colapsa (Δ −19.1) con un four-seam al **66.5%**. Ambos parten de Stuff+ 111.1 a nivel del mar.
 
@@ -130,9 +136,23 @@ Ejemplo real del dataset: `pitcher_00566` sobrevive la altitud (Δ −5.2) apoy�
 
 ### P6 · Tablero de Despliegue
 
-**Pregunta:** *¿Quién abre en casa?*
+**Pregunta:** *¿Quiénes son los mejores para el estadio donde se juega?*
 
-Roster ordenado por Stuff+ HH vs Stuff+ de carretera. Vista de matchup de bullpen. Es el módulo de menor prioridad — puede quedar como mockup de alta fidelidad.
+Selector de entorno → el roster ordenado por Stuff+ de **ese** estadio, **agrupado por rol**: abridor, relevista, relevista de entradas finales.
+
+**No sugiere orden de pitcheo.** Esa decisión es del mánager, entra contexto que no modelamos, y automatizarla es la forma más rápida de que deje de usarse la herramienta.
+
+El rol se infiere de la entrada en que el lanzador entra al juego — una regla medida sobre 22,569 apariciones, no un modelo: 439 lanzadores abren menos del 5% de las veces, 153 más del 80%, y solo 59 quedan en la zona ambigua. **No hay categoría "cerrador"**: se define por situación de salvamento y el dataset no trae marcador.
+
+Lo que justifica la pantalla: la correlación de orden entre casa y gira es **0.700**, el cambio mediano es de **38 posiciones**, y **6 de los 10 mejores en casa no están entre los 10 mejores de gira**.
+
+---
+
+### Lo que **no** es pantalla: el entorno de la liga
+
+El contexto de liga —RA/9 por entorno, Índice de Densidad por estadio, el efecto replicado en tres temporadas— **vive en el documento técnico y en el deck, no en la app.** Es material que se lee una vez para entender la tesis; no es una consulta que alguien repita, y una pantalla que nadie vuelve a abrir le resta a las que sí se usan.
+
+La excepción es la **barra de Índice de Densidad**, que se queda como componente transversal: ahí no es contexto, es la procedencia del número que se está viendo.
 
 ---
 
@@ -143,8 +163,9 @@ Roster ordenado por Stuff+ HH vs Stuff+ de carretera. Vista de matchup de bullpe
 | **KPI con banda** | Un número nunca aparece solo. Siempre `valor ± banda`. Es principio de producto, no adorno |
 | **Toggle de entorno** | Harp Helú ⟷ nivel del mar. Mismo control, mismo lugar, en toda la app |
 | **Mapa de movimiento** | El gráfico insignia. Ambos entornos, codificación constante |
-| **Chip de Sello** | `Resistente` / `Neutral` / `Frágil` — legible sin depender del color |
+| **Chip de Rol** | `Abridor` / `Relevista` / `Relevista de entradas finales` — legible sin depender del color |
 | **Bandera de Trampa** | Alerta visual de alta prioridad |
+| **Estado "no concluyente"** | Para toda cifra sin significancia. Es el cuarto estado de dato, junto a cargando, vacío y error |
 | **Ficha Técnica** | Panel de explicación: features + física, en lenguaje de coach |
 | **Barra de Índice de Densidad** | Elemento de marca. Muestra el aire medido del juego/entorno |
 
@@ -168,7 +189,7 @@ Secuencia propuesta:
 
 Un pitcher, una decisión. Lo que el director deportivo se lleva de la sala.
 
-Contenido: identidad · Stuff+ HH con banda · Impuesto de Altitud en carreras · Sello · mapa de movimiento sea/altitud · tabla de arsenal · **una recomendación explícita** (`Fichar` / `Fichar con reservas` / `No fichar`) con su justificación en dos líneas.
+Contenido: identidad · rol · Stuff+ HH con banda · Impuesto de Altitud en carreras por 9 entradas · mapa de movimiento sea/altitud · tabla de arsenal · **una recomendación explícita** (`Fichar` / `Fichar con reservas` / `No fichar`) con su justificación en dos líneas.
 
 ---
 
@@ -186,11 +207,13 @@ Contenido: identidad · Stuff+ HH con banda · Impuesto de Altitud en carreras �
 
 ```
 analysis/outputs/mockup_data.json
-  pitchers[]        286 cards reales con arsenal, Stuff+, impuesto, sello, trampa
+  pitchers[]        286 cards reales con arsenal, Stuff+, impuesto/9, rol, trampa
   pitch_profiles{}  niveles y deltas por tipo de pitch y entorno
   density{}         índice de densidad por entorno
 
 analysis/outputs/evidence.json
+  run_environment{} RA/9 observado por entorno: 4.84 -> 7.55 (+56%)
+  roles{}           distribucion de roles inferidos
   within_pitcher{}  efecto within-pitcher por tipo de pitch
   translator{}      métricas de holdout del Traductor
   hypotheses{}      veredicto sobre H1–H4

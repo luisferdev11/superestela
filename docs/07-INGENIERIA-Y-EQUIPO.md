@@ -38,9 +38,11 @@ Lo que datos entrega, producto consume. Formato parquet, validado con Pandera en
 |---|---|
 | `pitcher_id`, `season`, `environment` | Llave compuesta |
 | `n_pitches` | Para decidir si se muestra o se suprime por muestra insuficiente |
+| `role` | `starter` / `reliever` / `late_inning_reliever`. Nulo debajo de 5 apariciones. **Nunca `closer`:** se define por situación de salvamento y no hay marcador en el dataset |
 | `stuff_plus_hh`, `stuff_plus_hh_ci95` | |
 | `stuff_plus_sea`, `stuff_plus_sea_ci95` | |
-| `altitude_tax_per_100`, `altitude_tax_se`, `altitude_tax_significant` | |
+| `altitude_tax_per_9`, `altitude_tax_se` | Carreras por **9 entradas**, no por 100 lanzamientos. Cota inferior: los pesos lineales no ven secuenciamiento y capturan ~65% del efecto observado |
+| `altitude_tax_significant` | **Obligatorio de respetar.** Falso en 246 de 286; ahí el producto muestra *no concluyente*, no un número |
 | `arsenal[]` | Por tipo: uso, velo, ivb, hb, spin, stuff_plus, whiff |
 
 **Regla de producto:** por debajo de `n_pitches = 100` no se muestra score; se muestra "muestra insuficiente". Es preferible callar que mentir con una banda enorme.

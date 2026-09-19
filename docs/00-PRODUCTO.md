@@ -25,7 +25,7 @@ Correlación entre el ride (IVB) de un fastball a nivel del mar y cuánto pierde
 
 Y es un juego con *superestrella*: la superestrella es el lanzador que el mercado persigue y que peor sobrevive aquí. Una letra de diferencia cambia la tesis — **no persigues a la estrella, lees la estela.**
 
-Forma corta: **Estela**. Las métricas firmadas no dependen del nombre: Stuff+ HH, Impuesto de Altitud, Índice de Densidad, Sello de Altitud y Trampa de Altitud se mantienen.
+Forma corta: **Estela**. Las métricas firmadas no dependen del nombre: Stuff+ HH, Impuesto de Altitud, Índice de Densidad y Trampa de Altitud se mantienen.
 
 ---
 
@@ -73,10 +73,13 @@ Son activos de marca tanto como métricas. Aparecen con nombre propio en app, de
 | Métrica | Definición | Usuario |
 |---|---|---|
 | **Stuff+ HH** | Stuff+ calibrado a las condiciones del Harp Helú. 100 = pitch promedio de la LMB. | Pitching coach |
-| **Impuesto de Altitud** | Carreras adicionales concedidas por cada 100 pitches al mover a este pitcher a CDMX. Con error estándar y prueba de significancia. | Director deportivo |
+| **Impuesto de Altitud** | Carreras adicionales concedidas **por cada 9 entradas** al mover a este pitcher a CDMX. Con error estándar; donde no alcanza significancia se muestra *no concluyente*, nunca un número. | Director deportivo |
 | **Índice de Densidad** | Densidad del aire **medida** desde la trayectoria de la bola, juego a juego. Sea level = 1.000. | Credibilidad científica |
-| **Sello de Altitud** | `Resistente` / `Neutral` / `Frágil`, por terciles del Impuesto de Altitud. | Scout — decisión en 3 segundos |
-| **Trampa de Altitud** | Bandera roja: se ve fuerte a nivel del mar, colapsa en CDMX. **47 de 286 pitchers** de la cohorte. | Director deportivo |
+| **Trampa de Altitud** | Bandera roja: se ve fuerte a nivel del mar, colapsa en CDMX. **44 de 286 pitchers** de la cohorte. | Director deportivo |
+
+> **Por qué el Impuesto va en carreras por 9 entradas.** Nueve entradas es la unidad que el béisbol ya lee; *por 100 lanzamientos* no se la sabe nadie. La conversión usa los 18.63 lanzamientos por entrada medidos en altitud, no un número redondo.
+>
+> **Y por qué es un piso, no el efecto completo.** El Impuesto se construye con pesos lineales por lanzamiento, que valoran el resultado de cada pitch pero nunca ven el secuenciamiento. Contra las carreras realmente admitidas recupera **+1.77 de los +2.70 RA/9 observados**, cerca del 65%. Se reporta como cota inferior y se dice así.
 
 > **Nota de escala.** Stuff+ HH se normaliza sobre toda la liga (ambos entornos), así que los pitches en altitud promedian **por debajo de 100 por construcción**. Esa brecha *es* el efecto altitud, no un error de calibración. El mismo lanzador puntúa en promedio **8.6 puntos menos** en casa que a nivel del mar.
 
@@ -88,16 +91,20 @@ Son activos de marca tanto como métricas. Aparecen con nombre propio en app, de
 Entra el arsenal de un pitcher medido en cualquier parte → sale su forma proyectada y su Stuff+ HH, con banda de confianza. Cubre el entregable 3 del reto ("cómo perfilar un prospecto o agente libre").
 
 ### 2. Radar de Fichajes
-Ranking de candidatos por valor proyectado **en CDMX**, no por sus números crudos. Columnas de Impuesto de Altitud, Sello y bandera de Trampa. Ordena por lo que importa aquí.
+Ranking de candidatos por valor proyectado **en CDMX**, no por sus números crudos. Columnas de Stuff+ HH, Stuff+ a nivel del mar, Δ, Impuesto de Altitud y bandera de Trampa. Ordena por lo que importa aquí.
 
 ### 3. Simulador de Pitch *(entregable 4 obligatorio)*
 Sliders de velocidad / IVB / HB / spin / extensión → Stuff+ lado a lado **Harp Helú vs nivel del mar**, más el mapa de movimiento. Es lo que pide el reto, ejecutado con calidad de producto real.
 
 ### 4. Plan de Desarrollo
-Para un pitcher ya en roster: qué pitch agregar, soltar o reformar, cuantificado en Stuff+ HH y en carreras.
+Para un pitcher ya en roster: qué lanzamiento se degrada más, cuál aguanta, y qué cambio de uso lo compensa — cuantificado en Stuff+ HH y en carreras, **en dos o tres frases con su mecanismo físico**. No en tarjetas: un coach no lee tarjetas, escucha una razón. Cubre el entregable 3 del reto junto con el Traductor.
 
 ### 5. Tablero de Despliegue
-Quién abre en casa vs carretera. Matchups de bullpen en altitud.
+Selector de estadio → el roster ordenado por Stuff+ de **ese** entorno, agrupado por rol (abridor / relevista / relevista de entradas finales). **No sugiere orden de pitcheo**: esa decisión es del mánager y no es nuestra para automatizar.
+
+Que el tablero exista lo justifica el dato: la correlación de orden entre casa y gira es **0.700**, el cambio mediano es de **38 posiciones**, y **6 de los 10 mejores en casa no están entre los 10 mejores de gira**.
+
+El rol se infiere de la entrada en que el lanzador entra al juego — una regla medida, no un modelo. **No incluye "cerrador":** un cerrador se define por entrar en situación de salvamento y el dataset no trae marcador.
 
 ### 6. Ficha Técnica *(transversal)*
 Cada score viene con su explicación: contribución por feature (SHAP) **y la razón física**. Un pitching coach no actúa sobre una caja negra.
@@ -133,7 +140,7 @@ Cada score viene con su explicación: contribución por feature (SHAP) **y la ra
 
 Es *Moneyball* con una variable física que ningún otro club de la liga está modelando. La ventaja dura mientras nadie más la construya.
 
-**Traducción a dinero.** Un delta de Stuff+ no mueve a un director deportivo; "este fichaje concede 3.7 carreras extra por cada 100 pitches en casa" sí. El Impuesto de Altitud está expresado en carreras precisamente para poder convertirlo a valor de contrato.
+**Traducción a dinero.** Un delta de Stuff+ no mueve a un director deportivo; "este fichaje concede 6.3 carreras extra por cada 9 entradas en casa" sí. El Impuesto de Altitud está expresado en carreras precisamente para poder convertirlo a valor de contrato.
 
 ---
 
