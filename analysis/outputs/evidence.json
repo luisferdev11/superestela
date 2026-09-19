@@ -811,6 +811,33 @@
       }
     }
   },
+  "run_environment": {
+    "No Altitude": {
+      "pitches": 292657,
+      "innings": 16809.0,
+      "runs": 9045,
+      "ra9": 4.84,
+      "pitches_per_inning": 17.41
+    },
+    "Medium Altitude": {
+      "pitches": 154825,
+      "innings": 8404.7,
+      "runs": 6373,
+      "ra9": 6.82,
+      "pitches_per_inning": 18.42
+    },
+    "Extreme Altitude": {
+      "pitches": 181544,
+      "innings": 9752.3,
+      "runs": 8178,
+      "ra9": 7.55,
+      "pitches_per_inning": 18.62
+    },
+    "altitude_effect": {
+      "ra9_delta": 2.71,
+      "ra9_pct": 56.0
+    }
+  },
   "translator": {
     "magnus_ratio_measured": 0.7543,
     "by_pitch": {
@@ -949,10 +976,21 @@
     "oof_r2": 0.00283,
     "note": "v0 baseline for prototype realism - not the final model"
   },
+  "roles": {
+    "n_classified": 786,
+    "distribution": {
+      "late_inning_reliever": 353,
+      "starter": 218,
+      "reliever": 215
+    },
+    "starter_first_inning_share_ge": 0.5,
+    "late_inning_entry_ge": 7
+  },
   "cohort": {
-    "seal_thresholds_runs_per_100": {
-      "resistente_max": 0.37,
-      "fragil_min": 1.69
+    "altitude_tax_runs_per_9": {
+      "mean": 1.77,
+      "median": 1.67,
+      "n_significant": 40
     },
     "n_cards": 286,
     "n_traps": 44

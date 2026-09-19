@@ -29,6 +29,12 @@ import pandas as pd
 from sklearn.ensemble import HistGradientBoostingRegressor
 from sklearn.model_selection import GroupKFold
 
+from models.features.role import (
+    LATE_INNING_ENTRY,
+    STARTER_FIRST_INNING_SHARE,
+    classify_roles,
+)
+
 warnings.filterwarnings("ignore")
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -113,7 +119,9 @@ def load():
         "is_batted",
         "home_run",
         "is_hit_by_pitch",
+        "Inning",
         "Outs",
+        "OutsOnPlay",
         "Balls",
         "Strikes",
         "RunsScored",
@@ -410,6 +418,40 @@ def league_environment(df):
     return out
 
 
+def run_environment(df):
+    """Runs actually allowed per nine innings, by environment.
+
+    The league-level business case. Unlike the Altitude Tax, which prices each
+    pitch with linear weights, this counts the runs that actually crossed the
+    plate - so it includes sequencing, which is where the tax loses about a
+    third of the effect.
+
+    Also returns pitches per inning, which is what converts a per-pitch
+    quantity into the per-nine-innings unit baseball reads.
+    """
+    out = {}
+    for lvl in [SEA, MED, EXT]:
+        d = df[df.altitude_category == lvl]
+        if not len(d):
+            continue
+        innings = float(d.OutsOnPlay.sum()) / 3
+        if innings <= 0:
+            continue
+        out[lvl] = {
+            "pitches": len(d),
+            "innings": round(innings, 1),
+            "runs": int(d.RunsScored.sum()),
+            "ra9": round(9 * float(d.RunsScored.sum()) / innings, 2),
+            "pitches_per_inning": round(len(d) / innings, 2),
+        }
+    if SEA in out and EXT in out:
+        out["altitude_effect"] = {
+            "ra9_delta": round(out[EXT]["ra9"] - out[SEA]["ra9"], 2),
+            "ra9_pct": round(100 * (out[EXT]["ra9"] / out[SEA]["ra9"] - 1), 1),
+        }
+    return out
+
+
 # --------------------------------------------------------------------------
 # 5. Altitude Translator - validated with a PITCHER HOLDOUT
 # --------------------------------------------------------------------------
@@ -560,7 +602,7 @@ def stuff_plus_v0(df, seed=7):
 # --------------------------------------------------------------------------
 # 7. Mockup data: real pitcher rows for the prototype
 # --------------------------------------------------------------------------
-def mockup(d, df_phys):
+def mockup(d, df_phys, roles=None, pitches_per_inning=None):
     """Pitcher-level cards with Stuff+ HH, sea-level Stuff+ and Altitude Tax.
 
     Scale note: stuff_plus_v0 is normalised across the WHOLE league (both
@@ -583,8 +625,12 @@ def mockup(d, df_phys):
         ci = 1.96 * se
         # Altitude Tax: extra runs conceded per 100 pitches at altitude,
         # with a standard error from the two independent sample means.
-        se_tax = 100 * np.sqrt(float(e.rv.var()) / len(e) + float(s_.rv.var()) / len(s_))
-        tax = 100 * (rv_hh - rv_sea)
+        # Per NINE INNINGS, not per hundred pitches: nine innings is the unit
+        # baseball already reads. The conversion uses the pitches per inning
+        # measured in this very environment, not a round number.
+        per_9 = 9 * pitches_per_inning
+        se_tax = per_9 * np.sqrt(float(e.rv.var()) / len(e) + float(s_.rv.var()) / len(s_))
+        tax = per_9 * (rv_hh - rv_sea)
         arsenal = []
         for pt, g in e.groupby("AutoPitchType"):
             if len(g) < 25:
@@ -629,31 +675,29 @@ def mockup(d, df_phys):
                 "stuff_plus_sea": round(sp_sea, 1),
                 "stuff_plus_delta": round(sp_hh - sp_sea, 1),
                 "stuff_plus_hh_ci95": round(ci, 1),
-                "altitude_tax_runs_per_100": round(tax, 2),
+                "role": roles.get(pid) if roles else None,
+                "altitude_tax_runs_per_9": round(tax, 2),
                 "altitude_tax_se": round(se_tax, 2),
                 "altitude_tax_significant": bool(abs(tax) > 1.96 * se_tax),
                 "mean_ivb_loss_in": round(float(loss), 2) if retained else None,
                 "arsenal": sorted(arsenal, key=lambda a: -a["usage_pct"]),
             }
         )
-    # Data-driven seal: terciles of the altitude tax across the cohort.
-    taxes = np.array([c["altitude_tax_runs_per_100"] for c in cards])
-    lo, hi = np.percentile(taxes, [33.3, 66.7])
     sea_sp = np.array([c["stuff_plus_sea"] for c in cards])
     delta = np.array([c["stuff_plus_delta"] for c in cards])
     sea_p70, delta_p30 = np.percentile(sea_sp, 70), np.percentile(delta, 30)
     for c in cards:
-        t = c["altitude_tax_runs_per_100"]
-        c["altitude_seal"] = "Resistente" if t <= lo else "Neutral" if t <= hi else "Fragil"
         # Altitude Trap: looks strong at sea level, degrades hard in CDMX.
         c["altitude_trap"] = bool(
             c["stuff_plus_sea"] >= sea_p70 and c["stuff_plus_delta"] <= delta_p30
         )
     cards.sort(key=lambda c: -c["stuff_plus_hh"])
+    taxes = np.array([c["altitude_tax_runs_per_9"] for c in cards])
     return cards, {
-        "seal_thresholds_runs_per_100": {
-            "resistente_max": round(float(lo), 2),
-            "fragil_min": round(float(hi), 2),
+        "altitude_tax_runs_per_9": {
+            "mean": round(float(taxes.mean()), 2),
+            "median": round(float(np.median(taxes)), 2),
+            "n_significant": int(sum(c["altitude_tax_significant"] for c in cards)),
         },
         "n_cards": len(cards),
         "n_traps": int(sum(c["altitude_trap"] for c in cards)),
@@ -744,13 +788,34 @@ def main():
 
     R["pitch_profiles"] = pitch_profiles(df)
     R["league_environment"] = league_environment(df)
+    R["run_environment"] = run_environment(df)
+    eff = R["run_environment"].get("altitude_effect", {})
+    log(
+        f"Run environment: {R['run_environment'][SEA]['ra9']} -> "
+        f"{R['run_environment'][EXT]['ra9']} RA/9 (+{eff.get('ra9_pct')}%)"
+    )
     R["translator"] = translator(df)
     log("Translator validated on held-out pitchers.")
 
     d, R["stuff_plus_v0"] = stuff_plus_v0(df)
     log(f"Stuff+ v0 baseline: OOF R2={R['stuff_plus_v0']['oof_r2']}")
 
-    cards, R["cohort"] = mockup(d, df)
+    # Role is a rule over every appearance in the dataset, not over the
+    # scored subset: a pitcher's job is the same whatever we scored.
+    role_table = classify_roles(
+        df, pitcher_col="pitcher_anon_id", game_col="game_anon_id", inning_col="Inning"
+    )
+    roles = role_table["role"].to_dict()
+    R["roles"] = {
+        "n_classified": int(role_table["role"].notna().sum()),
+        "distribution": {str(k): int(v) for k, v in role_table["role"].value_counts().items()},
+        "starter_first_inning_share_ge": STARTER_FIRST_INNING_SHARE,
+        "late_inning_entry_ge": LATE_INNING_ENTRY,
+    }
+    log(f"Roles: {R['roles']['distribution']}")
+
+    ppi = R["run_environment"][EXT]["pitches_per_inning"]
+    cards, R["cohort"] = mockup(d, df, roles=roles, pitches_per_inning=ppi)
     log(f"Mockup cards: {len(cards)} pitchers, {R['cohort']['n_traps']} altitude traps")
 
     R["target_learnability"] = target_learnability(df)

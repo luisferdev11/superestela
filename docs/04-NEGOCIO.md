@@ -34,14 +34,16 @@ Sobre 286 lanzadores con al menos 150 lanzamientos en ambos entornos:
 
 | Perfil           | Impuesto de Altitud | Carreras/temporada en casa\* | Victorias\*\* |
 | ---------------- | ------------------- | ---------------------------- | ------------- |
-| Frágil (p90)     | +3.74 carreras/100  | **+31.7**                    | +3.2          |
-| Mediana          | +0.99 carreras/100  | +8.5                         | +0.9          |
-| Resistente (p10) | −1.38 carreras/100  | **−11.7**                    | −1.2          |
+| Peor decil (p90) | +6.26 carreras/9 ent. | **+31.8**                  | +3.2          |
+| Mediana          | +1.67 carreras/9 ent. | +8.5                       | +0.9          |
+| Mejor decil (p10)| −2.29 carreras/9 ent. | **−11.6**                  | −1.2          |
 
-\* Supuesto: 850 lanzamientos en casa por abridor y temporada.
+\* Supuesto: 850 lanzamientos en casa por abridor y temporada, que a 18.62 lanzamientos por entrada son ~45.6 entradas.
 \*\* Supuesto: ~10 carreras por victoria.
 
 > **43 carreras — cerca de 4.3 victorias — separan al perfil correcto del equivocado en un solo puesto de rotación.** La herramienta cuesta lo mismo en ambos casos.
+
+> **Y es una cota inferior.** El Impuesto se construye con pesos lineales por lanzamiento, que no ven el secuenciamiento: captura +1.77 de los +2.71 RA/9 realmente observados entre entornos, cerca del 65% (`01-EVIDENCIA.md` §8.2). El caso económico está calculado sobre el 65%, no sobre el total.
 
 ### 2.2 Las cinco palancas, por costo de implementación
 
