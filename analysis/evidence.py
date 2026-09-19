@@ -623,6 +623,9 @@ def mockup(d, df_phys, roles=None, pitches_per_inning=None):
         # REAL uncertainty: 95% CI half-width on the mean Stuff+ at altitude
         se = float(e.stuff_plus_v0.std()) / np.sqrt(len(e))
         ci = 1.96 * se
+        # The sea-level score is rendered too, and the product does not show a
+        # number without its band (CONVENTIONS.md section 8 rule 2).
+        ci_sea = 1.96 * float(s_.stuff_plus_v0.std()) / np.sqrt(len(s_))
         # Altitude Tax: extra runs conceded per 100 pitches at altitude,
         # with a standard error from the two independent sample means.
         # Per NINE INNINGS, not per hundred pitches: nine innings is the unit
@@ -675,6 +678,7 @@ def mockup(d, df_phys, roles=None, pitches_per_inning=None):
                 "stuff_plus_sea": round(sp_sea, 1),
                 "stuff_plus_delta": round(sp_hh - sp_sea, 1),
                 "stuff_plus_hh_ci95": round(ci, 1),
+                "stuff_plus_sea_ci95": round(ci_sea, 1),
                 "role": roles.get(pid) if roles else None,
                 "altitude_tax_runs_per_9": round(tax, 2),
                 "altitude_tax_se": round(se_tax, 2),
