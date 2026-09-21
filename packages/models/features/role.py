@@ -1,20 +1,30 @@
-"""Pitcher role, inferred from when he enters the game.
+"""Pitcher role for a given season, inferred from when he enters the game.
 
-This is a rule, not a model, and it is written as one on purpose. Measured
-across the 22,569 appearances in the dataset, the separation is close to
-clean: 439 pitchers enter the first inning in under 5% of their appearances,
-153 in over 80%, and only 59 sit in the ambiguous 20-50% band. Pitch counts
-per appearance are bimodal with a shallow valley - 247 pitchers at 15 or
-fewer, 183 above 60. Fitting a classifier to that would add a training step,
-a seed and a failure mode in exchange for nothing.
+This is a rule, not a model, and it separates exactly two things because two
+is what the data separates. Whether a pitcher opens the game is bimodal
+across the 22,569 appearances in the dataset:
 
-The role matters because ranking a starter against a reliever on average
-Stuff+ compares two different jobs: a starter passes through the order three
-times, a reliever once.
+    opens  0-10% of appearances  ############################ 469
+    opens 40-50%                 ## 21        <- the valley
+    opens 90-100%                ######## 119
 
-**There is no "closer" here, and that is not an oversight.** A closer is
-defined by entering a save situation, which needs the score; the dataset has
-no score column. `late_inning_reliever` is what the data actually supports.
+Pitch counts per appearance are bimodal on the same line: 450 pitchers at
+10-20 pitches, a valley at 30-50, then 79 at 70-80. Two jobs, and ranking one
+against the other on average Stuff+ compares a start to an inning of relief.
+
+**There is no third tier, and the reason is worth keeping.** An earlier
+version split relievers at "enters from the 7th onward", which sounds like a
+category. It is not one: the relievers' median entry inning is unimodal with
+its mode at exactly the 7th, so the cut ran through the peak with 222 of 568
+pitchers standing on the line, and the two halves differed by 3 pitches per
+appearance with almost fully overlapping interquartile ranges. Nameable is
+not the same as separable. See docs/adr/0004.
+
+There is also no "closer": a closer is defined by entering a save situation,
+and the dataset carries no score.
+
+**Role is per season, not per pitcher.** 43 of the 347 pitchers with two or
+more classified seasons change role between them.
 """
 
 from __future__ import annotations
@@ -23,22 +33,20 @@ import pandas as pd
 
 from contracts.schemas import MIN_APPEARANCES_FOR_ROLE
 
-# A pitcher who opens at least half his appearances is doing the starter's job,
-# even in a staff that uses openers. measured: the 20-50% band holds 59 of 786.
+# A pitcher who opens at least half his appearances is doing the starter's
+# job, even on a staff that uses openers. The valley in the measured
+# distribution sits at 40-50%, so the threshold lands inside it.
 STARTER_FIRST_INNING_SHARE = 0.50
-
-# Entering from the seventh onward is the late-inning job: setup or closing.
-# We can see that he came in late; we cannot see whether it was a save.
-LATE_INNING_ENTRY = 7
 
 
 def summarize_appearances(
     pitches: pd.DataFrame,
     pitcher_col: str = "pitcher_id",
+    season_col: str = "season",
     game_col: str = "game_id",
     inning_col: str = "inning",
 ) -> pd.DataFrame:
-    """Collapse pitch-level rows into one row per pitcher.
+    """Collapse pitch-level rows into one row per pitcher and season.
 
     An appearance is a pitcher in a game. Entry inning is the earliest inning
     he threw in that game.
@@ -46,18 +54,19 @@ def summarize_appearances(
     Args:
         pitches: Pitch-level rows.
         pitcher_col: Column holding the pitcher identifier.
+        season_col: Column holding the season.
         game_col: Column holding the game identifier.
         inning_col: Column holding the inning the pitch was thrown in.
 
     Returns:
-        One row per pitcher, indexed by pitcher id, carrying `appearances`,
-        `first_inning_share`, `median_entry_inning` and `median_pitches`.
+        One row per pitcher and season, indexed by both, carrying
+        `appearances`, `first_inning_share`, `median_entry_inning` and
+        `median_pitches`.
     """
-    per_game = pitches.groupby([pitcher_col, game_col], observed=True).agg(
-        entry_inning=(inning_col, "min"),
-        pitches=(inning_col, "size"),
+    per_game = pitches.groupby([pitcher_col, season_col, game_col], observed=True).agg(
+        entry_inning=(inning_col, "min"), pitches=(inning_col, "size")
     )
-    return per_game.groupby(level=0).agg(
+    return per_game.groupby(level=[0, 1]).agg(
         appearances=("pitches", "size"),
         first_inning_share=("entry_inning", lambda s: float((s == 1).mean())),
         median_entry_inning=("entry_inning", "median"),
@@ -65,17 +74,12 @@ def summarize_appearances(
     )
 
 
-def assign_role(
-    first_inning_share: float,
-    median_entry_inning: float,
-    appearances: int,
-) -> str | None:
-    """Classify one pitcher from his appearance pattern.
+def assign_role(first_inning_share: float, appearances: int) -> str | None:
+    """Classify one pitcher-season from his appearance pattern.
 
     Args:
         first_inning_share: Fraction of appearances begun in the first inning.
-        median_entry_inning: Median inning he enters the game in.
-        appearances: How many games he pitched in.
+        appearances: How many games he pitched in that season.
 
     Returns:
         One of the values in `contracts.schemas.ROLES`, or None when there are
@@ -84,36 +88,34 @@ def assign_role(
     """
     if appearances < MIN_APPEARANCES_FOR_ROLE:
         return None
-    if first_inning_share >= STARTER_FIRST_INNING_SHARE:
-        return "starter"
-    if median_entry_inning >= LATE_INNING_ENTRY:
-        return "late_inning_reliever"
-    return "reliever"
+    return "starter" if first_inning_share >= STARTER_FIRST_INNING_SHARE else "reliever"
 
 
 def classify_roles(
     pitches: pd.DataFrame,
     pitcher_col: str = "pitcher_id",
+    season_col: str = "season",
     game_col: str = "game_id",
     inning_col: str = "inning",
 ) -> pd.DataFrame:
-    """Infer every pitcher's role from pitch-level rows.
+    """Infer every pitcher-season's role from pitch-level rows.
 
     Args:
         pitches: Pitch-level rows.
         pitcher_col: Column holding the pitcher identifier.
+        season_col: Column holding the season.
         game_col: Column holding the game identifier.
         inning_col: Column holding the inning the pitch was thrown in.
 
     Returns:
-        The appearance summary with a `role` column added.
+        The appearance summary with a `role` column added, indexed by
+        (pitcher, season).
     """
-    summary = summarize_appearances(pitches, pitcher_col, game_col, inning_col)
+    summary = summarize_appearances(pitches, pitcher_col, season_col, game_col, inning_col)
     shares = summary["first_inning_share"].to_numpy(dtype=float)
-    entries = summary["median_entry_inning"].to_numpy(dtype=float)
     appearances = summary["appearances"].to_numpy(dtype=int)
     roles = [
-        assign_role(float(share), float(entry), int(count))
-        for share, entry, count in zip(shares, entries, appearances, strict=True)
+        assign_role(float(share), int(count))
+        for share, count in zip(shares, appearances, strict=True)
     ]
     return summary.assign(role=pd.Series(roles, index=summary.index, dtype=object))

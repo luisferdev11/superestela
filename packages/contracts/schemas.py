@@ -35,12 +35,15 @@ STUFF_PLUS_MIN, STUFF_PLUS_MAX = 40.0, 160.0
 # headroom. evidence.json -> density: 0.858 extreme, 1.000 sea level.
 DENSITY_INDEX_MIN, DENSITY_INDEX_MAX = 0.70, 1.05
 
-ENVIRONMENTS = ["sea_level", "medium_altitude", "extreme_altitude"]
-
-# Never "closer". A closer is defined by entering a save situation, and the
-# dataset carries no score, so the role cannot be derived - only asserted.
-# What the data does support is "came in late", which is what this says.
-ROLES = ["starter", "reliever", "late_inning_reliever"]
+# Two, because two is what the data separates. Whether a pitcher opens the
+# game is bimodal: 469 pitchers open under 10% of their appearances, 119 over
+# 90%, and the valley sits at 40-50%. Anything finer is not a classification,
+# it is a cut through one population - see docs/adr/0004.
+#
+# In particular there is no "closer" and no "late inning" tier: a closer is
+# defined by entering a save situation and the dataset carries no score, and
+# the relievers' entry inning is unimodal with its mode at exactly the 7th.
+ROLES = ["starter", "reliever"]
 
 # Minimum appearances before a role is assigned at all. Below this the entry
 # inning is one or two games of noise.
@@ -94,15 +97,26 @@ class PitcherAggregates(pa.DataFrameModel):
     """
 
     pitcher_id: Series[str] = pa.Field(nullable=False)
+    # Season is part of the key, not a label. A pitcher who left in 2025 and
+    # came back in 2026 is two different measurements, and 28 pitchers in the
+    # dataset are exactly that. Shape correlates 0.78-0.83 between consecutive
+    # seasons but only 0.674 across a gap year.
     season: Series[int] = pa.Field(ge=2000, le=2100, nullable=False)
-    environment: Series[str] = pa.Field(isin=ENVIRONMENTS, nullable=False)
 
-    n_pitches: Series[int] = pa.Field(ge=0, nullable=False)
+    # Counted per environment because the sample rule applies to each one
+    # separately: a delivery with 900 pitches at sea level and 40 at altitude
+    # has no comparison in it, and a single `n_pitches` would hide that.
+    n_pitches_hh: Series[int] = pa.Field(ge=0, nullable=False)
+    n_pitches_sea: Series[int] = pa.Field(ge=0, nullable=False)
 
     # Null below MIN_APPEARANCES_FOR_ROLE. Comparing a starter to a reliever on
     # average Stuff+ compares two different jobs, so the deployment board needs
-    # this to group before it ranks.
+    # this to group before it ranks. 43 of 347 pitchers change role between
+    # seasons, which is why it lives on the pitcher-season row.
     role: Series[str] = pa.Field(isin=ROLES, nullable=True)
+    # Not rendered. It is what the role rule is built from, and what question
+    # E5 of the backlog needs to ask whether altitude bites differently by role.
+    median_entry_inning: Series[float] = pa.Field(ge=1.0, le=20.0, nullable=True)
 
     stuff_plus_hh: Series[float] = pa.Field(ge=STUFF_PLUS_MIN, le=STUFF_PLUS_MAX, nullable=True)
     stuff_plus_hh_ci95: Series[float] = pa.Field(ge=0.0, nullable=True)
@@ -129,8 +143,14 @@ class PitcherAggregates(pa.DataFrameModel):
     arsenal: Series[object] = pa.Field(nullable=True)
 
     class Config:
-        """The composite key is (pitcher_id, season, environment)."""
+        """The composite key is (pitcher_id, season).
+
+        Environment is deliberately NOT in the key. Each row already carries
+        both `stuff_plus_hh` and `stuff_plus_sea`: it is a comparison between
+        environments, not an observation of one. Keying by environment as well
+        would duplicate that comparison on every row.
+        """
 
         strict = "filter"
         coerce = True
-        unique: ClassVar[list[str]] = ["pitcher_id", "season", "environment"]
+        unique: ClassVar[list[str]] = ["pitcher_id", "season"]

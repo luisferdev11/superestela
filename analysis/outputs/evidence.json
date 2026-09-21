@@ -976,24 +976,57 @@
     "oof_r2": 0.00283,
     "note": "v0 baseline for prototype realism - not the final model"
   },
+  "seasons": {
+    "seasons_in_dataset": [
+      2024,
+      2025,
+      2026
+    ],
+    "pitchers": 1050,
+    "pattern_counts": {
+      "2024": 230,
+      "2024,2025": 131,
+      "2024,2025,2026": 152,
+      "2024,2026": 28,
+      "2025": 173,
+      "2025,2026": 120,
+      "2026": 216
+    },
+    "pitchers_with_a_gap": 28,
+    "qualifying_pitcher_seasons_tracked": 379,
+    "scored_pitcher_seasons": 370,
+    "scored_pitchers": 296,
+    "scored_seasons_per_pitcher": {
+      "1": 230,
+      "2": 58,
+      "3": 8
+    },
+    "last_scored_season": {
+      "2024": 95,
+      "2025": 134,
+      "2026": 67
+    }
+  },
   "roles": {
-    "n_classified": 786,
+    "n_classified": 1242,
     "distribution": {
-      "late_inning_reliever": 353,
-      "starter": 218,
-      "reliever": 215
+      "reliever": 895,
+      "starter": 347
     },
     "starter_first_inning_share_ge": 0.5,
-    "late_inning_entry_ge": 7
+    "pitchers_with_multiple_seasons": 347,
+    "pitchers_changing_role_between_seasons": 43
   },
   "cohort": {
     "altitude_tax_runs_per_9": {
-      "mean": 1.77,
-      "median": 1.67,
+      "mean": 1.53,
+      "median": 1.37,
       "n_significant": 40
     },
-    "n_cards": 286,
-    "n_traps": 44
+    "n_cards": 370,
+    "n_pitchers": 296,
+    "min_pitches_each_environment": 100,
+    "n_traps": 58
   },
   "target_learnability": {
     "P(whiff | swing)": {

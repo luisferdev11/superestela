@@ -44,29 +44,49 @@ def valid_pitch_scores(n: int = 500, seed: int = FIXTURE_SEED) -> pd.DataFrame:
 
 
 def valid_pitcher_aggregates(n: int = 60, seed: int = FIXTURE_SEED) -> pd.DataFrame:
-    """Build a delivery that satisfies Contract B in every respect."""
+    """Build a delivery that satisfies Contract B in every respect.
+
+    One row per pitcher and season, and deliberately not the same seasons for
+    everyone: the real dataset has 702 pitchers with a single season, 252 with
+    two, 152 with three, and 28 who skipped a year and came back. A fixture
+    where everyone has the same seasons would never exercise that.
+    """
     rng = np.random.default_rng(seed)
-    environments = ["sea_level", "extreme_altitude"]
+    season_patterns = [
+        (2026,),
+        (2025,),
+        (2025, 2026),
+        (2024, 2025, 2026),
+        (2024, 2026),  # the gap: left and came back
+    ]
     rows = [
         {
             "pitcher_id": f"pitcher_{i:05d}",
-            "season": 2026,
-            "environment": env,
-            "n_pitches": int(rng.integers(50, 800)),
+            "season": season,
+            "n_pitches_hh": int(rng.integers(100, 800)),
+            "n_pitches_sea": int(rng.integers(100, 800)),
             "stuff_plus_hh": float(np.clip(rng.normal(100.0, 10.0), 40.0, 160.0)),
             "stuff_plus_hh_ci95": float(rng.uniform(1.0, 6.0)),
             "stuff_plus_sea": float(np.clip(rng.normal(100.0, 10.0), 40.0, 160.0)),
             "stuff_plus_sea_ci95": float(rng.uniform(1.0, 6.0)),
             "role": str(rng.choice(ROLES)),
+            "median_entry_inning": float(rng.integers(1, 10)),
             "altitude_tax_per_9": float(rng.normal(1.8, 0.9)),
             "altitude_tax_se": float(rng.uniform(0.1, 0.4)),
             "altitude_tax_significant": bool(rng.integers(0, 2)),
             "arsenal": [{"pitch_type": "Four-Seam", "usage": 0.55}],
         }
         for i in range(n)
-        for env in environments
+        for season in season_patterns[i % len(season_patterns)]
     ]
     return pd.DataFrame(rows)
+
+
+def duplicate_pitcher_season(seed: int = FIXTURE_SEED) -> pd.DataFrame:
+    """The same pitcher twice in one season. Rejected: that is the key."""
+    df = valid_pitcher_aggregates(seed=seed)
+    df.loc[1, ["pitcher_id", "season"]] = df.loc[0, ["pitcher_id", "season"]].to_numpy()
+    return df
 
 
 def missing_standard_error(seed: int = FIXTURE_SEED) -> pd.DataFrame:
@@ -119,4 +139,11 @@ def invalid_role(seed: int = FIXTURE_SEED) -> pd.DataFrame:
     """
     df = valid_pitcher_aggregates(seed=seed)
     df.loc[0, "role"] = "closer"
+    return df
+
+
+def retired_role(seed: int = FIXTURE_SEED) -> pd.DataFrame:
+    """A delivery still using the three-way split. Rejected since ADR 0004."""
+    df = valid_pitcher_aggregates(seed=seed)
+    df.loc[0, "role"] = "late_inning_reliever"
     return df

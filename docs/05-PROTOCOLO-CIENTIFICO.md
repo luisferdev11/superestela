@@ -100,7 +100,8 @@ Cada entrada es una pregunta con una corrida asociada. `P` = prioridad.
 | E2 | ¿El efecto altitud tiene pendientes aleatorias por lanzador? ¿Quién se adapta? | 2 |
 | E3 | Batted ball: carry y HR/FB por entorno, con velocidad de salida y ángulo controlados | 2 |
 | E4 | ¿Interactúa la altitud con el paso por la orden de bateo? | 4 |
-| E5 | ¿El efecto de altitud difiere por **rol**? Un abridor pasa tres veces por la orden y un relevista una; si el impuesto difiere, el tablero de despliegue cambia | 2 |
+| E5 | ¿El efecto de altitud difiere por **rol**? Un abridor pasa tres veces por la orden y un relevista una; si el impuesto difiere, el tablero de despliegue cambia. El Contrato B entrega `role` y `median_entry_inning` | 2 |
+| E6 | ¿El Stuff+ de una temporada predice el de la siguiente, y cuánto se degrada con un año de hueco? Medido en forma cruda da 0.78–0.83 consecutivas contra 0.674 con hueco; falta hacerlo sobre el score | 2 |
 
 ### Track F · Validación
 
@@ -230,7 +231,8 @@ Las cuatro en negrita son las que nos separan. Si hay que recortar, se recorta d
 3. **F1 y F2.** El producto muestra una banda en cada número. Si no está calibrada, es decoración y un jurado técnico lo va a preguntar.
 4. **D1.** El Traductor usa un factor de Magnus global. Si varía por tipo de lanzamiento, mejora y además es publicable.
 5. **E1.** La compensación de mira es un hallazgo nuevo que todavía no está en ninguna pantalla. Si resulta entrenable, es una recomendación operativa directa para el pitching coach.
-6. **El campo `role` en el Contrato B.** La regla ya está escrita en `packages/models/features/role.py` y no necesita investigación: solo hay que incluirlo en la entrega. Sin él, el tablero de despliegue compara abridores con relevistas por Stuff+ promedio, que es comparar dos oficios distintos.
+6. **El campo `role` en el Contrato B.** La regla ya está escrita en `packages/models/features/role.py` y no necesita investigación: solo hay que incluirlo en la entrega. Son **dos** valores, `starter` y `reliever` — la tercera categoría se retiró porque no la sostiene el dato (`docs/adr/0004`). Sin este campo, el tablero de despliegue compara abridores con relevistas por Stuff+ promedio, que es comparar dos oficios distintos.
+7. **Una fila por lanzador y temporada.** No un promedio de su carrera: 28 lanzadores se ausentaron una temporada y volvieron, y 43 cambian de rol entre temporadas. La llave del Contrato B es `(pitcher_id, season)` (`docs/adr/0005`).
 
 > **Sobre el Impuesto de Altitud.** A partir de esta revisión se entrega en **carreras por 9 entradas**, no por 100 lanzamientos, y `altitude_tax_significant` deja de ser informativo para volverse obligatorio: el producto suprime el número donde es falso. El contrato ejecutable en `packages/contracts/schemas.py` ya lo refleja.
 
