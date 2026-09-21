@@ -1,10 +1,5 @@
 @import 'tailwindcss';
-
-/*
- * Los tokens de marca y la escala de altitud llegan en el PR del sistema de
- * diseno, generados desde `src/design/tokens.json` (docs/07 seccion 5.2,
- * regla 6: una sola fuente). Aqui solo va lo que ya es regla de producto.
- */
+@import '../styles/tokens.generated.css';
 
 @layer base {
   /*
@@ -12,6 +7,17 @@
    * las columnas bailan y una tabla de scores se ve amateur.
    */
   body {
+    background: var(--color-surface-page);
+    color: var(--color-text-strong);
+    font-family: var(--font-body);
     font-variant-numeric: tabular-nums;
+  }
+
+  a {
+    color: var(--color-diablos);
+  }
+
+  a:hover {
+    color: var(--color-diablos-strong);
   }
 }
