@@ -24571,6 +24571,4206 @@
       "altitude_trap": false
     }
   ],
+  "pitcher_seasons": {
+    "pitcher_00010": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 188,
+        "n_pitches_sea": 146,
+        "scored": true
+      }
+    ],
+    "pitcher_00019": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 323,
+        "n_pitches_sea": 137,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 949,
+        "n_pitches_sea": 367,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 499,
+        "n_pitches_sea": 162,
+        "scored": true
+      }
+    ],
+    "pitcher_00020": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 159,
+        "n_pitches_sea": 1060,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 113,
+        "n_pitches_sea": 349,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 72,
+        "n_pitches_sea": 118,
+        "scored": false
+      }
+    ],
+    "pitcher_00021": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 109,
+        "n_pitches_sea": 121,
+        "scored": true
+      }
+    ],
+    "pitcher_00026": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 87,
+        "n_pitches_sea": 484,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 458,
+        "n_pitches_sea": 362,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 18,
+        "n_pitches_sea": 59,
+        "scored": false
+      }
+    ],
+    "pitcher_00035": [
+      {
+        "season": 2026,
+        "n_pitches_hh": 123,
+        "n_pitches_sea": 392,
+        "scored": true
+      }
+    ],
+    "pitcher_00038": [
+      {
+        "season": 2026,
+        "n_pitches_hh": 141,
+        "n_pitches_sea": 209,
+        "scored": true
+      }
+    ],
+    "pitcher_00041": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 155,
+        "n_pitches_sea": 181,
+        "scored": true
+      }
+    ],
+    "pitcher_00047": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 50,
+        "n_pitches_sea": 308,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 102,
+        "n_pitches_sea": 151,
+        "scored": true
+      }
+    ],
+    "pitcher_00048": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 182,
+        "n_pitches_sea": 667,
+        "scored": true
+      }
+    ],
+    "pitcher_00053": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 355,
+        "n_pitches_sea": 113,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 70,
+        "scored": false
+      }
+    ],
+    "pitcher_00055": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 23,
+        "n_pitches_sea": 50,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 142,
+        "n_pitches_sea": 120,
+        "scored": true
+      }
+    ],
+    "pitcher_00056": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 12,
+        "n_pitches_sea": 130,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 109,
+        "n_pitches_sea": 274,
+        "scored": true
+      }
+    ],
+    "pitcher_00067": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 165,
+        "n_pitches_sea": 201,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 120,
+        "n_pitches_sea": 47,
+        "scored": false
+      }
+    ],
+    "pitcher_00069": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 341,
+        "n_pitches_sea": 434,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 199,
+        "n_pitches_sea": 86,
+        "scored": false
+      }
+    ],
+    "pitcher_00071": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 59,
+        "n_pitches_sea": 239,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 119,
+        "n_pitches_sea": 150,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 0,
+        "scored": false
+      }
+    ],
+    "pitcher_00072": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 913,
+        "n_pitches_sea": 165,
+        "scored": true
+      }
+    ],
+    "pitcher_00076": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 106,
+        "n_pitches_sea": 220,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 80,
+        "n_pitches_sea": 98,
+        "scored": false
+      }
+    ],
+    "pitcher_00081": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 176,
+        "n_pitches_sea": 415,
+        "scored": true
+      }
+    ],
+    "pitcher_00083": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 281,
+        "n_pitches_sea": 216,
+        "scored": true
+      }
+    ],
+    "pitcher_00096": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 470,
+        "n_pitches_sea": 150,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 309,
+        "n_pitches_sea": 127,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 231,
+        "n_pitches_sea": 141,
+        "scored": true
+      }
+    ],
+    "pitcher_00099": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 168,
+        "n_pitches_sea": 68,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 114,
+        "n_pitches_sea": 198,
+        "scored": true
+      }
+    ],
+    "pitcher_00103": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 539,
+        "n_pitches_sea": 443,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 705,
+        "n_pitches_sea": 190,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 439,
+        "n_pitches_sea": 129,
+        "scored": true
+      }
+    ],
+    "pitcher_00106": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 614,
+        "n_pitches_sea": 329,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 170,
+        "n_pitches_sea": 348,
+        "scored": true
+      }
+    ],
+    "pitcher_00114": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 411,
+        "n_pitches_sea": 167,
+        "scored": true
+      }
+    ],
+    "pitcher_00122": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 371,
+        "n_pitches_sea": 226,
+        "scored": true
+      }
+    ],
+    "pitcher_00123": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 553,
+        "n_pitches_sea": 220,
+        "scored": true
+      }
+    ],
+    "pitcher_00125": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 666,
+        "n_pitches_sea": 148,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 18,
+        "n_pitches_sea": 212,
+        "scored": false
+      }
+    ],
+    "pitcher_00127": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 108,
+        "n_pitches_sea": 107,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 122,
+        "n_pitches_sea": 278,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 200,
+        "n_pitches_sea": 107,
+        "scored": true
+      }
+    ],
+    "pitcher_00130": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 401,
+        "n_pitches_sea": 457,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 227,
+        "n_pitches_sea": 106,
+        "scored": true
+      }
+    ],
+    "pitcher_00134": [
+      {
+        "season": 2026,
+        "n_pitches_hh": 424,
+        "n_pitches_sea": 220,
+        "scored": true
+      }
+    ],
+    "pitcher_00135": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 118,
+        "n_pitches_sea": 116,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 53,
+        "n_pitches_sea": 223,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 33,
+        "n_pitches_sea": 7,
+        "scored": false
+      }
+    ],
+    "pitcher_00138": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 469,
+        "n_pitches_sea": 163,
+        "scored": true
+      }
+    ],
+    "pitcher_00139": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 498,
+        "n_pitches_sea": 182,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 254,
+        "n_pitches_sea": 122,
+        "scored": true
+      }
+    ],
+    "pitcher_00141": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 100,
+        "n_pitches_sea": 75,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 106,
+        "n_pitches_sea": 167,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 64,
+        "n_pitches_sea": 322,
+        "scored": false
+      }
+    ],
+    "pitcher_00144": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 289,
+        "n_pitches_sea": 123,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 382,
+        "n_pitches_sea": 71,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 306,
+        "scored": false
+      }
+    ],
+    "pitcher_00145": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 235,
+        "n_pitches_sea": 199,
+        "scored": true
+      }
+    ],
+    "pitcher_00157": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 200,
+        "n_pitches_sea": 247,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 169,
+        "n_pitches_sea": 223,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 155,
+        "n_pitches_sea": 15,
+        "scored": false
+      }
+    ],
+    "pitcher_00161": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 270,
+        "n_pitches_sea": 159,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 73,
+        "n_pitches_sea": 59,
+        "scored": false
+      }
+    ],
+    "pitcher_00162": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 167,
+        "n_pitches_sea": 294,
+        "scored": true
+      }
+    ],
+    "pitcher_00163": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 324,
+        "n_pitches_sea": 190,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 28,
+        "scored": false
+      }
+    ],
+    "pitcher_00165": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 149,
+        "n_pitches_sea": 101,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 35,
+        "n_pitches_sea": 0,
+        "scored": false
+      }
+    ],
+    "pitcher_00166": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 320,
+        "n_pitches_sea": 770,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 156,
+        "n_pitches_sea": 501,
+        "scored": true
+      }
+    ],
+    "pitcher_00167": [
+      {
+        "season": 2026,
+        "n_pitches_hh": 214,
+        "n_pitches_sea": 280,
+        "scored": true
+      }
+    ],
+    "pitcher_00168": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 273,
+        "n_pitches_sea": 115,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 0,
+        "scored": false
+      }
+    ],
+    "pitcher_00169": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 289,
+        "n_pitches_sea": 119,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 90,
+        "n_pitches_sea": 0,
+        "scored": false
+      }
+    ],
+    "pitcher_00170": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 124,
+        "n_pitches_sea": 170,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 66,
+        "n_pitches_sea": 128,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 69,
+        "n_pitches_sea": 181,
+        "scored": false
+      }
+    ],
+    "pitcher_00175": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 143,
+        "n_pitches_sea": 628,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 18,
+        "n_pitches_sea": 0,
+        "scored": false
+      }
+    ],
+    "pitcher_00178": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 51,
+        "n_pitches_sea": 389,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 229,
+        "n_pitches_sea": 726,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 20,
+        "n_pitches_sea": 302,
+        "scored": false
+      }
+    ],
+    "pitcher_00180": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 481,
+        "n_pitches_sea": 132,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 242,
+        "n_pitches_sea": 0,
+        "scored": false
+      }
+    ],
+    "pitcher_00182": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 83,
+        "n_pitches_sea": 74,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 187,
+        "n_pitches_sea": 102,
+        "scored": true
+      }
+    ],
+    "pitcher_00186": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 79,
+        "n_pitches_sea": 1011,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 350,
+        "n_pitches_sea": 782,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 577,
+        "scored": false
+      }
+    ],
+    "pitcher_00188": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 254,
+        "n_pitches_sea": 197,
+        "scored": true
+      }
+    ],
+    "pitcher_00190": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 419,
+        "n_pitches_sea": 163,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 0,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 23,
+        "n_pitches_sea": 193,
+        "scored": false
+      }
+    ],
+    "pitcher_00191": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 158,
+        "n_pitches_sea": 690,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 151,
+        "n_pitches_sea": 683,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 29,
+        "n_pitches_sea": 371,
+        "scored": false
+      }
+    ],
+    "pitcher_00193": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 100,
+        "n_pitches_sea": 0,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 452,
+        "n_pitches_sea": 153,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 213,
+        "n_pitches_sea": 132,
+        "scored": true
+      }
+    ],
+    "pitcher_00195": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 166,
+        "n_pitches_sea": 212,
+        "scored": true
+      }
+    ],
+    "pitcher_00198": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 518,
+        "n_pitches_sea": 226,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 490,
+        "n_pitches_sea": 273,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 265,
+        "n_pitches_sea": 132,
+        "scored": true
+      }
+    ],
+    "pitcher_00199": [
+      {
+        "season": 2026,
+        "n_pitches_hh": 164,
+        "n_pitches_sea": 434,
+        "scored": true
+      }
+    ],
+    "pitcher_00200": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 289,
+        "n_pitches_sea": 468,
+        "scored": true
+      }
+    ],
+    "pitcher_00204": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 134,
+        "n_pitches_sea": 12,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 129,
+        "n_pitches_sea": 431,
+        "scored": true
+      }
+    ],
+    "pitcher_00205": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 572,
+        "n_pitches_sea": 195,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 245,
+        "n_pitches_sea": 227,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 92,
+        "scored": false
+      }
+    ],
+    "pitcher_00208": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 278,
+        "n_pitches_sea": 158,
+        "scored": true
+      }
+    ],
+    "pitcher_00213": [
+      {
+        "season": 2026,
+        "n_pitches_hh": 178,
+        "n_pitches_sea": 322,
+        "scored": true
+      }
+    ],
+    "pitcher_00215": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 24,
+        "n_pitches_sea": 26,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 161,
+        "n_pitches_sea": 116,
+        "scored": true
+      }
+    ],
+    "pitcher_00217": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 341,
+        "n_pitches_sea": 84,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 211,
+        "n_pitches_sea": 313,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 118,
+        "n_pitches_sea": 98,
+        "scored": false
+      }
+    ],
+    "pitcher_00227": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 233,
+        "n_pitches_sea": 849,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 418,
+        "scored": false
+      }
+    ],
+    "pitcher_00236": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 626,
+        "n_pitches_sea": 274,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 548,
+        "n_pitches_sea": 168,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 698,
+        "n_pitches_sea": 84,
+        "scored": false
+      }
+    ],
+    "pitcher_00239": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 245,
+        "n_pitches_sea": 153,
+        "scored": true
+      }
+    ],
+    "pitcher_00244": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 184,
+        "n_pitches_sea": 374,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 183,
+        "n_pitches_sea": 44,
+        "scored": false
+      }
+    ],
+    "pitcher_00246": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 166,
+        "n_pitches_sea": 463,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 149,
+        "n_pitches_sea": 210,
+        "scored": true
+      }
+    ],
+    "pitcher_00248": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 91,
+        "n_pitches_sea": 195,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 203,
+        "n_pitches_sea": 245,
+        "scored": true
+      }
+    ],
+    "pitcher_00256": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 162,
+        "n_pitches_sea": 247,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 68,
+        "n_pitches_sea": 269,
+        "scored": false
+      }
+    ],
+    "pitcher_00258": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 393,
+        "n_pitches_sea": 236,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 189,
+        "n_pitches_sea": 71,
+        "scored": false
+      }
+    ],
+    "pitcher_00260": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 97,
+        "n_pitches_sea": 93,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 450,
+        "n_pitches_sea": 162,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 205,
+        "n_pitches_sea": 175,
+        "scored": true
+      }
+    ],
+    "pitcher_00269": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 106,
+        "n_pitches_sea": 316,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 312,
+        "n_pitches_sea": 123,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 132,
+        "n_pitches_sea": 46,
+        "scored": false
+      }
+    ],
+    "pitcher_00274": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 108,
+        "n_pitches_sea": 311,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 62,
+        "n_pitches_sea": 375,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 68,
+        "n_pitches_sea": 241,
+        "scored": false
+      }
+    ],
+    "pitcher_00277": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 99,
+        "n_pitches_sea": 345,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 213,
+        "n_pitches_sea": 244,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 64,
+        "n_pitches_sea": 24,
+        "scored": false
+      }
+    ],
+    "pitcher_00282": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 399,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 233,
+        "n_pitches_sea": 272,
+        "scored": true
+      }
+    ],
+    "pitcher_00288": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 92,
+        "n_pitches_sea": 642,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 100,
+        "n_pitches_sea": 255,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 82,
+        "n_pitches_sea": 212,
+        "scored": false
+      }
+    ],
+    "pitcher_00289": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 172,
+        "n_pitches_sea": 1204,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 97,
+        "n_pitches_sea": 639,
+        "scored": false
+      }
+    ],
+    "pitcher_00292": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 383,
+        "n_pitches_sea": 972,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 370,
+        "n_pitches_sea": 608,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 587,
+        "n_pitches_sea": 425,
+        "scored": true
+      }
+    ],
+    "pitcher_00294": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 134,
+        "n_pitches_sea": 524,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 99,
+        "n_pitches_sea": 60,
+        "scored": false
+      }
+    ],
+    "pitcher_00301": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 71,
+        "n_pitches_sea": 91,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 100,
+        "n_pitches_sea": 291,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 120,
+        "n_pitches_sea": 77,
+        "scored": false
+      }
+    ],
+    "pitcher_00302": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 149,
+        "n_pitches_sea": 453,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 90,
+        "n_pitches_sea": 431,
+        "scored": false
+      }
+    ],
+    "pitcher_00303": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 244,
+        "n_pitches_sea": 637,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 271,
+        "n_pitches_sea": 878,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 85,
+        "n_pitches_sea": 241,
+        "scored": false
+      }
+    ],
+    "pitcher_00309": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 244,
+        "n_pitches_sea": 261,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 9,
+        "n_pitches_sea": 0,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 56,
+        "n_pitches_sea": 51,
+        "scored": false
+      }
+    ],
+    "pitcher_00315": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 410,
+        "n_pitches_sea": 227,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 202,
+        "n_pitches_sea": 103,
+        "scored": true
+      }
+    ],
+    "pitcher_00316": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 200,
+        "n_pitches_sea": 151,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 33,
+        "n_pitches_sea": 0,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 88,
+        "scored": false
+      }
+    ],
+    "pitcher_00319": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 546,
+        "n_pitches_sea": 189,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 353,
+        "n_pitches_sea": 254,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 69,
+        "n_pitches_sea": 289,
+        "scored": false
+      }
+    ],
+    "pitcher_00324": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 117,
+        "n_pitches_sea": 329,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 20,
+        "n_pitches_sea": 269,
+        "scored": false
+      }
+    ],
+    "pitcher_00326": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 75,
+        "n_pitches_sea": 664,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 12,
+        "n_pitches_sea": 130,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 447,
+        "n_pitches_sea": 106,
+        "scored": true
+      }
+    ],
+    "pitcher_00327": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 585,
+        "n_pitches_sea": 134,
+        "scored": true
+      }
+    ],
+    "pitcher_00331": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 413,
+        "n_pitches_sea": 180,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 360,
+        "n_pitches_sea": 161,
+        "scored": true
+      }
+    ],
+    "pitcher_00334": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 351,
+        "n_pitches_sea": 267,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 127,
+        "n_pitches_sea": 22,
+        "scored": false
+      }
+    ],
+    "pitcher_00338": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 743,
+        "n_pitches_sea": 255,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 518,
+        "n_pitches_sea": 58,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 315,
+        "n_pitches_sea": 164,
+        "scored": true
+      }
+    ],
+    "pitcher_00340": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 156,
+        "n_pitches_sea": 1064,
+        "scored": true
+      }
+    ],
+    "pitcher_00343": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 84,
+        "n_pitches_sea": 139,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 443,
+        "n_pitches_sea": 123,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 146,
+        "n_pitches_sea": 77,
+        "scored": false
+      }
+    ],
+    "pitcher_00348": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 107,
+        "n_pitches_sea": 708,
+        "scored": true
+      }
+    ],
+    "pitcher_00361": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 297,
+        "n_pitches_sea": 136,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 467,
+        "n_pitches_sea": 163,
+        "scored": true
+      }
+    ],
+    "pitcher_00364": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 293,
+        "n_pitches_sea": 231,
+        "scored": true
+      }
+    ],
+    "pitcher_00370": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 180,
+        "n_pitches_sea": 228,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 164,
+        "n_pitches_sea": 300,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 129,
+        "n_pitches_sea": 79,
+        "scored": false
+      }
+    ],
+    "pitcher_00373": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 255,
+        "n_pitches_sea": 540,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 244,
+        "n_pitches_sea": 92,
+        "scored": false
+      }
+    ],
+    "pitcher_00377": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 742,
+        "n_pitches_sea": 208,
+        "scored": true
+      }
+    ],
+    "pitcher_00381": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 150,
+        "n_pitches_sea": 110,
+        "scored": true
+      }
+    ],
+    "pitcher_00382": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 128,
+        "n_pitches_sea": 130,
+        "scored": true
+      }
+    ],
+    "pitcher_00387": [
+      {
+        "season": 2026,
+        "n_pitches_hh": 125,
+        "n_pitches_sea": 140,
+        "scored": true
+      }
+    ],
+    "pitcher_00395": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 118,
+        "n_pitches_sea": 180,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 53,
+        "n_pitches_sea": 221,
+        "scored": false
+      }
+    ],
+    "pitcher_00396": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 177,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 176,
+        "n_pitches_sea": 976,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 754,
+        "scored": false
+      }
+    ],
+    "pitcher_00398": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 134,
+        "n_pitches_sea": 131,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 89,
+        "n_pitches_sea": 0,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 114,
+        "n_pitches_sea": 80,
+        "scored": false
+      }
+    ],
+    "pitcher_00401": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 55,
+        "n_pitches_sea": 54,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 272,
+        "n_pitches_sea": 667,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 352,
+        "n_pitches_sea": 121,
+        "scored": true
+      }
+    ],
+    "pitcher_00403": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 585,
+        "n_pitches_sea": 394,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 407,
+        "n_pitches_sea": 68,
+        "scored": false
+      }
+    ],
+    "pitcher_00404": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 68,
+        "n_pitches_sea": 1320,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 262,
+        "n_pitches_sea": 131,
+        "scored": true
+      }
+    ],
+    "pitcher_00418": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 374,
+        "n_pitches_sea": 131,
+        "scored": true
+      }
+    ],
+    "pitcher_00422": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 186,
+        "n_pitches_sea": 430,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 60,
+        "n_pitches_sea": 332,
+        "scored": false
+      }
+    ],
+    "pitcher_00426": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 268,
+        "n_pitches_sea": 448,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 293,
+        "n_pitches_sea": 330,
+        "scored": true
+      }
+    ],
+    "pitcher_00430": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 344,
+        "n_pitches_sea": 349,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 97,
+        "n_pitches_sea": 244,
+        "scored": false
+      }
+    ],
+    "pitcher_00436": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 363,
+        "n_pitches_sea": 508,
+        "scored": true
+      }
+    ],
+    "pitcher_00439": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 209,
+        "n_pitches_sea": 144,
+        "scored": true
+      }
+    ],
+    "pitcher_00445": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 313,
+        "n_pitches_sea": 171,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 28,
+        "n_pitches_sea": 179,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 7,
+        "n_pitches_sea": 29,
+        "scored": false
+      }
+    ],
+    "pitcher_00446": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 91,
+        "n_pitches_sea": 912,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 366,
+        "n_pitches_sea": 546,
+        "scored": true
+      }
+    ],
+    "pitcher_00448": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 322,
+        "n_pitches_sea": 142,
+        "scored": true
+      }
+    ],
+    "pitcher_00449": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 116,
+        "n_pitches_sea": 407,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 34,
+        "n_pitches_sea": 74,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 50,
+        "n_pitches_sea": 59,
+        "scored": false
+      }
+    ],
+    "pitcher_00451": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 89,
+        "n_pitches_sea": 370,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 140,
+        "n_pitches_sea": 367,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 90,
+        "n_pitches_sea": 239,
+        "scored": false
+      }
+    ],
+    "pitcher_00457": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 156,
+        "n_pitches_sea": 143,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 165,
+        "n_pitches_sea": 407,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 41,
+        "n_pitches_sea": 0,
+        "scored": false
+      }
+    ],
+    "pitcher_00458": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 148,
+        "n_pitches_sea": 187,
+        "scored": true
+      }
+    ],
+    "pitcher_00461": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 64,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 293,
+        "n_pitches_sea": 1215,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 80,
+        "scored": false
+      }
+    ],
+    "pitcher_00462": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 103,
+        "n_pitches_sea": 325,
+        "scored": true
+      }
+    ],
+    "pitcher_00464": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 197,
+        "n_pitches_sea": 1101,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 84,
+        "n_pitches_sea": 290,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 398,
+        "n_pitches_sea": 148,
+        "scored": true
+      }
+    ],
+    "pitcher_00466": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 111,
+        "n_pitches_sea": 558,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 21,
+        "n_pitches_sea": 22,
+        "scored": false
+      }
+    ],
+    "pitcher_00467": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 79,
+        "n_pitches_sea": 272,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 162,
+        "n_pitches_sea": 322,
+        "scored": true
+      }
+    ],
+    "pitcher_00468": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 274,
+        "n_pitches_sea": 636,
+        "scored": true
+      }
+    ],
+    "pitcher_00470": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 626,
+        "n_pitches_sea": 400,
+        "scored": true
+      }
+    ],
+    "pitcher_00477": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 39,
+        "n_pitches_sea": 224,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 151,
+        "n_pitches_sea": 469,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 23,
+        "n_pitches_sea": 314,
+        "scored": false
+      }
+    ],
+    "pitcher_00478": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 15,
+        "n_pitches_sea": 558,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 366,
+        "n_pitches_sea": 183,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 25,
+        "n_pitches_sea": 354,
+        "scored": false
+      }
+    ],
+    "pitcher_00483": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 66,
+        "n_pitches_sea": 349,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 100,
+        "n_pitches_sea": 334,
+        "scored": true
+      }
+    ],
+    "pitcher_00484": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 185,
+        "n_pitches_sea": 255,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 114,
+        "n_pitches_sea": 229,
+        "scored": true
+      }
+    ],
+    "pitcher_00495": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 752,
+        "n_pitches_sea": 208,
+        "scored": true
+      }
+    ],
+    "pitcher_00509": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 126,
+        "n_pitches_sea": 150,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 134,
+        "n_pitches_sea": 108,
+        "scored": true
+      }
+    ],
+    "pitcher_00511": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 65,
+        "n_pitches_sea": 284,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 118,
+        "n_pitches_sea": 381,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 71,
+        "n_pitches_sea": 130,
+        "scored": false
+      }
+    ],
+    "pitcher_00514": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 102,
+        "n_pitches_sea": 496,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 194,
+        "n_pitches_sea": 197,
+        "scored": true
+      }
+    ],
+    "pitcher_00516": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 32,
+        "n_pitches_sea": 613,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 243,
+        "n_pitches_sea": 386,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 237,
+        "scored": false
+      }
+    ],
+    "pitcher_00519": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 468,
+        "n_pitches_sea": 344,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 314,
+        "n_pitches_sea": 301,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 109,
+        "n_pitches_sea": 81,
+        "scored": false
+      }
+    ],
+    "pitcher_00522": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 417,
+        "n_pitches_sea": 189,
+        "scored": true
+      }
+    ],
+    "pitcher_00523": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 139,
+        "n_pitches_sea": 582,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 61,
+        "n_pitches_sea": 580,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 52,
+        "n_pitches_sea": 358,
+        "scored": false
+      }
+    ],
+    "pitcher_00539": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 29,
+        "n_pitches_sea": 15,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 101,
+        "n_pitches_sea": 529,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 151,
+        "n_pitches_sea": 109,
+        "scored": true
+      }
+    ],
+    "pitcher_00542": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 159,
+        "n_pitches_sea": 0,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 525,
+        "n_pitches_sea": 205,
+        "scored": true
+      }
+    ],
+    "pitcher_00547": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 20,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 173,
+        "n_pitches_sea": 122,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 52,
+        "n_pitches_sea": 94,
+        "scored": false
+      }
+    ],
+    "pitcher_00559": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 357,
+        "n_pitches_sea": 161,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 52,
+        "n_pitches_sea": 46,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 79,
+        "scored": false
+      }
+    ],
+    "pitcher_00562": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 499,
+        "n_pitches_sea": 149,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 83,
+        "n_pitches_sea": 296,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 171,
+        "scored": false
+      }
+    ],
+    "pitcher_00566": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 94,
+        "n_pitches_sea": 219,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 105,
+        "n_pitches_sea": 190,
+        "scored": true
+      }
+    ],
+    "pitcher_00569": [
+      {
+        "season": 2026,
+        "n_pitches_hh": 505,
+        "n_pitches_sea": 141,
+        "scored": true
+      }
+    ],
+    "pitcher_00573": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 370,
+        "n_pitches_sea": 310,
+        "scored": true
+      }
+    ],
+    "pitcher_00576": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 111,
+        "n_pitches_sea": 592,
+        "scored": true
+      }
+    ],
+    "pitcher_00581": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 162,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 465,
+        "n_pitches_sea": 157,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 49,
+        "n_pitches_sea": 50,
+        "scored": false
+      }
+    ],
+    "pitcher_00587": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 107,
+        "n_pitches_sea": 188,
+        "scored": true
+      }
+    ],
+    "pitcher_00595": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 165,
+        "n_pitches_sea": 493,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 196,
+        "n_pitches_sea": 148,
+        "scored": true
+      }
+    ],
+    "pitcher_00601": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 134,
+        "n_pitches_sea": 163,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 26,
+        "n_pitches_sea": 93,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 60,
+        "n_pitches_sea": 164,
+        "scored": false
+      }
+    ],
+    "pitcher_00604": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 403,
+        "n_pitches_sea": 344,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 440,
+        "n_pitches_sea": 113,
+        "scored": true
+      }
+    ],
+    "pitcher_00605": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 276,
+        "n_pitches_sea": 136,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 178,
+        "n_pitches_sea": 189,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 279,
+        "scored": false
+      }
+    ],
+    "pitcher_00609": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 145,
+        "n_pitches_sea": 265,
+        "scored": true
+      }
+    ],
+    "pitcher_00610": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 254,
+        "n_pitches_sea": 193,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 197,
+        "n_pitches_sea": 17,
+        "scored": false
+      }
+    ],
+    "pitcher_00616": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 143,
+        "n_pitches_sea": 141,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 23,
+        "n_pitches_sea": 69,
+        "scored": false
+      }
+    ],
+    "pitcher_00617": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 169,
+        "n_pitches_sea": 1296,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 90,
+        "n_pitches_sea": 882,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 553,
+        "scored": false
+      }
+    ],
+    "pitcher_00619": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 853,
+        "n_pitches_sea": 299,
+        "scored": true
+      }
+    ],
+    "pitcher_00622": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 380,
+        "n_pitches_sea": 896,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 1201,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 184,
+        "n_pitches_sea": 254,
+        "scored": true
+      }
+    ],
+    "pitcher_00624": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 187,
+        "n_pitches_sea": 237,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 105,
+        "n_pitches_sea": 137,
+        "scored": true
+      }
+    ],
+    "pitcher_00629": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 250,
+        "n_pitches_sea": 208,
+        "scored": true
+      }
+    ],
+    "pitcher_00636": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 75,
+        "n_pitches_sea": 150,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 60,
+        "n_pitches_sea": 158,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 443,
+        "n_pitches_sea": 160,
+        "scored": true
+      }
+    ],
+    "pitcher_00638": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 149,
+        "n_pitches_sea": 31,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 336,
+        "n_pitches_sea": 172,
+        "scored": true
+      }
+    ],
+    "pitcher_00646": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 251,
+        "n_pitches_sea": 157,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 614,
+        "n_pitches_sea": 257,
+        "scored": true
+      }
+    ],
+    "pitcher_00649": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 76,
+        "n_pitches_sea": 580,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 187,
+        "n_pitches_sea": 159,
+        "scored": true
+      }
+    ],
+    "pitcher_00660": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 275,
+        "n_pitches_sea": 146,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 201,
+        "n_pitches_sea": 91,
+        "scored": false
+      }
+    ],
+    "pitcher_00664": [
+      {
+        "season": 2026,
+        "n_pitches_hh": 408,
+        "n_pitches_sea": 113,
+        "scored": true
+      }
+    ],
+    "pitcher_00666": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 91,
+        "n_pitches_sea": 1178,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 208,
+        "n_pitches_sea": 743,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 76,
+        "n_pitches_sea": 478,
+        "scored": false
+      }
+    ],
+    "pitcher_00680": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 354,
+        "n_pitches_sea": 129,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 604,
+        "n_pitches_sea": 86,
+        "scored": false
+      }
+    ],
+    "pitcher_00681": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 247,
+        "n_pitches_sea": 141,
+        "scored": true
+      }
+    ],
+    "pitcher_00682": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 56,
+        "n_pitches_sea": 55,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 700,
+        "n_pitches_sea": 178,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 344,
+        "n_pitches_sea": 80,
+        "scored": false
+      }
+    ],
+    "pitcher_00685": [
+      {
+        "season": 2026,
+        "n_pitches_hh": 211,
+        "n_pitches_sea": 108,
+        "scored": true
+      }
+    ],
+    "pitcher_00686": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 183,
+        "n_pitches_sea": 210,
+        "scored": true
+      }
+    ],
+    "pitcher_00699": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 26,
+        "n_pitches_sea": 15,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 375,
+        "n_pitches_sea": 177,
+        "scored": true
+      }
+    ],
+    "pitcher_00702": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 721,
+        "n_pitches_sea": 392,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 149,
+        "n_pitches_sea": 0,
+        "scored": false
+      }
+    ],
+    "pitcher_00703": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 293,
+        "n_pitches_sea": 152,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 47,
+        "n_pitches_sea": 16,
+        "scored": false
+      }
+    ],
+    "pitcher_00705": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 388,
+        "n_pitches_sea": 754,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 85,
+        "n_pitches_sea": 332,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 169,
+        "n_pitches_sea": 252,
+        "scored": true
+      }
+    ],
+    "pitcher_00710": [
+      {
+        "season": 2026,
+        "n_pitches_hh": 286,
+        "n_pitches_sea": 145,
+        "scored": true
+      }
+    ],
+    "pitcher_00714": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 246,
+        "n_pitches_sea": 259,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 144,
+        "n_pitches_sea": 228,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 164,
+        "n_pitches_sea": 167,
+        "scored": true
+      }
+    ],
+    "pitcher_00718": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 178,
+        "n_pitches_sea": 167,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 162,
+        "n_pitches_sea": 145,
+        "scored": true
+      }
+    ],
+    "pitcher_00723": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 868,
+        "n_pitches_sea": 195,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 257,
+        "n_pitches_sea": 674,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 76,
+        "n_pitches_sea": 594,
+        "scored": false
+      }
+    ],
+    "pitcher_00736": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 445,
+        "n_pitches_sea": 139,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 13,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 187,
+        "n_pitches_sea": 33,
+        "scored": false
+      }
+    ],
+    "pitcher_00737": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 294,
+        "n_pitches_sea": 511,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 653,
+        "n_pitches_sea": 414,
+        "scored": true
+      }
+    ],
+    "pitcher_00742": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 28,
+        "n_pitches_sea": 538,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 174,
+        "n_pitches_sea": 207,
+        "scored": true
+      }
+    ],
+    "pitcher_00743": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 230,
+        "n_pitches_sea": 364,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 96,
+        "n_pitches_sea": 245,
+        "scored": false
+      }
+    ],
+    "pitcher_00751": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 131,
+        "n_pitches_sea": 150,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 192,
+        "n_pitches_sea": 536,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 280,
+        "scored": false
+      }
+    ],
+    "pitcher_00753": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 217,
+        "n_pitches_sea": 219,
+        "scored": true
+      }
+    ],
+    "pitcher_00755": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 177,
+        "n_pitches_sea": 577,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 41,
+        "n_pitches_sea": 553,
+        "scored": false
+      }
+    ],
+    "pitcher_00756": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 349,
+        "n_pitches_sea": 149,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 317,
+        "n_pitches_sea": 84,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 136,
+        "n_pitches_sea": 17,
+        "scored": false
+      }
+    ],
+    "pitcher_00757": [
+      {
+        "season": 2026,
+        "n_pitches_hh": 187,
+        "n_pitches_sea": 135,
+        "scored": true
+      }
+    ],
+    "pitcher_00759": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 472,
+        "n_pitches_sea": 205,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 13,
+        "n_pitches_sea": 0,
+        "scored": false
+      }
+    ],
+    "pitcher_00764": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 82,
+        "n_pitches_sea": 135,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 112,
+        "n_pitches_sea": 127,
+        "scored": true
+      }
+    ],
+    "pitcher_00767": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 579,
+        "n_pitches_sea": 314,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 603,
+        "n_pitches_sea": 250,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 219,
+        "n_pitches_sea": 21,
+        "scored": false
+      }
+    ],
+    "pitcher_00770": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 408,
+        "n_pitches_sea": 160,
+        "scored": true
+      }
+    ],
+    "pitcher_00775": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 193,
+        "n_pitches_sea": 226,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 80,
+        "n_pitches_sea": 84,
+        "scored": false
+      }
+    ],
+    "pitcher_00776": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 727,
+        "n_pitches_sea": 294,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 436,
+        "n_pitches_sea": 117,
+        "scored": true
+      }
+    ],
+    "pitcher_00778": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 480,
+        "n_pitches_sea": 629,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 169,
+        "n_pitches_sea": 892,
+        "scored": true
+      }
+    ],
+    "pitcher_00787": [
+      {
+        "season": 2026,
+        "n_pitches_hh": 252,
+        "n_pitches_sea": 148,
+        "scored": true
+      }
+    ],
+    "pitcher_00790": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 158,
+        "n_pitches_sea": 143,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 131,
+        "n_pitches_sea": 187,
+        "scored": true
+      }
+    ],
+    "pitcher_00797": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 196,
+        "n_pitches_sea": 119,
+        "scored": true
+      }
+    ],
+    "pitcher_00800": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 406,
+        "n_pitches_sea": 163,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 227,
+        "n_pitches_sea": 276,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 115,
+        "n_pitches_sea": 208,
+        "scored": true
+      }
+    ],
+    "pitcher_00801": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 95,
+        "n_pitches_sea": 134,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 293,
+        "n_pitches_sea": 213,
+        "scored": true
+      }
+    ],
+    "pitcher_00807": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 185,
+        "n_pitches_sea": 132,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 126,
+        "n_pitches_sea": 71,
+        "scored": false
+      }
+    ],
+    "pitcher_00816": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 28,
+        "n_pitches_sea": 110,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 106,
+        "n_pitches_sea": 286,
+        "scored": true
+      }
+    ],
+    "pitcher_00819": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 184,
+        "n_pitches_sea": 161,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 341,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 219,
+        "scored": false
+      }
+    ],
+    "pitcher_00829": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 214,
+        "n_pitches_sea": 104,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 137,
+        "n_pitches_sea": 10,
+        "scored": false
+      }
+    ],
+    "pitcher_00830": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 81,
+        "n_pitches_sea": 1293,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 183,
+        "n_pitches_sea": 1083,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 19,
+        "n_pitches_sea": 162,
+        "scored": false
+      }
+    ],
+    "pitcher_00834": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 194,
+        "n_pitches_sea": 442,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 77,
+        "n_pitches_sea": 75,
+        "scored": false
+      }
+    ],
+    "pitcher_00840": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 19,
+        "n_pitches_sea": 102,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 194,
+        "n_pitches_sea": 324,
+        "scored": true
+      }
+    ],
+    "pitcher_00841": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 189,
+        "n_pitches_sea": 549,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 449,
+        "n_pitches_sea": 550,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 60,
+        "n_pitches_sea": 132,
+        "scored": false
+      }
+    ],
+    "pitcher_00844": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 266,
+        "n_pitches_sea": 1368,
+        "scored": true
+      }
+    ],
+    "pitcher_00847": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 246,
+        "n_pitches_sea": 956,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 611,
+        "scored": false
+      }
+    ],
+    "pitcher_00848": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 182,
+        "n_pitches_sea": 68,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 316,
+        "n_pitches_sea": 145,
+        "scored": true
+      }
+    ],
+    "pitcher_00850": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 169,
+        "n_pitches_sea": 536,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 135,
+        "n_pitches_sea": 209,
+        "scored": true
+      }
+    ],
+    "pitcher_00865": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 164,
+        "n_pitches_sea": 121,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 132,
+        "n_pitches_sea": 82,
+        "scored": false
+      }
+    ],
+    "pitcher_00866": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 432,
+        "n_pitches_sea": 145,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 258,
+        "n_pitches_sea": 93,
+        "scored": false
+      }
+    ],
+    "pitcher_00877": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 185,
+        "n_pitches_sea": 157,
+        "scored": true
+      }
+    ],
+    "pitcher_00882": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 242,
+        "n_pitches_sea": 105,
+        "scored": true
+      }
+    ],
+    "pitcher_00890": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 167,
+        "n_pitches_sea": 112,
+        "scored": true
+      }
+    ],
+    "pitcher_00892": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 407,
+        "n_pitches_sea": 445,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 735,
+        "n_pitches_sea": 398,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 64,
+        "n_pitches_sea": 48,
+        "scored": false
+      }
+    ],
+    "pitcher_00893": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 187,
+        "n_pitches_sea": 171,
+        "scored": true
+      }
+    ],
+    "pitcher_00897": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 390,
+        "n_pitches_sea": 279,
+        "scored": true
+      }
+    ],
+    "pitcher_00902": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 56,
+        "n_pitches_sea": 431,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 203,
+        "n_pitches_sea": 263,
+        "scored": true
+      }
+    ],
+    "pitcher_00903": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 50,
+        "n_pitches_sea": 169,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 102,
+        "n_pitches_sea": 287,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 66,
+        "n_pitches_sea": 70,
+        "scored": false
+      }
+    ],
+    "pitcher_00904": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 257,
+        "n_pitches_sea": 84,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 869,
+        "n_pitches_sea": 434,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 445,
+        "n_pitches_sea": 211,
+        "scored": true
+      }
+    ],
+    "pitcher_00913": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 201,
+        "n_pitches_sea": 100,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 478,
+        "n_pitches_sea": 78,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 43,
+        "n_pitches_sea": 140,
+        "scored": false
+      }
+    ],
+    "pitcher_00918": [
+      {
+        "season": 2026,
+        "n_pitches_hh": 112,
+        "n_pitches_sea": 131,
+        "scored": true
+      }
+    ],
+    "pitcher_00924": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 244,
+        "n_pitches_sea": 646,
+        "scored": true
+      }
+    ],
+    "pitcher_00932": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 89,
+        "n_pitches_sea": 970,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 333,
+        "n_pitches_sea": 917,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 317,
+        "n_pitches_sea": 206,
+        "scored": true
+      }
+    ],
+    "pitcher_00938": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 64,
+        "n_pitches_sea": 997,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 1396,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 222,
+        "n_pitches_sea": 242,
+        "scored": true
+      }
+    ],
+    "pitcher_00940": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 125,
+        "n_pitches_sea": 817,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 15,
+        "scored": false
+      }
+    ],
+    "pitcher_00943": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 113,
+        "n_pitches_sea": 114,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 39,
+        "n_pitches_sea": 69,
+        "scored": false
+      }
+    ],
+    "pitcher_00948": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 495,
+        "n_pitches_sea": 208,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 151,
+        "n_pitches_sea": 0,
+        "scored": false
+      }
+    ],
+    "pitcher_00952": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 550,
+        "n_pitches_sea": 234,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 23,
+        "n_pitches_sea": 51,
+        "scored": false
+      }
+    ],
+    "pitcher_00953": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 358,
+        "n_pitches_sea": 127,
+        "scored": true
+      }
+    ],
+    "pitcher_00956": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 115,
+        "n_pitches_sea": 969,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 84,
+        "n_pitches_sea": 966,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 349,
+        "scored": false
+      }
+    ],
+    "pitcher_00958": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 811,
+        "n_pitches_sea": 442,
+        "scored": true
+      }
+    ],
+    "pitcher_00964": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 159,
+        "n_pitches_sea": 86,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 377,
+        "n_pitches_sea": 257,
+        "scored": true
+      }
+    ],
+    "pitcher_00967": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 497,
+        "n_pitches_sea": 194,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 499,
+        "scored": false
+      }
+    ],
+    "pitcher_00971": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 106,
+        "n_pitches_sea": 211,
+        "scored": true
+      }
+    ],
+    "pitcher_00974": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 420,
+        "n_pitches_sea": 949,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 85,
+        "n_pitches_sea": 113,
+        "scored": false
+      }
+    ],
+    "pitcher_00976": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 476,
+        "n_pitches_sea": 276,
+        "scored": true
+      }
+    ],
+    "pitcher_00983": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 204,
+        "n_pitches_sea": 129,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 8,
+        "n_pitches_sea": 107,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 43,
+        "n_pitches_sea": 46,
+        "scored": false
+      }
+    ],
+    "pitcher_00990": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 407,
+        "n_pitches_sea": 109,
+        "scored": true
+      }
+    ],
+    "pitcher_00997": [
+      {
+        "season": 2026,
+        "n_pitches_hh": 161,
+        "n_pitches_sea": 260,
+        "scored": true
+      }
+    ],
+    "pitcher_00999": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 309,
+        "n_pitches_sea": 174,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 35,
+        "n_pitches_sea": 97,
+        "scored": false
+      }
+    ],
+    "pitcher_01001": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 142,
+        "n_pitches_sea": 231,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 60,
+        "n_pitches_sea": 218,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 30,
+        "n_pitches_sea": 0,
+        "scored": false
+      }
+    ],
+    "pitcher_01003": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 108,
+        "n_pitches_sea": 194,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 100,
+        "n_pitches_sea": 172,
+        "scored": true
+      }
+    ],
+    "pitcher_01012": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 643,
+        "n_pitches_sea": 102,
+        "scored": true
+      }
+    ],
+    "pitcher_01014": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 172,
+        "n_pitches_sea": 957,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 138,
+        "scored": false
+      }
+    ],
+    "pitcher_01017": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 102,
+        "n_pitches_sea": 100,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 83,
+        "n_pitches_sea": 16,
+        "scored": false
+      }
+    ],
+    "pitcher_01018": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 577,
+        "n_pitches_sea": 134,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 118,
+        "n_pitches_sea": 76,
+        "scored": false
+      }
+    ],
+    "pitcher_01022": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 182,
+        "n_pitches_sea": 102,
+        "scored": true
+      }
+    ],
+    "pitcher_01023": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 194,
+        "n_pitches_sea": 432,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 250,
+        "n_pitches_sea": 60,
+        "scored": false
+      }
+    ],
+    "pitcher_01027": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 108,
+        "n_pitches_sea": 127,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 42,
+        "n_pitches_sea": 89,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 43,
+        "n_pitches_sea": 47,
+        "scored": false
+      }
+    ],
+    "pitcher_01030": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 125,
+        "n_pitches_sea": 102,
+        "scored": true
+      }
+    ],
+    "pitcher_01031": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 155,
+        "n_pitches_sea": 172,
+        "scored": true
+      }
+    ],
+    "pitcher_01032": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 500,
+        "n_pitches_sea": 507,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 305,
+        "n_pitches_sea": 49,
+        "scored": false
+      }
+    ],
+    "pitcher_01033": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 133,
+        "n_pitches_sea": 191,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 271,
+        "n_pitches_sea": 131,
+        "scored": true
+      }
+    ],
+    "pitcher_01035": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 214,
+        "n_pitches_sea": 155,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 215,
+        "scored": false
+      }
+    ],
+    "pitcher_01036": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 106,
+        "n_pitches_sea": 266,
+        "scored": true
+      }
+    ],
+    "pitcher_01037": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 152,
+        "n_pitches_sea": 1070,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 73,
+        "n_pitches_sea": 170,
+        "scored": false
+      }
+    ],
+    "pitcher_01038": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 42,
+        "n_pitches_sea": 245,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 142,
+        "n_pitches_sea": 171,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 22,
+        "scored": false
+      }
+    ],
+    "pitcher_01039": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 97,
+        "n_pitches_sea": 131,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 166,
+        "n_pitches_sea": 212,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 78,
+        "n_pitches_sea": 21,
+        "scored": false
+      }
+    ],
+    "pitcher_01040": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 149,
+        "n_pitches_sea": 329,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 173,
+        "n_pitches_sea": 535,
+        "scored": true
+      }
+    ],
+    "pitcher_01044": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 314,
+        "n_pitches_sea": 154,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 76,
+        "n_pitches_sea": 0,
+        "scored": false
+      }
+    ],
+    "pitcher_01049": [
+      {
+        "season": 2026,
+        "n_pitches_hh": 126,
+        "n_pitches_sea": 522,
+        "scored": true
+      }
+    ],
+    "pitcher_01051": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 32,
+        "n_pitches_sea": 61,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 355,
+        "n_pitches_sea": 154,
+        "scored": true
+      }
+    ],
+    "pitcher_01058": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 108,
+        "n_pitches_sea": 340,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 46,
+        "n_pitches_sea": 255,
+        "scored": false
+      }
+    ],
+    "pitcher_01060": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 1179,
+        "n_pitches_sea": 257,
+        "scored": true
+      }
+    ],
+    "pitcher_01067": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 68,
+        "n_pitches_sea": 1048,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 106,
+        "n_pitches_sea": 117,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 179,
+        "n_pitches_sea": 262,
+        "scored": true
+      }
+    ],
+    "pitcher_01072": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 32,
+        "n_pitches_sea": 278,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 107,
+        "n_pitches_sea": 405,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 2,
+        "n_pitches_sea": 8,
+        "scored": false
+      }
+    ],
+    "pitcher_01073": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 204,
+        "n_pitches_sea": 753,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 95,
+        "n_pitches_sea": 88,
+        "scored": false
+      }
+    ],
+    "pitcher_01075": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 103,
+        "n_pitches_sea": 112,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 89,
+        "n_pitches_sea": 33,
+        "scored": false
+      }
+    ],
+    "pitcher_01082": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 182,
+        "n_pitches_sea": 236,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 130,
+        "n_pitches_sea": 54,
+        "scored": false
+      }
+    ],
+    "pitcher_01084": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 231,
+        "n_pitches_sea": 248,
+        "scored": true
+      }
+    ],
+    "pitcher_01092": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 21,
+        "n_pitches_sea": 111,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 75,
+        "n_pitches_sea": 554,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 205,
+        "n_pitches_sea": 224,
+        "scored": true
+      }
+    ],
+    "pitcher_01099": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 134,
+        "n_pitches_sea": 165,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 244,
+        "n_pitches_sea": 84,
+        "scored": false
+      }
+    ],
+    "pitcher_01101": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 338,
+        "n_pitches_sea": 185,
+        "scored": true
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 246,
+        "n_pitches_sea": 164,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 159,
+        "n_pitches_sea": 35,
+        "scored": false
+      }
+    ],
+    "pitcher_01105": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 168,
+        "n_pitches_sea": 134,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 64,
+        "n_pitches_sea": 132,
+        "scored": false
+      }
+    ],
+    "pitcher_01109": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 171,
+        "n_pitches_sea": 739,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 184,
+        "n_pitches_sea": 651,
+        "scored": true
+      }
+    ],
+    "pitcher_01110": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 103,
+        "n_pitches_sea": 621,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 135,
+        "n_pitches_sea": 199,
+        "scored": true
+      }
+    ],
+    "pitcher_01112": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 151,
+        "n_pitches_sea": 237,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 117,
+        "n_pitches_sea": 253,
+        "scored": true
+      }
+    ],
+    "pitcher_01114": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 213,
+        "n_pitches_sea": 166,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 59,
+        "n_pitches_sea": 227,
+        "scored": false
+      }
+    ],
+    "pitcher_01122": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 157,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 140,
+        "n_pitches_sea": 195,
+        "scored": true
+      }
+    ],
+    "pitcher_01129": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 270,
+        "n_pitches_sea": 157,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 50,
+        "n_pitches_sea": 72,
+        "scored": false
+      }
+    ],
+    "pitcher_01130": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 342,
+        "n_pitches_sea": 292,
+        "scored": true
+      }
+    ],
+    "pitcher_01133": [
+      {
+        "season": 2024,
+        "n_pitches_hh": 36,
+        "n_pitches_sea": 329,
+        "scored": false
+      },
+      {
+        "season": 2025,
+        "n_pitches_hh": 0,
+        "n_pitches_sea": 52,
+        "scored": false
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 103,
+        "n_pitches_sea": 250,
+        "scored": true
+      }
+    ],
+    "pitcher_01134": [
+      {
+        "season": 2025,
+        "n_pitches_hh": 524,
+        "n_pitches_sea": 379,
+        "scored": true
+      },
+      {
+        "season": 2026,
+        "n_pitches_hh": 403,
+        "n_pitches_sea": 379,
+        "scored": true
+      }
+    ]
+  },
   "pitch_profiles": {
     "Changeup": {
       "levels": {

@@ -761,18 +761,48 @@ def mockup(d, df_phys, roles=None, entries=None, pitches_per_inning=None):
             c["stuff_plus_sea"] >= sea_p70 and c["stuff_plus_delta"] <= delta_p30
         )
     cards.sort(key=lambda c: (-c["stuff_plus_hh"], c["pitcher_id"]))
+    # Every season each carded pitcher appears in, scored or not. The Ficha
+    # shows all of them: a season with 212 pitches at altitude and 95 at sea
+    # level carries no comparison, and saying so is the point of the view.
+    carded = {c["pitcher_id"] for c in cards}
+    scored_keys = {(c["pitcher_id"], c["season"]) for c in cards}
+    # Counted on the SCORED frame, the same one the cards come from, so the
+    # Ficha never shows two different pitch counts for one season.
+    counts = (
+        d[d.pitcher_anon_id.isin(carded)]
+        .groupby(["pitcher_anon_id", "year", "altitude_category"])
+        .size()
+        .unstack(fill_value=0)
+    )
+    history = {}
+    for (pid, yr), row in counts.iterrows():
+        history.setdefault(pid, []).append(
+            {
+                "season": int(yr),
+                "n_pitches_hh": int(row.get(EXT, 0)),
+                "n_pitches_sea": int(row.get(SEA, 0)),
+                "scored": (pid, int(yr)) in scored_keys,
+            }
+        )
+    for pid in history:
+        history[pid].sort(key=lambda x: x["season"])
+
     taxes = np.array([c["altitude_tax_runs_per_9"] for c in cards])
-    return cards, {
-        "altitude_tax_runs_per_9": {
-            "mean": round(float(taxes.mean()), 2),
-            "median": round(float(np.median(taxes)), 2),
-            "n_significant": int(sum(c["altitude_tax_significant"] for c in cards)),
+    return (
+        cards,
+        history,
+        {
+            "altitude_tax_runs_per_9": {
+                "mean": round(float(taxes.mean()), 2),
+                "median": round(float(np.median(taxes)), 2),
+                "n_significant": int(sum(c["altitude_tax_significant"] for c in cards)),
+            },
+            "n_cards": len(cards),
+            "n_pitchers": len({c["pitcher_id"] for c in cards}),
+            "min_pitches_each_environment": MIN_PITCHES,
+            "n_traps": int(sum(c["altitude_trap"] for c in cards)),
         },
-        "n_cards": len(cards),
-        "n_pitchers": len({c["pitcher_id"] for c in cards}),
-        "min_pitches_each_environment": MIN_PITCHES,
-        "n_traps": int(sum(c["altitude_trap"] for c in cards)),
-    }
+    )
 
 
 def target_learnability(df, seed=7):
@@ -906,7 +936,9 @@ def main():
     log(f"Roles: {R['roles']['distribution']}")
 
     ppi = R["run_environment"][EXT]["pitches_per_inning"]
-    cards, R["cohort"] = mockup(d, df, roles=roles, entries=entries, pitches_per_inning=ppi)
+    cards, history, R["cohort"] = mockup(
+        d, df, roles=roles, entries=entries, pitches_per_inning=ppi
+    )
     log(
         f"Mockup cards: {len(cards)} pitcher-seasons from "
         f"{R['cohort']['n_pitchers']} pitchers, {R['cohort']['n_traps']} altitude traps"
@@ -922,7 +954,12 @@ def main():
         json.dump(R, f, indent=2, ensure_ascii=False)
     with open(os.path.join(OUT, "mockup_data.json"), "w") as f:
         json.dump(
-            {"pitchers": cards, "pitch_profiles": R["pitch_profiles"], "density": R["density"]},
+            {
+                "pitchers": cards,
+                "pitcher_seasons": history,
+                "pitch_profiles": R["pitch_profiles"],
+                "density": R["density"],
+            },
             f,
             indent=2,
             ensure_ascii=False,
