@@ -9,7 +9,10 @@ import path from 'node:path'
  * `SUPERESTELA_DATA_DIR` existe para CI y contenedores, donde la ruta relativa
  * al repositorio puede no aplicar.
  */
-const REPO_OUTPUTS = path.join(import.meta.dirname, '..', '..', '..', '..', 'analysis', 'outputs')
+// Anclado a `process.cwd()` y no a `import.meta.dirname`: el bundle de Next no
+// define esa variable, asi que un modulo que la usa compila y revienta al
+// recolectar la pagina. `cwd` es `packages/web` tanto en Next como en Vitest.
+const REPO_OUTPUTS = path.join(process.cwd(), '..', '..', 'analysis', 'outputs')
 
 export const dataDir = (): string => process.env.SUPERESTELA_DATA_DIR ?? REPO_OUTPUTS
 
