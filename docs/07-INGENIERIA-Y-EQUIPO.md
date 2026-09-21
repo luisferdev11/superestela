@@ -36,16 +36,19 @@ Lo que datos entrega, producto consume. Formato parquet, validado con Pandera en
 
 | Campo | Nota |
 |---|---|
-| `pitcher_id`, `season`, `environment` | Llave compuesta |
-| `n_pitches` | Para decidir si se muestra o se suprime por muestra insuficiente |
-| `role` | `starter` / `reliever` / `late_inning_reliever`. Nulo debajo de 5 apariciones. **Nunca `closer`:** se define por situación de salvamento y no hay marcador en el dataset |
+| `pitcher_id`, `season` | **Llave compuesta.** El entorno **no** va en la llave: la fila ya trae Stuff+ en los dos, o sea que es una comparación, no la observación de uno |
+| `n_pitches_hh`, `n_pitches_sea` | Por entorno, no un total. Una entrega con 900 a nivel del mar y 40 en altitud no contiene ninguna comparación, y un solo conteo lo escondería |
+| `role` | `starter` / `reliever`, y nada más. Nulo debajo de 5 apariciones. **Nunca `closer`** —se define por situación de salvamento y no hay marcador— ni una tercera categoría por entrada tardía (`docs/adr/0004`) |
+| `median_entry_inning` | No se muestra. Es la materia prima del rol y lo que necesita la pregunta E5 del backlog |
 | `stuff_plus_hh`, `stuff_plus_hh_ci95` | |
 | `stuff_plus_sea`, `stuff_plus_sea_ci95` | |
 | `altitude_tax_per_9`, `altitude_tax_se` | Carreras por **9 entradas**, no por 100 lanzamientos. Cota inferior: los pesos lineales no ven secuenciamiento y capturan ~65% del efecto observado |
 | `altitude_tax_significant` | **Obligatorio de respetar.** Falso en 246 de 286; ahí el producto muestra *no concluyente*, no un número |
 | `arsenal[]` | Por tipo: uso, velo, ivb, hb, spin, stuff_plus, whiff |
 
-**Regla de producto:** por debajo de `n_pitches = 100` no se muestra score; se muestra "muestra insuficiente". Es preferible callar que mentir con una banda enorme.
+**Regla de producto:** por debajo de **100 lanzamientos en cada entorno** no se muestra score; se muestra "muestra insuficiente". Es preferible callar que mentir con una banda enorme.
+
+**Por qué la temporada va en la llave.** Un lanzador que estuvo en 2024, se fue en 2025 y volvió en 2026 no es un promedio: son dos mediciones. En el dataset hay **28 casos exactos** de eso. Y el hueco se paga en precisión —la forma correlaciona 0.78–0.83 entre temporadas consecutivas y **0.674** con un año de por medio—, así que mezclarlas describe a alguien que no existe. Detalle en `docs/adr/0005`.
 
 ### 1.3 Contrato C · El Traductor, como función
 
