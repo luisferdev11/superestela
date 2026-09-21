@@ -199,17 +199,23 @@ Reemplaza un elemento de navegación que estaba en el rail en gris, sin pantalla
 
 ## 4. La narrativa de 10 minutos *(deck)*
 
-Secuencia propuesta:
+Trece láminas. El orden importa: primero el hallazgo, luego la física que lo explica, luego **por qué el método es el correcto**, y solo entonces el producto.
 
-1. **El gancho** — 268 pitchers. 100% pierde ride. Y los mejores pierden más.
-2. **Los dos pitchers** — `pitcher_00069` y `pitcher_00566`: **idéntico Stuff+ a nivel del mar (111.1)**, separados por **13.8 puntos** en CDMX. Nadie en el mercado ve esa diferencia. Nosotros sí.
-3. **Por qué pasa** — la física: densidad 0.858, Magnus 0.754, medidos desde la pelota.
-4. **Lo que refutamos** — H2 no se sostiene. El changeup no sobrevive; la curva sí.
-5. **El producto** — las tres decisiones: fichar, desarrollar, alinear.
-6. **Que esto es un sistema, no una demo** — arquitectura, gobernanza, Decision Log.
-7. **El cierre** — el Impuesto de Altitud en carreras y en pesos.
-
----
+| # | Lámina | Qué carga |
+|---|---|---|
+| 01 | Portada | La tesis en una frase: no persigas a la estrella, lee la estela |
+| 02 | El hallazgo | 268 lanzadores medidos contra sí mismos, 100% pierde ride, y los mejores pierden más |
+| 03 | Los dos lanzadores | Mismo Stuff+ a nivel del mar en la misma temporada, 13 puntos de diferencia en CDMX |
+| 04 | La física | El aire medido desde la trayectoria: densidad 0.858, Magnus 0.754 |
+| 05 | H2 refutada | La convocatoria pidió cuantificar antes de asumir |
+| **06** | **Por qué la forma y no el resultado** | **El resultado persiste r = 0.216; la habilidad, r = 0.556. Justifica el método antes de enseñar la herramienta** |
+| 07 | El producto | Tres decisiones, no un score |
+| 08 | La demostración | Un clic reordena el mercado: 10 trampas contra 1 |
+| 09 | El Traductor | El diferenciador, con su error en pitchers nunca vistos |
+| 10 | El caso económico | 43 carreras entre el perfil correcto y el equivocado |
+| 11 | Ingeniería | Que esto es un sistema, no una demo |
+| 12 | Los límites | Lo que declaramos que no sabemos |
+| 13 | Cierre | Tres decisiones que cambiarían el lunes |
 
 ## 5. Ficha ejecutiva (1 página)
 

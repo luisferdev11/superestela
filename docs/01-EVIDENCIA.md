@@ -223,6 +223,33 @@ Es sólido a nivel de liga y débil a nivel de individuo, y las dos cosas son ci
 
 ---
 
+## 8.4 Por qué medir la forma y no el resultado
+
+Es la validación que todo modelo público de Stuff+ hace para justificarse: dada una temporada, ¿qué predice la siguiente? Con 2024, 2025 y 2026 podemos hacerla nosotros. **336 pares de temporadas consecutivas** con al menos 200 lanzamientos en cada una.
+
+| Predicción | r |
+|---|---|
+| RA/9 de un año → **RA/9 del siguiente** | **+0.216** |
+| whiff de un año → **whiff del siguiente** | **+0.556** |
+| RA/9 de un año → whiff del siguiente | −0.077 |
+| whiff de un año → RA/9 del siguiente | −0.119 |
+
+**El resultado casi no se repite. La habilidad sí, 2.6 veces mejor.** Ese es el argumento entero de por qué existe Stuff+, y aquí está medido sobre la LMB en lugar de citado de MLB.
+
+El tercer renglón es el que conviene decir en voz alta ante un director deportivo: **lo que un lanzador concedió el año pasado no dice prácticamente nada sobre la habilidad que va a mostrar el siguiente.** Si evalúas por resultado, estás evaluando ruido.
+
+> **Y el cuarto renglón es nuestro límite, no un descuido.** El whiff de un año tampoco predice fuerte las carreras del siguiente (−0.119). La dirección es la correcta —más swings fallados, menos carreras— pero la magnitud es débil. Ese hueco es exactamente el puente A1–A3 del backlog: el modelo por componentes agregado a xRV es lo que lo cierra. Lo publicamos porque el hueco es la razón de que ese trabajo sea la prioridad 1, no a pesar de ella.
+
+### 8.5 Sobre el sesgo hacia el slider
+
+Los modelos de stuff, públicamente, premian a los sliders, y el nuestro no es la excepción: a nivel del mar el `stuff_plus_v0` da curva **114.0**, slider **109.2** y recta **101.2**. Como nuestra tesis dice que el slider sobrevive mejor la altitud, la objeción obvia es que estamos midiendo el sesgo del modelo y no el efecto del aire.
+
+No es el caso, y se puede comprobar: **la correlación entre el |IVB| a nivel del mar y los puntos de Stuff+ perdidos en altitud es +0.531.** Lo que sobrevive no es una categoría de lanzamiento, es **el poco ride**, que es una propiedad física continua. El orden por tipo de lanzamiento es consecuencia de eso, no su causa — los sliders sobreviven porque tienen poco ride, no porque sean sliders.
+
+La prueba que lo cerraría del todo es correr el baseline sin las variables de tipo de lanzamiento y ver si el efecto sobrevive sin que el modelo sepa qué se lanzó. Está anotada en `docs/08` como trabajo pendiente.
+
+---
+
 ## 9. Qué target debe modelar el equipo de datos
 
 **Hallazgo metodológico central.** Ajustamos un baseline sobre las 8 features core con `GroupKFold` por pitcher, contra dos familias de target:

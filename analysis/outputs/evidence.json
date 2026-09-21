@@ -838,6 +838,19 @@
       "ra9_pct": 56.0
     }
   },
+  "season_stability": {
+    "n_pairs": 336,
+    "min_pitches_per_season": 200,
+    "pairs_by_first_season": {
+      "2024": 181,
+      "2025": 155
+    },
+    "result_persistence_ra9": 0.216,
+    "skill_persistence_whiff": 0.556,
+    "whiff_predicts_next_whiff": 0.556,
+    "ra9_predicts_next_whiff": -0.077,
+    "whiff_predicts_next_ra9": -0.119
+  },
   "translator": {
     "magnus_ratio_measured": 0.7543,
     "by_pitch": {
