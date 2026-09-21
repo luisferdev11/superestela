@@ -15,6 +15,22 @@ export const es = {
   insufficientSample: 'muestra insuficiente',
   inconclusive: 'no concluyente',
   inconclusiveShort: 'no concl.',
+  brand: { top: 'SUPER', bottom: 'ESTELA' },
+  nav: {
+    groups: { signings: 'Fichajes', roster: 'Roster', lab: 'Laboratorio' },
+    items: {
+      radar: 'Radar de candidatos',
+      roster: 'Plantel',
+      deployment: 'Despliegue',
+      simulator: 'Simulador de Pitch',
+      translator: 'Traductor de Altitud',
+    },
+    pending: 'Pantalla pendiente',
+  },
+  densityIndex: '\u00cdndice de Densidad',
+  atHarpHelu: '\u00b7 Harp Hel\u00fa',
+  baselineNote: (pitches: number, seasons: number): string =>
+    `Stuff+ v0 baseline \u00b7 ${pitches.toLocaleString('es-MX')} lanzamientos \u00b7 ${String(seasons)} temporadas`,
   sortBy: 'Ordenar por',
   environment: { hh: 'Stuff+ HH', sea: 'Stuff+ nivel del mar' },
   columns: [
@@ -33,6 +49,8 @@ export const es = {
   evaluated: 'Evaluados',
   conclusiveTax: 'Impuesto concluyente',
   traps: 'Trampas de Altitud',
+  trapsOver: (total: number): string => `Trampas \u00b7 ${String(total)} temporadas`,
+  outOf: (total: number): string => `de ${String(total)}`,
   trap: 'Trampa de Altitud',
   trapDescription: 'Se ve fuerte a nivel del mar y colapsa en el Harp Helú.',
 } as const

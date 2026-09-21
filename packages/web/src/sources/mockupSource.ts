@@ -1,8 +1,10 @@
 import 'server-only'
 import { readFile } from 'node:fs/promises'
-import { mockupDataPath } from './paths'
+import { evidencePath, mockupDataPath } from './paths'
 import { mockupDataSchema } from './schema'
-import { toPitcherSeason, toSeasonEntry } from './adapter'
+import { evidenceSchema } from './evidenceSchema'
+import { toDensityLevel, toPitcherSeason, toSeasonEntry } from './adapter'
+import { orderByDensity, type DensityScale } from '@/domain/density'
 import type { PitcherSeason, SeasonEntry } from '@/domain/types'
 
 /**
@@ -13,11 +15,30 @@ import type { PitcherSeason, SeasonEntry } from '@/domain/types'
 export type Dataset = {
   readonly cards: readonly PitcherSeason[]
   readonly seasonsByPitcher: ReadonlyMap<string, readonly SeasonEntry[]>
+  readonly density: DensityScale
+  /** Del audit: lo que respalda el pie del rail. */
+  readonly nPitches: number
+  readonly seasons: readonly number[]
 }
 
 export const loadDataset = async (): Promise<Dataset> => {
-  const raw: unknown = JSON.parse(await readFile(mockupDataPath(), 'utf8'))
-  const parsed = mockupDataSchema.parse(raw)
+  const [mockupRaw, evidenceRaw]: [unknown, unknown] = await Promise.all([
+    readFile(mockupDataPath(), 'utf8').then((text): unknown => JSON.parse(text)),
+    readFile(evidencePath(), 'utf8').then((text): unknown => JSON.parse(text)),
+  ])
+  const parsed = mockupDataSchema.parse(mockupRaw)
+  const evidence = evidenceSchema.parse(evidenceRaw)
+
+  // Cual entorno es "nivel del mar" y cual "altitud extrema" se decide por la
+  // densidad medida, no por la ortografia de la etiqueta.
+  const levels = orderByDensity(
+    Object.entries(parsed.density).map(([label, level]) => toDensityLevel(label, level)),
+  )
+  const sea = levels[0]
+  const extreme = levels[levels.length - 1]
+  if (sea === undefined || extreme === undefined) {
+    throw new Error('mockup_data.json no trae ningun entorno con densidad medida')
+  }
 
   return {
     cards: parsed.pitchers.map(toPitcherSeason),
@@ -27,5 +48,8 @@ export const loadDataset = async (): Promise<Dataset> => {
         seasons.map(toSeasonEntry),
       ]),
     ),
+    density: { levels, sea, extreme },
+    nPitches: evidence.audit.n_pitches,
+    seasons: evidence.audit.seasons,
   }
 }

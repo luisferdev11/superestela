@@ -1,7 +1,8 @@
 import type { ArsenalEntry, PitcherSeason, SeasonEntry } from '@/domain/types'
 import type { PitcherCardRaw } from './schema'
 import type { z } from 'zod'
-import type { arsenalEntrySchema, seasonEntrySchema } from './schema'
+import type { arsenalEntrySchema, densityLevelSchema, seasonEntrySchema } from './schema'
+import type { DensityLevel } from '@/domain/density'
 
 /**
  * El unico lugar del proyecto donde `snake_case` se vuelve `camelCase`.
@@ -58,4 +59,14 @@ export const toSeasonEntry = (raw: z.infer<typeof seasonEntrySchema>): SeasonEnt
   nPitchesHh: raw.n_pitches_hh,
   nPitchesSea: raw.n_pitches_sea,
   scored: raw.scored,
+})
+
+export const toDensityLevel = (
+  label: string,
+  raw: z.infer<typeof densityLevelSchema>,
+): DensityLevel => ({
+  label,
+  densityRatio: raw.density_ratio,
+  magnusRatio: raw.magnus_ratio,
+  nPitches: raw.n,
 })
