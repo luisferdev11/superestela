@@ -43,6 +43,18 @@ docker compose up -d               # api :8000, MLflow :5000, Postgres :5433
 curl localhost:8000/health
 ```
 
+## El prototipo
+
+Las pantallas y el deck **no viven en este repositorio**. Viven en un Artifact de tipo Design:
+
+**https://claude.ai/artifact/AysYSEs8pq1Aq4baGMjpAD**
+
+Diez pantallas de aplicación y trece láminas de deck, con datos reales de `analysis/outputs/mockup_data.json`. Es la referencia para construir `packages/web/`: el HTML de cada pantalla ya tiene la estructura, los tokens de color y las cifras.
+
+> **Regla que cuesta recordar y cuesta más olvidar:** cada cambio de métrica o de cifra se aplica en **tres** lugares — la evidencia (`analysis/evidence.py`), los documentos (`docs/`) y el prototipo. Si el prototipo se queda atrás, el deck enseña números que ninguna corrida respalda, y eso es justo lo que prohíbe `CONVENTIONS.md` §8.
+
+---
+
 ## El repositorio
 
 | Ruta | Qué es |
