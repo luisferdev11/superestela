@@ -1,4 +1,5 @@
 import { readFile } from 'node:fs/promises'
+import path from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { MIN_PITCHES_FOR_SCORE, ROLES } from './constants'
 
@@ -9,8 +10,10 @@ import { MIN_PITCHES_FOR_SCORE, ROLES } from './constants'
  * contrato rechazaria — y nadie se entera hasta el deck.
  */
 
+// Ruta armada con `path` y no con `new URL(..., import.meta.url)`: el plugin
+// de React reescribe esa forma como si fuera un asset del bundle.
 const contracts = async (file: string): Promise<string> =>
-  readFile(new URL(`../../../contracts/${file}`, import.meta.url), 'utf8')
+  readFile(path.join(import.meta.dirname, '..', '..', '..', 'contracts', file), 'utf8')
 
 describe('las constantes no se separan de packages/contracts', () => {
   it('el umbral de muestra coincide con MIN_PITCHES_FOR_SCORE', async () => {
