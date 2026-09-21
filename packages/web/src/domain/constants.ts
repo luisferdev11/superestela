@@ -1,0 +1,10 @@
+/**
+ * Umbral de muestra. Espejo de `MIN_PITCHES_FOR_SCORE` en
+ * `packages/contracts/schemas.py`: debajo de esto no hay score, hay "muestra
+ * insuficiente". Un test lee la constante de Python y compara, para que las dos
+ * no se separen en silencio.
+ */
+export const MIN_PITCHES_FOR_SCORE = 100
+
+/** Los dos roles que el dato separa. Ver `docs/adr/0004`. */
+export const ROLES = ['starter', 'reliever'] as const

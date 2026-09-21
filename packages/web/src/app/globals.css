@@ -1,0 +1,23 @@
+@import 'tailwindcss';
+@import '../styles/tokens.generated.css';
+
+@layer base {
+  /*
+   * docs/07 seccion 5.2, regla 1: cifras tabulares en todas partes. Sin esto
+   * las columnas bailan y una tabla de scores se ve amateur.
+   */
+  body {
+    background: var(--color-surface-page);
+    color: var(--color-text-strong);
+    font-family: var(--font-body);
+    font-variant-numeric: tabular-nums;
+  }
+
+  a {
+    color: var(--color-diablos);
+  }
+
+  a:hover {
+    color: var(--color-diablos-strong);
+  }
+}
