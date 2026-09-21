@@ -4,7 +4,14 @@ import { useState } from 'react'
 import { RadarRow } from './RadarRow'
 import { RadarLegend } from './RadarLegend'
 import { RadarFilters } from './RadarFilters'
-import { applyFilters, NO_FILTERS, type RadarFilters as Filters } from '@/domain/filters'
+import { RadarSummary } from './RadarSummary'
+import {
+  applyFilters,
+  isFiltered,
+  NO_FILTERS,
+  type RadarFilters as Filters,
+} from '@/domain/filters'
+import { summarize, type CohortSummary } from '@/domain/cohort'
 import { rankBy } from '@/domain/ranking'
 import type { Environment, PitcherSeason } from '@/domain/types'
 import { es } from '@/i18n/es'
@@ -17,12 +24,12 @@ import { es } from '@/i18n/es'
 export const RadarTable = ({
   cards,
   latestSeason,
-  significant,
+  cohortSummary,
   pitches,
 }: {
   readonly cards: readonly PitcherSeason[]
   readonly latestSeason: number
-  readonly significant: number
+  readonly cohortSummary: CohortSummary
   readonly pitches: readonly string[]
 }) => {
   const [environment, setEnvironment] = useState<Environment>('hh')
@@ -31,10 +38,14 @@ export const RadarTable = ({
     setEnvironment(next)
   }
 
-  const rows = rankBy(applyFilters(cards, filters), environment)
+  const matching = applyFilters(cards, filters)
+  const rows = rankBy(matching, environment)
+  const shown = summarize(matching)
 
   return (
     <div className="flex flex-col gap-4">
+      <RadarSummary shown={shown} cohort={cohortSummary} filtered={isFiltered(filters)} />
+
       <RadarFilters
         cards={cards}
         pitches={pitches}
@@ -101,8 +112,8 @@ export const RadarTable = ({
         <RadarLegend
           shown={rows.length}
           total={cards.length}
-          significant={significant}
-          significantOver={cards.length}
+          significant={shown.nConclusiveTax}
+          significantOver={rows.length}
         />
       </div>
     </div>
