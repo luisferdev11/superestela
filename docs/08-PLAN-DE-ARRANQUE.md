@@ -1,94 +1,84 @@
-# SuperEstela — Plan de arranque
+# SuperEstela — Plan hacia el 15 de octubre
 
-> Fecha de escritura: **17 de septiembre de 2026**. Entrega: **15 de octubre**. Quedan **4 semanas exactas**.
+> Actualizado el **21 de septiembre de 2026**. Quedan **24 días**.
 >
-> Este documento existe para que nadie tenga que volver a decidir qué sigue. Todo lo que hay aquí está respaldado por `docs/00`–`07` y por `CONVENTIONS.md`.
+> Reemplaza al plan de arranque original: el repositorio ya está en pie y la semana 1 se cumplió. Esto es lo que falta.
 
 ---
 
-## 1. Calendario, hacia atrás desde el 15 de octubre
+## 1. Dónde estamos
 
-| Semana | Fechas | Objetivo | Hecho cuando |
-|---|---|---|---|
-| **1** | 17–24 sep | **Desbloquear al equipo** | Repo en pie, CI verde, contratos publicados, datos trabajando |
-| **2** | 25 sep – 1 oct | **Modelo v1 y esqueleto de app** | Componentes → xRV corriendo; Radar sirviendo scores reales |
-| **3** | 2–8 oct | **Integración** | Las tres pantallas nucleares sobre scores reales; borrador del documento |
-| **4** | 9–15 oct | **Cerrar** | Validación final, documento, deck, y margen para lo que salga mal |
+| | |
+|---|---|
+| Repositorio | `github.com/luisferdev11/superestela`, privado, CI verde, `main` protegida |
+| Contratos | Ejecutables y publicados. Llave `(pitcher_id, season)`, rol de dos valores |
+| Evidencia | `analysis/evidence.py` reproduce todo en ~3 min; 370 temporadas con score de 296 lanzadores |
+| Prototipo | 10 pantallas de app y 13 láminas de deck, con datos reales de la corrida actual |
+| Equipo de datos | Incorporado, primer PR fusionado (EDA del dataset) |
+
+**Lo que todavía no existe:** el modelo final. Todo lo que se ve hoy corre sobre `stuff_plus_v0`, un baseline declarado como tal.
+
+---
+
+## 2. Calendario
+
+| Semana | Fechas | Objetivo |
+|---|---|---|
+| **2** (en curso) | 21–24 sep | Modelo por componentes arrancando: A1 y A2 del backlog |
+| **3** | 25 sep – 1 oct | **Puerta A3**: ¿existe un xRV que correlacione con el run value observado? |
+| **4** | 2–8 oct | Integración: las pantallas sobre scores reales, borrador del documento |
+| **5** | 9–15 oct | Cerrar |
 
 ### Dos fechas que no se mueven
 
-- **12 de octubre · congelamiento de cifras.** A partir de ahí ningún número cambia. El documento y el deck se terminan contra cifras congeladas, no contra un modelo que sigue entrenando. Sin esto, la última noche se va en actualizar tablas.
+- **12 de octubre · congelamiento de cifras.** A partir de ahí ningún número cambia. El documento y el deck se terminan contra cifras congeladas, no contra un modelo que sigue entrenando.
 - **13 de octubre · ensayo completo.** Los 10 minutos cronometrados, con la app en vivo. Lo que falle ahí se arregla el 14.
 
-### La ruta crítica
+### La ruta crítica, sin cambios
 
-**A1–A3: el puente Stuff+ → carreras** (`docs/05` §3, Track A). Todo lo demás tiene holgura; esto no. Si el 1 de octubre no hay un xRV que correlacione con el run value observado, se recorta alcance de producto, no de validación.
+**A1–A3: el puente Stuff+ → carreras.** Todo lo demás tiene holgura; esto no. La lámina 06 del deck ahora **declara el hueco explícitamente** (el whiff predice las carreras del año siguiente con −0.12), así que si el puente no cierra, el deck sigue siendo coherente: dijimos que faltaba.
 
----
-
-## 2. Semana 1, día por día
-
-### Sesión de setup (la siguiente, en Claude Code limpio)
-
-Orden exacto, porque cada paso desbloquea al siguiente:
-
-1. **`git init`, estructura de `packages/`** según `docs/07` §2.1. `data/` en `.gitignore` en el **primer** commit.
-2. **`packages/contracts/`** — los esquemas Pandera de `docs/07` §1.1 y §1.2, con fixtures que pasan y que fallan. *Esto es lo que desbloquea al equipo de datos: publicarlo antes que nada.*
-3. **`packages/core/`** — extraer de `analysis/evidence.py` la capa de física: `density_index()` y `translate()`, como funciones puras con tests de propiedades. Es la frontera de IP (`docs/04` §5.1); nace limpia o no nace.
-4. **`pre-commit`** — ruff, mypy, commitlint, gitleaks, y el hook que rechaza `.parquet`/`.csv`/`.xlsx`.
-5. **`.github/workflows/ci.yml`** — el de `docs/07` §4.1.
-6. **`Dockerfile` + `docker-compose.yml`** — app, Postgres, MLflow. Sin esto el compañero de Windows pierde horas.
-7. **`CONVENTIONS.md`, `AGENTS.md`, `CLAUDE.md`, `.cursorrules`** — ya escritos, solo se mueven al repo nuevo.
-8. **Invitar al equipo**, ramas protegidas, `CODEOWNERS`.
-
-### El resto de la semana
-
-| Quién | Qué |
-|---|---|
-| **Datos** | MLflow en pie con la taxonomía de `docs/05` §4; correr A1 (componentes vs run value directo) |
-| **Producto** | Scaffold de Next.js, tokens desde el sistema de marca, el componente `<Metric>` |
-| **Ambos** | Primer PR de cada uno, para probar que CI y revisión funcionan de verdad |
+**Disparador:** si el 1 de octubre no hay xRV correlacionado, se recorta alcance de producto, no de validación.
 
 ---
 
-## 3. Lo que el equipo de datos recibe el día uno
+## 3. Qué falta, en orden
 
-No una conversación: **artefactos**.
-
-1. **`docs/05-PROTOCOLO-CIENTIFICO.md`** — su backlog de 26 preguntas con prioridad, y la estructura de MLflow.
-2. **`packages/contracts/`** — el esquema exacto de lo que deben entregar, ejecutable.
-3. **`docs/07` §1** — los cinco contratos y la cadencia lunes/miércoles/viernes.
-4. **`CONVENTIONS.md`** — cómo se escribe el código, sin importar qué agente usen.
-5. **`analysis/evidence.py`** — el baseline v0 con todos los hallazgos reproducibles en 3 minutos.
-
-### Las tres reglas que hay que decirles en voz alta
-
-1. **No ajusten run value crudo.** R² 0.003. Componentes → xRV. Está medido, no es opinión.
-2. **Features de arsenal con corrección temporal.** Calculadas sobre la temporada completa filtran el futuro y fallan justo contra un lanzador nuevo — que es el caso de uso de fichajes.
-3. **`stuff_plus_se` es obligatorio.** El producto muestra banda en cada número; un score sin error estándar es una entrega rechazada.
+1. **El modelo por componentes** (datos). A1, A2, A3 del backlog de `docs/05`. Es lo único que está en la ruta crítica.
+2. **Scaffold de Next.js** (producto). Las pantallas existen como diseño; falta la app. `packages/web/` está vacío y el job `web` del CI ya está esperando.
+3. **`contracts.yml` y `model-eval.yml`** (CI). Semanas 2 y 3 de la progresión de `docs/07` §4.
+4. **El documento técnico.** Se escribe contra cifras congeladas a partir del 12.
 
 ---
 
-## 4. Riesgos, con su disparador
+## 4. Anotado, y explícitamente no prioritario
 
-| Riesgo | Se activa si | Qué hacemos |
-|---|---|---|
-| El puente a carreras no cierra | 1 oct sin xRV correlacionado | El caso económico se apoya solo en el impuesto **observado**. La lámina 11 ya lo declara; no se inventa la conversión |
-| El modelo final no llega | 8 oct sin scores en producción | El baseline v0 sirve al prototipo. Se dice que es baseline, como ya se dice |
-| Alcance de producto | 8 oct con menos de 3 pantallas vivas | Radar, Ficha y Simulador son obligatorias. Las otras tres bajan a mockup |
-| Alguien se satura | Cualquier momento | Son 4 semanas con clases. Mejor recortar el 1 de octubre que el 14 |
+Cosas que valen la pena y que **solo se hacen si sobra tiempo**. Están aquí para que no se pierdan, no para que presionen.
+
+### Mapa de diseño de lanzamiento
+
+El uso de Stuff+ que más valoran las organizaciones: no *"¿qué pasa si muevo esto?"* sino *"¿hacia dónde muevo?"* — un contorno sobre el plano de break que muestra la dirección en que sube el score.
+
+**Por qué espera:** el contorno saldría del `stuff_plus_v0`, cuyo R² no sostiene una recomendación direccional. Dibujar una flecha encima prometería una precisión que no tenemos. **Entra cuando exista el modelo por componentes**, y entonces es una capa sobre el Simulador, no una pantalla nueva.
+
+### La prueba que cierra el sesgo de slider
+
+`docs/01` §8.5 documenta que nuestro v0 premia sliders y curvas, y que lo que realmente sobrevive la altitud es **el poco ride** (corr |IVB| vs pérdida = **+0.531**), no la categoría de lanzamiento.
+
+La prueba que lo cerraría del todo: **correr el baseline sin las variables de tipo de lanzamiento** y ver si el efecto de altitud sobrevive sin que el modelo sepa qué se lanzó. Media tarde del equipo de datos.
+
+**Por qué espera:** la respuesta ya está documentada y lista si preguntan en la presentación. Convertirla en experimento la haría más fuerte, pero no es lo que decide el resultado del reto.
+
+### Ángulo de brazo
+
+Probado y descartado, para que nadie lo reabra: el proxy de slot correlaciona −0.221 con la pérdida de IVB, pero enteramente por su correlación con el IVB mismo (+0.388). Controlando por IVB, el coeficiente es −0.0014 y el R² gana 0.000. **No aporta nada que las features de release y el IVB no tengan ya.**
 
 ---
 
-## 5. Qué pedirle a la siguiente sesión
+## 5. Pendientes que no son de código
 
-> Vamos a montar el repositorio de SuperEstela. Lee `CONVENTIONS.md`, `docs/07-INGENIERIA-Y-EQUIPO.md` y `docs/08-PLAN-DE-ARRANQUE.md`, y ejecuta los ocho pasos de la sesión de setup en orden. Empieza por `git init` y la estructura de `packages/`, y no avances al siguiente paso hasta que el anterior tenga su test o su verificación.
-
----
-
-## 6. Pendientes que no son de código
-
-- [ ] **Buscar si "SuperEstela" ya existe** como marca en software o deporte. Media hora ahora; un problema incómodo en noviembre.
+- [ ] **Buscar si "SuperEstela" ya existe** como marca en software o deporte.
 - [ ] Confirmar el hex exacto del rojo y el teal contra el manual de marca del club.
 - [ ] Leer el NDA de finalistas **antes de firmarlo**, en la parte de propiedad intelectual (`docs/04` §5.3).
 - [ ] Decidir quién presenta los 10 minutos y quién responde la parte técnica.
+- [ ] **Subir las revisiones requeridas de `main` a 1** el día que entren los compañeros al repositorio (comando en el `README`).

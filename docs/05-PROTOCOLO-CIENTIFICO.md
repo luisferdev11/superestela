@@ -109,7 +109,7 @@ Cada entrada es una pregunta con una corrida asociada. `P` = prioridad.
 |---|---|---|
 | F1 | Curvas de calibración por entorno, no solo discriminación | **1** |
 | F2 | Cobertura de las bandas: ¿el 95% cae dentro del 95%? | **1** |
-| F3 | Estabilidad: ¿Stuff+ HH de una temporada predice outcome de la siguiente mejor que el outcome observado? **Es el argumento de por qué usar Stuff+** | 2 |
+| F3 | Estabilidad: ¿Stuff+ HH de una temporada predice outcome de la siguiente mejor que el outcome observado? **Es el argumento de por qué usar Stuff+.** *Medido en crudo (`docs/01` §8.4): el resultado persiste r = 0.216, el whiff r = 0.556. Falta hacerlo sobre el score* | **1** |
 | F4 | El Traductor con validación repetida y IC, no un solo split | 2 |
 | F5 | Sensibilidad a la semilla en todo lo anterior | 3 |
 

@@ -509,6 +509,71 @@ def season_coverage(df, scored=None):
     }
 
 
+def season_stability(df, min_pitches=200):
+    """Does this season predict the next one - and which part of it does?
+
+    The question every public Stuff+ validation asks: given last season, what
+    best predicts next season? We can finally ask it because the dataset spans
+    2024, 2025 and 2026.
+
+    It is the whole argument for modelling stuff at all. If results persisted
+    year to year, you would just use results. They do not.
+    """
+    g = (
+        df.groupby(["pitcher_anon_id", "year"])
+        .agg(
+            pitches=("year", "size"),
+            outs=("OutsOnPlay", "sum"),
+            runs=("RunsScored", "sum"),
+            whiff=("is_whiff", "sum"),
+            swing=("is_swing", "sum"),
+        )
+        .reset_index()
+    )
+    g = g[(g.pitches >= min_pitches) & (g.outs > 0) & (g.swing > 0)]
+    g["ra9"] = 9 * g.runs / (g.outs / 3)
+    g["whiff_rate"] = g.whiff / g.swing
+
+    rows = []
+    for _, sub in g.groupby("pitcher_anon_id"):
+        by_year = sub.set_index("year")
+        for y in sorted(by_year.index):
+            if y + 1 not in by_year.index:
+                continue
+            a, b = by_year.loc[y], by_year.loc[y + 1]
+            rows.append(
+                {
+                    "from": int(y),
+                    "ra9_t": a.ra9,
+                    "ra9_next": b.ra9,
+                    "whiff_t": a.whiff_rate,
+                    "whiff_next": b.whiff_rate,
+                }
+            )
+    if len(rows) < 30:
+        return {"n_pairs": len(rows), "note": "too few consecutive seasons to test"}
+    p = pd.DataFrame(rows)
+
+    def r(x, y):
+        return round(float(np.corrcoef(p[x], p[y])[0, 1]), 3)
+
+    return {
+        "n_pairs": len(p),
+        "min_pitches_per_season": min_pitches,
+        "pairs_by_first_season": {
+            str(k): int(v) for k, v in p["from"].value_counts().sort_index().items()
+        },
+        # Does the RESULT repeat itself?
+        "result_persistence_ra9": r("ra9_t", "ra9_next"),
+        # Does the SKILL repeat itself?
+        "skill_persistence_whiff": r("whiff_t", "whiff_next"),
+        # Which one tells you more about next season's skill?
+        "whiff_predicts_next_whiff": r("whiff_t", "whiff_next"),
+        "ra9_predicts_next_whiff": r("ra9_t", "whiff_next"),
+        "whiff_predicts_next_ra9": r("whiff_t", "ra9_next"),
+    }
+
+
 # --------------------------------------------------------------------------
 # 5. Altitude Translator - validated with a PITCHER HOLDOUT
 # --------------------------------------------------------------------------
@@ -890,6 +955,12 @@ def main():
     R["pitch_profiles"] = pitch_profiles(df)
     R["league_environment"] = league_environment(df)
     R["run_environment"] = run_environment(df)
+    R["season_stability"] = season_stability(df)
+    st = R["season_stability"]
+    log(
+        f"Season stability ({st['n_pairs']} pairs): result RA/9 r={st['result_persistence_ra9']} "
+        f"vs skill whiff r={st['skill_persistence_whiff']}"
+    )
     eff = R["run_environment"].get("altitude_effect", {})
     log(
         f"Run environment: {R['run_environment'][SEA]['ra9']} -> "
