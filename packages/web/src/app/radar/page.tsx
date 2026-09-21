@@ -66,7 +66,11 @@ export default async function RadarPage() {
           />
         </div>
 
-        <RadarTable cards={cohort} />
+        <RadarTable
+          cards={cohort}
+          latestSeason={Math.max(...seasons)}
+          significant={summary.nConclusiveTax}
+        />
       </main>
     </div>
   )

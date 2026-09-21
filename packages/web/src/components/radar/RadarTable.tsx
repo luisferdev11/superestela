@@ -1,11 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { MetricValue } from '@/components/metric/MetricValue'
-import { InconclusiveValue } from '@/components/metric/InconclusiveValue'
-import { RoleChip } from '@/components/chip/RoleChip'
-import { TrapFlag } from '@/components/chip/TrapFlag'
-import { formatNumber, formatSigned } from '@/domain/format'
+import { RadarRow } from './RadarRow'
+import { RadarLegend } from './RadarLegend'
 import { rankBy } from '@/domain/ranking'
 import type { Environment, PitcherSeason } from '@/domain/types'
 import { es } from '@/i18n/es'
@@ -15,7 +12,15 @@ import { es } from '@/i18n/es'
  * (`CONVENTIONS.md` seccion 4, regla 5). La carga y el parseo del JSON se
  * quedan en el servidor; aqui solo se reordena lo que ya llego.
  */
-export const RadarTable = ({ cards }: { readonly cards: readonly PitcherSeason[] }) => {
+export const RadarTable = ({
+  cards,
+  latestSeason,
+  significant,
+}: {
+  readonly cards: readonly PitcherSeason[]
+  readonly latestSeason: number
+  readonly significant: number
+}) => {
   const [environment, setEnvironment] = useState<Environment>('hh')
   const handleSortChange = (next: Environment) => () => {
     setEnvironment(next)
@@ -24,9 +29,9 @@ export const RadarTable = ({ cards }: { readonly cards: readonly PitcherSeason[]
   const rows = rankBy(cards, environment)
 
   return (
-    <>
-      <div className="mb-4 flex items-center justify-end gap-3">
-        <span className="text-xs font-bold tracking-widest text-(--color-text-muted) uppercase">
+    <div className="flex flex-col gap-4">
+      <div className="flex items-center justify-end gap-3">
+        <span className="text-[10px] font-bold tracking-widest text-(--color-text-muted) uppercase">
           {es.sortBy}
         </span>
         <div className="flex border border-(--color-border-strong)">
@@ -38,8 +43,8 @@ export const RadarTable = ({ cards }: { readonly cards: readonly PitcherSeason[]
               aria-pressed={environment === option}
               className={
                 environment === option
-                  ? 'bg-(--color-ink) px-4 py-2 text-xs font-semibold text-white'
-                  : 'bg-(--color-surface-card) px-4 py-2 text-xs text-(--color-text)'
+                  ? 'bg-(--color-ink) px-3.5 py-1.5 text-xs font-semibold text-white'
+                  : 'bg-(--color-surface-card) px-3.5 py-1.5 text-xs text-(--color-text)'
               }
             >
               {es.environment[option]}
@@ -48,58 +53,41 @@ export const RadarTable = ({ cards }: { readonly cards: readonly PitcherSeason[]
         </div>
       </div>
 
-      <table className="w-full border-collapse bg-(--color-surface-card) text-sm">
-        <thead>
-          <tr>
-            {es.columns.map((column, index) => (
-              <th
-                key={column}
-                scope="col"
-                className={`border-b border-(--color-border-strong) px-3 pb-2 text-[10px] font-bold tracking-wider text-(--color-text-muted) uppercase ${
-                  index === 0 ? 'text-left' : 'text-right'
-                }`}
-              >
-                {column}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((card) => (
-            <tr
-              key={`${card.pitcherId}:${String(card.season)}`}
-              className={
-                card.altitudeTrap
-                  ? 'bg-(--color-diablos-wash)'
-                  : 'border-b border-(--color-border-hairline)'
-              }
-            >
-              <td className="px-3 py-2">
-                {card.pitcherId} <TrapFlag trap={card.altitudeTrap} />
-              </td>
-              <td className="px-3 py-2 text-right">{card.season}</td>
-              <td className="px-3 py-2 text-right">{card.throws}</td>
-              <td className="px-3 py-2 text-right">
-                <MetricValue metric={card.stuffPlusHh} />
-              </td>
-              <td className="px-3 py-2 text-right text-(--color-text-muted)">
-                {formatNumber(card.stuffPlusSea.value)}
-              </td>
-              <td className="px-3 py-2 text-right">{formatSigned(card.stuffPlusDelta)}</td>
-              <td className="px-3 py-2 text-right">
-                {card.altitudeTax === null ? (
-                  <InconclusiveValue short />
-                ) : (
-                  <MetricValue metric={card.altitudeTax} digits={2} />
-                )}
-              </td>
-              <td className="px-3 py-2 text-right">
-                <RoleChip role={card.role} />
-              </td>
+      <div className="border border-(--color-border) bg-(--color-surface-card) p-5">
+        <table className="w-full border-collapse">
+          <thead>
+            <tr>
+              {es.columns.map((column, index) => (
+                <th
+                  key={column}
+                  scope="col"
+                  className={`border-b border-(--color-border-strong) px-3 pb-2 text-[10px] font-bold tracking-wider whitespace-nowrap text-(--color-text-muted) uppercase ${
+                    index === 0 || index === 7 || index === 8 ? 'text-left' : 'text-right'
+                  }`}
+                >
+                  {column}
+                </th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
+          </thead>
+          <tbody className="text-[13px]">
+            {rows.map((card) => (
+              <RadarRow
+                key={`${card.pitcherId}:${String(card.season)}`}
+                card={card}
+                latestSeason={latestSeason}
+              />
+            ))}
+          </tbody>
+        </table>
+
+        <RadarLegend
+          shown={rows.length}
+          total={cards.length}
+          significant={significant}
+          significantOver={cards.length}
+        />
+      </div>
+    </div>
   )
 }

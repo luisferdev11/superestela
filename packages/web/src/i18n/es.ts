@@ -32,6 +32,15 @@ export const es = {
   baselineNote: (pitches: number, seasons: number): string =>
     `Stuff+ v0 baseline \u00b7 ${pitches.toLocaleString('es-MX')} lanzamientos \u00b7 ${String(seasons)} temporadas`,
   sortBy: 'Ordenar por',
+  legend: {
+    trap: 'Trampa de Altitud \u2014 se ve fuerte a nivel del mar, colapsa en el Harp Hel\u00fa.',
+    inconclusive: (significant: number, total: number): string =>
+      `\u2014 el Impuesto no alcanza significancia: solo ${String(significant)} de ${String(total)} la alcanzan.`,
+    stale:
+      'Temporada en \u00e1mbar \u2014 su \u00faltimo dato no es de la temporada m\u00e1s reciente.',
+    showing: (shown: number, total: number): string =>
+      `Mostrando ${String(shown)} de ${String(total)} \u00b7 \u00faltima temporada jugada de cada uno \u00b7 banda al 95%`,
+  },
   environment: { hh: 'Stuff+ HH', sea: 'Stuff+ nivel del mar' },
   columns: [
     'Pitcher',
@@ -42,6 +51,8 @@ export const es = {
     '\u0394',
     'Impuesto c/9 ent.',
     'Rol',
+    'Pitch principal',
+    'Uso',
   ],
   title: 'Radar de Fichajes',
   subtitle:
