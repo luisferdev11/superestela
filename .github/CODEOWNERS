@@ -1,12 +1,17 @@
 # Cada área la revisa quien la conoce. docs/07 seccion 2.2.
-# Las cuentas del equipo se agregan al invitarlos al repositorio.
+# El equipo entro al repositorio el 21 de septiembre de 2026.
 
 *                       @luisferdev11
 
-/packages/models/       @luisferdev11
+# Datos. Los tres sin repartir por area todavia: cualquiera puede revisar y
+# nadie espera a una sola persona. Se afina cuando se vea quien toca que.
+/packages/models/       @EMOA117 @angelmvp @Kittyk-son @luisferdev11
+/packages/contracts/    @EMOA117 @angelmvp @Kittyk-son @luisferdev11
+
+# Producto e ingenieria.
 /packages/core/         @luisferdev11
 /packages/web/          @luisferdev11
-/packages/contracts/    @luisferdev11
+/packages/api/          @luisferdev11
 
 # CONVENTIONS.md cambia solo por PR, con el motivo escrito (seccion 10).
 /CONVENTIONS.md         @luisferdev11
