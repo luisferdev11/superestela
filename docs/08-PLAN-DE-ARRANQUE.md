@@ -81,4 +81,4 @@ Probado y descartado, para que nadie lo reabra: el proxy de slot correlaciona �
 - [ ] Confirmar el hex exacto del rojo y el teal contra el manual de marca del club.
 - [ ] Leer el NDA de finalistas **antes de firmarlo**, en la parte de propiedad intelectual (`docs/04` §5.3).
 - [ ] Decidir quién presenta los 10 minutos y quién responde la parte técnica.
-- [ ] **Subir las revisiones requeridas de `main` a 1** el día que entren los compañeros al repositorio (comando en el `README`).
+- [x] ~~Subir las revisiones requeridas de `main` a 1~~ — hecho el 21 de septiembre, el día que entró el equipo ([ADR 0006](adr/0006-gobierno-con-el-equipo-dentro.md)).
