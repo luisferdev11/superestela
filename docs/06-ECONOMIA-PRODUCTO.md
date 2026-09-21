@@ -14,7 +14,7 @@ El prototipo no es el producto. Esto es lo que falta para operar en producción.
 |---|---|---|
 | Data / ML engineer | 4.0 | Modelo final multi-target, xRV, calibración, recalibración por temporada |
 | Platform / backend | 3.0 | Ingesta, contratos de datos, feature store point-in-time, scoring, API, Decision Log |
-| Frontend | 2.5 | Las seis pantallas en producción, estados vacíos, errores, permisos |
+| Frontend | 2.5 | Las ocho pantallas en producción, estados vacíos, errores, permisos |
 | Producto / diseño | 1.5 | Definición, research con los tres usuarios, sistema de diseño |
 | **Total** | **11.0** | |
 

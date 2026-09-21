@@ -159,7 +159,7 @@ Es *Moneyball* con una variable física que ningún otro club de la liga está m
 | **Calidad del Stuff+ Model** | 25% | Targets por componente (whiff, chase, GB, hard contact) combinados en xRV, no run value crudo — con evidencia de por qué (§ `01-EVIDENCIA.md`) |
 | **Robustez fuera de muestra** | 25% | Pitcher holdout, season holdout, park holdout. Features de arsenal con *point-in-time correctness* para eliminar leakage |
 | **Integración arsenal + altitud** | 25% | Índice de Densidad continuo medido desde la física; efecto cuantificado within-pitcher; delta por pitch shape |
-| **Aplicabilidad real** | 25% | Seis módulos orientados a las tres decisiones reales del club; Impuesto de Altitud en carreras; Decision Log auditable |
+| **Aplicabilidad real** | 25% | Ocho módulos orientados a las tres decisiones reales del club; Impuesto de Altitud en carreras; Decision Log auditable |
 
 Entregables obligatorios del reto: **1** → Radar + Ficha de Pitcher · **2** → Perfil Físico Ideal · **3** → Plan de Desarrollo + Traductor · **4** → Simulador · **5** → `docs/` + documento técnico.
 
@@ -173,7 +173,7 @@ Entregables obligatorios del reto: **1** → Radar + Ficha de Pitcher · **2** �
 | El equipo de datos no llega al modelo final | El Traductor funciona con **física pura, sin entrenamiento**. Producto defendible aunque el ML se retrase |
 | Refutar H2 se lee como arrogancia | Enmarcar como *"la convocatoria pidió cuantificar antes de asumir; esto encontramos"* |
 | `Extreme Altitude` mezcla varios estadios | Es exactamente por qué modelamos densidad continua y no el bucket |
-| Confusión de fechas (15 oct vs 9 dic) | **Confirmar con ISAC.** Ver `README.md` |
+| ~~Confusión de fechas (15 oct vs 9 dic)~~ | **Resuelto.** La entrega es el **15 de octubre de 2026**, confirmado con ISAC |
 
 ---
 
