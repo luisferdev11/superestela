@@ -67,12 +67,23 @@ export const seasonEntrySchema = z
   })
   .strict()
 
+export const densityLevelSchema = z
+  .object({
+    n: z.number().int().nonnegative(),
+    density_ratio: z.number().min(0.7).max(1.05),
+    magnus_ratio: z.number().min(0.7).max(1.05),
+    per_game_mean: z.number(),
+    per_game_sd: z.number().nonnegative(),
+    per_game_n: z.number().int().nonnegative(),
+  })
+  .strict()
+
 export const mockupDataSchema = z
   .object({
     pitchers: z.array(pitcherCardSchema),
     pitcher_seasons: z.record(z.string(), z.array(seasonEntrySchema)),
     pitch_profiles: z.record(z.string(), z.unknown()),
-    density: z.record(z.string(), z.unknown()),
+    density: z.record(z.string(), densityLevelSchema),
   })
   .strict()
 
