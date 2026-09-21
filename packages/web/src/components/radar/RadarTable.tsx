@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import { RadarRow } from './RadarRow'
 import { RadarLegend } from './RadarLegend'
+import { RadarFilters } from './RadarFilters'
+import { applyFilters, NO_FILTERS, type RadarFilters as Filters } from '@/domain/filters'
 import { rankBy } from '@/domain/ranking'
 import type { Environment, PitcherSeason } from '@/domain/types'
 import { es } from '@/i18n/es'
@@ -16,20 +18,30 @@ export const RadarTable = ({
   cards,
   latestSeason,
   significant,
+  pitches,
 }: {
   readonly cards: readonly PitcherSeason[]
   readonly latestSeason: number
   readonly significant: number
+  readonly pitches: readonly string[]
 }) => {
   const [environment, setEnvironment] = useState<Environment>('hh')
+  const [filters, setFilters] = useState<Filters>(NO_FILTERS)
   const handleSortChange = (next: Environment) => () => {
     setEnvironment(next)
   }
 
-  const rows = rankBy(cards, environment)
+  const rows = rankBy(applyFilters(cards, filters), environment)
 
   return (
     <div className="flex flex-col gap-4">
+      <RadarFilters
+        cards={cards}
+        pitches={pitches}
+        filters={filters}
+        onFiltersChange={setFilters}
+      />
+
       <div className="flex items-center justify-end gap-3">
         <span className="text-[10px] font-bold tracking-widest text-(--color-text-muted) uppercase">
           {es.sortBy}
@@ -80,6 +92,11 @@ export const RadarTable = ({
             ))}
           </tbody>
         </table>
+
+        {/* El estado vacio, uno de los cuatro de docs/07 seccion 5.2 regla 3. */}
+        {rows.length === 0 ? (
+          <p className="py-8 text-center text-sm text-(--color-text-muted)">{es.noMatches}</p>
+        ) : null}
 
         <RadarLegend
           shown={rows.length}

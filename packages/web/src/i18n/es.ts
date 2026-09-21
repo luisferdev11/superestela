@@ -31,6 +31,12 @@ export const es = {
   atHarpHelu: '\u00b7 Harp Hel\u00fa',
   baselineNote: (pitches: number, seasons: number): string =>
     `Stuff+ v0 baseline \u00b7 ${pitches.toLocaleString('es-MX')} lanzamientos \u00b7 ${String(seasons)} temporadas`,
+  filter: 'Filtrar',
+  all: 'Todos',
+  trapsOnly: 'Solo Trampas',
+  noMatches: 'Ning\u00fan candidato cumple estos filtros.',
+  throws: { Right: 'Diestros', Left: 'Zurdos' } as Record<string, string | undefined>,
+  rolePlural: { starter: 'Abridores', reliever: 'Relevistas' } satisfies Record<Role, string>,
   sortBy: 'Ordenar por',
   legend: {
     trap: 'Trampa de Altitud \u2014 se ve fuerte a nivel del mar, colapsa en el Harp Hel\u00fa.',
