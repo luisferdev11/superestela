@@ -1,0 +1,27 @@
+/* Generado por scripts/build-tokens.mjs desde src/design/tokens.json.
+   No editar a mano: `pnpm tokens` lo reescribe y un test lo vigila. */
+@theme {
+  --color-diablos: #D8102F;
+  --color-diablos-strong: #9E0B22;
+  --color-diablos-wash: #FDF3F4;
+  --color-ink: #14161A;
+  --color-ink-raised: #1E2127;
+  --color-surface-page: #F5F4F1;
+  --color-surface-card: #FFFFFF;
+  --color-text-strong: #14161A;
+  --color-text: #3C4046;
+  --color-text-muted: #6E7278;
+  --color-text-faint: #9A9790;
+  --color-border-strong: #14161A;
+  --color-border: #DCDAD4;
+  --color-border-hairline: #E6E4DE;
+  --color-border-underline: #C9C6BE;
+  --color-altitude-sea: #12726E;
+  --color-altitude-medium: #9AA8A4;
+  --color-altitude-extreme: #E08A1E;
+  --color-semantic-trap: #D8102F;
+  --color-semantic-stale: #B8700F;
+  --color-semantic-inconclusive: #9A9790;
+  --font-display: var(--font-anton), "Arial Narrow", sans-serif;
+  --font-body: var(--font-archivo), "Helvetica Neue", Helvetica, sans-serif;
+}
