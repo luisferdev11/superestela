@@ -1,0 +1,4 @@
+# Next lo regenera en cada build.
+next-env.d.ts
+*.tsbuildinfo
+.next/
