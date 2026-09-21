@@ -49,22 +49,23 @@ El **mapa de movimiento** (break horizontal vs vertical) es el gráfico insignia
 
 **Pregunta:** *¿A quién deberíamos estar mirando?*
 
-Tabla densa y ordenable, 286 pitchers reales.
+Tabla densa y ordenable, 296 lanzadores reales en su última temporada jugada.
 
 | Columna | Ejemplo | Nota |
 |---|---|---|
 | Pitcher | `pitcher_00069` | IDs anonimizados por diseño del reto |
+| **Temporada** | 2025 | **Su última temporada jugada.** 95 candidatos tienen 2024, 134 el 2025, 67 el 2026 — no es un pie de página |
 | Mano | Right / Left | |
 | **Stuff+ HH** | 92.0 ± 0.7 | El número principal. Siempre con su banda |
 | Stuff+ nivel del mar | 111.1 | La referencia engañosa |
 | **Δ** | −19.1 | Codificado en la escala de altitud |
 | **Impuesto de Altitud** | +5.93 ± 2.18 | Carreras por 9 entradas. **Solo 40 de 286 son significativos; los otros 246 dicen *no concluyente*, no un número** |
-| **Rol** | `Abridor` | Inferido de la entrada de ingreso. Agrupa antes de rankear |
-| **Trampa** | 🚩 | 44 de 286 |
+| **Rol** | `Abridor` | Dos valores, abridor o relevista. Inferido de la entrada de ingreso, y **por temporada** (`docs/adr/0004`) |
+| **Trampa** | 🚩 | 58 de 370 temporadas |
 
 Rangos reales: Stuff+ HH **87.8 – 107.1** · Impuesto **−9.53 a +9.50** carreras/9 entradas.
 
-Controles: filtro por mano, rol, tipo de pitch dominante; toggle **"ordenar por Stuff+ nivel del mar"** — que produce un orden visiblemente distinto. **Ese contraste es la demostración del producto en un solo clic.**
+Controles: filtro por mano, rol, temporada, tipo de pitch dominante; toggle **"ordenar por Stuff+ nivel del mar"** — que produce un orden visiblemente distinto. **Ese contraste es la demostración del producto en un solo clic.**
 
 ---
 
@@ -72,12 +73,14 @@ Controles: filtro por mano, rol, tipo de pitch dominante; toggle **"ordenar por 
 
 **Pregunta:** *¿Qué tengo enfrente y qué le pasa en la altura?*
 
-Caso real, `pitcher_00069` — el ejemplo canónico:
+La barra de contexto lleva un **selector de temporada** con las que el lanzador tenga, y debajo una tabla compacta con **todas sus temporadas** y su rol en cada una. Ahí es donde se ve el hueco de los 28 que se fueron y volvieron: un lanzador con 2024 y 2026 y nada en medio no es un promedio, son dos mediciones.
 
-- Stuff+ HH **92.0 ± 0.7** · nivel del mar **111.1** · Δ **−19.1**
-- Impuesto de Altitud **+5.93 ± 2.18 carreras por 9 entradas** (significativo — es de los 40 que sí lo son)
-- Rol **Abridor** · 🚩 **Trampa de Altitud**
-- Pérdida media de IVB: **4.27"** · 540 pitches en altitud, 520 a nivel del mar
+Caso real, `pitcher_00069` en su única temporada con score, **2025**:
+
+- Stuff+ HH **93.3 ± 0.7** · nivel del mar **110.5 ± 0.8** · Δ **−17.2**
+- Impuesto de Altitud **no concluyente** — mide +4.55 ± 2.70 carreras por 9 entradas, y con la muestra de una sola temporada la banda cruza el cero. **La pantalla muestra el estado, no el número:** es la regla funcionando
+- Rol **Abridor** · 🚩 **Trampa de Altitud** · 341 pitches en altitud, 434 a nivel del mar
+- Pérdida media de IVB: **4.43"**
 
 Arsenal (datos reales):
 
@@ -138,11 +141,11 @@ Ejemplo real del dataset: `pitcher_00566` sobrevive la altitud (Δ −5.2) apoy�
 
 **Pregunta:** *¿Quiénes son los mejores para el estadio donde se juega?*
 
-Selector de entorno → el roster ordenado por Stuff+ de **ese** estadio, **agrupado por rol**: abridor, relevista, relevista de entradas finales.
+Selector de entorno → el roster ordenado por Stuff+ de **ese** estadio, **agrupado por rol**: abridores y relevistas.
 
 **No sugiere orden de pitcheo.** Esa decisión es del mánager, entra contexto que no modelamos, y automatizarla es la forma más rápida de que deje de usarse la herramienta.
 
-El rol se infiere de la entrada en que el lanzador entra al juego — una regla medida sobre 22,569 apariciones, no un modelo: 439 lanzadores abren menos del 5% de las veces, 153 más del 80%, y solo 59 quedan en la zona ambigua. **No hay categoría "cerrador"**: se define por situación de salvamento y el dataset no trae marcador.
+El rol se infiere de la entrada en que el lanzador entra al juego — una regla medida sobre 22,569 apariciones, no un modelo: 469 lanzadores abren menos del 10% de las veces, 119 más del 90%, y el valle está en 40–50%. **Son dos categorías y nada más:** no hay "cerrador" —se define por situación de salvamento y no hay marcador— ni un tercer nivel por entrada tardía, porque la entrada de ingreso de los relevistas es unimodal con su moda justo en la séptima (`docs/adr/0004`).
 
 Lo que justifica la pantalla: la correlación de orden entre casa y gira es **0.700**, el cambio mediano es de **38 posiciones**, y **6 de los 10 mejores en casa no están entre los 10 mejores de gira**.
 
@@ -156,6 +159,28 @@ La excepción es la **barra de Índice de Densidad**, que se queda como componen
 
 ---
 
+### P7 · Proyección *(por lanzador)*
+
+**Pregunta:** *¿Cómo se vería este lanzador en el estadio de la próxima serie?*
+
+La forma medida de **ese** lanzador, proyectada al entorno que se elija —incluida la altitud media, donde casi nadie tiene muestra suficiente para medirlo directamente—. Por lanzamiento: IVB y |HB| proyectados con su banda por eje, y el factor de densidad aplicado, visible.
+
+Existe porque la pestaña anterior saltaba al Traductor, que es una herramienta de laboratorio con captura manual: la migaja decía un lanzador y el contenido era un formulario en blanco. Es el mismo error de alcance que tuvo Ubicación.
+
+**Y declara su propio límite:** para un lanzador con muestra en los dos entornos la proyección es redundante —la Ficha ya trae la medición—. Esta pantalla gana cuando el destino es un entorno donde **no** ha lanzado.
+
+---
+
+### P8 · Plantel
+
+**Pregunta:** *¿Qué tenemos?*
+
+Los lanzadores del club con su Stuff+ por temporada y su rol. Es la contraparte del Radar: aquí no se evalúan candidatos, se mira lo propio. Y es la puerta natural a la Ficha para la gente del club.
+
+Reemplaza un elemento de navegación que estaba en el rail en gris, sin pantalla detrás.
+
+---
+
 ## 3. Componentes transversales
 
 | Componente | Requisito |
@@ -163,7 +188,8 @@ La excepción es la **barra de Índice de Densidad**, que se queda como componen
 | **KPI con banda** | Un número nunca aparece solo. Siempre `valor ± banda`. Es principio de producto, no adorno |
 | **Toggle de entorno** | Harp Helú ⟷ nivel del mar. Mismo control, mismo lugar, en toda la app |
 | **Mapa de movimiento** | El gráfico insignia. Ambos entornos, codificación constante |
-| **Chip de Rol** | `Abridor` / `Relevista` / `Relevista de entradas finales` — legible sin depender del color |
+| **Chip de Rol** | `Abridor` / `Relevista`. Dos, porque dos es lo que el dato separa (`docs/adr/0004`) |
+| **Selector de temporada** | Donde un lanzador tiene varias. Mismo control, mismo lugar. Un lanzador con hueco muestra el hueco |
 | **Bandera de Trampa** | Alerta visual de alta prioridad |
 | **Estado "no concluyente"** | Para toda cifra sin significancia. Es el cuarto estado de dato, junto a cargando, vacío y error |
 | **Ficha Técnica** | Panel de explicación: features + física, en lenguaje de coach |
@@ -207,13 +233,14 @@ Contenido: identidad · rol · Stuff+ HH con banda · Impuesto de Altitud en car
 
 ```
 analysis/outputs/mockup_data.json
-  pitchers[]        286 cards reales con arsenal, Stuff+, impuesto/9, rol, trampa
+  pitchers[]        370 tarjetas lanzador-temporada con arsenal, Stuff+, impuesto/9, rol, trampa
   pitch_profiles{}  niveles y deltas por tipo de pitch y entorno
   density{}         índice de densidad por entorno
 
 analysis/outputs/evidence.json
   run_environment{} RA/9 observado por entorno: 4.84 -> 7.55 (+56%)
   roles{}           distribucion de roles inferidos
+  seasons{}         cobertura por temporada, huecos y ultima temporada con score
   within_pitcher{}  efecto within-pitcher por tipo de pitch
   translator{}      métricas de holdout del Traductor
   hypotheses{}      veredicto sobre H1–H4

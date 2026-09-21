@@ -29,11 +29,7 @@ import pandas as pd
 from sklearn.ensemble import HistGradientBoostingRegressor
 from sklearn.model_selection import GroupKFold
 
-from models.features.role import (
-    LATE_INNING_ENTRY,
-    STARTER_FIRST_INNING_SHARE,
-    classify_roles,
-)
+from models.features.role import STARTER_FIRST_INNING_SHARE, classify_roles
 
 warnings.filterwarnings("ignore")
 
@@ -43,6 +39,10 @@ PARQUET = os.path.join(ROOT, "data", "stuff_model_df.parquet")
 OUT = os.path.join(HERE, "outputs")
 
 GRAVITY = 32.174  # ft/s^2
+
+# Product rule, mirrored from contracts.schemas.MIN_PITCHES_FOR_SCORE: below
+# this in EITHER environment there is no comparison to show.
+MIN_PITCHES = 100
 MAIN_PITCHES = ["Four-Seam", "Sinker", "Slider", "Changeup", "Curveball", "Cutter"]
 SEA, MED, EXT = "No Altitude", "Medium Altitude", "Extreme Altitude"
 
@@ -452,6 +452,63 @@ def run_environment(df):
     return out
 
 
+def season_coverage(df, scored=None):
+    """How the dataset is shaped along the season axis.
+
+    The product ranks candidates on their LAST played season, so how many
+    seasons each pitcher has - and whether he skipped one - is not trivia.
+
+    Two denominators live here on purpose, and they differ by nine:
+
+    * `qualifying_pitcher_seasons_tracked` counts every pitch with a usable
+      trajectory.
+    * `scored_pitcher_seasons` counts only the six main pitch types with
+      complete shape features, which is what the model actually scores.
+
+    The cards follow the second. Reporting only the first would overstate the
+    cohort, and two numbers for one thing in one file is how a report starts
+    contradicting itself.
+    """
+    ps = df.groupby(["pitcher_anon_id", "year"]).size()
+    seasons = (
+        ps.reset_index()
+        .groupby("pitcher_anon_id")
+        .year.apply(lambda x: tuple(sorted(int(v) for v in x)))
+    )
+    pattern = {}
+    for pat in seasons:
+        pattern[",".join(str(y) for y in pat)] = pattern.get(",".join(str(y) for y in pat), 0) + 1
+    gaps = sum(1 for x in seasons if len(x) > 1 and (max(x) - min(x) + 1) != len(x))
+
+    def _qualifying(frame):
+        counts = (
+            frame.groupby(["pitcher_anon_id", "year", "altitude_category"])
+            .size()
+            .unstack(fill_value=0)
+        )
+        return counts[(counts.get(SEA, 0) >= MIN_PITCHES) & (counts.get(EXT, 0) >= MIN_PITCHES)]
+
+    tracked = _qualifying(df)
+    qual = _qualifying(df if scored is None else scored)
+    per_pitcher = qual.reset_index().groupby("pitcher_anon_id").size()
+    last = qual.reset_index().groupby("pitcher_anon_id").year.max()
+    return {
+        "seasons_in_dataset": sorted(int(y) for y in df.year.unique()),
+        "pitchers": int(df.pitcher_anon_id.nunique()),
+        "pattern_counts": dict(sorted(pattern.items())),
+        "pitchers_with_a_gap": int(gaps),
+        "qualifying_pitcher_seasons_tracked": int(len(tracked)),
+        "scored_pitcher_seasons": int(len(qual)),
+        "scored_pitchers": int(per_pitcher.size),
+        "scored_seasons_per_pitcher": {
+            str(int(k)): int(v) for k, v in per_pitcher.value_counts().sort_index().items()
+        },
+        "last_scored_season": {
+            str(int(k)): int(v) for k, v in last.value_counts().sort_index().items()
+        },
+    }
+
+
 # --------------------------------------------------------------------------
 # 5. Altitude Translator - validated with a PITCHER HOLDOUT
 # --------------------------------------------------------------------------
@@ -602,7 +659,7 @@ def stuff_plus_v0(df, seed=7):
 # --------------------------------------------------------------------------
 # 7. Mockup data: real pitcher rows for the prototype
 # --------------------------------------------------------------------------
-def mockup(d, df_phys, roles=None, pitches_per_inning=None):
+def mockup(d, df_phys, roles=None, entries=None, pitches_per_inning=None):
     """Pitcher-level cards with Stuff+ HH, sea-level Stuff+ and Altitude Tax.
 
     Scale note: stuff_plus_v0 is normalised across the WHOLE league (both
@@ -612,12 +669,18 @@ def mockup(d, df_phys, roles=None, pitches_per_inning=None):
     """
     ext = d[d.altitude_category == EXT]
     sea = d[d.altitude_category == SEA]
-    n_ext = ext.groupby("pitcher_anon_id").size()
-    n_sea = sea.groupby("pitcher_anon_id").size()
-    ok = sorted(set(n_ext[n_ext >= 150].index) & set(n_sea[n_sea >= 150].index))
+    # One card per pitcher AND SEASON. A pitcher who left and came back is two
+    # measurements, not one average of two different people: shape correlates
+    # 0.674 across a gap year against 0.78-0.83 between consecutive ones.
+    n_ext = ext.groupby(["pitcher_anon_id", "year"]).size()
+    n_sea = sea.groupby(["pitcher_anon_id", "year"]).size()
+    # MIN_PITCHES_FOR_SCORE, the rule the contract already declared and this
+    # script was quietly ignoring by using 150.
+    ok = sorted(set(n_ext[n_ext >= MIN_PITCHES].index) & set(n_sea[n_sea >= MIN_PITCHES].index))
     cards = []
-    for pid in ok:
-        e, s_ = ext[ext.pitcher_anon_id == pid], sea[sea.pitcher_anon_id == pid]
+    for pid, yr in ok:
+        e = ext[(ext.pitcher_anon_id == pid) & (ext.year == yr)]
+        s_ = sea[(sea.pitcher_anon_id == pid) & (sea.year == yr)]
         sp_hh, sp_sea = float(e.stuff_plus_v0.mean()), float(s_.stuff_plus_v0.mean())
         rv_hh, rv_sea = float(e.rv.mean()), float(s_.rv.mean())
         # REAL uncertainty: 95% CI half-width on the mean Stuff+ at altitude
@@ -669,17 +732,19 @@ def mockup(d, df_phys, roles=None, pitches_per_inning=None):
         cards.append(
             {
                 "pitcher_id": pid,
+                "season": int(yr),
                 "throws": str(e.PitcherThrows.mode().iloc[0])
                 if len(e.PitcherThrows.mode())
                 else "Right",
-                "pitches_hh": len(e),
-                "pitches_sea": len(s_),
+                "n_pitches_hh": len(e),
+                "n_pitches_sea": len(s_),
                 "stuff_plus_hh": round(sp_hh, 1),
                 "stuff_plus_sea": round(sp_sea, 1),
                 "stuff_plus_delta": round(sp_hh - sp_sea, 1),
                 "stuff_plus_hh_ci95": round(ci, 1),
                 "stuff_plus_sea_ci95": round(ci_sea, 1),
-                "role": roles.get(pid) if roles else None,
+                "role": roles.get((pid, int(yr))) if roles else None,
+                "median_entry_inning": entries.get((pid, int(yr))) if entries else None,
                 "altitude_tax_runs_per_9": round(tax, 2),
                 "altitude_tax_se": round(se_tax, 2),
                 "altitude_tax_significant": bool(abs(tax) > 1.96 * se_tax),
@@ -695,17 +760,49 @@ def mockup(d, df_phys, roles=None, pitches_per_inning=None):
         c["altitude_trap"] = bool(
             c["stuff_plus_sea"] >= sea_p70 and c["stuff_plus_delta"] <= delta_p30
         )
-    cards.sort(key=lambda c: -c["stuff_plus_hh"])
+    cards.sort(key=lambda c: (-c["stuff_plus_hh"], c["pitcher_id"]))
+    # Every season each carded pitcher appears in, scored or not. The Ficha
+    # shows all of them: a season with 212 pitches at altitude and 95 at sea
+    # level carries no comparison, and saying so is the point of the view.
+    carded = {c["pitcher_id"] for c in cards}
+    scored_keys = {(c["pitcher_id"], c["season"]) for c in cards}
+    # Counted on the SCORED frame, the same one the cards come from, so the
+    # Ficha never shows two different pitch counts for one season.
+    counts = (
+        d[d.pitcher_anon_id.isin(carded)]
+        .groupby(["pitcher_anon_id", "year", "altitude_category"])
+        .size()
+        .unstack(fill_value=0)
+    )
+    history = {}
+    for (pid, yr), row in counts.iterrows():
+        history.setdefault(pid, []).append(
+            {
+                "season": int(yr),
+                "n_pitches_hh": int(row.get(EXT, 0)),
+                "n_pitches_sea": int(row.get(SEA, 0)),
+                "scored": (pid, int(yr)) in scored_keys,
+            }
+        )
+    for pid in history:
+        history[pid].sort(key=lambda x: x["season"])
+
     taxes = np.array([c["altitude_tax_runs_per_9"] for c in cards])
-    return cards, {
-        "altitude_tax_runs_per_9": {
-            "mean": round(float(taxes.mean()), 2),
-            "median": round(float(np.median(taxes)), 2),
-            "n_significant": int(sum(c["altitude_tax_significant"] for c in cards)),
+    return (
+        cards,
+        history,
+        {
+            "altitude_tax_runs_per_9": {
+                "mean": round(float(taxes.mean()), 2),
+                "median": round(float(np.median(taxes)), 2),
+                "n_significant": int(sum(c["altitude_tax_significant"] for c in cards)),
+            },
+            "n_cards": len(cards),
+            "n_pitchers": len({c["pitcher_id"] for c in cards}),
+            "min_pitches_each_environment": MIN_PITCHES,
+            "n_traps": int(sum(c["altitude_trap"] for c in cards)),
         },
-        "n_cards": len(cards),
-        "n_traps": int(sum(c["altitude_trap"] for c in cards)),
-    }
+    )
 
 
 def target_learnability(df, seed=7):
@@ -804,23 +901,48 @@ def main():
     d, R["stuff_plus_v0"] = stuff_plus_v0(df)
     log(f"Stuff+ v0 baseline: OOF R2={R['stuff_plus_v0']['oof_r2']}")
 
+    # After stuff_plus_v0, so both denominators agree with the cards.
+    R["seasons"] = season_coverage(df, scored=d)
+    log(
+        f"Seasons: {R['seasons']['scored_pitcher_seasons']} scored pitcher-seasons from "
+        f"{R['seasons']['scored_pitchers']} pitchers, "
+        f"{R['seasons']['pitchers_with_a_gap']} with a gap"
+    )
+
     # Role is a rule over every appearance in the dataset, not over the
     # scored subset: a pitcher's job is the same whatever we scored.
     role_table = classify_roles(
-        df, pitcher_col="pitcher_anon_id", game_col="game_anon_id", inning_col="Inning"
+        df,
+        pitcher_col="pitcher_anon_id",
+        season_col="year",
+        game_col="game_anon_id",
+        inning_col="Inning",
     )
+    role_table.index = role_table.index.set_levels(role_table.index.levels[1].astype(int), level=1)
     roles = role_table["role"].to_dict()
+    entries = role_table["median_entry_inning"].to_dict()
+    # Role is a property of a pitcher-SEASON. This counts how often it moves,
+    # rather than asserting that it does.
+    per_pitcher = role_table.reset_index().dropna(subset=["role"]).groupby("pitcher_anon_id")
+    n_roles = per_pitcher.role.nunique()
+    n_seasons = per_pitcher.role.size()
     R["roles"] = {
         "n_classified": int(role_table["role"].notna().sum()),
         "distribution": {str(k): int(v) for k, v in role_table["role"].value_counts().items()},
         "starter_first_inning_share_ge": STARTER_FIRST_INNING_SHARE,
-        "late_inning_entry_ge": LATE_INNING_ENTRY,
+        "pitchers_with_multiple_seasons": int((n_seasons > 1).sum()),
+        "pitchers_changing_role_between_seasons": int((n_roles > 1).sum()),
     }
     log(f"Roles: {R['roles']['distribution']}")
 
     ppi = R["run_environment"][EXT]["pitches_per_inning"]
-    cards, R["cohort"] = mockup(d, df, roles=roles, pitches_per_inning=ppi)
-    log(f"Mockup cards: {len(cards)} pitchers, {R['cohort']['n_traps']} altitude traps")
+    cards, history, R["cohort"] = mockup(
+        d, df, roles=roles, entries=entries, pitches_per_inning=ppi
+    )
+    log(
+        f"Mockup cards: {len(cards)} pitcher-seasons from "
+        f"{R['cohort']['n_pitchers']} pitchers, {R['cohort']['n_traps']} altitude traps"
+    )
 
     R["target_learnability"] = target_learnability(df)
     for k, v in R["target_learnability"].items():
@@ -832,7 +954,12 @@ def main():
         json.dump(R, f, indent=2, ensure_ascii=False)
     with open(os.path.join(OUT, "mockup_data.json"), "w") as f:
         json.dump(
-            {"pitchers": cards, "pitch_profiles": R["pitch_profiles"], "density": R["density"]},
+            {
+                "pitchers": cards,
+                "pitcher_seasons": history,
+                "pitch_profiles": R["pitch_profiles"],
+                "density": R["density"],
+            },
             f,
             indent=2,
             ensure_ascii=False,
