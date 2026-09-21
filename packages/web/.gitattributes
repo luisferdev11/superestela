@@ -1,0 +1,4 @@
+# Generado por pnpm. Se revisa el package.json, no estas miles de lineas.
+pnpm-lock.yaml                  linguist-generated=true
+# Generado por scripts/build-tokens.mjs desde src/design/tokens.json.
+src/styles/tokens.generated.css linguist-generated=true
