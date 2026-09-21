@@ -29,7 +29,7 @@ Lo que **no** es: gradientes, glassmorphism, ilustraciones deportivas genéricas
 | Rol | Uso |
 |---|---|
 | **Rojo Diablos** | Acento primario, el equipo. Usar con disciplina: acciones, identidad, el dato más importante de la pantalla. Nunca como fondo amplio. |
-| **Escala de altitud** | El gradiente conceptual del producto: de nivel del mar a 2,240 m. Es el sistema cromático que codifica entorno en toda la app. Sea level y altitud deben ser distinguibles de un vistazo y consistentes en las 6 pantallas. |
+| **Escala de altitud** | El gradiente conceptual del producto: de nivel del mar a 2,240 m. Es el sistema cromático que codifica entorno en toda la app. Sea level y altitud deben ser distinguibles de un vistazo y consistentes en las ocho pantallas. |
 | **Neutros** | La mayor parte de la interfaz. Superficies, tablas, texto. Alto contraste, poca saturación. |
 | **Semánticos** | La bandera de Trampa, el signo del Impuesto y el estado *no concluyente*. Deben leerse sin depender solo del color (accesibilidad). |
 
@@ -59,11 +59,13 @@ Tabla densa y ordenable, 296 lanzadores reales en su última temporada jugada.
 | **Stuff+ HH** | 92.0 ± 0.7 | El número principal. Siempre con su banda |
 | Stuff+ nivel del mar | 111.1 | La referencia engañosa |
 | **Δ** | −19.1 | Codificado en la escala de altitud |
-| **Impuesto de Altitud** | +5.93 ± 2.18 | Carreras por 9 entradas. **Solo 40 de 286 son significativos; los otros 246 dicen *no concluyente*, no un número** |
+| **Impuesto de Altitud** | +5.93 ± 2.18 | Carreras por 9 entradas. **Solo 35 de los 296 candidatos del Radar son significativos; los otros 261 dicen *no concluyente*, no un número.** Sobre las 370 tarjetas, 40 |
 | **Rol** | `Abridor` | Dos valores, abridor o relevista. Inferido de la entrada de ingreso, y **por temporada** (`docs/adr/0004`) |
 | **Trampa** | 🚩 | 58 de 370 temporadas |
 
-Rangos reales: Stuff+ HH **87.8 – 107.1** · Impuesto **−9.53 a +9.50** carreras/9 entradas.
+Rangos reales de la cohorte: Stuff+ HH **87.9 – 109.5** · Impuesto **−10.62 a +14.40** carreras/9 entradas sobre las 370 tarjetas.
+
+> Ninguna de estas cifras se escribe en la interfaz. La pantalla las deriva de `analysis/outputs/mockup_data.json` al renderizar y un test las compara contra `evidence.json`, que es la corrida que las respalda. Están aquí para leer el diseño, no para copiarlas al código.
 
 Controles: filtro por mano, rol, temporada, tipo de pitch dominante; toggle **"ordenar por Stuff+ nivel del mar"** — que produce un orden visiblemente distinto. **Ese contraste es la demostración del producto en un solo clic.**
 

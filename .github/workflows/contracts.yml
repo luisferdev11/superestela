@@ -1,0 +1,93 @@
+# Valida que lo que datos entrega cumple el contrato de docs/07 seccion 1,
+# ANTES de que llegue a producto, y escribe el veredicto en el PR.
+#
+# El fixture se genera con semilla en vez de versionar un parquet: la regla
+# "ningun dato entra a git, en ninguna ruta" no tiene excepciones que alguien
+# tenga que recordar o pueda malinterpretar. Ver packages/contracts/fixtures.py.
+name: Contratos de datos
+
+on:
+  pull_request:
+    paths:
+      - 'packages/models/**'
+      - 'packages/contracts/**'
+      - 'scripts/materialize_fixture.py'
+      - '.github/workflows/contracts.yml'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    strategy:
+      # Los dos contratos por separado: si A pasa y B falla, el PR lo dice sin
+      # que haya que leer un log.
+      fail-fast: false
+      matrix:
+        include:
+          - contract: A
+            rows: 500
+          - contract: B
+            rows: 60
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --all-extras
+
+      - name: Materializar el fixture del contrato ${{ matrix.contract }}
+        run: |
+          uv run python scripts/materialize_fixture.py \
+            "${RUNNER_TEMP}/delivery.parquet" \
+            --contract "${{ matrix.contract }}" --rows "${{ matrix.rows }}"
+
+      # `--mlflow-run` no es decorativo: sin corrida declarada la entrega se
+      # rechaza con salida distinta de cero. Es la regla de oro de docs/07
+      # seccion 1.6 aplicada por la maquina.
+      - name: Validar contra el contrato
+        id: validate
+        run: |
+          uv run python -m contracts.validate \
+            "${RUNNER_TEMP}/delivery.parquet" \
+            --contract "${{ matrix.contract }}" \
+            ${{ matrix.contract == 'A' && format('--expected-pitches {0}', matrix.rows) || '' }} \
+            --mlflow-run "${GITHUB_SHA::7}" \
+            --out contract_report.json
+
+      # El resumen se lee en shell y viaja por el entorno, en vez de que el
+      # script haga `require('node:fs')`: asi el paso no depende de que
+      # github-script siga exponiendo `require` en la siguiente mayor.
+      - name: Leer el veredicto
+        if: always() && steps.validate.outcome != 'skipped'
+        run: |
+          {
+            echo 'CONTRACT_SUMMARY<<CONTRACT_EOF'
+            uv run python -c "import json,sys; sys.stdout.write(json.load(open('contract_report.json'))['summary'])"
+            echo
+            echo 'CONTRACT_EOF'
+          } >> "$GITHUB_ENV"
+
+      - name: Comentar el resultado en el PR
+        if: always() && steps.validate.outcome != 'skipped'
+        uses: actions/github-script@v8
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `### Contrato de datos · ${{ matrix.contract }}\n\n${process.env.CONTRACT_SUMMARY}`,
+            });
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: contract-report-${{ matrix.contract }}
+          path: contract_report.json
