@@ -408,6 +408,23 @@ Las tres historias:
   cobertura es de ±9 puntos, así que un rango fijo reprueba por azar. El JSON guarda los dos
   veredictos (`passed_fixed_60_76`).
 
+### 5.2 Las tres historias, corridas contra la API · 23 de septiembre
+
+Son los datos de las historias de P1. **El cronometraje de los 10 segundos queda para el ensayo del
+13 de octubre**: ese criterio no lo puede decidir una máquina.
+
+| Historia | Lo que contesta el Simulador |
+|---|---|
+| 1 · recta de `pitcher_00069` | 113.7 ± 6.6 → 92.9 ± 4.1, Δ −20.8 ± 6.3 (−13.5 por la forma, −7.3 por el entorno). En el mapa cae en una zona de 28% de whiff a nivel del mar y de 20% en Harp Helú (media del tipo: 21%). **Con +2 mph, en Harp Helú sube de 92.9 a 100.0**: es la pregunta «¿qué le arreglo?» contestada con un número y su banda |
+| 2 · `pitcher_00566` | Su slider aguanta: 121.3 → 113.4 (Δ −8.0 ± 4.3). Su recta cae más: 106.1 → 93.8 (Δ −12.4 ± 4.6). Es el mecanismo de por qué sobrevive |
+| 3 · changeup de `pitcher_00816` | Contra su recta, la separación de IVB pasa de −16.3″ a **−12.3″** en altura; la de velocidad se queda en −9.9 mph. Pierde engaño por forma, no por velocidad: H2 visto desde el arsenal |
+
+**Lo que las capturas de la pantalla encontraron y se corrigió antes de fusionar:**
+- La línea base del modo lanzador arrastraba campos extra a la petición y la API contestaba 422. Ahora
+  un test de componente lo cubre.
+- El lanzador salía como su propio comparable más parecido. La API ahora lo excluye.
+- La banda de la liga y la marca del pitch real quedaban tapadas por el riel nativo del slider.
+
 **Riesgos que las compuertas no cierran, y se dicen:**
 - **Contrafactual observacional.** El modelo aprendió de pitches lanzados, no de intervenciones. «Subir 2
   mph» es una pregunta fuera de lo que vio si ese lanzador no las tiene. La `se` y el aviso de
@@ -429,7 +446,8 @@ Las tres historias:
 | VAA y velocidad al plato (F5) | ✅ | `core/trajectory.py`, 0.083° sobre 50,000 pitches |
 | Coherencia del spin (F4) | 🟢 | Mahalanobis robusto por tipo (`simulator.json → plausibility`, `core/spin.py`). Falsos positivos: 1.5% por construcción. La prueba real de F4 es que marque los casos imposibles conocidos. La primera versión, por variable, no los marcaba y se descartó |
 | Diferenciales de arsenal | ✅ | `core/arsenal.py`; arsenales base por lanzador en `analysis/outputs/arsenals.json` |
-| Mapa de efectividad | 🟢 | `simulator.json → movement_map`: rejilla de 2″, κ empírico por tipo y entorno, 10% extremos. Falta la pantalla |
+| Mapa de efectividad | ✅ | `simulator.json → movement_map` y la pantalla: dos paneles con encuadre y escala compartidos, extremos del 10% y el whiff de la zona del pitch |
+| Pantalla `/simulador` | ✅ | Modo lanzador y laboratorio, bandas en cada número, Δ partido, física, arsenal, comparables. Verificada con capturas; falta el cronometraje del ensayo (P1) |
 | Rangos de sliders y pérdida de velocidad | ✅ | `simulator.json → distributions`, `speed_loss` |
 | Contrato del scorer | ✅ | `models/scoring.py`, ADR 0007 |
 | Score v0 puente con `se` | 🟡 | `models/stuff/v0_bridge.py`. Pasa S1–S6, falla S7 (§5.1). Se muestra, declarado como puente |

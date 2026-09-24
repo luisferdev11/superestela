@@ -101,7 +101,9 @@ El prototipo tiene el HTML, los tokens y las cifras de las ocho:
 > el prototipo ya tenía.
 
 - [x] **P1 · Radar de Fichajes** — completa, a paridad con el prototipo.
-- [ ] **P4 · Simulador de Pitch.** `docs/00` §5 lo llama **«entregable 4
+- [x] **P4 · Simulador de Pitch** — construido el 23 de septiembre, en revisión en la cadena #22–#31.
+      Quedan la sesión con staff vía ISAC (P2) y el cronometraje del ensayo (P1).
+      `docs/00` §5 lo llama **«entregable 4
       obligatorio»**: es lo único del carril de producto que el reglamento exige
       por nombre. Va **antes que cualquier otra pantalla**.
       Diseño, fórmulas y validación en [`docs/09`](09-SIMULADOR.md): dos capas
