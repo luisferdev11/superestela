@@ -1,8 +1,17 @@
 'use client'
 
 import { FilterChip, FilterDivider } from './FilterChip'
-import { availableSeasons, availableThrows, isFiltered, NO_FILTERS } from '@/domain/filters'
-import type { RadarFilters as Filters } from '@/domain/filters'
+import {
+  availableSeasons,
+  availableThrows,
+  countWith,
+  countWithTrapsOnly,
+  isFiltered,
+  NO_FILTERS,
+  toggleValue,
+  type MultiKey,
+  type RadarFilters as Filters,
+} from '@/domain/filters'
 import { ROLES } from '@/domain/constants'
 import type { PitcherSeason, Role } from '@/domain/types'
 import { es } from '@/i18n/es'
@@ -18,13 +27,17 @@ export const RadarFilters = ({
   readonly filters: Filters
   readonly onFiltersChange: (next: Filters) => void
 }) => {
-  // Cada chip alterna: pulsar el activo lo apaga. Un filtro que no se puede
-  // quitar sin recargar es una trampa en una demo de diez minutos.
-  const toggle =
-    <K extends keyof Filters>(key: K, value: Filters[K]) =>
-    () => {
-      onFiltersChange({ ...filters, [key]: filters[key] === value ? NO_FILTERS[key] : value })
-    }
+  const chip = <K extends MultiKey>(key: K, value: Filters[K][number], label: string) => (
+    <FilterChip
+      key={`${key}:${String(value)}`}
+      label={label}
+      active={(filters[key] as readonly Filters[K][number][]).includes(value)}
+      count={countWith(cards, filters, key, value)}
+      onToggle={() => {
+        onFiltersChange(toggleValue(filters, key, value))
+      }}
+    />
+  )
 
   return (
     <div className="flex flex-wrap items-center gap-2">
@@ -35,54 +48,30 @@ export const RadarFilters = ({
       <FilterChip
         label={es.all}
         active={!isFiltered(filters)}
+        count={cards.length}
         onToggle={() => {
           onFiltersChange(NO_FILTERS)
         }}
       />
-      {availableThrows(cards).map((hand) => (
-        <FilterChip
-          key={hand}
-          label={es.throws[hand] ?? hand}
-          active={filters.throws === hand}
-          onToggle={toggle('throws', hand)}
-        />
-      ))}
+      {availableThrows(cards).map((hand) => chip('throws', hand, es.throws[hand] ?? hand))}
 
       <FilterDivider />
-      {ROLES.map((role: Role) => (
-        <FilterChip
-          key={role}
-          label={es.rolePlural[role]}
-          active={filters.role === role}
-          onToggle={toggle('role', role)}
-        />
-      ))}
+      {ROLES.map((role: Role) => chip('role', role, es.rolePlural[role]))}
 
       <FilterDivider />
-      {availableSeasons(cards).map((season) => (
-        <FilterChip
-          key={season}
-          label={String(season)}
-          active={filters.season === season}
-          onToggle={toggle('season', season)}
-        />
-      ))}
+      {availableSeasons(cards).map((season) => chip('season', season, String(season)))}
 
       <FilterDivider />
-      {pitches.map((pitch) => (
-        <FilterChip
-          key={pitch}
-          label={pitch}
-          active={filters.pitch === pitch}
-          onToggle={toggle('pitch', pitch)}
-        />
-      ))}
+      {pitches.map((pitch) => chip('pitch', pitch, pitch))}
 
       <FilterDivider />
       <FilterChip
         label={es.trapsOnly}
         active={filters.trapsOnly}
-        onToggle={toggle('trapsOnly', true)}
+        count={countWithTrapsOnly(cards, filters)}
+        onToggle={() => {
+          onFiltersChange({ ...filters, trapsOnly: !filters.trapsOnly })
+        }}
       />
     </div>
   )
