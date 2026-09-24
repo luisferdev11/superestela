@@ -104,9 +104,9 @@ la pelota». Lo presenta como si coincidieran, y no coinciden.
 
 ### 2.5 La eficiencia de spin absoluta no es identificable con estos datos (🔴 como número)
 
-Sondeo del 23 de septiembre (se formaliza en `evidence.json → spin_efficiency_check`):
-- Estimar la eficiencia por pitch (§3.4) da, para la **mediana de la recta a nivel del mar, entre 0.65
-  y 0.89** según la densidad absoluta supuesta (1.15–1.225 kg/m³) y el ajuste de `C_L(S)` elegido
+Corrida de `evidence.py` del 23 de septiembre (`analysis/outputs/simulator.json → spin_efficiency_check`):
+- Estimar la eficiencia por pitch (§3.4) da, para la **mediana de la recta a nivel del mar, entre 0.651
+  y 0.894** según la densidad absoluta supuesta (1.15–1.225 kg/m³) y el ajuste de `C_L(S)` elegido
   (Sawicki o Nathan).
 - Las curvas salen en ~0.3, muy por debajo de lo que publica Statcast.
 
@@ -375,12 +375,13 @@ Las tres historias:
 |---|---|---|
 | Física mar → HH (`translate.py`) | ✅ | Holdout por pitcher, bandas por tipo |
 | Extrapolación a otras densidades | 🟡 | Depende de §2.4; D4 la cierra |
-| Banda de Cutter | 🟡 | Sin muestra suficiente; banda máxima declarada |
+| Banda de Cutter | 🟡 | Sin muestra suficiente (25 de 40 lanzadores, registrado en `evidence.json → translator.skipped`); banda máxima declarada |
 | Densidad física / validación externa (F3) | 🟡 | Cálculo hecho aquí; falta el módulo y el test |
 | VAA y velocidad al plato (F5) | 🟢 | Sondeo 0.079°; falta el módulo |
-| Coherencia del spin (F4) | 🟡 | Medida relativa diseñada; falta construirla |
+| Coherencia del spin (F4) | 🟢 | Envolvente en `simulator.json → plausibility`: marca 1.2–1.5% de los pitches reales por tipo, bajo el 2%. Una primera versión al 99% central marcaba 2.4–2.9% y se recalibró; el umbral no se movió |
 | Diferenciales de arsenal | 🟡 | Aritmética; falta el módulo |
-| Mapa de efectividad | 🟡 | Diseñado; falta la salida en `evidence.py` |
+| Mapa de efectividad | 🟢 | `simulator.json → movement_map`: rejilla de 2″, κ empírico por tipo y entorno, 10% extremos. Falta la pantalla |
+| Rangos de sliders y pérdida de velocidad | ✅ | `simulator.json → distributions`, `speed_loss` |
 | Contrato del scorer | 🟡 | ADR 0007 |
 | Score v0 puente con `se` | 🔴 | Por construir; S3 en riesgo |
 | Features de arsenal **dentro** del score | 🔴 | Es A1, del equipo de datos |
