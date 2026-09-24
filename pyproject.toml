@@ -89,7 +89,7 @@ explicit_package_bases = true
 exclude = ["analysis/", "notebooks/"]
 
 [[tool.mypy.overrides]]
-module = ["sklearn.*", "mlflow.*", "pandera.*"]
+module = ["sklearn.*", "mlflow.*", "pandera.*", "joblib.*"]
 ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
