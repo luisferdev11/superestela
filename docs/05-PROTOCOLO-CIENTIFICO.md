@@ -33,7 +33,7 @@ Separado sin ambigüedad, porque mezclarlo es lo que hace que un baseline se lea
 |---|---|
 | Efecto altitud within-pitcher, 268 lanzadores, 100% pierde ride | ✅ Firme. Es aritmética sobre datos observados |
 | Spin invariante entre entornos | ✅ Firme |
-| Índice de Densidad desde la trayectoria (0.858 / 0.903 / 1.000) | ✅ Firme. Derivación física, falta validación externa (Q7) |
+| Índice de Densidad desde la trayectoria (0.858 / 0.903 / 1.000) | ✅ Firme como medición. 🟡 como *densidad*: queda arriba de la física (0.77–0.80) mientras la razón Magnus (0.754) sí coincide; probablemente es un índice de **arrastre** (`docs/09` §2.4). Falta validación externa (D4) |
 | Deltas de outcome por tipo de lanzamiento | ✅ Firme como descripción; falta IC |
 | Compensación de mira: −3.77″ de ride, −0.71″ de altura de llegada | ✅ Firme. **Hallazgo nuevo, no explotado todavía** |
 
@@ -42,7 +42,8 @@ Separado sin ambigüedad, porque mezclarlo es lo que hace que un baseline se lea
 | Pieza | Estado |
 |---|---|
 | `stuff_plus_v0` | 🟡 **Baseline desechable.** Existe para dar números al prototipo |
-| Coeficientes del Simulador y el Traductor | 🟡 Calibrados contra v0. Se reemplazan cuando exista el modelo real |
+| Score del Simulador | 🔴 **No existe todavía.** El prototipo usaba una fórmula lineal hecha a mano, descartada. Se construye como contrato + v0 puente con `se`, detrás de compuertas ([`docs/09`](09-SIMULADOR.md) §5, [ADR 0007](adr/0007-contrato-del-scorer-y-escala.md)) |
+| Física del Simulador y el Traductor | ✅ mar → HH (`translate.py`, holdout por pitcher). 🟡 al extrapolar a otras densidades, porque el índice es de arrastre (`docs/09` §2.4) |
 | Traductor: RMSE 0.85″–1.45″ en holdout | 🟢 Prometedor, pero con un solo split y sin IC |
 | Aprendibilidad por target (AUC 0.54–0.64) | 🟡 Una arquitectura, un juego de features, una semilla |
 | Puente Stuff+ → carreras | 🔴 **No existe.** r = −0.08 |
@@ -90,7 +91,7 @@ Cada entrada es una pregunta con una corrida asociada. `P` = prioridad.
 | D1 | ¿La razón de Magnus varía por tipo de lanzamiento y por spin rate? Hoy usamos un 0.754 global | **1** |
 | D2 | Estimar spin efficiency desde la trayectoria: comparar el vector Magnus observado contra el predicho por SpinAxis | 2 |
 | D3 | El residuo entre movimiento observado y movimiento gyro-predicho: ¿captura efecto de costura? | 3 |
-| D4 | ¿El Índice de Densidad por juego correlaciona con temperatura y presión externas? **Validación externa del índice** | 2 |
+| D4 | ¿El Índice de Densidad por juego correlaciona con temperatura y presión externas? **Validación externa del índice.** Incluye separar densidad de la dependencia del arrastre con Reynolds: hoy el índice (0.858) queda arriba de la densidad física (0.77–0.80) y la razón Magnus (0.754) no (`docs/09` §2.4) | **1** |
 
 ### Track E · Altitud
 

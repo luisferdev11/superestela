@@ -88,9 +88,11 @@ Arsenal (datos reales):
 
 | Pitch | Uso | Velo | IVB sea → HH | \|HB\| sea → HH | Spin | Stuff+ sea → HH | Whiff |
 |---|---|---|---|---|---|---|---|
-| Four-Seam | 66.5% | 92.0 | 20.9" → **15.7"** | 7.9" → 5.1" | 2341 | 110.8 → **87.8** | 19.8% |
-| Slider | 21.1% | 83.9 | 7.4" → 4.3" | 5.4" → 4.5" | 2269 | 104.6 → 99.8 | 27.7% |
-| Curveball | 11.5% | 71.8 | −16.7" → −12.2" | 11.2" → 7.3" | 2553 | 118.4 → 101.2 | 28.6% |
+| Four-Seam | 71.3% | 92.2 | 20.7" → **15.0"** | 8.2" → 5.2" | 2353 | 111.0 → **90.4** | 18.3% |
+| Slider | 18.5% | 84.1 | 7.1" → 2.7" | 5.4" → 4.4" | 2310 | 101.3 → 99.6 | 21.9% |
+| Curveball | 9.4% | 72.4 | −16.6" → −13.4" | 11.3" → 8.3" | 2640 | 117.1 → 102.9 | 43.8% |
+
+Temporada 2025, `mockup_data.json`. Una versión anterior de esta tabla (66.5% de uso, 110.8 → 87.8) era de antes de que las tarjetas fueran por temporada (ADR 0005) y no la respalda ninguna corrida vigente.
 
 Elementos: mapa de movimiento con ambos entornos superpuestos, tarjeta por pitch, y la **Ficha Técnica** desplegable — contribución por feature más la razón física en lenguaje llano.
 
@@ -107,19 +109,34 @@ El estado final debe mostrar tres cosas juntas:
 2. **Stuff+ HH proyectado** con banda.
 3. **Por qué** — el Índice de Densidad aplicado y el factor Magnus (≈0.75), visible. La física es el argumento de confianza, y debe verse.
 
-Precisión a comunicar honestamente: **±0.85" a ±1.45"** en pitchers nunca vistos.
+Precisión a comunicar honestamente, en pitchers nunca vistos: **±0.85" a ±1.45"** con el modelo empírico, **±0.90" a ±1.85"** con la física pura sobre el break con signo, que es la banda que `translate.py` pone en pantalla ([`docs/09`](09-SIMULADOR.md) §3.2). Se cita la que la pantalla muestra.
 
 ---
 
 ### P4 · Simulador de Pitch *(entregable obligatorio)*
 
-**Pregunta:** *¿Y si cambio esto?*
+**Pregunta:** *¿Y si mi pitcher cambia esto?*
 
-Sliders: velocidad, IVB, |HB|, spin rate, extensión, release height/side + selector de tipo y mano.
+Lo que el reto pide, literal: ingresar las características físicas de un pitch y obtener su Stuff+; el mismo pitch lado a lado en Harp Helú y a nivel del mar; y el **mapa de movimiento de los pitches más y menos efectivos**. Fundamento, fórmulas y criterios de aceptación en [`docs/09`](09-SIMULADOR.md).
 
-Salida **lado a lado, siempre**: Harp Helú vs nivel del mar. Stuff+, movimiento y mapa.
+**Entrada.** Dos modos: *desde un lanzador* —se elige lanzador y pitch, y su pitch real es la línea base que marca cada slider— y *laboratorio*, desde el promedio LMB del tipo. El primero es el principal: el coach pregunta por su pitcher, no por un pitch genérico.
 
-> **Decisión de diseño no negociable:** el spin rate se muestra pero **no domina la jerarquía visual**. Los datos son inequívocos — el spin no cambia con la altitud mientras el movimiento colapsa 20–30%. La interfaz debe enseñar `shape over spin`, no reforzar el error.
+**Controles**, agrupados por lo que deciden:
+- **Forma** — velocidad, IVB, HB. Arriba y con más peso visual.
+- **Release** — extensión, altura, lado.
+- **Spin** — rpm y eje, en un bloque secundario, con el *movimiento por rpm* en percentil del tipo y el aviso de plausibilidad cuando la combinación no se ha lanzado en la LMB.
+- Tipo de pitch y mano. Cada slider marca el valor real del lanzador y la banda p5–p95 de la liga.
+
+**Salida, lado a lado, siempre:**
+1. Stuff+ a nivel del mar y en Harp Helú, **cada uno con banda**, y el Δ partido en *forma* (cuánto pierde por moverse menos) y *entorno*. Si el modelo no pasó sus compuertas, el Stuff+ dice «modelo en validación» y el resto de la pantalla sigue.
+2. La forma en cada entorno con su banda, el VAA y la velocidad al plato.
+3. Los diferenciales contra la recta del lanzador **en los dos entornos**: en altura se encogen, y ahí se ve qué pitch pierde engaño.
+4. El mapa de efectividad en dos paneles, mar | Harp Helú: rejilla de whiff observado por zona de forma, los pitches más y menos efectivos, el arsenal del lanzador y el pitch simulado con su flecha.
+5. La procedencia: barra de Índice de Densidad, qué modelo contesta y si usa arsenal.
+
+**No imprime carreras.** El puente Stuff+ → carreras no existe (r = −0.08); las carreras viven en el Impuesto de Altitud, que es otra medición.
+
+> **Decisión de diseño no negociable:** el spin rate se muestra pero **no domina la jerarquía visual**. Los datos son inequívocos — el spin no cambia con la altitud mientras el movimiento colapsa 20–30%. La interfaz debe enseñar `shape over spin`, no reforzar el error. **El spin sí entra al modelo** (v0 usa `SpinRate` y `SpinAxis`, y el reto lo nombra como feature); lo que no hace es decidir: la forma decide, y el spin dice si esa forma es coherente.
 
 ---
 
@@ -135,7 +152,7 @@ Salida **lado a lado, siempre**: Harp Helú vs nivel del mar. Stuff+, movimiento
 
 Deriva del contraste entre el arsenal actual y los perfiles resistentes de la cohorte.
 
-Ejemplo real del dataset: `pitcher_00566` sobrevive la altitud (Δ −5.2) apoyándose en un slider al **45.2% de uso**, mientras `pitcher_00069` colapsa (Δ −19.1) con un four-seam al **66.5%**. Ambos parten de Stuff+ 111.1 a nivel del mar.
+Ejemplo real del dataset, temporada 2025: `pitcher_00566` sobrevive la altitud (Δ −4.0) apoyándose en un slider al **41.9% de uso**, mientras `pitcher_00069` colapsa (Δ −17.2) con un four-seam al **71.3%**. Los dos parten de ~111 de Stuff+ a nivel del mar (111.3 y 110.5).
 
 ---
 

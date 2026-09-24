@@ -19,3 +19,11 @@ export const dataDir = (): string => process.env.SUPERESTELA_DATA_DIR ?? REPO_OU
 export const mockupDataPath = (): string => path.join(dataDir(), 'mockup_data.json')
 
 export const evidencePath = (): string => path.join(dataDir(), 'evidence.json')
+
+/** Lo que lee el Simulador (`docs/09`): rangos, mapa, arsenales y el veredicto de las compuertas. */
+export const simulatorEvidencePath = (): string => path.join(dataDir(), 'simulator.json')
+
+export const arsenalsPath = (): string => path.join(dataDir(), 'arsenals.json')
+
+export const simulatorValidationPath = (): string =>
+  path.join(dataDir(), 'simulator_validation.json')

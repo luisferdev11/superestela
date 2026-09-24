@@ -26,6 +26,7 @@ import warnings
 
 import numpy as np
 import pandas as pd
+from simulator_evidence import simulator_evidence
 from sklearn.ensemble import HistGradientBoostingRegressor
 from sklearn.model_selection import GroupKFold
 
@@ -100,6 +101,7 @@ def load():
         "HorzBreak",
         "VertApprAngle",
         "SpeedDrop",
+        "PlateLocHeight",
         "vx0",
         "vy0",
         "vz0",
@@ -603,6 +605,13 @@ def translator(df, min_n=40, seed=7):
             continue
         ok = n[(n[EXT] >= min_n) & (n[SEA] >= min_n)].index
         if len(ok) < 40:
+            # Recorded, not silently dropped: the screen falls back to the
+            # widest band for this type, and docs/09 section 3.2 says why.
+            res.setdefault("skipped", {})[pt] = {
+                "n_pitchers_qualifying": len(ok),
+                "min_pitchers": 40,
+                "min_pitches_per_environment": min_n,
+            }
             continue
         p = d.pivot_table(
             index="pitcher_anon_id",
@@ -1015,6 +1024,13 @@ def main():
         f"{R['cohort']['n_pitchers']} pitchers, {R['cohort']['n_traps']} altitude traps"
     )
 
+    # Its own file: the map and the envelope are thousands of lines that
+    # nobody reads alongside the rest of the evidence.
+    pitcher_seasons = {(c["pitcher_id"], c["season"]) for c in cards}
+    arsenal_baselines, simulator = simulator_evidence(df, MAIN_PITCHES, pitcher_seasons)
+    ff = simulator["spin_efficiency_check"]["four_seam_median_range"]
+    log(f"Simulator evidence: four-seam spin efficiency median spans {ff[0]}-{ff[1]}")
+
     R["target_learnability"] = target_learnability(df)
     for k, v in R["target_learnability"].items():
         log(f"  {k:28s} AUC={v['oof_auc']}")
@@ -1023,6 +1039,17 @@ def main():
 
     with open(os.path.join(OUT, "evidence.json"), "w") as f:
         json.dump(R, f, indent=2, ensure_ascii=False)
+        f.write("\n")
+    with open(os.path.join(OUT, "simulator.json"), "w") as f:
+        json.dump(simulator, f, indent=2, ensure_ascii=False, allow_nan=False)
+        f.write("\n")
+    # One pitcher-season per line: 370 lines instead of 60,000 in every diff.
+    with open(os.path.join(OUT, "arsenals.json"), "w") as f:
+        rows = [
+            f"  {json.dumps(k)}: {json.dumps(v, ensure_ascii=False, allow_nan=False)}"
+            for k, v in sorted(arsenal_baselines.items())
+        ]
+        f.write("{\n" + ",\n".join(rows) + "\n}\n")
     with open(os.path.join(OUT, "mockup_data.json"), "w") as f:
         json.dump(
             {
@@ -1035,7 +1062,8 @@ def main():
             indent=2,
             ensure_ascii=False,
         )
-    log(f"\nWrote {OUT}/evidence.json and {OUT}/mockup_data.json")
+        f.write("\n")
+    log(f"\nWrote {OUT}/evidence.json, {OUT}/simulator.json and {OUT}/mockup_data.json")
 
 
 def hypotheses(R):

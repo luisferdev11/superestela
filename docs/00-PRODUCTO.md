@@ -41,7 +41,7 @@ No hay un modelo Stuff+ calibrado para la LMB. Construirlo es el reto. Pero un s
 | **Desarrollar** | ¿Qué debe cambiar de su arsenal para sobrevivir en casa? | Plan de Desarrollo |
 | **Alinear** | ¿Quién abre en casa y quién en carretera? | Tablero de Despliegue |
 
-El "dashboard con sliders" que pide el entregable 4 del reto es el *commodity* que todos los equipos van a construir. En SuperEstela es **una de ocho pantallas**, no el producto.
+El "dashboard con sliders" que pide el entregable 4 del reto es lo que todos los equipos van a construir. En SuperEstela es **una de ocho pantallas**, no el producto — pero es la que el reto exige por nombre y la que el pitching coach toca en la entrevista, así que se construye con el mismo rigor que el modelo: con el arsenal del lanzador, bandas en cada número y compuertas que deciden si el score se muestra ([`docs/09`](09-SIMULADOR.md)).
 
 ---
 
@@ -82,6 +82,8 @@ Son activos de marca tanto como métricas. Aparecen con nombre propio en app, de
 > **Y por qué es un piso, no el efecto completo.** El Impuesto se construye con pesos lineales por lanzamiento, que valoran el resultado de cada pitch pero nunca ven el secuenciamiento. Contra las carreras realmente admitidas recupera **+1.77 de los +2.70 RA/9 observados**, cerca del 65%. Se reporta como cota inferior y se dice así.
 
 > **Nota de escala.** Stuff+ HH se normaliza sobre toda la liga (ambos entornos), así que los pitches en altitud promedian **por debajo de 100 por construcción**. Esa brecha *es* el efecto altitud, no un error de calibración. El mismo lanzador puntúa en promedio **8.6 puntos menos** en casa que a nivel del mar.
+>
+> **Esto difiere de la letra del reto**, que define 100 como «promedio LMB ajustado por temporada y estadio» y pide que «>100» signifique mejor que promedio «independientemente del pitch type». La propuesta de escala por tipo y temporada, con el entorno reportado como Δ, está en el [ADR 0007](adr/0007-contrato-del-scorer-y-escala.md) y la decide el equipo de datos en A3.
 
 ---
 
@@ -96,7 +98,7 @@ Ranking de candidatos por valor proyectado **en CDMX**, no por sus números crud
 Cada candidato aparece con su **última temporada jugada**, y la temporada es una columna visible: de los 296 lanzadores con score, 95 tienen 2024 como última, 134 el 2025 y solo 67 el 2026. Un candidato cuyo último dato es de hace dos años no es comparable con uno de este año, y la pantalla no lo puede esconder.
 
 ### 3. Simulador de Pitch *(entregable 4 obligatorio)*
-Sliders de velocidad / IVB / HB / spin / extensión → Stuff+ lado a lado **Harp Helú vs nivel del mar**, más el mapa de movimiento. Es lo que pide el reto, ejecutado con calidad de producto real.
+Parte de **un pitch real de un lanzador** (o del promedio de la liga, en modo laboratorio). Controles de los features físicos que el reto nombra: velocidad, IVB, HB, spin rate y eje, extensión, altura y lado de release, tipo y mano. Sale **lado a lado, Harp Helú vs nivel del mar**: Stuff+ con banda, la forma proyectada, el VAA y la velocidad al plato, y los diferenciales contra la recta del lanzador en cada entorno. Incluye el **mapa de movimiento de los pitches más y menos efectivos** que pide el reto, construido con whiff observado. Fundamento, fórmulas y criterios de aceptación en [`docs/09`](09-SIMULADOR.md).
 
 ### 4. Plan de Desarrollo
 Para un pitcher ya en roster: qué lanzamiento se degrada más, cuál aguanta, y qué cambio de uso lo compensa — cuantificado en Stuff+ HH y en carreras, **en dos o tres frases con su mecanismo físico**. No en tarjetas: un coach no lee tarjetas, escucha una razón. Cubre el entregable 3 del reto junto con el Traductor.
@@ -169,11 +171,11 @@ Entregables obligatorios del reto: **1** → Radar + Ficha de Pitcher · **2** �
 
 | Riesgo | Mitigación |
 |---|---|
-| Sobre-alcance: 8 módulos en 4 semanas | Módulos 1–3 son obligatorios; el resto degrada a mockup de alta fidelidad |
+| Sobre-alcance: 8 módulos en 4 semanas | Lo obligatorio son los entregables del reto (§9): Radar y Ficha (1), Plan de Desarrollo y Traductor (3) y **Simulador (4)**. El resto degrada a mockup de alta fidelidad |
 | El equipo de datos no llega al modelo final | El Traductor funciona con **física pura, sin entrenamiento**. Producto defendible aunque el ML se retrase |
 | Refutar H2 se lee como arrogancia | Enmarcar como *"la convocatoria pidió cuantificar antes de asumir; esto encontramos"* |
 | `Extreme Altitude` mezcla varios estadios | Es exactamente por qué modelamos densidad continua y no el bucket |
-| ~~Confusión de fechas (15 oct vs 9 dic)~~ | **Resuelto.** La entrega es el **15 de octubre de 2026**, confirmado con ISAC |
+| ~~Confusión de fechas (15 oct vs 9 dic)~~ | **Resuelto.** La entrega es el **15 de octubre de 2026**, confirmado con ISAC. Finalistas el 20 de octubre y **presentaciones el 10 y 11 de noviembre** según la página oficial; el «9 dic» de las notas viejas no aparece en ella |
 
 ---
 

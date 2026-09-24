@@ -34,21 +34,31 @@ MAGNUS_RATIO_EXTREME = 0.7543
 # Implied by the two measurements above; see the module docstring.
 MAGNUS_DENSITY_EXPONENT = math.log(MAGNUS_RATIO_EXTREME) / math.log(DENSITY_INDEX_EXTREME)
 
-# Holdout RMSE of the zero-parameter physics estimator, in inches, validated on
-# pitchers never seen during calibration.
-# measured, evidence.json -> translator.by_pitch.<type>.<axis>.holdout_rmse_physics_in
+# RMSE of the zero-parameter physics estimator on the SIGNED shape, in inches,
+# over every pitcher with 40+ pitches of the type in each environment. The
+# estimator fits nothing per pitcher, so every one of them is out of sample.
+# measured, simulator.json -> translation_error.<type>.<axis>.rmse_in
+#
+# An earlier version used evidence.json -> translator, measured on |HB| over a
+# 20% holdout. Gate F1 (docs/09 section 5) caught it understating the band the
+# simulator shows: slider HB 1.06 against 1.36 measured, curveball 1.41 against
+# 1.85, because sliders and curveballs cross zero and |HB| folds the error away.
 BREAK_ERROR_IN: dict[str, tuple[float, float]] = {
-    # pitch type: (ivb error, horizontal break error)
-    "Four-Seam": (0.92, 0.97),
-    "Sinker": (1.42, 0.99),
-    "Slider": (1.07, 1.06),
-    "Changeup": (1.47, 1.36),
-    "Curveball": (1.52, 1.41),
+    # pitch type: (ivb error, horizontal break error), pitchers measured
+    "Four-Seam": (0.92, 0.93),  # 326
+    "Sinker": (1.14, 1.07),  # 158
+    "Slider": (1.16, 1.36),  # 226
+    "Changeup": (1.38, 1.38),  # 104
+    "Curveball": (1.12, 1.85),  # 64
+    "Cutter": (1.14, 0.90),  # 25, the thinnest sample: declared, not hidden
 }
 
-# Used when the pitch type is unknown: the worst measured case, so that an
-# unlabelled pitch is never reported with more confidence than we earned.
-DEFAULT_BREAK_ERROR_IN = (1.52, 1.41)
+# Used when the pitch type is unknown: the worst measured case on each axis, so
+# that an unlabelled pitch is never reported with more confidence than we earned.
+DEFAULT_BREAK_ERROR_IN = (
+    max(e[0] for e in BREAK_ERROR_IN.values()),
+    max(e[1] for e in BREAK_ERROR_IN.values()),
+)
 
 # Within-pitcher standard deviation of the velocity delta, mph.
 # measured, evidence.json -> within_pitcher."Four-Seam".velo.delta_sd
