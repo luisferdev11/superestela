@@ -335,9 +335,19 @@ plantel» (T5) está aplicada y declarada. Si se elige mockup, que sea explícit
 | **`GET /api/v1/pitchers/{id}/scores`** | Tercer endpoint de `CONVENTIONS.md` §5.2; lo necesita `apiSource` | Responde con las tarjetas de ese lanzador y tiene tests de caso feliz, 404 y validación |
 | **Copy de prohibición de apuestas** | `docs/03` §9: declarado en el producto, no en un pie de página | Visible en el rail o en el pie de toda pantalla, con el texto en `es.ts` |
 | **Entregable 2 · Perfil Físico Ideal** | Decidido como sección del documento técnico más una lámina del deck (`docs/08`) | La sección existe, con cifras de `evidence.json` |
+| **Location+ y Pitching+** (del equipo de datos) | El entregable 1 pide «Stuff+, Location+, Pitching+» por lanzamiento, y hoy solo existe Stuff+. No estaba en ningún plan | Existen los dos scores por lanzamiento, o `docs/08` dice por qué no, según lo que conteste Diablos en el Q&A |
+| **Despliegue de la app**, si hace falta | Si la entrevista exige la app en internet, hoy no hay dónde correrla: la API necesita el modelo, que no va a git | Decidido tras el Q&A: o una URL pública que funcione el 13 de octubre, o una demo local declarada |
 | **Prototipo y deck** | Cada cambio de cifra va en tres lugares: evidencia, docs y artifact | Las pantallas nuevas del artifact dicen «maqueta» donde sus cifras no son las vigentes, como ya se hizo con el Simulador |
 
 ---
+
+### Preguntas abiertas que se llevan al Q&A con Diablos (30 de septiembre, 17:00)
+
+El documento de preguntas vive fuera del repo, en Claude Docs:
+https://claude.ai/code/artifact/1cdb16ee-211f-42ee-9ddb-eb4f3148f966. Cinco partes de este plan
+dependen de sus respuestas: el plantel de P6/P8 (T5 y T7), la escala y el target del modelo final, qué
+significa «Stuff+ HH» (estadios por categoría), si hay que desplegar, y qué se entrega el 15. **Después
+del Q&A, pasar las respuestas aquí y ajustar las tareas afectadas.**
 
 ## 4. Lo que queda del Simulador (P4)
 
