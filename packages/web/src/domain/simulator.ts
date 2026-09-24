@@ -140,6 +140,8 @@ export const baselinePitches = (arsenal: readonly ArsenalPitch[]): readonly Arse
 /** Lo que se le manda a `POST /api/v1/simulate`. */
 export type SimulateRequest = {
   readonly pitch: PitchValues & { readonly pitchType: PitchType; readonly pitcherHand: Hand }
+  /** El lanzador real, para que no salga como su propio comparable. */
+  readonly pitcherId: string | null
   readonly arsenal: readonly {
     readonly pitchType: PitchType
     readonly usage: number
@@ -161,8 +163,10 @@ export const buildRequest = (
   pitchType: PitchType,
   hand: Hand,
   arsenal: readonly ArsenalPitch[],
+  pitcherId: string | null = null,
 ): SimulateRequest => ({
   pitch: { ...pickValues(values), pitchType, pitcherHand: hand },
+  pitcherId,
   arsenal: arsenal.map((p) => {
     const v = p.pitchType === pitchType ? values : p
     return {

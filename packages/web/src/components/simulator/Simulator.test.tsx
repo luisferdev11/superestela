@@ -45,6 +45,15 @@ const SCALE: DensityScale = {
   sea: { label: 'sea', densityRatio: 1, magnusRatio: 1, nPitches: 1 },
   extreme: { label: 'ext', densityRatio: 0.858, magnusRatio: 0.754, nPitches: 1 },
 }
+const PANEL = {
+  binIn: 2,
+  meanWhiffPerSwing: 0.21,
+  cells: [{ ivb: 21, horizontalBreak: 9, swings: 400, whiffPerSwing: 0.25 }],
+  extremes: [],
+}
+const MAPS = Object.fromEntries(
+  PITCH_TYPES.map((pt) => [pt, { sea: PANEL, hh: PANEL }]),
+) as unknown as MovementMaps
 const m = (value: number, se: number) => ({ value, se })
 const env = (name: 'sea' | 'harpHelu', stuff: number) => ({
   environment: name,
@@ -80,7 +89,7 @@ const renderSimulator = () =>
   render(
     <Simulator
       distributions={DISTRIBUTIONS}
-      maps={{} as MovementMaps}
+      maps={MAPS}
       arsenals={ARSENALS}
       scale={SCALE}
       validation={null}

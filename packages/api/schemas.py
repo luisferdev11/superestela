@@ -54,6 +54,9 @@ class SimulateRequest(Wire):
 
     pitch: PitchIn
     arsenal: list[ArsenalPitchIn] | None = None
+    # When the pitch is a real pitcher's, he is left out of his own comparables:
+    # being closest to yourself is true and says nothing.
+    pitcher_id: str | None = None
 
 
 class Metric(Wire):

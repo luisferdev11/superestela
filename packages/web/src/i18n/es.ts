@@ -1,4 +1,4 @@
-import type { Role } from '@/domain/types'
+import type { Environment, Role } from '@/domain/types'
 import type { Control, Hand, SimMode } from '@/domain/simulator'
 import type { StuffPlusReason } from '@/sources/simulateResponse'
 
@@ -147,6 +147,47 @@ export const es = {
       rejected: 'La API rechazó este pitch. Revisa que los valores sean físicos.',
     },
     noRuns: 'El Simulador no imprime carreras: el puente de Stuff+ a carreras todavía no existe.',
+    map: {
+      title: 'Mapa de movimiento · pitches más y menos efectivos',
+      subtitle: (pitchType: string): string =>
+        `Whiff por swing observado de cada zona de forma de ${pitchType}, comparado con su media a nivel del mar. Vista del lanzador: el brazo a la derecha.`,
+      panel: { sea: 'Nivel del mar', hh: 'Harp Helú' } satisfies Record<Environment, string>,
+      armSide: 'brazo ▸',
+      gloveSide: '◂ guante',
+      rises: 'sube',
+      drops: 'cae',
+      axisIvb: 'IVB (pulgadas)',
+      axisHb: 'break horizontal (pulgadas)',
+      legend: {
+        more: 'más whiff que la media',
+        less: 'menos whiff que la media',
+        most: '10% más efectivos',
+        least: '10% menos efectivos',
+        simulated: 'el pitch simulado',
+        seaGhost: 'su forma a nivel del mar',
+      },
+      zone: (env: string, whiff: string, reference: string): string =>
+        `${env}: la liga hace ${whiff} de whiff por swing en esta zona (media del tipo a nivel del mar: ${reference}).`,
+      noZone: (env: string): string =>
+        `${env}: la liga casi no lanza esta forma; no hay muestra en la zona.`,
+      label: (pitchType: string, env: string, ivb: string, hb: string): string =>
+        `Mapa de movimiento de ${pitchType} en ${env}. El pitch simulado cae en IVB ${ivb} y break horizontal ${hb} pulgadas.`,
+    },
+    arsenal: {
+      title: (fastball: string): string => `Contra su recta · ${fastball}`,
+      velocity: 'Velocidad',
+      release: 'Distancia de release (túnel)',
+      anchor: 'Este pitch es su recta primaria: los demás se miden contra él.',
+      none: 'Sin recta en el arsenal contra la cual medir.',
+      shrink:
+        'En la altura los diferenciales de movimiento se encogen y los de velocidad no: el engaño por forma se pierde, el de velocidad sobrevive.',
+    },
+    comparables: {
+      title: 'Los pitches reales más parecidos',
+      row: (id: string, season: number, n: number): string =>
+        `${id} · ${String(season)} · ${String(n)} pitches`,
+      whiff: (value: string): string => `${value} whiff`,
+    },
     provenance: (modelId: string, passed: number, total: number, usesArsenal: boolean): string =>
       `Stuff+ del modelo ${modelId} · pasó ${String(passed)} de ${String(total)} compuertas · ${usesArsenal ? 'usa' : 'no usa'} el arsenal`,
   },

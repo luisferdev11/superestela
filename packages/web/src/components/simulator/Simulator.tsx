@@ -4,6 +4,8 @@ import { useMemo, useState } from 'react'
 import { PitchSlider } from './PitchSlider'
 import { StuffPlusKpis } from './StuffPlusKpis'
 import { AltitudePhysics } from './AltitudePhysics'
+import { MovementMapPair } from './MovementMapPair'
+import { ArsenalContext } from './ArsenalContext'
 import { useSimulation } from './useSimulation'
 import {
   CONTROL_GROUPS,
@@ -49,6 +51,7 @@ const chip = (active: boolean): string =>
  */
 export const Simulator = ({
   distributions,
+  maps,
   arsenals,
   scale,
   validation,
@@ -100,9 +103,12 @@ export const Simulator = ({
   const pitches = inPitcherMode ? baselinePitches(arsenal.sea).map((p) => p.pitchType) : PITCH_TYPES
   const baseline = baselineOf(selection)
   const context = inPitcherMode ? arsenal.sea : []
+  const pitcherId = inPitcherMode ? arsenal.pitcherId : null
 
-  const simulation = useSimulation(buildRequest(values, selection.pitchType, hand, context))
-  const real = useSimulation(buildRequest(baseline, selection.pitchType, hand, context))
+  const simulation = useSimulation(
+    buildRequest(values, selection.pitchType, hand, context, pitcherId),
+  )
+  const real = useSimulation(buildRequest(baseline, selection.pitchType, hand, context, pitcherId))
   const result = simulation.status === 'ready' ? simulation.result : simulation.last
   const realResult = real.status === 'ready' ? real.result : null
 
@@ -250,8 +256,20 @@ export const Simulator = ({
                 }
               />
               <div className="border border-(--color-border) bg-(--color-surface-card) p-5">
+                <MovementMapPair
+                  pitchType={selection.pitchType}
+                  panels={maps[selection.pitchType]}
+                  result={result}
+                />
+              </div>
+              <div className="border border-(--color-border) bg-(--color-surface-card) p-5">
                 <AltitudePhysics result={result} scale={scale} spinRate={values.spinRate} />
               </div>
+              {inPitcherMode || result.sea.comparables.length > 0 ? (
+                <div className="border border-(--color-border) bg-(--color-surface-card) p-5">
+                  <ArsenalContext result={result} pitchType={selection.pitchType} />
+                </div>
+              ) : null}
             </>
           )}
           <p className="text-[11px] text-(--color-text-muted)">

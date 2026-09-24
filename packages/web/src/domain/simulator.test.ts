@@ -67,6 +67,13 @@ describe('la peticion a la API', () => {
     expect(req.arsenal.find((p) => p.pitchType === 'Changeup')?.releaseSpeed).toBe(84)
   })
 
+  it('lleva al lanzador, para excluirlo de sus propios comparables', () => {
+    expect(buildRequest(changeup, 'Changeup', 'Left', arsenal, 'pitcher_00069').pitcherId).toBe(
+      'pitcher_00069',
+    )
+    expect(buildRequest(changeup, 'Changeup', 'Left', []).pitcherId).toBeNull()
+  })
+
   it('lleva la mano y el tipo del pitch', () => {
     const req = buildRequest(changeup, 'Changeup', 'Left', arsenal)
     expect(req.pitch).toMatchObject({ pitchType: 'Changeup', pitcherHand: 'Left', ivb: 7 })

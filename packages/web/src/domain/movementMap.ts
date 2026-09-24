@@ -52,3 +52,60 @@ export const sharedWhiffRange = (panels: readonly MapPanel[], reference: number)
   const spreads = panels.flatMap((p) => p.cells.map((c) => Math.abs(relativeWhiff(c, reference))))
   return spreads.length === 0 ? 0 : Math.max(...spreads)
 }
+
+/** La celda del mapa donde cae una forma, o `null` si ahi no hay muestra. */
+export const cellAt = (panel: MapPanel, ivb: number, horizontalBreak: number): MapCell | null => {
+  const half = panel.binIn / 2
+  return (
+    panel.cells.find(
+      (c) =>
+        Math.abs(c.ivb - ivb) <= half &&
+        Math.abs(c.horizontalBreak - horizontalBreak) <= half &&
+        // El borde superior pertenece a la celda siguiente, como en el binning de Python.
+        ivb < c.ivb + half &&
+        horizontalBreak < c.horizontalBreak + half,
+    ) ?? null
+  )
+}
+
+export type Extent = {
+  readonly hbMin: number
+  readonly hbMax: number
+  readonly ivbMin: number
+  readonly ivbMax: number
+}
+
+/**
+ * Un solo encuadre para los dos paneles, que contiene todas las celdas y las
+ * formas marcadas. Cuadrado en pulgadas: una pulgada de break mide lo mismo en
+ * horizontal y en vertical, o el mapa miente sobre la forma.
+ */
+export const sharedExtent = (
+  panels: readonly MapPanel[],
+  points: readonly { readonly ivb: number; readonly horizontalBreak: number }[],
+  padding = 2,
+): Extent => {
+  const xs = [
+    ...panels.flatMap((p) =>
+      p.cells.flatMap((c) => [c.horizontalBreak - p.binIn / 2, c.horizontalBreak + p.binIn / 2]),
+    ),
+    ...points.map((p) => p.horizontalBreak),
+  ]
+  const ys = [
+    ...panels.flatMap((p) => p.cells.flatMap((c) => [c.ivb - p.binIn / 2, c.ivb + p.binIn / 2])),
+    ...points.map((p) => p.ivb),
+  ]
+  const x0 = Math.min(...xs) - padding
+  const x1 = Math.max(...xs) + padding
+  const y0 = Math.min(...ys) - padding
+  const y1 = Math.max(...ys) + padding
+  const side = Math.max(x1 - x0, y1 - y0)
+  const cx = (x0 + x1) / 2
+  const cy = (y0 + y1) / 2
+  return {
+    hbMin: cx - side / 2,
+    hbMax: cx + side / 2,
+    ivbMin: cy - side / 2,
+    ivbMax: cy + side / 2,
+  }
+}

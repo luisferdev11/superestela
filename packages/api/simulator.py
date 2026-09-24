@@ -77,6 +77,7 @@ class SimulatorService:
                 ),
                 stuff_sea,
                 sea_diff,
+                req.pitcher_id,
             ),
             harp_helu=self._environment(
                 "harpHelu",
@@ -91,6 +92,7 @@ class SimulatorService:
                 ),
                 stuff_high,
                 high_diff,
+                req.pitcher_id,
             ),
             altitude_delta=delta,
             primary_fastball=fastball,
@@ -109,6 +111,7 @@ class SimulatorService:
         shape: s.Shape,
         stuff: s.Metric | None,
         diff: s.Differentials | None,
+        exclude: str | None,
     ) -> s.EnvironmentResult:
         loss = self.evidence["speed_loss"][pitch.pitch_type][env]["speed_drop_fraction"]
         arrival = approach(
@@ -125,7 +128,7 @@ class SimulatorService:
             approach=s.Approach(plate_speed=arrival.plate_speed, vaa=arrival.vaa),
             stuff_plus=stuff,
             differentials=diff,
-            comparables=self._comparables(pitch, env),
+            comparables=self._comparables(pitch, env, exclude),
         )
 
     def _score(
@@ -193,7 +196,7 @@ class SimulatorService:
             unusual=list(out.unusual),
         )
 
-    def _comparables(self, pitch: s.PitchIn, env: str) -> list[s.Comparable]:
+    def _comparables(self, pitch: s.PitchIn, env: str, exclude: str | None) -> list[s.Comparable]:
         spread = self.evidence["distributions"][pitch.pitch_type][env]
         sd = np.array(
             [(spread[a]["p95"] - spread[a]["p5"]) / P5_P95_IN_SD for a in COMPARABLE_AXES]
@@ -201,6 +204,8 @@ class SimulatorService:
         target = np.array([getattr(pitch, a) for a in COMPARABLE_AXES])
         found = []
         for rec in self.arsenals.values():
+            if rec["pitcher_id"] == exclude:
+                continue
             for q in rec["by_environment"].get(env, []):
                 if q["pitch_type"] != pitch.pitch_type or q["n"] < COMPARABLE_MIN_PITCHES:
                     continue

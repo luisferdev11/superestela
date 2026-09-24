@@ -127,6 +127,15 @@ def test_a_secondary_pitch_is_measured_against_its_fastball_in_both_airs(client)
     assert high["releaseSpeed"] == sea["releaseSpeed"]  # velocity gaps do not
 
 
+def test_a_pitcher_is_not_his_own_comparable(client):
+    first = next(iter(ARSENALS.values()))
+    body = client.post(
+        "/api/v1/simulate", json={"pitch": FOUR_SEAM, "pitcherId": first["pitcher_id"]}
+    ).json()
+    ids = {c["pitcherId"] for c in body["sea"]["comparables"] + body["harpHelu"]["comparables"]}
+    assert first["pitcher_id"] not in ids
+
+
 def test_an_empty_arsenal_gives_no_differentials(client):
     body = client.post("/api/v1/simulate", json={"pitch": CHANGEUP, "arsenal": []}).json()
     assert body["primaryFastball"] is None and body["sea"]["differentials"] is None
