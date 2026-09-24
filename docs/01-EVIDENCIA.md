@@ -141,7 +141,7 @@ Proyectando sobre el vector velocidad separamos ambas. Y como `drag_k = |a_drag|
 | Medium Altitude | 0.903 | 0.813 | 509 | 0.039 |
 | **Extreme Altitude** | **0.858** | **0.754** | 604 | 0.032 |
 
-La física predice ~0.78–0.80 de densidad relativa a 2,240 m. **Medimos 0.858 desde la pelota, sin usar la etiqueta.**
+La física predice ~0.77–0.80 de densidad relativa a 2,240 m. **Medimos 0.858 desde la pelota, sin usar la etiqueta** — y esa diferencia no es un acuerdo, es un hallazgo: lo que coincide con la física es la **razón Magnus (0.754)**, no el índice. El índice sale del arrastre, y el coeficiente de arrastre depende del número de Reynolds, que baja con el aire; así que `drag_k` cae menos que la densidad. El índice es una medición física, continua y juego a juego, pero de **arrastre**, no de densidad pura. Hipótesis por confirmar con D4 (`docs/05`); detalle en [`docs/09`](09-SIMULADOR.md) §2.4.
 
 Tres consecuencias:
 

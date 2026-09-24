@@ -107,19 +107,34 @@ El estado final debe mostrar tres cosas juntas:
 2. **Stuff+ HH proyectado** con banda.
 3. **Por qué** — el Índice de Densidad aplicado y el factor Magnus (≈0.75), visible. La física es el argumento de confianza, y debe verse.
 
-Precisión a comunicar honestamente: **±0.85" a ±1.45"** en pitchers nunca vistos.
+Precisión a comunicar honestamente, en pitchers nunca vistos: **±0.85" a ±1.45"** con el modelo empírico, **±0.92" a ±1.52"** con la física pura, que es la banda que `translate.py` pone en pantalla. Se cita la que la pantalla muestra.
 
 ---
 
 ### P4 · Simulador de Pitch *(entregable obligatorio)*
 
-**Pregunta:** *¿Y si cambio esto?*
+**Pregunta:** *¿Y si mi pitcher cambia esto?*
 
-Sliders: velocidad, IVB, |HB|, spin rate, extensión, release height/side + selector de tipo y mano.
+Lo que el reto pide, literal: ingresar las características físicas de un pitch y obtener su Stuff+; el mismo pitch lado a lado en Harp Helú y a nivel del mar; y el **mapa de movimiento de los pitches más y menos efectivos**. Fundamento, fórmulas y criterios de aceptación en [`docs/09`](09-SIMULADOR.md).
 
-Salida **lado a lado, siempre**: Harp Helú vs nivel del mar. Stuff+, movimiento y mapa.
+**Entrada.** Dos modos: *desde un lanzador* —se elige lanzador y pitch, y su pitch real es la línea base que marca cada slider— y *laboratorio*, desde el promedio LMB del tipo. El primero es el principal: el coach pregunta por su pitcher, no por un pitch genérico.
 
-> **Decisión de diseño no negociable:** el spin rate se muestra pero **no domina la jerarquía visual**. Los datos son inequívocos — el spin no cambia con la altitud mientras el movimiento colapsa 20–30%. La interfaz debe enseñar `shape over spin`, no reforzar el error.
+**Controles**, agrupados por lo que deciden:
+- **Forma** — velocidad, IVB, HB. Arriba y con más peso visual.
+- **Release** — extensión, altura, lado.
+- **Spin** — rpm y eje, en un bloque secundario, con el *movimiento por rpm* en percentil del tipo y el aviso de plausibilidad cuando la combinación no se ha lanzado en la LMB.
+- Tipo de pitch y mano. Cada slider marca el valor real del lanzador y la banda p5–p95 de la liga.
+
+**Salida, lado a lado, siempre:**
+1. Stuff+ a nivel del mar y en Harp Helú, **cada uno con banda**, y el Δ partido en *forma* (cuánto pierde por moverse menos) y *entorno*. Si el modelo no pasó sus compuertas, el Stuff+ dice «modelo en validación» y el resto de la pantalla sigue.
+2. La forma en cada entorno con su banda, el VAA y la velocidad al plato.
+3. Los diferenciales contra la recta del lanzador **en los dos entornos**: en altura se encogen, y ahí se ve qué pitch pierde engaño.
+4. El mapa de efectividad en dos paneles, mar | Harp Helú: rejilla de whiff observado por zona de forma, los pitches más y menos efectivos, el arsenal del lanzador y el pitch simulado con su flecha.
+5. La procedencia: barra de Índice de Densidad, qué modelo contesta y si usa arsenal.
+
+**No imprime carreras.** El puente Stuff+ → carreras no existe (r = −0.08); las carreras viven en el Impuesto de Altitud, que es otra medición.
+
+> **Decisión de diseño no negociable:** el spin rate se muestra pero **no domina la jerarquía visual**. Los datos son inequívocos — el spin no cambia con la altitud mientras el movimiento colapsa 20–30%. La interfaz debe enseñar `shape over spin`, no reforzar el error. **El spin sí entra al modelo** (v0 usa `SpinRate` y `SpinAxis`, y el reto lo nombra como feature); lo que no hace es decidir: la forma decide, y el spin dice si esa forma es coherente.
 
 ---
 

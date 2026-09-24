@@ -3,8 +3,9 @@
 **Stuff+ para la Liga Mexicana de Beisbol, con la altitud dentro del modelo.**
 
 Un lanzamiento que domina en Monterrey no es el mismo lanzamiento en la Ciudad de
-México. La densidad del aire cae a **0.858** de su valor a nivel del mar, y con ella
-el break: una recta pierde **3.77 pulgadas** de IVB, medido dentro del mismo lanzador.
+México. El efecto Magnus, que es lo que mueve la pelota, cae a **0.754** de su valor
+a nivel del mar, y con él el break: una recta pierde **3.77 pulgadas** de IVB, medido
+dentro del mismo lanzador.
 SuperEstela mide ese efecto por lanzador y lo convierte en decisiones de fichaje.
 
 El contexto completo está en [`docs/00-PRODUCTO.md`](docs/00-PRODUCTO.md).
