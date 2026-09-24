@@ -21,3 +21,43 @@
     color: var(--color-diablos-strong);
   }
 }
+
+/*
+ * El slider del Simulador. El riel nativo tapa lo que importa: la banda de la
+ * liga y la marca del pitch real, que van dibujadas debajo. Se vuelve
+ * transparente y se dibuja un riel propio; el pulgar queda cuadrado, como en
+ * el prototipo.
+ */
+.pitch-slider {
+  appearance: none;
+  background: transparent;
+}
+.pitch-slider::-webkit-slider-runnable-track {
+  height: 16px;
+  background: transparent;
+}
+.pitch-slider::-moz-range-track {
+  height: 16px;
+  background: transparent;
+}
+.pitch-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  margin-top: 1px;
+  background: var(--color-ink);
+  border: 2px solid var(--color-surface-card);
+  cursor: pointer;
+}
+.pitch-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--color-ink);
+  border: 2px solid var(--color-surface-card);
+  border-radius: 0;
+  cursor: pointer;
+}
+.pitch-slider:focus-visible {
+  outline: 2px solid var(--color-diablos);
+  outline-offset: 2px;
+}

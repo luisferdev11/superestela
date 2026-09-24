@@ -1,4 +1,6 @@
 import type { Role } from '@/domain/types'
+import type { Control, Hand, SimMode } from '@/domain/simulator'
+import type { StuffPlusReason } from '@/sources/simulateResponse'
 
 /**
  * El unico archivo con espanol. `CONVENTIONS.md` seccion 2.1 y seccion 4 regla
@@ -70,4 +72,82 @@ export const es = {
   outOf: (total: number): string => `de ${String(total)}`,
   trap: 'Trampa de Altitud',
   trapDescription: 'Se ve fuerte a nivel del mar y colapsa en el Harp Helú.',
+  sim: {
+    title: 'Simulador de Pitch',
+    subtitle:
+      'Parte del pitch real de un lanzador, muévelo y compara lo que vale a nivel del mar y en el Harp Helú.',
+    modes: { pitcher: 'Desde un lanzador', lab: 'Laboratorio' } satisfies Record<SimMode, string>,
+    pitcher: 'Lanzador',
+    pitcherOption: (id: string, season: number): string => `${id} · ${String(season)}`,
+    pitch: 'Pitch',
+    hand: 'Mano',
+    hands: { Right: 'Diestro', Left: 'Zurdo' } satisfies Record<Hand, string>,
+    usage: (share: number): string => `${(100 * share).toFixed(0)}% de uso`,
+    groups: {
+      shape: 'Forma · lo que decide',
+      release: 'Release',
+      spin: 'Spin · la coherencia de la forma',
+    },
+    controls: {
+      releaseSpeed: 'Velocidad de salida',
+      ivb: 'Induced vertical break',
+      horizontalBreak: 'Break horizontal',
+      extension: 'Extensión',
+      releaseHeight: 'Altura de liberación',
+      releaseSide: 'Lado de liberación',
+      spinRate: 'Spin rate',
+      spinAxis: 'Eje de giro',
+    } satisfies Record<Control, string>,
+    units: {
+      releaseSpeed: 'mph',
+      ivb: '″',
+      horizontalBreak: '″',
+      extension: 'ft',
+      releaseHeight: 'ft',
+      releaseSide: 'ft',
+      spinRate: 'rpm',
+      spinAxis: '°',
+    } satisfies Record<Control, string>,
+    armSideNote: 'Break y lado de liberación, positivos hacia el brazo que lanza.',
+    leagueBand: 'banda p5–p95 de la LMB',
+    baselineMark: 'su pitch real',
+    resetPitcher: 'Volver al pitch real',
+    resetLab: 'Volver a la mediana de la liga',
+    kpi: {
+      sea: 'Stuff+ a nivel del mar',
+      hh: 'Stuff+ en Harp Helú',
+      delta: 'Δ por altitud',
+      shape: 'por la forma',
+      environment: 'por el entorno',
+      real: 'su pitch real',
+    },
+    reasons: {
+      model_unavailable: 'Modelo no disponible. La física sigue contestando.',
+      model_not_gated: 'Este modelo no pasó por las compuertas: su Stuff+ no se muestra.',
+      gates_failed: 'El modelo no pasó sus compuertas de coherencia: su Stuff+ no se muestra.',
+    } satisfies Record<StuffPlusReason, string>,
+    physics: {
+      title: 'Qué le hace la altura a esta forma',
+      plateSpeed: 'Velocidad al plato',
+      vaa: 'VAA a media zona',
+      unchanged: 'no cambia',
+      explanation: (density: string, magnus: string): string =>
+        `En el Harp Helú el efecto Magnus —lo que mueve la pelota— cae a ${magnus} de su valor a nivel del mar, y todo el break se contrae en esa proporción. El aire también la frena menos (Índice de Densidad ${density}, medido desde la pelota), así que llega más rápida al plato. La velocidad de salida y el spin son del brazo, no del aire: no se tocan.`,
+    },
+    spin: {
+      perKrpm: (value: string, percentile: string): string =>
+        `${value}″ de movimiento por cada 1,000 rpm · percentil ${percentile} del tipo`,
+      note: 'El spin entra al modelo, pero no decide: dice si la forma es coherente. En la altura el spin no cambia y el movimiento sí.',
+      implausible:
+        'Esta combinación no se ha lanzado en la LMB. El Stuff+ es una extrapolación: léelo con su banda.',
+    },
+    status: {
+      loading: 'Calculando…',
+      unreachable: 'No se pudo calcular: la API del Simulador no respondió.',
+      rejected: 'La API rechazó este pitch. Revisa que los valores sean físicos.',
+    },
+    noRuns: 'El Simulador no imprime carreras: el puente de Stuff+ a carreras todavía no existe.',
+    provenance: (modelId: string, passed: number, total: number, usesArsenal: boolean): string =>
+      `Stuff+ del modelo ${modelId} · pasó ${String(passed)} de ${String(total)} compuertas · ${usesArsenal ? 'usa' : 'no usa'} el arsenal`,
+  },
 } as const

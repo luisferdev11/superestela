@@ -20,6 +20,16 @@ export type PitchType = (typeof PITCH_TYPES)[number]
 export const HANDS = ['Right', 'Left'] as const
 export type Hand = (typeof HANDS)[number]
 
+/** Desde el pitch real de un lanzador, o desde la mediana de la liga. */
+export type SimMode = 'pitcher' | 'lab'
+
+/**
+ * La historia 1 de `docs/09` seccion 5: la recta que colapsa. Es el punto de
+ * partida de la pantalla porque es la pregunta del club; si el lanzador no
+ * esta en los datos, se parte del primero.
+ */
+export const DEFAULT_PITCHER = 'pitcher_00069'
+
 /** Las perillas, en el orden y los grupos de `docs/02` P4: forma, release, spin. */
 export const CONTROLS = [
   'releaseSpeed',
@@ -110,6 +120,23 @@ export type PitcherArsenal = {
   readonly sea: readonly ArsenalPitch[]
 }
 
+/**
+ * Solo las perillas. Un pitch del arsenal trae ademas uso, muestra y whiff; la
+ * API rechaza campos que no conoce (`extra="forbid"`), y hace bien.
+ */
+export const pickValues = (values: PitchValues): PitchValues =>
+  Object.fromEntries(CONTROLS.map((c) => [c, values[c]])) as Record<Control, number>
+
+/**
+ * Debajo de esto un pitch del arsenal no es una linea base: su forma media es
+ * ruido. Es el mismo umbral que usa la API para los comparables.
+ */
+export const MIN_PITCHES_FOR_BASELINE = 30
+
+/** Los pitches del arsenal con muestra para partir de ellos, del mas usado al menos. */
+export const baselinePitches = (arsenal: readonly ArsenalPitch[]): readonly ArsenalPitch[] =>
+  arsenal.filter((p) => p.n >= MIN_PITCHES_FOR_BASELINE)
+
 /** Lo que se le manda a `POST /api/v1/simulate`. */
 export type SimulateRequest = {
   readonly pitch: PitchValues & { readonly pitchType: PitchType; readonly pitcherHand: Hand }
@@ -135,7 +162,7 @@ export const buildRequest = (
   hand: Hand,
   arsenal: readonly ArsenalPitch[],
 ): SimulateRequest => ({
-  pitch: { ...values, pitchType, pitcherHand: hand },
+  pitch: { ...pickValues(values), pitchType, pitcherHand: hand },
   arsenal: arsenal.map((p) => {
     const v = p.pitchType === pitchType ? values : p
     return {

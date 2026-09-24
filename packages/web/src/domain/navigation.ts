@@ -5,7 +5,7 @@
  */
 export type NavItem = {
   readonly id: 'radar' | 'roster' | 'deployment' | 'simulator' | 'translator'
-  readonly href: '/radar' | null
+  readonly href: '/radar' | '/simulador' | null
 }
 
 export type NavGroup = {
@@ -25,7 +25,7 @@ export const NAV_GROUPS: readonly NavGroup[] = [
   {
     id: 'lab',
     items: [
-      { id: 'simulator', href: null },
+      { id: 'simulator', href: '/simulador' },
       { id: 'translator', href: null },
     ],
   },
