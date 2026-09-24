@@ -254,8 +254,18 @@ def _diff(d: Differentials) -> s.Differentials:
     )
 
 
+def verdict_path(model_path: str) -> str:
+    """Where analysis/simulator_gates.py leaves the verdict for this model file."""
+    return os.path.splitext(model_path)[0] + ".validation.json"
+
+
 def load_service(outputs_dir: str, model_path: str) -> SimulatorService:
-    """Read the evidence, the arsenals, the gate verdict and the model, once."""
+    """Read the evidence, the arsenals, the model and the verdict next to it, once.
+
+    The verdict is the one written beside the model by the run that fitted it,
+    not the published record in analysis/outputs: that one describes whatever
+    model was last published, which is not necessarily the one on this machine.
+    """
 
     def read(name: str) -> dict[str, Any]:
         with open(os.path.join(outputs_dir, name)) as fh:
@@ -266,7 +276,8 @@ def load_service(outputs_dir: str, model_path: str) -> SimulatorService:
         return SimulatorService(None, "model_unavailable", evidence, arsenals)
     model = BridgeModel.load(model_path)
     try:
-        verdict = read("simulator_validation.json")
+        with open(verdict_path(model_path)) as fh:
+            verdict = dict(json.load(fh))
     except FileNotFoundError:
         return SimulatorService(model, "model_not_gated", evidence, arsenals)
     if verdict.get("model_id") != model.model_id:

@@ -1,10 +1,16 @@
 """Fit the v0 bridge on the real data and run the simulator's acceptance gates.
 
-    uv run python analysis/simulator_gates.py      # ~5 min
+    uv run python analysis/simulator_gates.py              # ~1 min
+    uv run python analysis/simulator_gates.py --publish    # also updates the record
 
-Writes artifacts/stuff_plus_v0_bridge.joblib (never committed) and
-analysis/outputs/simulator_validation.json, which the product reads to decide
-whether the model's Stuff+ is shown. The gates, their reasons and thresholds
+Writes the fitted model and its verdict side by side in artifacts/, which is
+never committed: stuff_plus_v0_bridge.joblib and
+stuff_plus_v0_bridge.validation.json. The API reads the verdict next to the
+model it loads, so a model is shown only if the gates judged that very fit, on
+that machine. With --publish the verdict is also written to
+analysis/outputs/simulator_validation.json, the record that docs/09 section 5.1
+and the web's provenance line cite; publish only when the model or the gates
+changed, or every run would leave that file dirty with nothing but a new hash. The gates, their reasons and thresholds
 are docs/09 section 5; they apply unchanged to any model that answers through
 the scoring contract, A3 included (ADR 0007).
 
@@ -15,6 +21,7 @@ are reported whatever they say.
 import json
 import os
 import subprocess
+import sys
 
 import evidence as E
 import numpy as np
@@ -28,6 +35,9 @@ from core.translate import BREAK_ERROR_IN, break_scaling_factor
 from models.stuff.v0_bridge import PITCH_TYPES, BridgeModel, fit_bridge
 
 ARTIFACT = os.path.join(E.ROOT, "artifacts", "stuff_plus_v0_bridge.joblib")
+# The verdict for the model in artifacts/, read by the API. Never committed.
+VERDICT = os.path.splitext(ARTIFACT)[0] + ".validation.json"
+# The published record, committed; written only with --publish.
 VALIDATION = os.path.join(E.OUT, "simulator_validation.json")
 DISPLAY_GATES = ("S1", "S2", "S3", "S4")
 SEED = 7
@@ -414,22 +424,20 @@ def main():
         E.log(f"  {g['id']} {'PASS' if g['passed'] else 'FAIL'}  {g['name']}: {g['value']}")
     E.log(f"Stuff+ shown in the simulator: {shown}")
 
-    with open(VALIDATION, "w") as fh:
-        json.dump(
-            {
-                "model_id": model.model_id,
-                "uses_arsenal": model.uses_arsenal,
-                "scale": model.scale.description,
-                "display_gates": list(DISPLAY_GATES),
-                "stuff_plus_shown": shown,
-                "gates": gates,
-            },
-            fh,
-            indent=2,
-            ensure_ascii=False,
-            allow_nan=False,
-        )
-        fh.write("\n")
+    record = {
+        "model_id": model.model_id,
+        "uses_arsenal": model.uses_arsenal,
+        "scale": model.scale.description,
+        "display_gates": list(DISPLAY_GATES),
+        "stuff_plus_shown": shown,
+        "gates": gates,
+    }
+    targets = [VERDICT, VALIDATION] if "--publish" in sys.argv else [VERDICT]
+    for path in targets:
+        with open(path, "w") as fh:
+            json.dump(record, fh, indent=2, ensure_ascii=False, allow_nan=False)
+            fh.write("\n")
+        E.log(f"Wrote {os.path.relpath(path, E.ROOT)}")
 
 
 if __name__ == "__main__":

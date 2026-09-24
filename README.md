@@ -12,19 +12,22 @@ El contexto completo está en [`docs/00-PRODUCTO.md`](docs/00-PRODUCTO.md).
 
 ---
 
-## Arrancar
+## Arrancar, una sola vez
 
 ```bash
 git clone git@github.com:luisferdev11/superestela.git
 cd superestela
 
-# Toolchain. uv trae su propio Python, no hace falta instalarlo aparte.
+# Python. uv trae su propio Python, no hace falta instalarlo aparte.
 curl -LsSf https://astral.sh/uv/install.sh | sh
-uv sync --all-extras
+uv sync --all-extras            # --all-extras trae ruff, mypy y pytest; sin eso fallan los hooks
 
 # Los hooks. Esto es toda la incorporación a las convenciones.
 uv tool install pre-commit
 pre-commit install --install-hooks
+
+# La web: Node 22 y pnpm 10.
+cd packages/web && pnpm install && cd ../..
 ```
 
 El dataset **no está en el repositorio y nunca lo estará**. Colócalo en `data/`:
@@ -33,20 +36,70 @@ El dataset **no está en el repositorio y nunca lo estará**. Colócalo en `data
 data/stuff_model_df.parquet
 ```
 
-## Correr
+Con el dataset en su lugar, genera la evidencia y el modelo del Simulador. Solo hace falta una vez, y
+de nuevo cuando cambie `analysis/`:
 
 ```bash
-uv run pytest                      # pruebas
-uv run ruff check . && uv run mypy packages/
-uv run python analysis/evidence.py # regenera toda la evidencia, ~3 min
-
-uv run python scripts/check_pendientes.py   # qué falta para la entrega
-
-cd packages/web && pnpm install && pnpm dev # la app, en :3000/radar
-
-docker compose up -d               # api :8000, MLflow :5000, Postgres :5433
-curl localhost:8000/health
+uv run python analysis/evidence.py          # ~1 min: reescribe analysis/outputs/, que ya está en git
+uv run python analysis/simulator_gates.py   # ~1 min: entrena el modelo y corre sus compuertas
 ```
+
+`simulator_gates.py` deja el modelo y su veredicto en `artifacts/`, que **no va a git** porque se
+deriva de datos licenciados. No modifica ningún archivo versionado. Si cambias el modelo o las
+compuertas y quieres publicar el resultado nuevo en `analysis/outputs/simulator_validation.json`,
+corre `simulator_gates.py --publish`.
+
+## Levantar la app
+
+Dos terminales, desde la raíz del repo:
+
+```bash
+# 1 · la API (FastAPI): el Simulador le pide el Stuff+
+uv run uvicorn api.main:app --port 8000
+
+# 2 · la web (Next.js)
+cd packages/web && pnpm dev
+```
+
+Abre **http://localhost:3000**. Te lleva al Radar, y el Simulador está en `/simulador`. La web busca
+la API en `http://localhost:8000`; si la corres en otro puerto, arranca la web con
+`SUPERESTELA_API_URL=http://localhost:<puerto> pnpm dev`.
+
+**Con Docker, en lugar de la terminal 1:** `docker compose up -d` levanta la API en `:8000`, MLflow en
+`:5000` y Postgres en `:5433`. Monta `analysis/outputs/` y `artifacts/`, así que antes hay que haber
+corrido los dos comandos de arriba. `docker compose down` los apaga.
+
+### Si algo no jala
+
+| Síntoma | Causa | Qué hacer |
+|---|---|---|
+| El Simulador dice «la API del Simulador no respondió» | La API no está arriba, o está en otro puerto | Revisa la terminal 1, o usa `SUPERESTELA_API_URL` |
+| «Modelo no disponible» en lugar del Stuff+ | No hay modelo en `artifacts/` | `uv run python analysis/simulator_gates.py` y reinicia la API |
+| «Este modelo no pasó por las compuertas» | El modelo de `artifacts/` no es el que juzgaron las compuertas | Lo mismo: vuelve a correr las compuertas y reinicia la API |
+| `Address already in use` | El puerto está ocupado, a veces por un `docker compose` viejo | `docker compose down`, o cambia el puerto |
+| Un commit rechazado por `ruff` o `mypy` «not found» | Faltan las herramientas de desarrollo | `uv sync --all-extras` |
+| Un commit rechazado por commitlint | El asunto debe ir en inglés y todo en minúsculas | `feat(web): add the translator screen` |
+| `next dev` modifica `packages/web/AGENTS.md` | Next lo reescribe solo al arrancar | Ya está commiteado; no hay que hacer nada |
+
+## Comandos del día a día
+
+```bash
+uv run pytest                                  # pruebas de Python
+uv run ruff check . && uv run mypy packages/   # lint y tipos
+cd packages/web && pnpm lint && pnpm typecheck && pnpm test   # lo mismo para la web
+uv run python scripts/check_pendientes.py      # qué falta para la entrega
+```
+
+## Ramas
+
+**Todo sale de `main` y todo vuelve a `main`.** Una rama por cambio (`feat/…`, `fix/…`, `docs/…`,
+`chore/…`), y un PR de menos de 400 líneas.
+
+Si una pantalla necesita varios PRs encadenados, **no se fusiona ninguno de arriba hasta que el de
+abajo haya entrado a `main`**, y cada uno se reapunta a `main` justo cuando le toca. Si se fusionan
+uno sobre otro, GitHub los marca como fusionados pero `main` no recibe nada: ya nos pasó con la cadena
+del Simulador (#22–#31), y hubo que abrir el #32 para llevarla a `main`. Para comprobar que algo llegó,
+se mira el contenido de `main`, no el estado del PR.
 
 ## El prototipo
 
@@ -68,9 +121,10 @@ Diez pantallas de aplicación y trece láminas de deck, con datos reales de `ana
 | `packages/contracts/` | Los esquemas ejecutables entre datos y producto. **Empieza por aquí** |
 | `packages/models/` | Entrenamiento. Toca el dataset |
 | `packages/api/` | FastAPI: sirve scores y el simulador |
-| `packages/web/` | Next.js. La P1 está completa — [su README](packages/web/README.md) tiene lo que cuesta redescubrir |
+| `packages/web/` | Next.js. El Radar (P1) y el Simulador (P4) están completos — [su README](packages/web/README.md) tiene lo que cuesta redescubrir |
 | `analysis/evidence.py` | El baseline v0. Reproduce cada cifra citada en los documentos |
-| `docs/` | Producto, evidencia, diseño, negocio, protocolo científico, ingeniería |
+| `analysis/simulator_gates.py` | Entrena el modelo del Simulador y corre sus compuertas ([`docs/09`](docs/09-SIMULADOR.md) §5) |
+| `docs/` | Producto, evidencia, diseño, negocio, protocolo científico, ingeniería. [`docs/08`](docs/08-PLAN-DE-ARRANQUE.md) es la lista viva de pendientes y [`docs/10`](docs/10-PANTALLAS-RESTANTES.md) el plan de las pantallas que faltan |
 
 ## Las reglas que no se negocian
 

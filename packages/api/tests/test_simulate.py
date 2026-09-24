@@ -172,15 +172,40 @@ def test_without_a_model_the_physics_still_answers(model):
     assert body["harpHelu"]["shape"]["ivb"]["value"] < FOUR_SEAM["ivb"]
 
 
-def test_a_model_the_gates_did_not_judge_is_not_shown(model, tmp_path):
+def _outputs(tmp_path: Path) -> None:
     for name in ("simulator.json", "arsenals.json"):
         (tmp_path / name).write_text((OUTPUTS / name).read_text())
-    (tmp_path / "simulator_validation.json").write_text(
+
+
+def test_a_model_the_gates_did_not_judge_is_not_shown(model, tmp_path):
+    _outputs(tmp_path)
+    model_path = str(tmp_path / "bridge.joblib")
+    model.save(model_path)
+    (tmp_path / "bridge.validation.json").write_text(
         json.dumps({"model_id": "0.1.0+other", "stuff_plus_shown": True})
     )
-    model.save(str(tmp_path / "bridge.joblib"))
-    service = load_service(str(tmp_path), str(tmp_path / "bridge.joblib"))
-    assert service.reason == "model_not_gated"
+    assert load_service(str(tmp_path), model_path).reason == "model_not_gated"
+
+
+def test_a_model_without_a_verdict_beside_it_is_not_shown(model, tmp_path):
+    _outputs(tmp_path)
+    model_path = str(tmp_path / "bridge.joblib")
+    model.save(model_path)
+    assert load_service(str(tmp_path), model_path).reason == "model_not_gated"
+
+
+def test_the_verdict_beside_the_model_decides_and_the_published_record_does_not(model, tmp_path):
+    # The committed record describes another machine's fit; it must not block this one.
+    _outputs(tmp_path)
+    (tmp_path / "simulator_validation.json").write_text(
+        json.dumps({"model_id": "0.1.0+elsewhere", "stuff_plus_shown": False})
+    )
+    model_path = str(tmp_path / "bridge.joblib")
+    model.save(model_path)
+    (tmp_path / "bridge.validation.json").write_text(
+        json.dumps({"model_id": model.model_id, "stuff_plus_shown": True})
+    )
+    assert load_service(str(tmp_path), model_path).reason is None
 
 
 def test_translate_moves_a_shape_with_its_band():

@@ -349,7 +349,9 @@ $$
 ## 5. Validación: los criterios de aceptación
 
 Las compuertas son automáticas: `uv run python analysis/simulator_gates.py` entrena el puente, las corre y
-escribe `analysis/outputs/simulator_validation.json` (unos 50 s).
+deja el modelo y su veredicto juntos en `artifacts/`, fuera de git (unos 50 s). La API solo muestra el
+Stuff+ si ese veredicto corresponde a ese modelo. Con `--publish` el veredicto se escribe además en
+`analysis/outputs/simulator_validation.json`, el registro que cita esta sección.
 **Cualquier modelo que entre por el contrato, incluido A3, pasa por las mismas.**
 
 | # | Qué prueba | Por qué | Umbral |

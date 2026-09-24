@@ -37,33 +37,27 @@ Si una pantalla necesita un número que no existe, **se calcula primero en `anal
 (`docs/02` §0, `CONVENTIONS.md` §8.1). Nunca va una cifra plausible escrita a mano. Donde de verdad no
 hay dato, va un placeholder que diga que no lo hay.
 
-### Estado del repositorio al cerrar esta sesión
+### Estado del repositorio
 
-- **La P4 vive en una cadena de 10 PRs sin fusionar: #22 → #31**, encadenados sobre **#21**
-  (`docs/plan-y-pendientes`). La punta es `feat/web-simulador-mapas` (#31).
-- **Hay que fusionarla con `--merge` y sin `--delete-branch`**, después de reapuntar toda la cadena a
-  `main`. Si se hace con `--squash --delete-branch`, se cierran los PRs siguientes. Todos necesitan una
-  revisión del equipo, porque `main` tiene `enforce_admins` y exige una revisión.
-- **Mientras la cadena no esté fusionada, el trabajo nuevo sale de la punta, `feat/web-simulador-mapas`**,
-  no de `main`. Si no, las pantallas nuevas no tienen el Simulador, `arsenals.json`, los componentes
-  del mapa ni la API.
+- La P4 llega a `main` con el PR de integración **#32** (24 de septiembre). La cadena #22–#31 se
+  fusionó cada PR sobre el anterior en lugar de sobre `main`, y el #32 la lleva a `main` de una vez.
+- **Todo trabajo nuevo sale de `main`**, una vez fusionado el #32. Las ramas viejas de la cadena ya se
+  borraron.
 
 ### Arrancar el entorno
 
+Está en el [README](../README.md): «Arrancar, una sola vez», «Levantar la app» y la tabla «Si algo no
+jala». En corto:
+
 ```bash
-git fetch && git worktree add -b feat/<nombre> <ruta> origin/feat/web-simulador-mapas
-cd <ruta> && ln -s <repo-principal>/data data     # el dataset no está en git (data/ en .gitignore)
-uv sync --all-extras                               # sin esto fallan los hooks de pre-commit
-cd packages/web && pnpm install --frozen-lockfile
-
-# Evidencia y modelo (si cambió algo en analysis/):
-uv run python analysis/evidence.py                 # ~1 min
-uv run python analysis/simulator_gates.py          # ~1 min; entrena el puente en artifacts/
-
-# App:
-uv run uvicorn api.main:app --port 8765            # la API
-SUPERESTELA_API_URL=http://localhost:8765 npx next dev -p 3456   # desde packages/web
+uv sync --all-extras && (cd packages/web && pnpm install)
+uv run python analysis/evidence.py && uv run python analysis/simulator_gates.py
+uv run uvicorn api.main:app --port 8000        # terminal 1
+cd packages/web && pnpm dev                    # terminal 2 → http://localhost:3000
 ```
+
+Si se trabaja en un worktree, necesita su propio `uv sync --all-extras` y un enlace a `data/`
+(`ln -s <repo>/data data`), o fallan los hooks y la evidencia.
 
 ### Reglas que muerden
 
@@ -78,8 +72,10 @@ SUPERESTELA_API_URL=http://localhost:8765 npx next dev -p 3456   # desde package
   más abajo posible del árbol.
 - **La API rechaza campos desconocidos** (`extra="forbid"`). Manda solo lo que el esquema pide:
   `pickValues` existe por eso.
-- **El `model_id` del artefacto tiene que coincidir con `simulator_validation.json`**, o la API
-  contesta `model_not_gated` y no muestra Stuff+. Si reentrenas, vuelve a correr las compuertas.
+- **El modelo y su veredicto viven juntos en `artifacts/`**, fuera de git. La API solo muestra Stuff+
+  si el veredicto junto al modelo corresponde a ese modelo. Correr las compuertas no toca archivos
+  versionados; `--publish` actualiza el registro de `analysis/outputs/` y solo se usa cuando el
+  modelo o las compuertas cambian.
 - **Verifica la interfaz con capturas headless, no con la extensión de Chrome**, que no conecta en
   esta máquina:
   ```bash
@@ -100,7 +96,7 @@ SUPERESTELA_API_URL=http://localhost:8765 npx next dev -p 3456   # desde package
 
 | Semana | Fechas | Producto |
 |---|---|---|
-| 3 | 24 sep – 1 oct | Fusionar la cadena · **P3 Traductor** · **P2 Ficha** |
+| 3 | 24 sep – 1 oct | Fusionar el #32 · **P3 Traductor** · **P2 Ficha** |
 | 4 | 2 – 8 oct | **P5 Plan** · P6/P7/P8 · la web lee de la API · `report/build.py` |
 | 5 | 9 – 15 oct | Congelamiento el **12** · ensayo el **13** · entrega el **15** |
 
@@ -112,20 +108,16 @@ falta tiempo (`docs/00` §10).
 
 ## 2. Tareas
 
-### T1 · Fusionar la cadena de la P4 · **bloquea a las demás**
+### T1 · Fusionar el #32 · **bloquea a las demás**
 
-**Qué:** revisar y fusionar #21 → #31 en orden.
-**Por qué:** diez PRs encadenados envejecen rápido. Cada cambio en `main` obliga a actualizar toda la
-cadena, y mientras no se fusionen, cualquier trabajo nuevo carga con ellos.
-**Cómo:** seguir la memoria de PRs encadenados:
-1. Reapuntar todos a `main` con `gh api -X PATCH repos/luisferdev11/superestela/pulls/N -f base=main`.
-2. Fusionar en orden con `--merge`, sin `--delete-branch`.
-3. Con `strict: true`, poner cada PR al día antes de fusionarlo
-   (`gh api -X PUT .../pulls/N/update-branch`).
+**Qué:** el PR de integración #32 (`chore/simulador-a-main` → `main`) lleva a `main` toda la P4, la
+guía de arranque del README y el veredicto del modelo junto al modelo. Necesita una aprobación de
+alguien del equipo: quien lo abrió no puede aprobarse a sí mismo y `main` tiene `enforce_admins`.
+**Cómo:** aprobar y fusionar con merge commit; después, borrar la rama `chore/simulador-a-main`.
+Es la última rama vieja.
 
-**Hecho cuando:** `main` contiene `packages/web/src/app/simulador/page.tsx` y
+**Hecho cuando:** `git ls-tree origin/main packages/web/src/app/simulador/page.tsx` la encuentra y
 `uv run python scripts/check_pendientes.py` marca P4 ✅ desde `main`.
-**No es de producto:** la revisión. La da alguien del equipo.
 
 ---
 
