@@ -107,7 +107,7 @@ El estado final debe mostrar tres cosas juntas:
 2. **Stuff+ HH proyectado** con banda.
 3. **Por qué** — el Índice de Densidad aplicado y el factor Magnus (≈0.75), visible. La física es el argumento de confianza, y debe verse.
 
-Precisión a comunicar honestamente, en pitchers nunca vistos: **±0.85" a ±1.45"** con el modelo empírico, **±0.92" a ±1.52"** con la física pura, que es la banda que `translate.py` pone en pantalla. Se cita la que la pantalla muestra.
+Precisión a comunicar honestamente, en pitchers nunca vistos: **±0.85" a ±1.45"** con el modelo empírico, **±0.90" a ±1.85"** con la física pura sobre el break con signo, que es la banda que `translate.py` pone en pantalla ([`docs/09`](09-SIMULADOR.md) §3.2). Se cita la que la pantalla muestra.
 
 ---
 

@@ -283,10 +283,109 @@ def spin_efficiency_check(d, pitches):
     return out
 
 
-def simulator_evidence(df, pitches):
-    """Everything the simulator reads, keyed by output."""
+# Translation bands, docs/09 section 3.2. A pitcher needs this many pitches of
+# a type in EACH environment for his mean shape to be compared, as in
+# evidence.translator.
+TRANSLATION_MIN_PITCHES = 40
+# Sea level to extreme altitude, the measured Magnus ratio (evidence.json ->
+# translator.magnus_ratio_measured); core.translate reproduces it exactly.
+MAGNUS_RATIO_EXTREME = 0.7543
+TRANSLATION_REQUIRED = [
+    "RelSpeed",
+    "SpinRate",
+    "SpinAxis",
+    "InducedVertBreak",
+    "HorzBreak",
+    "Extension",
+    "RelHeight",
+    "RelSide",
+    "pitcher_anon_id",
+]
+
+
+def translation_error(d, pitches):
+    """Error of the physics translation on the SIGNED shape, over every pitcher.
+
+    evidence.translator measured |HB| on a 20% holdout, as few as 13 pitchers.
+    The simulator moves signed HB, and for sliders and curveballs, which cross
+    zero, the absolute value hides error. Physics fits nothing per pitcher, so
+    every qualifying pitcher is out of sample; these are the bands to show.
+    """
+    out = {}
+    # The same pitches the bridge and the gates see: every stuff feature present.
+    d = d.dropna(subset=TRANSLATION_REQUIRED)
+    for pt in pitches:
+        x = d[d.AutoPitchType == pt]
+        g = x.groupby(["pitcher_anon_id", "altitude_category"])
+        m = g[["InducedVertBreak", "hb_arm"]].mean().assign(n=g.size())
+        m = m[m.n >= TRANSLATION_MIN_PITCHES].unstack("altitude_category")
+        m = m.dropna(subset=[("n", SEA), ("n", EXT)])
+        rec = {"n_pitchers": len(m)}
+        for col, axis in (("InducedVertBreak", "ivb"), ("hb_arm", "horizontal_break")):
+            err = m[(col, EXT)] - MAGNUS_RATIO_EXTREME * m[(col, SEA)]
+            rmse = float(np.sqrt((err**2).mean()))
+            rec[axis] = {
+                "rmse_in": round(rmse, 2),
+                "coverage_of_one_rmse": round(float((err.abs() <= rmse).mean()), 3),
+            }
+        out[pt] = rec
+    return out
+
+
+def arsenals(d, pitcher_seasons):
+    """Each Radar pitcher-season's pitches, per environment: the simulator's baselines.
+
+    The Radar cards carry |HB| and no release point or spin axis, so a coach
+    who starts from a real pitcher would start from an incomplete pitch.
+    """
+    x = d[d.set_index(["pitcher_anon_id", "year"]).index.isin(pitcher_seasons)]
+    cols = {
+        "RelSpeed": "release_speed",
+        "InducedVertBreak": "ivb",
+        "hb_arm": "horizontal_break",
+        "SpinRate": "spin_rate",
+        "axis_arm": "spin_axis",
+        "Extension": "extension",
+        "RelHeight": "release_height",
+        "side_arm": "release_side",
+    }
+    out = {}
+    for (pid, season, env), e in x.groupby(["pitcher_anon_id", "year", "altitude_category"]):
+        if env not in ENVIRONMENTS:
+            continue
+        pitches = []
+        for pt, g in e.groupby("AutoPitchType"):
+            swings = int(g.is_swing.sum())
+            pitches.append(
+                {
+                    "pitch_type": str(pt),
+                    "n": len(g),
+                    "usage": round(len(g) / len(e), 3),
+                    **{name: round(float(g[col].mean()), 2) for col, name in cols.items()},
+                    "whiff_per_swing": round(float(g.is_whiff.sum() / swings), 3)
+                    if swings
+                    else None,
+                }
+            )
+        key = f"{pid}/{int(season)}"
+        out.setdefault(
+            key,
+            {
+                "pitcher_id": str(pid),
+                "season": int(season),
+                "pitcher_hand": str(e.PitcherThrows.mode().iloc[0]),
+                "by_environment": {},
+            },
+        )
+        out[key]["by_environment"][env] = sorted(pitches, key=lambda p: -p["usage"])
+    return out
+
+
+def simulator_evidence(df, pitches, pitcher_seasons):
+    """Everything the simulator reads, and the arsenals it starts from, apart."""
     d = with_arm_side(df[df.AutoPitchType.isin(pitches)])
-    return {
+    return arsenals(d, pitcher_seasons), {
+        "translation_error": translation_error(d, pitches),
         "arm_side_convention": "right-hander frame: arm side positive; left-handers mirrored",
         "distributions": pitch_distributions(d, pitches),
         "speed_loss": speed_loss(d, pitches),

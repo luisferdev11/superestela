@@ -119,8 +119,9 @@ El prototipo tiene el HTML, los tokens y las cifras de las ocho:
 - [ ] **P3 · Traductor de Altitud**, el diferenciador (`docs/02` §2).
       Sus datos ya están en `evidence.json` (`translator`) y su física en
       `packages/core/translate.py`. Precisión a comunicar honestamente:
-      **±0.92″ a ±1.52″**, la banda física que usa `translate.py` (el empírico da
-      ±0.85″ a ±1.45″; se cita la que se muestra).
+      **±0.90″ a ±1.85″**, la banda física sobre el break con signo que usa
+      `translate.py` (`docs/09` §3.2; el empírico sobre |HB| da ±0.85″ a ±1.45″, y
+      subestimaba slider y curva).
       **Hecho cuando:** `packages/web/src/app/traductor/page.tsx` existe.
 
 - [ ] **P2 · Ficha de Pitcher.** Es a donde apunta el Radar.

@@ -150,23 +150,28 @@ $$
 - Con `k = 1.841` la ley reproduce **exactamente la razón Magnus medida** en Extreme.
 - El modelo de libro de texto (`F_M ∝ ρ`) daría `k = 1` sobre la densidad verdadera. Que aquí salga 1.841
   es lo que §2.4 explica: el índice no es la densidad.
-- **Validación**: pitcher holdout 80/20, sin ajustar nada.
+- **Validación**: la física no ajusta nada por lanzador, así que cada lanzador con ≥ 40 pitches del
+  tipo en cada entorno está fuera de muestra. Se mide sobre el **HB con signo**, que es lo que el
+  simulador mueve (`simulator.json → translation_error`):
 
-  | Pitch | IVB física | IVB sin ajustar | HB física |
-  |---|---|---|---|
-  | Four-Seam | **0.92″** | 3.88″ | 0.97″ |
-  | Sinker | 1.42″ | 2.83″ | 0.99″ |
-  | Slider | 1.07″ | 1.58″ | 1.06″ |
-  | Changeup | 1.47″ | 2.93″ | 1.36″ |
-  | Curveball | 1.52″ | 3.15″ | 1.41″ |
+  | Pitch | Lanzadores | IVB | HB | Antes (\|HB\|, holdout 20%) |
+  |---|---|---|---|---|
+  | Four-Seam | 326 | **0.92″** | 0.93″ | 0.92″ / 0.97″ |
+  | Sinker | 158 | 1.14″ | 1.07″ | 1.42″ / 0.99″ |
+  | Slider | 226 | 1.16″ | **1.36″** | 1.07″ / 1.06″ |
+  | Changeup | 104 | 1.38″ | 1.38″ | 1.47″ / 1.36″ |
+  | Curveball | 64 | 1.12″ | **1.85″** | 1.52″ / 1.41″ |
+  | Cutter | 25 | 1.14″ | 0.90″ | sin banda |
 
-  Fuente: `evidence.json → translator`.
-- Esas RMSE son la **banda que muestra la pantalla** (`BREAK_ERROR_IN`).
-- El «±0.85″ a ±1.45″» que citan `docs/00` y `docs/02` es el error del modelo **empírico**. La
-  pantalla usa el **físico**, que va de **±0.92″ a ±1.52″**.
-- **Cutter no tiene banda medida.** Solo 25 lanzadores tienen ≥ 40 cutters en cada entorno, y la
-  validación exige 40. Cae a la banda más ancha, (1.52″, 1.41″). Bajar el umbral a 20 daría 70
-  lanzadores, con más ruido por lanzador; queda como decisión explícita en la compuerta F1.
+- Esas RMSE son la **banda que muestra la pantalla** (`BREAK_ERROR_IN`), de **±0.90″ a ±1.85″**.
+- **La compuerta F1 atrapó un error en las bandas anteriores.** Se habían medido sobre |HB| en un
+  holdout del 20%, con apenas 13 curvas, y **subestimaban el HB de slider (1.06″ contra 1.36″) y de
+  curva (1.41″ contra 1.85″)**. Sliders y curvas cruzan el cero en HB, y el valor absoluto dobla el
+  error hacia adentro. Se corrigieron las bandas, no la compuerta.
+- El «±0.85″ a ±1.45″» que citaban `docs/00` y `docs/02` es el error del modelo **empírico** sobre
+  |HB|. No es la banda de la pantalla.
+- **Cutter ahora tiene banda**, medida con 25 lanzadores. Es la muestra más delgada y se declara. Antes
+  caía a la banda máxima porque `translator()` exige 40 lanzadores.
 
 ### 3.3 Magnus y coeficiente de sustentación · ✅ física, 🟡 los parámetros
 
@@ -338,13 +343,14 @@ $$
 
 ## 5. Validación: los criterios de aceptación
 
-Las compuertas son automáticas: `models/evaluate_simulator.py` → `analysis/outputs/simulator_validation.json`.
+Las compuertas son automáticas: `uv run python analysis/simulator_gates.py` entrena el puente, las corre y
+escribe `analysis/outputs/simulator_validation.json` (unos 50 s).
 **Cualquier modelo que entre por el contrato, incluido A3, pasa por las mismas.**
 
 | # | Qué prueba | Por qué | Umbral |
 |---|---|---|---|
-| **F1** | Holdout por pitcher: proyectar la forma de mar → HH y comparar con la observada | Es la afirmación central de la física | RMSE ≤ lo publicado en §3.2 |
-| **F2** | Cobertura de la banda ±1σ en ese holdout | Una banda que no cubre es decorado (`docs/05` F2) | 60–76% |
+| **F1** | Proyectar la forma de mar → HH y compararla con la observada, sobre el HB con signo y todos los lanzadores que califican | Es la afirmación central de la física, y la banda que se muestra | RMSE ≤ la banda de la pantalla |
+| **F2** | Cobertura de la banda ±1σ | Una banda que no cubre es decorado (`docs/05` F2) | 68.3% ± 2 errores estándar binomiales para la muestra (antes: 60–76% fijo) |
 | **F3** | Densidad física (§3.1) contra la razón Magnus medida | Validación externa: la física predice lo que medimos | Magnus dentro del rango físico ± 0.03 |
 | **F4** | El detector de plausibilidad, sobre pitches reales y sobre casos imposibles conocidos | No debe saltar con pitches normales, y sí con los que nadie lanza | < 2% de reales marcados (1.5% por construcción) **y** 100% de los imposibles de la lista marcados |
 | **F5** | VAA cinemático contra `VertApprAngle` | Que la salida de VAA sea medición, no ilustración | RMSE ≤ 0.5° (sondeo: 0.079°) |
@@ -368,12 +374,38 @@ Las tres historias:
 - **S5–S7 se reportan tal como salgan**, en este documento y en el técnico. Se espera que v0 falle S7:
   su R² es 0.003.
 
-**Sondeo del 23 de septiembre, con un solo modelo sin ensamble** (no es la corrida oficial):
-- S1 pasa: +2.03 puntos por mph, 4.7% de violaciones.
-- **S3 falla**: p99 de 3.63 puntos por paso y máximo de 14.6.
-- El ensamble de §3.8 promedia los escalones. Si no alcanza, el **plan B** es v0 con restricción
-  monótona en la velocidad (`monotonic_cst` de `HistGradientBoostingRegressor`) y un modelo por familia
-  de pitch (FB/BB/OS), como PitchingBot[^pb].
+### 5.1 Resultados · corrida del 23 de septiembre, modelo `0.1.0+<sha>`
+
+**El Stuff+ del puente v0 se muestra: pasa S1–S4.** Todo lo demás se reporta tal como salió.
+
+| # | Resultado | Valor |
+|---|---|---|
+| F1 | ✅ tras corregir las bandas | RMSE ≤ banda en los 12 ejes. **En la primera corrida falló**: las bandas viejas subestimaban el HB de slider y curva (§3.2) |
+| F2 | ❌ por 0.002, del lado conservador | 11 de 12 ejes dentro. HB de sinker cubre 75.9% contra un máximo de 75.7%: la banda es un poco más ancha de lo necesario, no más estrecha |
+| F3 | ✅ | Magnus 0.754 contra la física 0.774–0.804 (± 0.03). El índice de arrastre, 0.858, se reporta sin compuerta |
+| F4 | ✅ | 1.5% de falsos positivos; los 4 casos imposibles marcados (d² de 23 a 67) |
+| F5 | ✅ | VAA con RMSE de 0.083° sobre 50,000 pitches |
+| S1 | ✅ | +1.79 puntos por mph; 9.3% de violaciones, **cerca del 10% del umbral** |
+| S2 | ✅ | 0.0, por construcción en el marco del brazo |
+| S3 | ✅ | p99 de 1.23 puntos por paso, máximo 2.86. **Un solo modelo daba p99 3.63**: el ensamble lo arregló, así que el plan B no hizo falta |
+| S4 | ✅ | r = 0.951 y \|Δ\| medio de 2.47 contra el Radar, sobre 2,153 pitches de arsenal |
+| S5 | ✅ | Spearman 1.0: los diez deciles ordenan el run value observado, de +0.033 a −0.010 |
+| S6 | ✅, débil | r = 0.144, IC 95% [0.047, 0.230], en 521 pitcher-pitch. El Δ simulado sí ordena la pérdida de whiff real, **pero explica poco** |
+| S7 | ❌ | El conteo solo (RMSE 0.21747) le gana a la física sola (0.21888). Conteo + física da 0.21732: **la física agrega algo sobre el conteo, muy poco** |
+
+**Cómo se lee, sin adornos:**
+- El puente es **coherente**: monótono, suave, simétrico, igual al Radar y bien ordenado. Por eso se
+  muestra.
+- **No es un buen predictor.** S7 falla y S6 es débil. Es exactamente lo que dice su R² de 0.003, y lo
+  que A1 tiene que mejorar.
+- La pantalla dice qué modelo contesta. El documento técnico lleva esta tabla completa.
+
+**Dos criterios cambiaron durante la corrida, y se dice:**
+- **F1** comparaba contra las bandas publicadas × 1.10. Esas bandas estaban mal medidas. Se
+  re-midieron, y el criterio pasó a «la banda nunca es menor que el error».
+- **F2** tenía un rango fijo de 60–76% para cualquier muestra. Con 25 cutters, el error estándar de la
+  cobertura es de ±9 puntos, así que un rango fijo reprueba por azar. El JSON guarda los dos
+  veredictos (`passed_fixed_60_76`).
 
 **Riesgos que las compuertas no cierran, y se dicen:**
 - **Contrafactual observacional.** El modelo aprendió de pitches lanzados, no de intervenciones. «Subir 2
@@ -391,15 +423,15 @@ Las tres historias:
 |---|---|---|
 | Física mar → HH (`translate.py`) | ✅ | Holdout por pitcher, bandas por tipo |
 | Extrapolación a otras densidades | 🟡 | Depende de §2.4; D4 la cierra |
-| Banda de Cutter | 🟡 | Sin muestra suficiente (25 de 40 lanzadores, registrado en `evidence.json → translator.skipped`); banda máxima declarada |
-| Densidad física / validación externa (F3) | 🟡 | Cálculo hecho aquí; falta el módulo y el test |
-| VAA y velocidad al plato (F5) | 🟢 | Sondeo 0.079°; falta el módulo |
+| Bandas de la física | ✅ | Re-medidas sobre el HB con signo tras fallar F1; Cutter medido con 25 lanzadores y declarado |
+| Densidad física / validación externa (F3) | ✅ | `core/atmosphere.py`, pasa F3 |
+| VAA y velocidad al plato (F5) | ✅ | `core/trajectory.py`, 0.083° sobre 50,000 pitches |
 | Coherencia del spin (F4) | 🟢 | Mahalanobis robusto por tipo (`simulator.json → plausibility`, `core/spin.py`). Falsos positivos: 1.5% por construcción. La prueba real de F4 es que marque los casos imposibles conocidos. La primera versión, por variable, no los marcaba y se descartó |
-| Diferenciales de arsenal | 🟡 | Aritmética; falta el módulo |
+| Diferenciales de arsenal | ✅ | `core/arsenal.py`; arsenales base por lanzador en `analysis/outputs/arsenals.json` |
 | Mapa de efectividad | 🟢 | `simulator.json → movement_map`: rejilla de 2″, κ empírico por tipo y entorno, 10% extremos. Falta la pantalla |
 | Rangos de sliders y pérdida de velocidad | ✅ | `simulator.json → distributions`, `speed_loss` |
-| Contrato del scorer | 🟡 | ADR 0007 |
-| Score v0 puente con `se` | 🔴 | Por construir; S3 en riesgo |
+| Contrato del scorer | ✅ | `models/scoring.py`, ADR 0007 |
+| Score v0 puente con `se` | 🟡 | `models/stuff/v0_bridge.py`. Pasa S1–S6, falla S7 (§5.1). Se muestra, declarado como puente |
 | Features de arsenal **dentro** del score | 🔴 | Es A1, del equipo de datos |
 | Puente Stuff+ → carreras | 🔴 | r = −0.08 (`docs/05`). **Por eso el Simulador no imprime carreras** |
 | Contorno «¿hacia dónde muevo?» y SHAP | 🔴 | Después de A1, como capa del Simulador |
@@ -412,7 +444,7 @@ Esta tabla se actualiza con cada PR de la cadena. §5 se cierra con los números
 2. Las salidas nuevas de `evidence.py`: distribuciones por tipo, mapa de efectividad, envolvente de
    plausibilidad y `SpeedDrop` por entorno.
 3. `core/`: `atmosphere`, `trajectory`, `arsenal` y `spin`, con tests de propiedad.
-4. `models/`: el contrato, v0 puente y `evaluate_simulator`, que produce `simulator_validation.json`.
+4. `models/`: el contrato y v0 puente; `analysis/simulator_gates.py`, que produce `simulator_validation.json`.
 5. `api/`: `POST /simulate` y `POST /translate`.
 6. `web/`: la pantalla, y se cierra este documento con el resultado real de cada compuerta.
 

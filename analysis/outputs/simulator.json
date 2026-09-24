@@ -1,4 +1,72 @@
 {
+  "translation_error": {
+    "Four-Seam": {
+      "n_pitchers": 326,
+      "ivb": {
+        "rmse_in": 0.92,
+        "coverage_of_one_rmse": 0.66
+      },
+      "horizontal_break": {
+        "rmse_in": 0.93,
+        "coverage_of_one_rmse": 0.721
+      }
+    },
+    "Sinker": {
+      "n_pitchers": 158,
+      "ivb": {
+        "rmse_in": 1.14,
+        "coverage_of_one_rmse": 0.747
+      },
+      "horizontal_break": {
+        "rmse_in": 1.07,
+        "coverage_of_one_rmse": 0.759
+      }
+    },
+    "Slider": {
+      "n_pitchers": 226,
+      "ivb": {
+        "rmse_in": 1.16,
+        "coverage_of_one_rmse": 0.695
+      },
+      "horizontal_break": {
+        "rmse_in": 1.36,
+        "coverage_of_one_rmse": 0.73
+      }
+    },
+    "Changeup": {
+      "n_pitchers": 104,
+      "ivb": {
+        "rmse_in": 1.38,
+        "coverage_of_one_rmse": 0.673
+      },
+      "horizontal_break": {
+        "rmse_in": 1.38,
+        "coverage_of_one_rmse": 0.644
+      }
+    },
+    "Curveball": {
+      "n_pitchers": 64,
+      "ivb": {
+        "rmse_in": 1.12,
+        "coverage_of_one_rmse": 0.703
+      },
+      "horizontal_break": {
+        "rmse_in": 1.85,
+        "coverage_of_one_rmse": 0.797
+      }
+    },
+    "Cutter": {
+      "n_pitchers": 25,
+      "ivb": {
+        "rmse_in": 1.14,
+        "coverage_of_one_rmse": 0.68
+      },
+      "horizontal_break": {
+        "rmse_in": 0.9,
+        "coverage_of_one_rmse": 0.56
+      }
+    }
+  },
   "arm_side_convention": "right-hander frame: arm side positive; left-handers mirrored",
   "distributions": {
     "Four-Seam": {

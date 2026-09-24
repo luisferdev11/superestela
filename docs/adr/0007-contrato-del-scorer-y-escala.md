@@ -48,7 +48,7 @@ class Scorer(Protocol):
 - Un modelo solo se muestra si pasa las compuertas S1–S4 de `docs/09` §5: monotonía en la recta, espejo
   por mano, suavidad por paso de slider y consistencia con el Radar.
 - S5–S7 (calibración, experimento natural y baseline nulo del reto) se reportan tal como salgan.
-- Las corre `models/evaluate_simulator.py` y quedan en `analysis/outputs/simulator_validation.json`.
+- Las corre `analysis/simulator_gates.py`, que vive junto a `evidence.py` porque necesita el dataset, y quedan en `analysis/outputs/simulator_validation.json`.
 - **Aplican igual a A3.** Son también su criterio de aceptación en `model-eval.yml`.
 
 **4. Propuesta de escala para A3 (decide el equipo de datos).**
