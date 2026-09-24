@@ -212,9 +212,13 @@ $$
 - **Validación (sondeo)**: con solo las entradas del Simulador, más `SpeedDrop` y la altura de llegada,
   el VAA reproduce `VertApprAngle` con **RMSE 0.079°** y sesgo −0.024°. Recta 0.045°, curva 0.144°.
 - **Lo que muestra, en la recta** (medias observadas):
-  - pierde 7.67 mph en el trayecto a nivel del mar y 6.34 en Extreme, así que **llega ~1.7 mph más
-    rápida** al plato;
-  - su VAA pasa de −4.95° a −5.22°, **más empinada**, porque perdió ride.
+  - pierde 7.67 mph en el trayecto a nivel del mar y 6.35 en Extreme (`simulator.json → speed_loss`).
+    Con la misma velocidad de salida, **llega ~1.3 mph más rápida** al plato. La diferencia cruda de
+    `ZoneSpeed` es 1.7 mph, pero incluye que en Extreme se lanza 0.4 mph más fuerte, y eso no es del
+    aire;
+  - su VAA pasa de −4.95° a −5.22°, **más empinada**. La mayor parte es el ride perdido; una parte es
+    que en Extreme llega 0.06 ft más baja. El Simulador fija la altura de llegada, así que muestra solo
+    lo del ride.
 - Es la otra mitad de la historia de la altitud: el bateador ve una recta más rápida pero más plana de
   forma y más empinada de llegada.
 
