@@ -187,10 +187,22 @@ $$
 - Lo que sí se muestra es el **movimiento por rpm**, `B_total / ω`, en **percentil dentro del tipo de
   pitch**. Es empírico, invariante a los supuestos, y dice lo que H4 quiere decir: dos rectas de
   2,400 rpm con 20″ y con 14″ no son el mismo pitch.
-- La **plausibilidad** es un aviso cuando la forma pedida cae fuera de la envolvente observada:
-  - fuera del percentil 1–99 del movimiento, condicionado a tipo, spin y velocidad;
-  - o lejos de todo pitch real, por distancia al vecino k-ésimo en el espacio estandarizado de
-    features[^shape].
+- La **plausibilidad** es una distancia de Mahalanobis sobre las cuatro magnitudes que tienen que
+  cuadrar entre sí: velocidad, IVB, HB y spin, por tipo de pitch:
+
+$$
+d^2 = (x - \mu)^\top \Sigma^{-1} (x - \mu), \qquad \text{aviso si } d^2 > q_{0.985}
+$$
+
+  - `μ` y `Σ` se estiman sobre el 95% central de los pitches a nivel del mar. Las colas traen errores
+    de tracking y pitches mal etiquetados que inflarían la covarianza.
+  - El umbral es el percentil 98.5 de los pitches reales, así que la tasa de falsos positivos queda
+    en 1.5% por construcción.
+  - **Por qué no límites por variable**: la primera versión revisaba cada magnitud por separado, y
+    22″ de ride con 1,500 rpm pasaba, porque cada valor solo era normal. Con Mahalanobis da d² = 40.9
+    contra un umbral de 28.6 para la recta. Una recta élite real (24″ a 2,400 rpm) da 5.8 y pasa,
+    como debe[^shape].
+  - Los límites por variable se conservan solo para decir **cuál** magnitud es rara.
 
 ### 3.5 VAA y velocidad al plato · 🟢 (sondeo), se formaliza en `core/trajectory.py`
 
@@ -334,7 +346,7 @@ Las compuertas son automáticas: `models/evaluate_simulator.py` → `analysis/ou
 | **F1** | Holdout por pitcher: proyectar la forma de mar → HH y comparar con la observada | Es la afirmación central de la física | RMSE ≤ lo publicado en §3.2 |
 | **F2** | Cobertura de la banda ±1σ en ese holdout | Una banda que no cubre es decorado (`docs/05` F2) | 60–76% |
 | **F3** | Densidad física (§3.1) contra la razón Magnus medida | Validación externa: la física predice lo que medimos | Magnus dentro del rango físico ± 0.03 |
-| **F4** | El movimiento por rpm y la envolvente, sobre pitches reales | El aviso de plausibilidad no debe saltar con pitches normales | < 2% de pitches reales marcados |
+| **F4** | El detector de plausibilidad, sobre pitches reales y sobre casos imposibles conocidos | No debe saltar con pitches normales, y sí con los que nadie lanza | < 2% de reales marcados (1.5% por construcción) **y** 100% de los imposibles de la lista marcados |
 | **F5** | VAA cinemático contra `VertApprAngle` | Que la salida de VAA sea medición, no ilustración | RMSE ≤ 0.5° (sondeo: 0.079°) |
 | **S1** | Monotonía: +1 mph en la recta, con forma fija, sobre 300 rectas reales | Lo primero que prueba un coach con el slider | Δ medio > 0; violaciones ≤ 10% |
 | **S2** | Espejo: un pitch zurdo reflejado contra el derecho | La mano no puede cambiar la calidad física | \|Δ\| ≤ 1 punto |
@@ -382,7 +394,7 @@ Las tres historias:
 | Banda de Cutter | 🟡 | Sin muestra suficiente (25 de 40 lanzadores, registrado en `evidence.json → translator.skipped`); banda máxima declarada |
 | Densidad física / validación externa (F3) | 🟡 | Cálculo hecho aquí; falta el módulo y el test |
 | VAA y velocidad al plato (F5) | 🟢 | Sondeo 0.079°; falta el módulo |
-| Coherencia del spin (F4) | 🟢 | Envolvente en `simulator.json → plausibility`: marca 1.2–1.5% de los pitches reales por tipo, bajo el 2%. Una primera versión al 99% central marcaba 2.4–2.9% y se recalibró; el umbral no se movió |
+| Coherencia del spin (F4) | 🟢 | Mahalanobis robusto por tipo (`simulator.json → plausibility`, `core/spin.py`). Falsos positivos: 1.5% por construcción. La prueba real de F4 es que marque los casos imposibles conocidos. La primera versión, por variable, no los marcaba y se descartó |
 | Diferenciales de arsenal | 🟡 | Aritmética; falta el módulo |
 | Mapa de efectividad | 🟢 | `simulator.json → movement_map`: rejilla de 2″, κ empírico por tipo y entorno, 10% extremos. Falta la pantalla |
 | Rangos de sliders y pérdida de velocidad | ✅ | `simulator.json → distributions`, `speed_loss` |

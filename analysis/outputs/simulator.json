@@ -8196,7 +8196,51 @@
   "plausibility": {
     "Four-Seam": {
       "n": 99041,
+      "features": [
+        "release_speed",
+        "ivb",
+        "horizontal_break",
+        "spin_rate"
+      ],
+      "mean": [
+        91.5653,
+        17.1679,
+        9.5868,
+        2330.457
+      ],
+      "inverse_covariance": [
+        [
+          0.1682541,
+          0.01471538,
+          -0.01946463,
+          -0.00083368
+        ],
+        [
+          0.01471538,
+          0.12472353,
+          0.00052839,
+          -0.00027861
+        ],
+        [
+          -0.01946463,
+          0.00052839,
+          0.08531474,
+          -0.00017529
+        ],
+        [
+          -0.00083368,
+          -0.00027861,
+          -0.00017529,
+          5.208e-05
+        ]
+      ],
+      "threshold_squared_distance": 28.59,
+      "flagged_share_of_real_pitches": 0.015,
       "bounds": {
+        "release_speed": {
+          "low": 83.942,
+          "high": 99.024
+        },
         "ivb": {
           "low": 8.089,
           "high": 25.06
@@ -8204,6 +8248,10 @@
         "horizontal_break": {
           "low": -2.283,
           "high": 19.04
+        },
+        "spin_rate": {
+          "low": 1178.045,
+          "high": 2818.464
         },
         "movement_per_krpm": {
           "low": 3.894,
@@ -8310,12 +8358,55 @@
         11.069,
         11.368,
         13.136
-      ],
-      "flagged_share_of_real_pitches": 0.0135
+      ]
     },
     "Sinker": {
       "n": 54807,
+      "features": [
+        "release_speed",
+        "ivb",
+        "horizontal_break",
+        "spin_rate"
+      ],
+      "mean": [
+        91.1627,
+        10.4366,
+        15.6296,
+        2250.8331
+      ],
+      "inverse_covariance": [
+        [
+          0.20587508,
+          1.5e-07,
+          -0.01844635,
+          -0.0009273
+        ],
+        [
+          1.5e-07,
+          0.06272347,
+          0.01623032,
+          -0.00029484
+        ],
+        [
+          -0.01844635,
+          0.01623032,
+          0.14948677,
+          -0.0006462
+        ],
+        [
+          -0.0009273,
+          -0.00029484,
+          -0.0006462,
+          4.905e-05
+        ]
+      ],
+      "threshold_squared_distance": 23.897,
+      "flagged_share_of_real_pitches": 0.015,
       "bounds": {
+        "release_speed": {
+          "low": 80.168,
+          "high": 97.991
+        },
         "ivb": {
           "low": -10.038,
           "high": 19.319
@@ -8323,6 +8414,10 @@
         "horizontal_break": {
           "low": 5.667,
           "high": 23.781
+        },
+        "spin_rate": {
+          "low": 1590.499,
+          "high": 2704.744
         },
         "movement_per_krpm": {
           "low": 3.975,
@@ -8429,12 +8524,55 @@
         10.899,
         11.125,
         11.49
-      ],
-      "flagged_share_of_real_pitches": 0.0146
+      ]
     },
     "Slider": {
       "n": 59446,
+      "features": [
+        "release_speed",
+        "ivb",
+        "horizontal_break",
+        "spin_rate"
+      ],
+      "mean": [
+        83.3846,
+        2.9679,
+        -4.8949,
+        2442.9508
+      ],
+      "inverse_covariance": [
+        [
+          0.16056547,
+          -0.01135706,
+          -0.04314455,
+          -0.00031912
+        ],
+        [
+          -0.01135706,
+          0.06736241,
+          -0.01480993,
+          7.91e-05
+        ],
+        [
+          -0.04314455,
+          -0.01480993,
+          0.05385624,
+          0.00030758
+        ],
+        [
+          -0.00031912,
+          7.91e-05,
+          0.00030758,
+          1.433e-05
+        ]
+      ],
+      "threshold_squared_distance": 28.025,
+      "flagged_share_of_real_pitches": 0.015,
       "bounds": {
+        "release_speed": {
+          "low": 75.008,
+          "high": 90.999
+        },
         "ivb": {
           "low": -8.803,
           "high": 14.985
@@ -8442,6 +8580,10 @@
         "horizontal_break": {
           "low": -22.325,
           "high": 9.83
+        },
+        "spin_rate": {
+          "low": 1072.35,
+          "high": 3223.253
         },
         "movement_per_krpm": {
           "low": 0.264,
@@ -8548,12 +8690,55 @@
         7.612,
         8.175,
         9.599
-      ],
-      "flagged_share_of_real_pitches": 0.0138
+      ]
     },
     "Changeup": {
       "n": 41165,
+      "features": [
+        "release_speed",
+        "ivb",
+        "horizontal_break",
+        "spin_rate"
+      ],
+      "mean": [
+        83.3072,
+        7.1477,
+        13.5587,
+        1804.0053
+      ],
+      "inverse_covariance": [
+        [
+          0.09406573,
+          -0.00867845,
+          -0.00826772,
+          -2.477e-05
+        ],
+        [
+          -0.00867845,
+          0.04395323,
+          0.01733474,
+          -0.00021178
+        ],
+        [
+          -0.00826772,
+          0.01733474,
+          0.08814397,
+          -0.00065659
+        ],
+        [
+          -2.477e-05,
+          -0.00021178,
+          -0.00065659,
+          1.465e-05
+        ]
+      ],
+      "threshold_squared_distance": 20.103,
+      "flagged_share_of_real_pitches": 0.015,
       "bounds": {
+        "release_speed": {
+          "low": 71.878,
+          "high": 94.283
+        },
         "ivb": {
           "low": -7.667,
           "high": 21.456
@@ -8561,6 +8746,10 @@
         "horizontal_break": {
           "low": -4.165,
           "high": 24.535
+        },
+        "spin_rate": {
+          "low": 979.951,
+          "high": 3208.956
         },
         "movement_per_krpm": {
           "low": 2.873,
@@ -8667,12 +8856,55 @@
         13.966,
         15.198,
         16.877
-      ],
-      "flagged_share_of_real_pitches": 0.0145
+      ]
     },
     "Curveball": {
       "n": 25002,
+      "features": [
+        "release_speed",
+        "ivb",
+        "horizontal_break",
+        "spin_rate"
+      ],
+      "mean": [
+        77.6947,
+        -8.1178,
+        -9.4089,
+        2550.2202
+      ],
+      "inverse_covariance": [
+        [
+          0.09022028,
+          -0.00510828,
+          -0.0252627,
+          -0.00028858
+        ],
+        [
+          -0.00510828,
+          0.03552353,
+          0.00042844,
+          0.00022452
+        ],
+        [
+          -0.0252627,
+          0.00042844,
+          0.05071891,
+          0.00037919
+        ],
+        [
+          -0.00028858,
+          0.00022452,
+          0.00037919,
+          1.595e-05
+        ]
+      ],
+      "threshold_squared_distance": 25.207,
+      "flagged_share_of_real_pitches": 0.015,
       "bounds": {
+        "release_speed": {
+          "low": 62.981,
+          "high": 86.278
+        },
         "ivb": {
           "low": -22.182,
           "high": 10.439
@@ -8680,6 +8912,10 @@
         "horizontal_break": {
           "low": -21.992,
           "high": 9.666
+        },
+        "spin_rate": {
+          "low": 1230.134,
+          "high": 3285.874
         },
         "movement_per_krpm": {
           "low": 0.739,
@@ -8786,12 +9022,55 @@
         9.252,
         9.701,
         10.712
-      ],
-      "flagged_share_of_real_pitches": 0.0138
+      ]
     },
     "Cutter": {
       "n": 9561,
+      "features": [
+        "release_speed",
+        "ivb",
+        "horizontal_break",
+        "spin_rate"
+      ],
+      "mean": [
+        88.1877,
+        10.5705,
+        -0.0957,
+        2434.1095
+      ],
+      "inverse_covariance": [
+        [
+          0.34486164,
+          0.05189451,
+          -0.00423745,
+          -0.00143639
+        ],
+        [
+          0.05189451,
+          0.12520867,
+          -0.0314036,
+          -0.00014939
+        ],
+        [
+          -0.00423745,
+          -0.0314036,
+          0.11233066,
+          0.00029093
+        ],
+        [
+          -0.00143639,
+          -0.00014939,
+          0.00029093,
+          3.36e-05
+        ]
+      ],
+      "threshold_squared_distance": 30.213,
+      "flagged_share_of_real_pitches": 0.0151,
       "bounds": {
+        "release_speed": {
+          "low": 82.527,
+          "high": 95.474
+        },
         "ivb": {
           "low": 3.281,
           "high": 22.667
@@ -8799,6 +9078,10 @@
         "horizontal_break": {
           "low": -8.68,
           "high": 16.052
+        },
+        "spin_rate": {
+          "low": 1269.826,
+          "high": 2914.633
         },
         "movement_per_krpm": {
           "low": 1.519,
@@ -8905,8 +9188,7 @@
         8.916,
         9.355,
         9.969
-      ],
-      "flagged_share_of_real_pitches": 0.0118
+      ]
     }
   },
   "spin_efficiency_check": {

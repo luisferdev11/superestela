@@ -30,10 +30,19 @@ MAP_MIN_SWINGS = 50
 EXTREME_MIN_SWINGS = 40
 EXTREME_SHARE = 0.10
 
-# Plausibility envelope, docs/09 section 3.4. The envelope is a detector and
-# its target is gate F4: it may flag fewer than 2% of the pitches the league
-# really threw. Three bounds at the central 99% flagged 2.4-2.9% (run of
-# 2026-09-23), so each bound sits at the central 99.5%.
+# Plausibility, docs/09 section 3.4. Bounds checked one quantity at a time let
+# combinations nobody throws through: 22 in of ride on 1,500 rpm passes every
+# marginal bound (run of 2026-09-23). So the detector is a Mahalanobis distance
+# over the four features that must agree - velocity, IVB, HB and spin - with a
+# covariance estimated on the central 95% of pitches, because the tails hold
+# tracking errors and mislabelled pitches that would inflate it. The threshold
+# is the 98.5th percentile of real pitches, which pins gate F4's false-positive
+# rate at 1.5% by construction; what F4 then tests is that impossible shapes
+# are caught.
+PLAUSIBILITY_FEATURES = ["RelSpeed", "InducedVertBreak", "hb_arm", "SpinRate"]
+PLAUSIBILITY_CORE_SHARE = 0.95
+PLAUSIBILITY_THRESHOLD_QUANTILE = 0.985
+# Per-axis bounds are kept to say WHICH quantity is unusual, not to decide.
 ENVELOPE_LOW, ENVELOPE_HIGH = 0.0025, 0.9975
 
 # Ball constants for the lift-coefficient inversion, docs/09 section 3.3.
@@ -190,8 +199,13 @@ def _extremes(x):
     }
 
 
+def _squared_distance(x, mean, inverse_covariance):
+    centred = x - mean
+    return np.einsum("ij,jk,ik->i", centred, inverse_covariance, centred)
+
+
 def plausibility_envelope(d, pitches):
-    """What the league actually throws, per type, and how often it is flagged.
+    """What the league actually throws, per type, and the detector for the rest.
 
     Movement per rpm is the empirical side of H4: it says whether a shape is
     coherent with its spin without assuming an absolute air density or a
@@ -201,27 +215,38 @@ def plausibility_envelope(d, pitches):
     percentiles = np.arange(1, 100)
     for pt in pitches:
         x = d[(d.AutoPitchType == pt) & (d.altitude_category == SEA)].dropna(
-            subset=["SpinRate", "InducedVertBreak", "hb_arm"]
+            subset=PLAUSIBILITY_FEATURES
         )
         x = x[x.SpinRate > 0]
+        values = x[PLAUSIBILITY_FEATURES].to_numpy(float)
+        first = _squared_distance(values, values.mean(0), np.linalg.inv(np.cov(values.T)))
+        core = values[first <= np.quantile(first, PLAUSIBILITY_CORE_SHARE)]
+        mean, inverse = core.mean(0), np.linalg.inv(np.cov(core.T))
+        distance = _squared_distance(values, mean, inverse)
+        threshold = float(np.quantile(distance, PLAUSIBILITY_THRESHOLD_QUANTILE))
+
         per_krpm = np.hypot(x.InducedVertBreak, x.hb_arm) / (x.SpinRate / 1000.0)
         bounds = {}
-        flagged = np.zeros(len(x), dtype=bool)
         for name, col in [
+            ("release_speed", x.RelSpeed),
             ("ivb", x.InducedVertBreak),
             ("horizontal_break", x.hb_arm),
+            ("spin_rate", x.SpinRate),
             ("movement_per_krpm", per_krpm),
         ]:
             lo, hi = col.quantile([ENVELOPE_LOW, ENVELOPE_HIGH])
             bounds[name] = {"low": round(float(lo), 3), "high": round(float(hi), 3)}
-            flagged |= ((col < lo) | (col > hi)).to_numpy()
         out[pt] = {
             "n": len(x),
+            "features": ["release_speed", "ivb", "horizontal_break", "spin_rate"],
+            "mean": [round(float(v), 4) for v in mean],
+            "inverse_covariance": [[round(float(v), 8) for v in row] for row in inverse],
+            "threshold_squared_distance": round(threshold, 3),
+            "flagged_share_of_real_pitches": round(float((distance > threshold).mean()), 4),
             "bounds": bounds,
             "movement_per_krpm_percentiles": [
                 round(float(v), 3) for v in np.percentile(per_krpm, percentiles)
             ],
-            "flagged_share_of_real_pitches": round(float(flagged.mean()), 4),
         }
     return out
 
