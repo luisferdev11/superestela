@@ -24,6 +24,7 @@ shown.
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass, field
 
 import joblib
@@ -91,6 +92,20 @@ class BridgeModel:
         """Return Stuff+ and its standard error for every row of a canonical frame."""
         per_bag = 100.0 - 10.0 * (self.bag_xrv(frame) - self.scale.mean_xrv) / self.scale.sd_xrv
         return per_bag.mean(axis=0), per_bag.std(axis=0, ddof=1)
+
+    def draws(self, pitches: Sequence[PitchInput], density_indices: Sequence[float]) -> FloatArray:
+        """Stuff+ per bag (rows) and pitch (columns): the bags are the draws."""
+        frame = pd.DataFrame(
+            [
+                {
+                    **{name: getattr(p, name) for name in PHYSICAL},
+                    "pitch_type": p.pitch_type,
+                    "density_index": rho,
+                }
+                for p, rho in zip(pitches, density_indices, strict=True)
+            ]
+        )
+        return 100.0 - 10.0 * (self.bag_xrv(frame) - self.scale.mean_xrv) / self.scale.sd_xrv
 
     def score(
         self, pitch: PitchInput, arsenal: ArsenalContext | None, density_index: float

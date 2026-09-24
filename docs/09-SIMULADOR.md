@@ -365,8 +365,9 @@ escribe `analysis/outputs/simulator_validation.json` (unos 50 s).
 | **P2** | Sesión con alguien del staff vía ISAC, si se consigue | Es la pregunta literal de la entrevista | La usa sin ayuda y nombra una decisión que cambiaría |
 
 Las tres historias:
-- `pitcher_00069`: recta de 20.9″ → 15.7″ y Stuff+ 110.8 → 87.8.
-- `pitcher_00566`: aguanta la altitud con un slider al 45.2%.
+- `pitcher_00069` (2025): recta de 20.7″ → 15.0″ y Stuff+ 111.0 → 90.4 en el Radar. El simulador, desde su
+  forma a nivel del mar, da 113.7 ± 6.6 → 92.9 ± 4.1: −13.5 por la forma y −7.3 por el entorno.
+- `pitcher_00566` (2025): aguanta la altitud (Δ −4.0) con un slider al 41.9%.
 - Un changeup que pierde engaño porque su diferencial contra la recta se encoge.
 
 **Regla de muestra:**

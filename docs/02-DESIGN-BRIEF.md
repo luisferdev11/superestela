@@ -88,9 +88,11 @@ Arsenal (datos reales):
 
 | Pitch | Uso | Velo | IVB sea → HH | \|HB\| sea → HH | Spin | Stuff+ sea → HH | Whiff |
 |---|---|---|---|---|---|---|---|
-| Four-Seam | 66.5% | 92.0 | 20.9" → **15.7"** | 7.9" → 5.1" | 2341 | 110.8 → **87.8** | 19.8% |
-| Slider | 21.1% | 83.9 | 7.4" → 4.3" | 5.4" → 4.5" | 2269 | 104.6 → 99.8 | 27.7% |
-| Curveball | 11.5% | 71.8 | −16.7" → −12.2" | 11.2" → 7.3" | 2553 | 118.4 → 101.2 | 28.6% |
+| Four-Seam | 71.3% | 92.2 | 20.7" → **15.0"** | 8.2" → 5.2" | 2353 | 111.0 → **90.4** | 18.3% |
+| Slider | 18.5% | 84.1 | 7.1" → 2.7" | 5.4" → 4.4" | 2310 | 101.3 → 99.6 | 21.9% |
+| Curveball | 9.4% | 72.4 | −16.6" → −13.4" | 11.3" → 8.3" | 2640 | 117.1 → 102.9 | 43.8% |
+
+Temporada 2025, `mockup_data.json`. Una versión anterior de esta tabla (66.5% de uso, 110.8 → 87.8) era de antes de que las tarjetas fueran por temporada (ADR 0005) y no la respalda ninguna corrida vigente.
 
 Elementos: mapa de movimiento con ambos entornos superpuestos, tarjeta por pitch, y la **Ficha Técnica** desplegable — contribución por feature más la razón física en lenguaje llano.
 
@@ -150,7 +152,7 @@ Lo que el reto pide, literal: ingresar las características físicas de un pitch
 
 Deriva del contraste entre el arsenal actual y los perfiles resistentes de la cohorte.
 
-Ejemplo real del dataset: `pitcher_00566` sobrevive la altitud (Δ −5.2) apoyándose en un slider al **45.2% de uso**, mientras `pitcher_00069` colapsa (Δ −19.1) con un four-seam al **66.5%**. Ambos parten de Stuff+ 111.1 a nivel del mar.
+Ejemplo real del dataset, temporada 2025: `pitcher_00566` sobrevive la altitud (Δ −4.0) apoyándose en un slider al **41.9% de uso**, mientras `pitcher_00069` colapsa (Δ −17.2) con un four-seam al **71.3%**. Los dos parten de ~111 de Stuff+ a nivel del mar (111.3 y 110.5).
 
 ---
 

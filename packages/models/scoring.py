@@ -11,8 +11,12 @@ what CONVENTIONS.md section 8.2 requires of anything the product shows.
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Protocol
+
+import numpy as np
+import numpy.typing as npt
 
 from core.arsenal import ArsenalPitch
 
@@ -78,4 +82,15 @@ class Scorer(Protocol):
         self, pitch: PitchInput, arsenal: ArsenalContext | None, density_index: float
     ) -> Score:
         """Return the Stuff+ of one pitch in an environment of this density index."""
+        ...
+
+    def draws(
+        self, pitches: Sequence[PitchInput], density_indices: Sequence[float]
+    ) -> npt.NDArray[np.float64]:
+        """Return Stuff+ draws, one row per draw and one column per pitch.
+
+        Joint draws are what put a band on a DIFFERENCE: the altitude delta of
+        a pitch compares two scores that share every draw, so their errors are
+        correlated and adding the two se's would overstate the band.
+        """
         ...

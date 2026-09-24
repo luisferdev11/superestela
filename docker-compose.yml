@@ -14,6 +14,11 @@ services:
         condition: service_healthy
     volumes:
       - ./packages:/app/packages:ro
+      # The simulator reads the evidence and the fitted bridge. The model is
+      # never in the image: it is derived from licensed data (artifacts/ is
+      # gitignored), so it is mounted from the machine that fitted it.
+      - ./analysis/outputs:/app/analysis/outputs:ro
+      - ./artifacts:/app/artifacts:ro
 
   postgres:
     image: postgres:16-alpine
