@@ -15,9 +15,16 @@ separates the two cleanly. The drag coefficient
 
     drag_k = |a_drag| / v^2  ~  rho * Cd * A / (2m)
 
-is proportional to air density for a ball of fixed mass and cross-section, so
-the RATIO of drag_k between two environments is a relative density measurement
-with no free parameters.
+is proportional to air density for a ball of fixed mass and cross-section AND
+a fixed drag coefficient, so the RATIO of drag_k between two environments is a
+relative density measurement with no free parameters - to the extent Cd holds.
+
+It does not hold exactly. A baseball's Cd depends on Reynolds number, which
+falls with the air, so drag_k falls less than density does: the index reads
+0.858 at extreme altitude where textbook physics gives 0.77-0.80 against a
+humid sea-level park (core.atmosphere), while the Magnus ratio, 0.754, lands
+close to physics. The index is a continuous, per-game physical measurement of
+DRAG. docs/09 section 2.4 has the argument; D4 in docs/05 is the test.
 
 Everything here is a pure function of arrays. No I/O, no file paths, no
 competition data: this is the IP boundary described in docs/04 section 5.1.
