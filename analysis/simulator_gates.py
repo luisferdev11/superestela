@@ -427,6 +427,7 @@ def main():
             fh,
             indent=2,
             ensure_ascii=False,
+            allow_nan=False,
         )
         fh.write("\n")
 

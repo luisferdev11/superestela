@@ -1041,12 +1041,12 @@ def main():
         json.dump(R, f, indent=2, ensure_ascii=False)
         f.write("\n")
     with open(os.path.join(OUT, "simulator.json"), "w") as f:
-        json.dump(simulator, f, indent=2, ensure_ascii=False)
+        json.dump(simulator, f, indent=2, ensure_ascii=False, allow_nan=False)
         f.write("\n")
     # One pitcher-season per line: 370 lines instead of 60,000 in every diff.
     with open(os.path.join(OUT, "arsenals.json"), "w") as f:
         rows = [
-            f"  {json.dumps(k)}: {json.dumps(v, ensure_ascii=False)}"
+            f"  {json.dumps(k)}: {json.dumps(v, ensure_ascii=False, allow_nan=False)}"
             for k, v in sorted(arsenal_baselines.items())
         ]
         f.write("{\n" + ",\n".join(rows) + "\n}\n")

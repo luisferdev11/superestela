@@ -338,7 +338,9 @@ def arsenals(d, pitcher_seasons):
     The Radar cards carry |HB| and no release point or spin axis, so a coach
     who starts from a real pitcher would start from an incomplete pitch.
     """
-    x = d[d.set_index(["pitcher_anon_id", "year"]).index.isin(pitcher_seasons)]
+    # A pitch with a missing feature has no mean to start from; NaN is not JSON.
+    x = d.dropna(subset=TRANSLATION_REQUIRED)
+    x = x[x.set_index(["pitcher_anon_id", "year"]).index.isin(pitcher_seasons)]
     cols = {
         "RelSpeed": "release_speed",
         "InducedVertBreak": "ivb",
