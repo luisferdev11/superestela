@@ -1,22 +1,45 @@
 # SuperEstela — Plan hacia el 15 de octubre
 
-> Actualizado el **21 de septiembre de 2026**. Quedan **24 días**.
+> Actualizado el **23 de septiembre de 2026**. Quedan **22 días**.
 >
-> Reemplaza al plan de arranque original: el repositorio ya está en pie y la semana 1 se cumplió. Esto es lo que falta.
+> Este documento es la lista viva de pendientes. Cada uno lleva su **criterio de
+> hecho**, y los que una máquina puede verificar los verifica
+> `scripts/check_pendientes.py`. Un pendiente sin criterio es una intención.
+
+```bash
+uv run python scripts/check_pendientes.py       # el estado, ahora mismo
+```
 
 ---
 
-## 1. Dónde estamos
+## 1. Dónde estamos, al 23 de septiembre
 
 | | |
 |---|---|
-| Repositorio | `github.com/luisferdev11/superestela`, privado, CI verde, `main` protegida |
-| Contratos | Ejecutables y publicados. Llave `(pitcher_id, season)`, rol de dos valores |
-| Evidencia | `analysis/evidence.py` reproduce todo en ~3 min; 370 temporadas con score de 296 lanzadores |
-| Prototipo | 10 pantallas de app y 13 láminas de deck, con datos reales de la corrida actual |
-| Equipo de datos | Incorporado, primer PR fusionado (EDA del dataset) |
+| Repositorio | `main` protegida del todo: CI verde obligatorio, **1 revisión requerida**, `enforce_admins`, checks `python` y `web` |
+| Evidencia | `analysis/evidence.py` reproduce todo en ~3 min. 370 tarjetas, 296 lanzadores |
+| Contratos | Ejecutables, y desde el 21 de septiembre **validados en CI** (`contracts.yml`) |
+| Aplicación | `packages/web/` existe. **P1 (Radar) completa y a paridad con el prototipo** |
+| Pruebas | 58 en Python, 38 en la web |
+| Modelo final | **No existe.** Todo corre sobre `stuff_plus_v0`, `oof_r2 = 0.0028` |
 
-**Lo que todavía no existe:** el modelo final. Todo lo que se ve hoy corre sobre `stuff_plus_v0`, un baseline declarado como tal.
+### Lo que hay que mirar de frente
+
+**La ruta crítica no se ha movido.** Entre el 21 y el 23 de septiembre no hubo
+ni un commit en `main` ni una rama del equipo de datos. La última contribución
+de alguien distinto al autor de este documento sigue siendo el PR #6. A1–A3 es
+lo único que decide el resultado del reto y no ha empezado en este repositorio.
+
+**La cadencia de `docs/07` §1.6 no se está cumpliendo.** Lunes producto publica
+afirmaciones, miércoles datos entrega candidata, viernes se promueve o se
+rechaza por escrito. El miércoles 23 pasó sin entrega, y `contracts.yml` —que
+existe justo para recibirla— sigue sin haber validado una sola entrega real.
+
+**La revisión obligatoria puede volverse el cuello de botella.** Se encendió el
+21 de septiembre y es lo correcto, pero con `enforce_admins` activo nadie
+fusiona solo. Un PR que espera dos días no es gobierno, es parálisis. Si la
+cadencia de revisión no aparece esta semana, hay que decidirlo explícitamente
+en un ADR, no dejarlo pasar.
 
 ---
 
@@ -24,61 +47,176 @@
 
 | Semana | Fechas | Objetivo |
 |---|---|---|
-| **2** (en curso) | 21–24 sep | Modelo por componentes arrancando: A1 y A2 del backlog |
-| **3** | 25 sep – 1 oct | **Puerta A3**: ¿existe un xRV que correlacione con el run value observado? |
-| **4** | 2–8 oct | Integración: las pantallas sobre scores reales, borrador del documento |
+| **2** (termina) | 21–24 sep | P1 completa ✅ · `contracts.yml` ✅ · A1/A2 sin arrancar 🔴 |
+| **3** | 25 sep – 1 oct | **Puerta A3** · P4 Simulador · `model-eval.yml` |
+| **4** | 2–8 oct | Integración: pantallas sobre scores reales · borrador del documento |
 | **5** | 9–15 oct | Cerrar |
 
-### Dos fechas que no se mueven
+### Tres fechas que no se mueven
 
-- **12 de octubre · congelamiento de cifras.** A partir de ahí ningún número cambia. El documento y el deck se terminan contra cifras congeladas, no contra un modelo que sigue entrenando.
-- **13 de octubre · ensayo completo.** Los 10 minutos cronometrados, con la app en vivo. Lo que falle ahí se arregla el 14.
-
-### La ruta crítica, sin cambios
-
-**A1–A3: el puente Stuff+ → carreras.** Todo lo demás tiene holgura; esto no. La lámina 06 del deck ahora **declara el hueco explícitamente** (el whiff predice las carreras del año siguiente con −0.12), así que si el puente no cierra, el deck sigue siendo coherente: dijimos que faltaba.
-
-**Disparador:** si el 1 de octubre no hay xRV correlacionado, se recorta alcance de producto, no de validación.
+- **1 de octubre · puerta A3.** ¿Existe un xRV que correlacione con el run value
+  observado? **Disparador:** si no lo hay, se recorta alcance de producto, no de
+  validación.
+- **12 de octubre · congelamiento de cifras.** A partir de ahí ningún número
+  cambia.
+- **13 de octubre · ensayo completo**, los 10 minutos cronometrados con la app
+  en vivo.
 
 ---
 
-## 3. Qué falta, en orden
+## 3. Pendientes
 
-1. **El modelo por componentes** (datos). A1, A2, A3 del backlog de `docs/05`. Es lo único que está en la ruta crítica.
-2. **Scaffold de Next.js** (producto). Las pantallas existen como diseño; falta la app. `packages/web/` está vacío y el job `web` del CI ya está esperando.
-3. **`contracts.yml` y `model-eval.yml`** (CI). Semanas 2 y 3 de la progresión de `docs/07` §4.
-4. **El documento técnico.** Se escribe contra cifras congeladas a partir del 12.
+Cada uno dice **qué es**, **por qué importa** y **cuándo está hecho**. El
+criterio de hecho es lo que verifica `scripts/check_pendientes.py`.
+
+### 3.1 Ruta crítica — equipo de datos
+
+- [ ] **A1 · Modelos por componente agregados a xRV.** ¿Superan al ajuste
+      directo del run value? La evidencia previa dice que sí: R² 0.003 directo
+      contra AUC 0.64 por componente (`analysis/outputs/evidence.json`,
+      `target_learnability`).
+      **Hecho cuando:** existe `packages/models/targets/` y una corrida de
+      MLflow con `question=A1`.
+
+- [ ] **A2 · Pesos de run value.** ¿Linear weights clásicos, o estimados sobre
+      LMB?
+      **Hecho cuando:** existe `packages/models/train.py` y su corrida.
+
+- [ ] **A3 · El puente.** ¿El xRV construido correlaciona con el run value
+      observado a nivel de lanzador-temporada? **Hoy r = −0.08.**
+      **Hecho cuando:** existe `packages/models/evaluate.py` y una corrida con
+      la métrica `xrv_vs_observed_r` registrada.
+
+> Los tres están en `docs/05` §3, Track A. Es el trabajo de mayor valor del
+> proyecto y el único sin holgura.
+
+### 3.2 Producto — las pantallas que faltan
+
+El prototipo tiene el HTML, los tokens y las cifras de las ocho:
+**https://claude.ai/artifact/AysYSEs8pq1Aq4baGMjpAD**
+
+> **Antes de escribir código de una pantalla, leer su `.dc.html` del artifact y
+> enumerar sus elementos.** La P1 se construyó dos veces por no hacerlo: primero
+> la tabla sola, y después el rail, los filtros, dos columnas y la leyenda que
+> el prototipo ya tenía.
+
+- [x] **P1 · Radar de Fichajes** — completa, a paridad con el prototipo.
+- [ ] **P4 · Simulador de Pitch.** `docs/00` §5 lo llama **«entregable 4
+      obligatorio»**: es lo único del carril de producto que el reglamento exige
+      por nombre. Va **antes que cualquier otra pantalla**.
+      Construirlo sobre `packages/core/translate.py` —`translate()` y
+      `break_scaling_factor()`, física medida con error declarado— y **no** sobre
+      `stuff_plus_v0`, que no está exportado. Así no depende de que A3 cierre.
+      Restricción del brief: la salida va **lado a lado, Harp Helú contra nivel
+      del mar**, y el spin se muestra pero no domina la jerarquía visual.
+      **Hecho cuando:** `packages/web/src/app/simulador/page.tsx` existe y sus
+      tests pasan.
+
+- [ ] **P3 · Traductor de Altitud**, el diferenciador (`docs/02` §2).
+      Sus datos ya están en `evidence.json` (`translator`) y su física en
+      `packages/core/translate.py`. Precisión a comunicar honestamente:
+      **±0.85″ a ±1.45″**.
+      **Hecho cuando:** `packages/web/src/app/traductor/page.tsx` existe.
+
+- [ ] **P2 · Ficha de Pitcher.** Es a donde apunta el Radar.
+      **Hecho cuando:** `packages/web/src/app/pitchers/[pitcherId]/page.tsx`
+      existe.
+
+- [ ] **P5 a P8** — Plan de Desarrollo, Tablero de Despliegue, Proyección y
+      Plantel. Degradan a mockup de alta fidelidad si falta tiempo
+      (`docs/00` §10).
+
+> Al aterrizar cada pantalla, cambiar su `null` por la ruta en
+> `packages/web/src/domain/navigation.ts`: el rail se entera solo.
+
+### 3.3 Ingeniería
+
+- [ ] **`report/build.py`.** `docs/05` §4.3: ninguna tabla ni figura del
+      documento se hace a mano, todas se generan desde MLflow, y **la matriz de
+      trazabilidad falla si una afirmación queda sin corrida**. El directorio
+      `report/` ni siquiera existe.
+      **Tiene que existir antes del 12 de octubre, no el 12**, porque el
+      documento se escribe contra cifras congeladas a partir de esa fecha.
+      **Hecho cuando:** `report/build.py` existe y corre sin error.
+
+- [ ] **`report/compare.py` y `model-eval.yml`.** Al tocar código de modelo,
+      evalúa en holdout y publica la comparación contra `main` en el PR.
+      **Bloqueado** hasta que exista `packages/models/evaluate.py`.
+      **Hecho cuando:** `.github/workflows/model-eval.yml` existe.
+
+- [ ] **Los tres endpoints de la API.** `CONVENTIONS.md` §5.2 los diseñó y hoy
+      solo existe `/health`:
+      `GET /api/v1/pitchers/{pitcherId}/scores`, `POST /api/v1/simulate`,
+      `POST /api/v1/translate`.
+      **`/translate` se puede hacer hoy**, sin el modelo: `packages/core/translate.py`
+      es física pura. Es la ruta de menor riesgo para tener un endpoint real, y
+      `docs/03` §10 lo pide explícito para el deck.
+      **Hecho cuando:** los tres responden.
+
+- [ ] **La fuente de datos de la web pasa a la API** (semana 4). Está diseñado
+      para ser **un archivo nuevo en `packages/web/src/sources/` y ningún
+      componente tocado**.
+      **Hecho cuando:** existe `packages/web/src/sources/apiSource.ts`.
+
+- [ ] **Accesibilidad verificada.** `docs/07` §5.3 dice «axe-core en Playwright,
+      corriendo en CI, **fallando el build**. Verificada, no declarada» — pero
+      §4.4 lo pone en «si sobra tiempo». **Resolver la contradicción y escribirlo.**
+      **Hecho cuando:** `.github/workflows/a11y.yml` existe, o un ADR dice por
+      qué no.
+
+### 3.4 Entregables que no son código
+
+- [ ] **Documento técnico**, 6–10 páginas. Se escribe contra cifras congeladas a
+      partir del 12 de octubre, y se **selecciona**, no se vuelca (`docs/05` §5).
+- [ ] **Ficha ejecutiva de 1 página** (`docs/02` §5), con una recomendación
+      explícita: `Fichar` / `Fichar con reservas` / `No fichar`. No existe.
+- [ ] **Entregable 2 del reto, «Perfil Físico Ideal».** Aparece **una sola vez
+      en todo el repositorio**, en el mapeo de `docs/00` §9. **Decidido:** se
+      cubre como **sección del documento técnico más lámina del deck**, no como
+      pantalla — sale de las features que sobreviven la altitud (corr |IVB| vs
+      pérdida = **+0.531**, `docs/01` §8.5), que es un hallazgo y no una
+      herramienta. Falta escribirlo.
+- [ ] **Decision Log auditable.** `docs/00` §9 lo lista dentro del 25% de
+      Aplicabilidad real. No existe ni en código ni en plan.
+- [ ] **Copy de cumplimiento en la app.** `docs/03` §9: la prohibición de
+      apuestas va **declarada en el producto, no escondida en un pie de página**.
+- [ ] Buscar si «SuperEstela» ya existe como marca en software o deporte.
+- [ ] Confirmar el hex del rojo y el teal contra el manual de marca del club.
+      Hoy son `#D8102F` y `#12726E`, transcritos del prototipo. Están en
+      `packages/web/src/design/tokens.json` y en ningún otro sitio: confirmarlos
+      es cambiar dos líneas y correr `pnpm tokens`.
+- [ ] Leer el NDA de finalistas **antes** de firmarlo (`docs/04` §5.3).
+- [ ] Decidir quién presenta los 10 minutos y quién responde la parte técnica.
+- [x] ~~Subir las revisiones requeridas de `main` a 1~~ — hecho el 21 de
+      septiembre ([ADR 0006](adr/0006-gobierno-con-el-equipo-dentro.md)).
+- [x] ~~Confirmar la fecha de entrega con ISAC~~ — 15 de octubre.
 
 ---
 
 ## 4. Anotado, y explícitamente no prioritario
 
-Cosas que valen la pena y que **solo se hacen si sobra tiempo**. Están aquí para que no se pierdan, no para que presionen.
+Cosas que valen la pena y que **solo se hacen si sobra tiempo**.
 
 ### Mapa de diseño de lanzamiento
 
-El uso de Stuff+ que más valoran las organizaciones: no *"¿qué pasa si muevo esto?"* sino *"¿hacia dónde muevo?"* — un contorno sobre el plano de break que muestra la dirección en que sube el score.
+El uso de Stuff+ que más valoran las organizaciones: no *«¿qué pasa si muevo
+esto?»* sino *«¿hacia dónde muevo?»* — un contorno sobre el plano de break.
 
-**Por qué espera:** el contorno saldría del `stuff_plus_v0`, cuyo R² no sostiene una recomendación direccional. Dibujar una flecha encima prometería una precisión que no tenemos. **Entra cuando exista el modelo por componentes**, y entonces es una capa sobre el Simulador, no una pantalla nueva.
+**Por qué espera:** saldría del `stuff_plus_v0`, cuyo R² no sostiene una
+recomendación direccional. **Entra cuando exista el modelo por componentes**, y
+entonces es una capa sobre el Simulador, no una pantalla nueva.
 
 ### La prueba que cierra el sesgo de slider
 
-`docs/01` §8.5 documenta que nuestro v0 premia sliders y curvas, y que lo que realmente sobrevive la altitud es **el poco ride** (corr |IVB| vs pérdida = **+0.531**), no la categoría de lanzamiento.
+Correr el baseline **sin las variables de tipo de lanzamiento** y ver si el
+efecto de altitud sobrevive. Media tarde del equipo de datos.
 
-La prueba que lo cerraría del todo: **correr el baseline sin las variables de tipo de lanzamiento** y ver si el efecto de altitud sobrevive sin que el modelo sepa qué se lanzó. Media tarde del equipo de datos.
-
-**Por qué espera:** la respuesta ya está documentada y lista si preguntan en la presentación. Convertirla en experimento la haría más fuerte, pero no es lo que decide el resultado del reto.
+**Por qué espera:** la respuesta ya está documentada (`docs/01` §8.5) y lista si
+preguntan. Convertirla en experimento la haría más fuerte, no decide el reto.
 
 ### Ángulo de brazo
 
-Probado y descartado, para que nadie lo reabra: el proxy de slot correlaciona −0.221 con la pérdida de IVB, pero enteramente por su correlación con el IVB mismo (+0.388). Controlando por IVB, el coeficiente es −0.0014 y el R² gana 0.000. **No aporta nada que las features de release y el IVB no tengan ya.**
-
----
-
-## 5. Pendientes que no son de código
-
-- [ ] **Buscar si "SuperEstela" ya existe** como marca en software o deporte.
-- [ ] Confirmar el hex exacto del rojo y el teal contra el manual de marca del club.
-- [ ] Leer el NDA de finalistas **antes de firmarlo**, en la parte de propiedad intelectual (`docs/04` §5.3).
-- [ ] Decidir quién presenta los 10 minutos y quién responde la parte técnica.
-- [x] ~~Subir las revisiones requeridas de `main` a 1~~ — hecho el 21 de septiembre, el día que entró el equipo ([ADR 0006](adr/0006-gobierno-con-el-equipo-dentro.md)).
+Probado y descartado, para que nadie lo reabra: el proxy de slot correlaciona
+−0.221 con la pérdida de IVB, pero enteramente por su correlación con el IVB
+mismo (+0.388). Controlando por IVB, el coeficiente es −0.0014 y el R² gana
+0.000.

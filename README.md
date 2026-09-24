@@ -39,6 +39,10 @@ uv run pytest                      # pruebas
 uv run ruff check . && uv run mypy packages/
 uv run python analysis/evidence.py # regenera toda la evidencia, ~3 min
 
+uv run python scripts/check_pendientes.py   # qué falta para la entrega
+
+cd packages/web && pnpm install && pnpm dev # la app, en :3000/radar
+
 docker compose up -d               # api :8000, MLflow :5000, Postgres :5433
 curl localhost:8000/health
 ```
@@ -63,7 +67,7 @@ Diez pantallas de aplicación y trece láminas de deck, con datos reales de `ana
 | `packages/contracts/` | Los esquemas ejecutables entre datos y producto. **Empieza por aquí** |
 | `packages/models/` | Entrenamiento. Toca el dataset |
 | `packages/api/` | FastAPI: sirve scores y el simulador |
-| `packages/web/` | Next.js |
+| `packages/web/` | Next.js. La P1 está completa — [su README](packages/web/README.md) tiene lo que cuesta redescubrir |
 | `analysis/evidence.py` | El baseline v0. Reproduce cada cifra citada en los documentos |
 | `docs/` | Producto, evidencia, diseño, negocio, protocolo científico, ingeniería |
 
@@ -104,5 +108,7 @@ Quién revisa qué lo dice [`.github/CODEOWNERS`](.github/CODEOWNERS): `models/`
 Sincronización lunes, miércoles y viernes. Los contratos con el equipo de
 datos y su cadencia están en [`docs/07`](docs/07-INGENIERIA-Y-EQUIPO.md) §1.
 
-El calendario hacia la entrega del **15 de octubre** está en
-[`docs/08`](docs/08-PLAN-DE-ARRANQUE.md).
+El calendario hacia la entrega del **15 de octubre**, y la lista viva de
+pendientes con su criterio de hecho, están en
+[`docs/08`](docs/08-PLAN-DE-ARRANQUE.md). Lo que una máquina puede verificar lo
+verifica `scripts/check_pendientes.py`.
