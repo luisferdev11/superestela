@@ -118,6 +118,9 @@ El prototipo tiene el HTML, los tokens y las cifras de las ocho:
       tests pasan, y `analysis/outputs/simulator_validation.json` existe con el
       resultado de cada compuerta.
 
+> **El plan detallado de las pantallas que faltan** —tareas, alcance, datos, código a reutilizar y
+> criterios de aceptación— está en [`docs/10`](10-PANTALLAS-RESTANTES.md). Empezar por ahí.
+
 - [ ] **P3 · Traductor de Altitud**, el diferenciador (`docs/02` §2).
       Sus datos ya están en `evidence.json` (`translator`) y su física en
       `packages/core/translate.py`. Precisión a comunicar honestamente:

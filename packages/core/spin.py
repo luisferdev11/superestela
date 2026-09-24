@@ -9,8 +9,11 @@ that soft is not shown.
 What is shown is empirical and assumption-free. Movement per 1,000 rpm, as a
 percentile within the pitch type, says whether two pitches with the same spin
 are the same pitch. And a Mahalanobis distance over velocity, IVB, HB and spin
-flags a combination nobody has thrown: bounds checked one quantity at a time
-let 22 in of ride on 1,500 rpm through, because each value alone is normal.
+flags a combination nobody has thrown. Bounds checked one quantity at a time
+let 22 in of ride on 1,500 rpm through: the spin tail holds tracking errors
+that drag its low bound to 1,178 rpm. A covariance fitted on the central 95%
+does not inflate that way, and it also catches shapes where every value is
+within its own bound but the combination is not (97 mph, 24 in, 0 in, 1,900).
 The means, covariance and threshold are data, so the caller passes them in;
 this module only does the arithmetic.
 

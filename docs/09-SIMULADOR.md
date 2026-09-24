@@ -203,10 +203,15 @@ $$
     de tracking y pitches mal etiquetados que inflarían la covarianza.
   - El umbral es el percentil 98.5 de los pitches reales, así que la tasa de falsos positivos queda
     en 1.5% por construcción.
-  - **Por qué no límites por variable**: la primera versión revisaba cada magnitud por separado, y
-    22″ de ride con 1,500 rpm pasaba, porque cada valor solo era normal. Con Mahalanobis da d² = 40.9
-    contra un umbral de 28.6 para la recta. Una recta élite real (24″ a 2,400 rpm) da 5.8 y pasa,
-    como debe[^shape].
+  - **Por qué no límites por variable**: la primera versión revisaba IVB, HB y movimiento por rpm por
+    separado, y 22″ de ride con 1,500 rpm pasaba. No revisaba el spin solo, y aunque lo hubiera hecho,
+    la cola baja del spin (errores de tracking) pone su percentil 0.25 en 1,178 rpm, así que 1,500
+    también habría pasado, con un z real de −5.7. Con Mahalanobis da d² = 41.0 contra un umbral de 28.6
+    para la recta. **Lo que más mejoró fue el recorte robusto de la covarianza; las correlaciones
+    entre estas cuatro magnitudes son débiles** (la mayor, velocidad–spin, es 0.29).
+  - El caso donde cada valor sí pasa sus límites y solo la combinación falla: 97 mph, 24″ de IVB, 0″
+    de HB y 1,900 rpm (z de +2.1, +2.4, −2.7 y −2.9) da d² = 35.4. Una recta élite real (24″ a
+    2,400 rpm) da 5.9 y pasa, como debe[^shape].
   - Los límites por variable se conservan solo para decir **cuál** magnitud es rara.
 
 ### 3.5 VAA y velocidad al plato · 🟢 (sondeo), se formaliza en `core/trajectory.py`

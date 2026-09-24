@@ -72,8 +72,8 @@ def test_a_league_average_fastball_is_plausible():
 
 
 def test_huge_ride_on_little_spin_is_flagged_and_explained():
-    # The example docs/09 section 2.1 uses: each value alone is ordinary enough
-    # to pass a per-axis bound on movement per rpm, the combination is not.
+    # The example of docs/09 section 3.4: it passes a per-axis bound on movement
+    # per rpm, and the spin, far from the mean, names what is unusual.
     out = assess_plausibility(91.6, 22.0, 9.0, 1500.0, envelope=ENVELOPE)
     assert not out.is_plausible
     assert "spin_rate" in out.unusual
