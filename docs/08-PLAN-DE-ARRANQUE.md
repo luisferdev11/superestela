@@ -101,21 +101,32 @@ El prototipo tiene el HTML, los tokens y las cifras de las ocho:
 > el prototipo ya tenía.
 
 - [x] **P1 · Radar de Fichajes** — completa, a paridad con el prototipo.
-- [ ] **P4 · Simulador de Pitch.** `docs/00` §5 lo llama **«entregable 4
+- [x] **P4 · Simulador de Pitch** — construido el 23 de septiembre, en revisión en la cadena #22–#31.
+      Quedan la sesión con staff vía ISAC (P2) y el cronometraje del ensayo (P1).
+      `docs/00` §5 lo llama **«entregable 4
       obligatorio»**: es lo único del carril de producto que el reglamento exige
       por nombre. Va **antes que cualquier otra pantalla**.
-      Construirlo sobre `packages/core/translate.py` —`translate()` y
-      `break_scaling_factor()`, física medida con error declarado— y **no** sobre
-      `stuff_plus_v0`, que no está exportado. Así no depende de que A3 cierre.
-      Restricción del brief: la salida va **lado a lado, Harp Helú contra nivel
-      del mar**, y el spin se muestra pero no domina la jerarquía visual.
+      Diseño, fórmulas y validación en [`docs/09`](09-SIMULADOR.md): dos capas
+      —la física de `packages/core/translate.py`, que no depende de A3, y un
+      **contrato de scorer** que hoy llena v0 como puente, con `se`, detrás de
+      compuertas ([ADR 0007](adr/0007-contrato-del-scorer-y-escala.md))—. Entra
+      desde un lanzador real, muestra los diferenciales contra su recta en los dos
+      entornos, e incluye el **mapa de los pitches más y menos efectivos** que el
+      reto pide y que ningún doc cubría.
+      Se entrega en seis PRs encadenados, en el orden de `docs/09` §6.
       **Hecho cuando:** `packages/web/src/app/simulador/page.tsx` existe y sus
-      tests pasan.
+      tests pasan, y `analysis/outputs/simulator_validation.json` existe con el
+      resultado de cada compuerta.
+
+> **El plan detallado de las pantallas que faltan** —tareas, alcance, datos, código a reutilizar y
+> criterios de aceptación— está en [`docs/10`](10-PANTALLAS-RESTANTES.md). Empezar por ahí.
 
 - [ ] **P3 · Traductor de Altitud**, el diferenciador (`docs/02` §2).
       Sus datos ya están en `evidence.json` (`translator`) y su física en
       `packages/core/translate.py`. Precisión a comunicar honestamente:
-      **±0.85″ a ±1.45″**.
+      **±0.90″ a ±1.85″**, la banda física sobre el break con signo que usa
+      `translate.py` (`docs/09` §3.2; el empírico sobre |HB| da ±0.85″ a ±1.45″, y
+      subestimaba slider y curva).
       **Hecho cuando:** `packages/web/src/app/traductor/page.tsx` existe.
 
 - [ ] **P2 · Ficha de Pitcher.** Es a donde apunta el Radar.
@@ -205,6 +216,11 @@ esto?»* sino *«¿hacia dónde muevo?»* — un contorno sobre el plano de brea
 **Por qué espera:** saldría del `stuff_plus_v0`, cuyo R² no sostiene una
 recomendación direccional. **Entra cuando exista el modelo por componentes**, y
 entonces es una capa sobre el Simulador, no una pantalla nueva.
+
+**Lo que ya no espera:** el mapa de efectividad **observada** —whiff por zona de
+forma, en cada entorno— entra con la P4, porque el reto lo pide y no depende del
+modelo (`docs/09` §3.10). Lo que sigue esperando es el contorno *calculado por el
+modelo*.
 
 ### La prueba que cierra el sesgo de slider
 

@@ -979,6 +979,13 @@
           "improvement_vs_naive": 3.3
         }
       }
+    },
+    "skipped": {
+      "Cutter": {
+        "n_pitchers_qualifying": 25,
+        "min_pitchers": 40,
+        "min_pitches_per_environment": 40
+      }
     }
   },
   "stuff_plus_v0": {

@@ -22,6 +22,10 @@ export const formatSigned = (value: number, digits = 1): string =>
 export const formatMetric = (metric: Metric, digits = 1): string =>
   `${formatNumber(metric.value, digits)} ± ${formatNumber(metric.se, digits)}`
 
+/** Lo mismo para una diferencia: con signo, y con su banda. */
+export const formatSignedMetric = (metric: Metric, digits = 1): string =>
+  `${formatSigned(metric.value, digits)} ± ${formatNumber(metric.se, digits)}`
+
 /**
  * Debajo del umbral, en cualquiera de los dos entornos, no hay cifra: hay
  * "muestra insuficiente". `README`, regla 4.

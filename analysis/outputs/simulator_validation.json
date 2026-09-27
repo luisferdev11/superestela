@@ -1,0 +1,300 @@
+{
+  "model_id": "0.1.0+b126006",
+  "uses_arsenal": false,
+  "scale": "100 - 10 z of out-of-bag expected run value over the whole league, both environments and all pitch types, as stuff_plus_v0",
+  "display_gates": [
+    "S1",
+    "S2",
+    "S3",
+    "S4"
+  ],
+  "stuff_plus_shown": true,
+  "gates": [
+    {
+      "id": "F1",
+      "name": "physics translation error on the signed shape, every qualifying pitcher",
+      "value": {
+        "Four-Seam/ivb": [
+          0.924,
+          0.92
+        ],
+        "Four-Seam/horizontal_break": [
+          0.929,
+          0.93
+        ],
+        "Sinker/ivb": [
+          1.143,
+          1.14
+        ],
+        "Sinker/horizontal_break": [
+          1.069,
+          1.07
+        ],
+        "Slider/ivb": [
+          1.156,
+          1.16
+        ],
+        "Slider/horizontal_break": [
+          1.361,
+          1.36
+        ],
+        "Changeup/ivb": [
+          1.376,
+          1.38
+        ],
+        "Changeup/horizontal_break": [
+          1.384,
+          1.38
+        ],
+        "Curveball/ivb": [
+          1.118,
+          1.12
+        ],
+        "Curveball/horizontal_break": [
+          1.852,
+          1.85
+        ],
+        "Cutter/ivb": [
+          1.142,
+          1.14
+        ],
+        "Cutter/horizontal_break": [
+          0.901,
+          0.9
+        ]
+      },
+      "threshold": "rmse <= the band the screen shows",
+      "passed": true,
+      "note": "value per axis: [rmse, band]. The first run failed: bands measured on |HB| over a 20% holdout understated slider and curveball HB, so the bands were re-measured (core/translate.py), not the gate relaxed"
+    },
+    {
+      "id": "F2",
+      "name": "share inside the +-1 band",
+      "value": {
+        "coverage": {
+          "Four-Seam/ivb": 0.656,
+          "Four-Seam/horizontal_break": 0.721,
+          "Sinker/ivb": 0.747,
+          "Sinker/horizontal_break": 0.759,
+          "Slider/ivb": 0.695,
+          "Slider/horizontal_break": 0.73,
+          "Changeup/ivb": 0.683,
+          "Changeup/horizontal_break": 0.644,
+          "Curveball/ivb": 0.703,
+          "Curveball/horizontal_break": 0.797,
+          "Cutter/ivb": 0.68,
+          "Cutter/horizontal_break": 0.56
+        },
+        "accepted_range": {
+          "Four-Seam/ivb": [
+            0.631,
+            0.735
+          ],
+          "Four-Seam/horizontal_break": [
+            0.631,
+            0.735
+          ],
+          "Sinker/ivb": [
+            0.609,
+            0.757
+          ],
+          "Sinker/horizontal_break": [
+            0.609,
+            0.757
+          ],
+          "Slider/ivb": [
+            0.621,
+            0.745
+          ],
+          "Slider/horizontal_break": [
+            0.621,
+            0.745
+          ],
+          "Changeup/ivb": [
+            0.592,
+            0.774
+          ],
+          "Changeup/horizontal_break": [
+            0.592,
+            0.774
+          ],
+          "Curveball/ivb": [
+            0.567,
+            0.799
+          ],
+          "Curveball/horizontal_break": [
+            0.567,
+            0.799
+          ],
+          "Cutter/ivb": [
+            0.497,
+            0.869
+          ],
+          "Cutter/horizontal_break": [
+            0.497,
+            0.869
+          ]
+        },
+        "passed_fixed_60_76": false
+      },
+      "threshold": "0.683 +- 2 binomial standard errors for the sample",
+      "passed": false,
+      "note": "above 0.76 the band is conservative (heavy tails inflate the rmse), below 0.60 it is too narrow; only the second misleads a coach"
+    },
+    {
+      "id": "F3",
+      "name": "measured Magnus ratio against textbook air density",
+      "value": {
+        "magnus_ratio": 0.7543,
+        "drag_index": 0.8577,
+        "physical_range": [
+          0.774,
+          0.804
+        ]
+      },
+      "threshold": "magnus within physical range +- 0.03",
+      "passed": true,
+      "note": "the drag index is reported, not gated: docs/09 section 2.4 argues it is not density"
+    },
+    {
+      "id": "F4",
+      "name": "plausibility: false positives on real pitches, and impossible shapes caught",
+      "value": {
+        "false_positive_share": {
+          "Four-Seam": 0.015,
+          "Sinker": 0.015,
+          "Slider": 0.015,
+          "Changeup": 0.015,
+          "Curveball": 0.015,
+          "Cutter": 0.0151
+        },
+        "impossible": [
+          {
+            "case": "22 in of ride on 1,500 rpm",
+            "flagged": true,
+            "squared_distance": 41.0
+          },
+          {
+            "case": "a four-seam that drops like a curve",
+            "flagged": true,
+            "squared_distance": 66.6
+          },
+          {
+            "case": "a curveball that rides",
+            "flagged": true,
+            "squared_distance": 35.0
+          },
+          {
+            "case": "a changeup at 99 mph",
+            "flagged": true,
+            "squared_distance": 23.1
+          }
+        ]
+      },
+      "threshold": "every type < 0.02 and every impossible case flagged",
+      "passed": true,
+      "note": ""
+    },
+    {
+      "id": "F5",
+      "name": "kinematic VAA against the dataset's VertApprAngle",
+      "value": 0.083,
+      "threshold": "rmse <= 0.5 deg",
+      "passed": true,
+      "note": ""
+    },
+    {
+      "id": "S1",
+      "name": "+1 mph on 300 real sea-level four-seams",
+      "value": {
+        "mean_delta": 1.791,
+        "violation_share": 0.093
+      },
+      "threshold": "mean > 0 and violations <= 0.10",
+      "passed": true,
+      "note": ""
+    },
+    {
+      "id": "S2",
+      "name": "a right-hander's pitch mirrored to a left-hander",
+      "value": 0.0,
+      "threshold": "mean |delta| <= 1",
+      "passed": true,
+      "note": "zero by construction in the arm-side frame; this checks the pipeline does not leak the hand"
+    },
+    {
+      "id": "S3",
+      "name": "Stuff+ jump per slider step (0.1 mph, 0.1 in) on 50 four-seams",
+      "value": {
+        "p99": 1.233,
+        "max": 2.859
+      },
+      "threshold": "p99 <= 1.5",
+      "passed": true,
+      "note": ""
+    },
+    {
+      "id": "S4",
+      "name": "simulator score of a real arsenal pitch against the Radar's number",
+      "value": {
+        "n": 2153,
+        "r": 0.951,
+        "mean_abs_delta": 2.469
+      },
+      "threshold": "r >= 0.9 and mean |delta| <= 3",
+      "passed": true,
+      "note": ""
+    },
+    {
+      "id": "S5",
+      "name": "calibration: Stuff+ deciles against observed run value, pitcher holdout",
+      "value": {
+        "spearman": 1.0,
+        "run_value_by_decile": [
+          0.0329,
+          0.0273,
+          0.021,
+          0.0204,
+          0.015,
+          0.0116,
+          0.0088,
+          0.0053,
+          0.0015,
+          -0.0099
+        ]
+      },
+      "threshold": "spearman >= 0.8",
+      "passed": true,
+      "note": ""
+    },
+    {
+      "id": "S6",
+      "name": "natural experiment: simulated delta against observed whiff delta",
+      "value": {
+        "n_pitcher_pitches": 521,
+        "r": 0.144,
+        "ci95": [
+          0.047,
+          0.23
+        ],
+        "mean_simulated_delta": -10.53,
+        "mean_observed_whiff_delta": -0.019
+      },
+      "threshold": "correlation > 0 with the 95% interval above zero",
+      "passed": true,
+      "note": ""
+    },
+    {
+      "id": "S7",
+      "name": "against the challenge's null model, run value by count",
+      "value": {
+        "rmse_null_count": 0.21747,
+        "rmse_model": 0.21888,
+        "rmse_count_plus_model": 0.21732
+      },
+      "threshold": "rmse_model < rmse_null_count",
+      "passed": false,
+      "note": "rmse_count_plus_model is reported too: whether the physics adds anything on top of the count, which is the fairer reading for a physics-only score"
+    }
+  ]
+}

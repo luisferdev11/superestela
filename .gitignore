@@ -34,6 +34,10 @@ node_modules/
 mlruns/
 mlflow.db
 
+# Fitted models. Derived from the licensed dataset, so they stay out of git
+# like the data does (CONVENTIONS.md section 8 rule 4).
+artifacts/
+
 # OS / editor
 .DS_Store
 *.swp
