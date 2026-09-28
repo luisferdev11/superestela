@@ -1,4 +1,4 @@
-import type { ArsenalEntry, PitcherSeason, SeasonEntry } from '@/domain/types'
+import type { ArsenalEntry, Metric, PitcherSeason, SeasonEntry } from '@/domain/types'
 import type { PitcherCardRaw } from './schema'
 import type { z } from 'zod'
 import type { arsenalEntrySchema, densityLevelSchema, seasonEntrySchema } from './schema'
@@ -16,6 +16,10 @@ import type { DensityLevel } from '@/domain/density'
  *     es un numero con banda enorme, es la ausencia de numero.
  */
 
+/** Un score sin su banda no sale: si falta cualquiera de los dos, no hay score. */
+const toMetric = (value: number | null, se: number | null): Metric | null =>
+  value === null || se === null ? null : { value, se }
+
 const toArsenalEntry = (raw: z.infer<typeof arsenalEntrySchema>): ArsenalEntry => ({
   pitch: raw.pitch,
   usagePct: raw.usage_pct,
@@ -27,8 +31,8 @@ const toArsenalEntry = (raw: z.infer<typeof arsenalEntrySchema>): ArsenalEntry =
   hbSea: raw.hb_sea,
   spin: raw.spin,
   extension: raw.extension,
-  stuffPlusHh: raw.stuff_plus_hh,
-  stuffPlusSea: raw.stuff_plus_sea,
+  stuffPlusHh: toMetric(raw.stuff_plus_hh, raw.stuff_plus_hh_ci95),
+  stuffPlusSea: toMetric(raw.stuff_plus_sea, raw.stuff_plus_sea_ci95),
   whiffPerSwing: raw.whiff_per_swing,
 })
 

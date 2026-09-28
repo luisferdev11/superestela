@@ -26,8 +26,9 @@ export type ArsenalEntry = {
   readonly hbSea: number | null
   readonly spin: number | null
   readonly extension: number | null
-  readonly stuffPlusHh: number | null
-  readonly stuffPlusSea: number | null
+  /** Con su banda, como el del lanzador: la Ficha lo muestra por pitch. */
+  readonly stuffPlusHh: Metric | null
+  readonly stuffPlusSea: Metric | null
   readonly whiffPerSwing: number | null
 }
 

@@ -30,6 +30,16 @@ describe('el artefacto de analisis cumple el contrato', () => {
     }
   })
 
+  it('todo Stuff+ por pitch llega con su banda, y la banda sin score tampoco', async () => {
+    const parsed = mockupDataSchema.parse(await readMockup())
+    for (const card of parsed.pitchers) {
+      for (const entry of card.arsenal) {
+        expect(entry.stuff_plus_hh_ci95 === null).toBe(entry.stuff_plus_hh === null)
+        expect(entry.stuff_plus_sea_ci95 === null).toBe(entry.stuff_plus_sea === null)
+      }
+    }
+  })
+
   it('ninguna tarjeta baja del umbral de muestra en ningun entorno', async () => {
     const parsed = mockupDataSchema.parse(await readMockup())
     for (const card of parsed.pitchers) {

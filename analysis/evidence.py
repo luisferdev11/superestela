@@ -733,6 +733,11 @@ def stuff_plus_v0(df, seed=7):
 # --------------------------------------------------------------------------
 # 7. Mockup data: real pitcher rows for the prototype
 # --------------------------------------------------------------------------
+def _ci95(scores):
+    """95% half-width on a mean Stuff+: 1.96 standard errors of the pitches' scores."""
+    return 1.96 * float(scores.std()) / np.sqrt(len(scores))
+
+
 def mockup(d, df_phys, roles=None, entries=None, pitches_per_inning=None):
     """Pitcher-level cards with Stuff+ HH, sea-level Stuff+ and Altitude Tax.
 
@@ -792,6 +797,12 @@ def mockup(d, df_phys, roles=None, entries=None, pitches_per_inning=None):
                     "extension": round(float(g.Extension.mean()), 1),
                     "stuff_plus_hh": round(float(g.stuff_plus_v0.mean()), 1),
                     "stuff_plus_sea": round(float(gs.stuff_plus_v0.mean()), 1)
+                    if len(gs) >= 15
+                    else None,
+                    # The pitcher's band, per pitch: the Ficha shows Stuff+ by
+                    # pitch and no score goes out without it (section 8 rule 2).
+                    "stuff_plus_hh_ci95": round(_ci95(g.stuff_plus_v0), 1),
+                    "stuff_plus_sea_ci95": round(_ci95(gs.stuff_plus_v0), 1)
                     if len(gs) >= 15
                     else None,
                     "whiff_per_swing": round(

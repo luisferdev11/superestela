@@ -31,6 +31,8 @@ export const arsenalEntrySchema = z
     extension: z.number().nullable(),
     stuff_plus_hh: z.number().nullable(),
     stuff_plus_sea: z.number().nullable(),
+    stuff_plus_hh_ci95: band.nullable(),
+    stuff_plus_sea_ci95: band.nullable(),
     whiff_per_swing: z.number().nullable(),
   })
   .strict()
