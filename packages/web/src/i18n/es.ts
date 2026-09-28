@@ -2,6 +2,7 @@ import type { Environment, Role } from '@/domain/types'
 import type { Control, Hand, SimMode } from '@/domain/simulator'
 import type { StuffPlusReason } from '@/sources/simulateResponse'
 import type { FichaTab } from '@/domain/navigation'
+import type { SeasonStatus } from '@/domain/pitcher'
 
 /**
  * El unico archivo con espanol. `CONVENTIONS.md` seccion 2.1 y seccion 4 regla
@@ -98,6 +99,26 @@ export const es = {
       rank: (sea: number, hh: number, of: number): string =>
         `A nivel del mar es el #${String(sea)} de ${String(of)} en su temporada; en el Harp Helú, el #${String(hh)}.`,
       belowAverage: 'En el Harp Helú queda por debajo del promedio.',
+    },
+    seasons: {
+      title: 'Sus temporadas',
+      rule: (min: number): string => `${String(min)} lanzamientos en cada entorno para tener score`,
+      columns: ['Temporada', 'En altitud', 'A nivel del mar', 'Rol', 'Estado'],
+      status: {
+        scored: 'con score',
+        shortSea: 'muestra insuficiente',
+        shortHh: 'muestra insuficiente',
+        shortBoth: 'muestra insuficiente',
+        absent: 'no lanzó',
+      } satisfies Record<SeasonStatus, string>,
+      shortSea: (season: number, hh: number, sea: number): string =>
+        `En ${String(season)} lanzó ${String(hh)} veces en altitud, pero solo ${String(sea)} a nivel del mar: no hay comparación que hacer.`,
+      shortHh: (season: number, hh: number, sea: number): string =>
+        `En ${String(season)} lanzó ${String(sea)} veces a nivel del mar, pero solo ${String(hh)} en altitud: no hay comparación que hacer.`,
+      gap: (season: number): string =>
+        `En ${String(season)} no lanzó. La Ficha no promedia alrededor del hueco: son dos mediciones distintas.`,
+      gapContext: (n: number): string =>
+        `${String(n)} lanzadores del dataset se ausentaron una temporada completa y volvieron.`,
     },
   },
   sim: {
