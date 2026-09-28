@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { ComplianceNote } from './ComplianceNote'
 import { DensityBar } from './DensityBar'
 import type { DensityScale } from '@/domain/density'
 import { es } from '@/i18n/es'
@@ -21,7 +22,7 @@ export const NavRail = ({
   readonly seasons: readonly number[]
   readonly current: string
 }) => (
-  <div className="flex w-[216px] shrink-0 flex-col justify-between bg-(--color-ink) py-6">
+  <div className="sticky top-0 flex h-screen w-[216px] shrink-0 flex-col justify-between gap-6 overflow-y-auto bg-(--color-ink) py-6">
     <div className="flex flex-col gap-6">
       <div className="flex items-center gap-2.5 px-5">
         <div className="flex flex-col">
@@ -72,6 +73,7 @@ export const NavRail = ({
     </div>
 
     <div className="flex flex-col gap-2 px-5">
+      <ComplianceNote />
       <DensityBar scale={scale} />
       <p className="pt-1 text-[10px] leading-relaxed text-(--color-text-muted)">
         {es.baselineNote(nPitches, seasons.length)}
