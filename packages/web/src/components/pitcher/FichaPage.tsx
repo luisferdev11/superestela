@@ -2,7 +2,8 @@ import { notFound } from 'next/navigation'
 import { NavRail } from '@/components/chrome/NavRail'
 import { PitcherHeader } from './PitcherHeader'
 import { PitcherKpis } from './PitcherKpis'
-import { cardsOf, fichaHref, pickSeason, rankInSeason } from '@/domain/pitcher'
+import { SeasonTable } from './SeasonTable'
+import { cardsOf, fichaHref, pickSeason, rankInSeason, seasonTimeline } from '@/domain/pitcher'
 import { loadDataset } from '@/sources/mockupSource'
 
 /**
@@ -17,7 +18,8 @@ export const FichaPage = async ({
   readonly pitcherId: string
   readonly season?: number
 }) => {
-  const { cards, density, nPitches, seasons } = await loadDataset()
+  const { cards, seasonsByPitcher, density, nPitches, seasons, pitchersWithGap } =
+    await loadDataset()
   const own = cardsOf(cards, pitcherId)
   const card = pickSeason(own, season)
   if (card === null) notFound()
@@ -37,6 +39,10 @@ export const FichaPage = async ({
           tabHrefs={{ summary: self }}
         />
         <PitcherKpis card={card} rank={{ sea: sea.rank, hh: hh.rank, of: sea.of }} />
+        <SeasonTable
+          rows={seasonTimeline(seasonsByPitcher.get(pitcherId) ?? [], own)}
+          pitchersWithGap={pitchersWithGap}
+        />
       </main>
     </div>
   )
