@@ -1,6 +1,7 @@
 import type { Environment, Role } from '@/domain/types'
 import type { Control, Hand, SimMode } from '@/domain/simulator'
 import type { StuffPlusReason } from '@/sources/simulateResponse'
+import type { FichaTab } from '@/domain/navigation'
 
 /**
  * El unico archivo con espanol. `CONVENTIONS.md` seccion 2.1 y seccion 4 regla
@@ -72,6 +73,33 @@ export const es = {
   outOf: (total: number): string => `de ${String(total)}`,
   trap: 'Trampa de Altitud',
   trapDescription: 'Se ve fuerte a nivel del mar y colapsa en el Harp Helú.',
+  ficha: {
+    breadcrumb: 'Fichajes',
+    tabs: {
+      summary: 'Resumen',
+      arsenal: 'Arsenal',
+      projection: 'Proyección',
+      plan: 'Plan de Desarrollo',
+    } satisfies Record<FichaTab, string>,
+    heading: (id: string, season: number): string => `${id} · ${String(season)}`,
+    sample: (hand: string, hh: number, sea: number): string =>
+      `${hand} · ${hh.toLocaleString('es-MX')} lanzamientos en altitud · ${sea.toLocaleString('es-MX')} a nivel del mar`,
+    hands: { Right: 'Diestro', Left: 'Zurdo' } as Record<string, string | undefined>,
+    kpi: {
+      hh: 'Stuff+ Harp Helú',
+      sea: 'Nivel del mar',
+      delta: 'Δ por altitud',
+      tax: 'Impuesto de Altitud',
+      taxMeasured: (measured: string): string =>
+        `mide ${measured} c/9 ent.; la banda cruza el cero`,
+      taxUnit: 'c/9 ent.',
+      loss: 'Pierde',
+      lossUnit: 'de IVB promedio en su arsenal.',
+      rank: (sea: number, hh: number, of: number): string =>
+        `A nivel del mar es el #${String(sea)} de ${String(of)} en su temporada; en el Harp Helú, el #${String(hh)}.`,
+      belowAverage: 'En el Harp Helú queda por debajo del promedio.',
+    },
+  },
   sim: {
     title: 'Simulador de Pitch',
     subtitle:
