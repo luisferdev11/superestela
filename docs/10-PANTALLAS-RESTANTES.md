@@ -6,6 +6,10 @@
 > Cada tarea dice qué es, por qué importa, qué entra y qué no, de dónde salen sus datos, qué código
 > ya existe para reutilizar y **cómo se sabe que está hecha**. `docs/08` sigue siendo la lista viva
 > de pendientes; este documento es el detalle de su carril de producto.
+>
+> **Cambio del 28 de septiembre:** las pantallas con scores (T2 a T7) **esperan a que el equipo de
+> datos entregue A3**. Producto no las adelanta sobre v0. Lo que se necesita de datos, y por qué,
+> está en [`docs/11`](11-LO-QUE-NECESITA-PRODUCTO.md).
 
 ---
 
