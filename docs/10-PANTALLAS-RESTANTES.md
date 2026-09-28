@@ -7,9 +7,9 @@
 > ya existe para reutilizar y **cómo se sabe que está hecha**. `docs/08` sigue siendo la lista viva
 > de pendientes; este documento es el detalle de su carril de producto.
 >
-> **Cambio del 28 de septiembre:** las pantallas con scores (T2 a T7) **esperan a que el equipo de
-> datos entregue A3**. Producto no las adelanta sobre v0. Lo que se necesita de datos, y por qué,
-> está en [`docs/11`](11-LO-QUE-NECESITA-PRODUCTO.md).
+> **Nota del 28 de septiembre:** las pantallas se construyen sobre los artefactos de v0, como dice
+> §0. Lo que producto no hace es otro modelo ni otro puente: eso es del equipo de datos. Lo que se
+> necesita de ellos, y por qué, está en [`docs/11`](11-LO-QUE-NECESITA-PRODUCTO.md).
 
 ---
 

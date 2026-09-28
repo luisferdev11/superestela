@@ -15,9 +15,15 @@ bolsas y sus compuertas porque el entregable 4 no podía esperar ([ADR 0007](adr
 **Ese puente no es el modelo que se entrega.** Tiene R² fuera de muestra de 0.003 y no usa el
 arsenal.
 
-De aquí en adelante, producto **no construye pantallas nuevas con scores** hasta que ustedes
-entreguen. La razón es que el equipo tiene que poder defender en la entrevista el modelo que se
-entrega, y eso solo pasa si lo construye quien lo va a explicar.
+De aquí en adelante la frontera es **modelo contra pantalla**:
+
+- **Producto** construye todas las pantallas, las edita y mejora su UX sobre los artefactos de v0 que
+  ya existen (`mockup_data.json`, `arsenals.json`, `evidence.json`, `simulator.json`). No espera a la
+  API ni a A3: cuando llegue el modelo final cambian los números, no las pantallas.
+- **Datos** construye el modelo que se entrega: targets, features, pesos, el puente a carreras y su
+  escala. Producto no hace otro puente ni otro modelo. La razón es que el equipo tiene que poder
+  defender en la entrevista el modelo que se entrega, y eso solo pasa si lo construye quien lo va a
+  explicar.
 
 ---
 
@@ -96,10 +102,10 @@ Para que se vea por qué importa cada una:
 |---|---|---|
 | P1 Radar | Stuff+ HH y nivel del mar por lanzador-temporada, Impuesto de Altitud | En `main`, sobre v0 |
 | P4 Simulador | Stuff+ de un pitch que nadie lanzó, en los dos entornos, con Δ | En `main`, sobre el puente |
-| P3 Traductor | Stuff+ HH proyectado de un lanzador de fuera | **Espera a A3** |
-| P2 Ficha | Stuff+ por pitch y arsenal; SHAP cuando llegue A1 | **Espera a A3** |
-| P5 Plan | Stuff+ ponderado por uso, antes y después | **Espera a A3** |
-| P6–P8 | Stuff+ por entorno y rol | Esperan a A3 y al Q&A |
+| P3 Traductor | Stuff+ HH proyectado de un lanzador de fuera | En construcción, sobre v0 |
+| P2 Ficha | Stuff+ por pitch y arsenal; SHAP cuando llegue A1 | En construcción, sobre v0 |
+| P5 Plan | Stuff+ ponderado por uso, antes y después | En construcción, sobre v0 |
+| P6–P8 | Stuff+ por entorno y rol | En construcción; el plantel depende del Q&A |
 | Documento técnico | Las tablas de A1–A3 y C1–C3 | Se congela el 12 oct |
 
 Ninguna pantalla imprime carreras: el puente Stuff+ → carreras no existe mientras A3 no lo muestre.
@@ -123,6 +129,7 @@ antes del 12.
 
 ## 7. Qué hace producto mientras tanto
 
-Lo que no toca scores: el copy de cumplimiento en la app, la preparación del Q&A, `report/build.py`,
-la ficha ejecutiva, el Decision Log y el deck. Si necesitan algo de producto para avanzar (un
+Las pantallas que faltan (`docs/10`), sobre v0, más lo que no es pantalla: `report/build.py`, la
+ficha ejecutiva, el Decision Log y el deck. Si una pantalla necesita un número que todavía no existe,
+se les pregunta antes de calcularlo; nunca se inventa. Si ustedes necesitan algo de producto (un
 endpoint, un cambio al contrato, una tabla del reporte), se pide en un issue y se hace.
