@@ -29,6 +29,15 @@ export const es = {
     },
     pending: 'Pantalla pendiente',
   },
+  // `docs/03` seccion 9: las condiciones del reto se declaran en el producto.
+  compliance: {
+    title: 'Uso de este producto',
+    rules: [
+      'Prohibido usarlo para apuestas.',
+      'Los datos son de ISAC y del club: se presentan resultados, no los datos.',
+      'El sistema recomienda; decide el cuerpo t\u00e9cnico.',
+    ],
+  },
   densityIndex: '\u00cdndice de Densidad',
   atHarpHelu: '\u00b7 Harp Hel\u00fa',
   baselineNote: (pitches: number, seasons: number): string =>
