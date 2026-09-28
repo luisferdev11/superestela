@@ -19,6 +19,8 @@ export type Dataset = {
   /** Del audit: lo que respalda el pie del rail. */
   readonly nPitches: number
   readonly seasons: readonly number[]
+  /** Los que se ausentaron una temporada completa y volvieron (ADR 0005). */
+  readonly pitchersWithGap: number
 }
 
 export const loadDataset = async (): Promise<Dataset> => {
@@ -51,5 +53,6 @@ export const loadDataset = async (): Promise<Dataset> => {
     density: { levels, sea, extreme },
     nPitches: evidence.audit.n_pitches,
     seasons: evidence.audit.seasons,
+    pitchersWithGap: evidence.seasons.pitchers_with_a_gap,
   }
 }

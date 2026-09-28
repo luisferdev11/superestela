@@ -12,6 +12,9 @@ export const evidenceSchema = z.object({
     n_pitches: z.number().int().positive(),
     seasons: z.array(z.number().int()),
   }),
+  seasons: z.object({
+    pitchers_with_a_gap: z.number().int().nonnegative(),
+  }),
 })
 
 export type EvidenceRaw = z.infer<typeof evidenceSchema>
