@@ -19,3 +19,24 @@ export const dominantPitchTypes = (cards: readonly PitcherSeason[]): readonly st
   }
   return [...counts.entries()].sort((a, b) => b[1] - a[1]).map(([pitch]) => pitch)
 }
+
+/**
+ * Una fila de la tabla del arsenal de la Ficha: nivel del mar contra Harp
+ * Helu. El break horizontal va en valor absoluto porque `mockup_data.json` lo
+ * trae en el marco de Trackman, no del lado del brazo; el mapa de movimiento
+ * usa la forma con signo de `arsenals.json`.
+ */
+export type ArsenalRow = ArsenalEntry & {
+  readonly absHbSea: number | null
+  readonly absHbHh: number | null
+}
+
+/** El arsenal de mayor a menor uso, que es como lo lee un coach. */
+export const arsenalRows = (card: PitcherSeason): readonly ArsenalRow[] =>
+  [...card.arsenal]
+    .sort((a, b) => b.usagePct - a.usagePct)
+    .map((entry) => ({
+      ...entry,
+      absHbSea: entry.hbSea === null ? null : Math.abs(entry.hbSea),
+      absHbHh: entry.hbHh === null ? null : Math.abs(entry.hbHh),
+    }))
