@@ -11,7 +11,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . && prettier --check .",
+    "lint": "next typegen && eslint . && prettier --check .",
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "tokens": "node scripts/build-tokens.mjs"
