@@ -3,6 +3,7 @@ import type { Control, Hand, SimMode } from '@/domain/simulator'
 import type { StuffPlusReason } from '@/sources/simulateResponse'
 import type { FichaTab } from '@/domain/navigation'
 import type { SeasonStatus } from '@/domain/pitcher'
+import type { Verdict } from '@/domain/reading'
 
 /**
  * El unico archivo con espanol. `CONVENTIONS.md` seccion 2.1 y seccion 4 regla
@@ -139,6 +140,19 @@ export const es = {
       title: 'El mecanismo f\u00edsico.',
       body: (density: string, magnus: string): string =>
         `El aire del Harp Hel\u00fa tiene densidad ${density} respecto al nivel del mar, medida desde la trayectoria de la bola. El efecto Magnus escala con esa densidad: ${magnus}. El brazo es el mismo; lo que cambia es cu\u00e1nto break puede sostener el aire.`,
+    },
+    reading: {
+      title: 'Lectura del sistema',
+      verdict: {
+        sign: 'Fichar.',
+        signWithReservations: 'Fichar con reservas.',
+        notAtSeaLevelPrice: 'No fichar al precio que marcan sus n\u00fameros de nivel del mar.',
+      } satisfies Record<Verdict, string>,
+      main: (pitch: string, usage: string, delta: string): string =>
+        `Su pitch principal es el ${pitch}, al ${usage}% de uso, y en el Harp Hel\u00fa cambia ${delta} puntos de Stuff+.`,
+      lever: (best: string, bestDelta: string, worst: string, worstDelta: string): string =>
+        `Si ya estuviera en el roster, la palanca es el ${best}: es lo que mejor aguanta la altitud (${bestDelta} contra ${worstDelta} del ${worst}).`,
+      rule: 'Regla provisional de producto: Trampa de Altitud, no al precio de nivel del mar; banda completa del Stuff+ HH arriba de 100, fichar; lo dem\u00e1s, con reservas. El veredicto final lo respalda el modelo del equipo de datos.',
     },
     seasons: {
       title: 'Sus temporadas',

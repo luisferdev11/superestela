@@ -5,6 +5,7 @@ import { ArsenalMap } from './ArsenalMap'
 import { ArsenalTable } from './ArsenalTable'
 import { PitcherKpis } from './PitcherKpis'
 import { PitcherPhysics } from './PitcherPhysics'
+import { PitcherReading } from './PitcherReading'
 import { SeasonTable } from './SeasonTable'
 import { cardsOf, fichaHref, pickSeason, rankInSeason, seasonTimeline } from '@/domain/pitcher'
 import type { Route } from 'next'
@@ -64,6 +65,7 @@ export const FichaPage = async ({
           rows={seasonTimeline(seasonsByPitcher.get(pitcherId) ?? [], own)}
           pitchersWithGap={pitchersWithGap}
         />
+        <PitcherReading card={card} />
       </main>
     </div>
   )
