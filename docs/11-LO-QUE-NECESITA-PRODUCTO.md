@@ -75,6 +75,58 @@ Lo que el producto necesita de ese contrato, y por qué:
 
 ---
 
+## 3.1 Lo que la Ficha ya espera de ustedes
+
+La Ficha (P2) se construyó tal como el prototipo. Dos partes se ven en pantalla pero **esperan
+trabajo de datos**, y la pantalla lo dice en vez de inventar cifras.
+
+### La ubicación: `analysis/outputs/locations.json`
+
+La pestaña Arsenal (`/pitchers/<id>/<temporada>/arsenal`) muestra dónde pone sus lanzamientos cada
+lanzador en cada entorno. Mientras el archivo no exista, cada mapa dice «pendiente: Location+». El
+día que exista, la pantalla lo pinta sin tocar código. La app lo valida con Zod
+(`packages/web/src/sources/locationSource.ts`): si la forma no coincide, falla con nombre de campo.
+
+```jsonc
+{
+  "pitcher_00069/2025": {           // la misma llave que arsenals.json
+    "sea": {                         // null si no hay muestra en ese entorno
+      "n_pitches": 543,
+      "mean_plate_height_ft": 2.64,
+      "zone_share": 0.424,           // entre 0 y 1
+      "whiff_per_swing": 0.264,      // entre 0 y 1
+      "grid": [[0.0, 0.1], [0.2, 0.4]],  // densidad por celda; filas de arriba abajo
+      "side_range_ft": [-2.0, 2.0],  // vista del cátcher, positivo a su derecha
+      "height_range_ft": [0.5, 4.5]
+    },
+    "hh": { "...": "igual" }
+  }
+}
+```
+
+Las cifras del ejemplo son las del prototipo, solo para ilustrar la forma. El dataset ya trae
+`PlateLocHeight`, `PlateLocSide` e `in_strike_zone`. `analysis/outputs/location_grid.json` es de la
+época del prototipo, sin script que lo genere y con un solo lanzador: no sirve como fuente.
+
+**Lo que decide el equipo de datos:** el tamaño de la rejilla, el suavizado, el mínimo de muestra y si
+la ubicación se mide relativa al bateador. «Lo que dice su ubicación» (si sobrecompensa la altura
+con la mira) también queda pendiente: necesita una regla que ustedes respalden.
+
+### El veredicto de «Lectura del sistema»
+
+La Ficha cierra con «Fichar», «Fichar con reservas» o «No fichar al precio de nivel del mar». Hoy lo
+decide una **regla provisional de producto**, declarada en pantalla
+(`packages/web/src/domain/reading.ts`):
+
+- Trampa de Altitud → no al precio de nivel del mar.
+- Banda completa del Stuff+ HH por encima de 100 → fichar.
+- Lo demás → con reservas.
+
+La regla se apoya en v0. Para que el veredicto deje de ser provisional hace falta que A3 muestre que
+el Stuff+ ordena lo que importa (carreras, o el target que se acuerde en el Q&A), y que ustedes
+digan qué umbral lo sostiene. Si cambian la regla, basta con cambiar `verdictOf`: la pantalla no se
+toca.
+
 ## 4. Cómo se sabe que el modelo sirve
 
 Las compuertas de `analysis/simulator_gates.py` (`docs/09` §5). **Aplican igual a su modelo** que al
@@ -103,7 +155,7 @@ Para que se vea por qué importa cada una:
 | P1 Radar | Stuff+ HH y nivel del mar por lanzador-temporada, Impuesto de Altitud | En `main`, sobre v0 |
 | P4 Simulador | Stuff+ de un pitch que nadie lanzó, en los dos entornos, con Δ | En `main`, sobre el puente |
 | P3 Traductor | Stuff+ HH proyectado de un lanzador de fuera | En construcción, sobre v0 |
-| P2 Ficha | Stuff+ por pitch y arsenal; SHAP cuando llegue A1 | En construcción, sobre v0 |
+| P2 Ficha | Stuff+ por pitch y arsenal; ubicación (§3.1); SHAP cuando llegue A1 | Construida sobre v0; la ubicación y el veredicto esperan (§3.1) |
 | P5 Plan | Stuff+ ponderado por uso, antes y después | En construcción, sobre v0 |
 | P6–P8 | Stuff+ por entorno y rol | En construcción; el plantel depende del Q&A |
 | Documento técnico | Las tablas de A1–A3 y C1–C3 | Se congela el 12 oct |
