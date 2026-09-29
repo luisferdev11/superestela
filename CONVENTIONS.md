@@ -264,6 +264,20 @@ Enforced by `commitlint` in pre-commit. It also generates the changelog for free
 - **CI green is required to merge.** If it can be bypassed, it is not CI.
 - Every PR gets a review. Not for control — it is how four people stay in the same codebase.
 
+**Chained PRs.** The 400-line limit means a screen ships as a chain, each PR on top of the previous
+one's branch. Merging one of those lands its code on that branch, **not on `main`**, and GitHub still
+marks it MERGED. It happened twice (#22–#31, #37–#39). So:
+
+- Only the bottom PR of a chain points at `main` and is ready for review. **Every PR above it opens
+  as a draft**: a draft cannot be merged.
+- When the PR below lands on `main`, the next one is retargeted to `main` (Edit → base) and marked
+  ready. Merge with a merge commit and **do not delete the branch**: deleting a base branch closes
+  the PR on top of it.
+- `.github/workflows/pr-base.yml` turns any PR whose base is not `main` red, with the reason. A red
+  draft in a chain is expected; a red PR that is ready for review is not to be merged.
+- Whether something reached `main` is checked with `git ls-tree origin/main <path>`, not with the
+  PR's MERGED label.
+
 ---
 
 ## 7. Testing
@@ -317,6 +331,7 @@ These exist because of what this product is. They are not generic hygiene.
 | Data contracts | `pandera` · CI (`contracts.yml`) |
 | Accessibility | `axe-core` in Playwright · CI |
 | Tests pass | `pytest` + `vitest` · CI, required to merge |
+| A PR lands on `main`, not on another branch | drafts for chained PRs · `pr-base.yml` flags it, cannot block it |
 
 Everything above installs with one command: `pre-commit install`. That is the whole onboarding for conventions — which is the point.
 
