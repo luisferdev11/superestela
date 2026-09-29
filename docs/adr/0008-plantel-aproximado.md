@@ -13,15 +13,24 @@ dejar las pantallas como mockup. **No inventar la lista** era la condición.
 
 ## Decisión
 
-**Se aproxima el plantel con los lanzadores que más lanzan en altitud extrema**, decidido con el
-usuario el 28 de septiembre.
+**Se aproxima el plantel con los lanzadores que lanzan en casa**, decidido con el usuario el 28 de
+septiembre («aproximar por apariciones en Harp Helú»).
 
-- **Regla:** los 14 lanzadores con más lanzamientos en altitud extrema en la temporada más reciente
-  del dataset (2026). Vive en `packages/web/src/domain/roster.ts`, en `approximateRoster` y
-  `ROSTER_SIZE`.
-- **Por qué funciona como aproximación:** quien juega la mitad de sus juegos en casa concentra ahí sus
-  lanzamientos. Entre los 16 que más lanzan en altitud extrema en 2026, entre 52% y 89% de sus
-  lanzamientos (contando altitud extrema y nivel del mar) son en altitud extrema.
+- **Regla:** los 14 lanzadores con mayor **proporción** de sus lanzamientos en altitud extrema en la
+  temporada más reciente (2026), entre los que tienen al menos 150 lanzamientos ahí. La proporción se
+  cuenta sobre altitud extrema más nivel del mar. Vive en `packages/web/src/domain/roster.ts`
+  (`approximateRoster`, `ROSTER_SIZE`, `MIN_HOME_PITCHES`).
+- **Por qué la proporción y no el conteo.** Se probaron tres reglas sobre 2026:
+
+  | Regla | Abridores | Relevistas | Proporción en altitud extrema |
+  |---|---|---|---|
+  | Más lanzamientos en altitud extrema | 11 | 3 | 52% a 89% |
+  | Mayor proporción, mínimo 100 | 4 | 10 | 78% a 100% |
+  | **Mayor proporción, mínimo 150** | **6** | **8** | **75% a 92%** |
+
+  Contar lanzamientos favorece al abridor, que lanza más. La proporción no depende del rol: quien
+  juega la mitad de sus juegos en casa lanza ahí la mayoría. Con mínimo 100 entra quien tiene 100%
+  porque no se le vio de gira, que no es lo mismo que ser de casa.
 - **Cada pantalla lo declara**, arriba y con la regla, no en un pie de página.
 - **Cada lanzador entra con su última temporada con score.** Uno sin ninguna temporada con score
   está en el plantel pero no en el tablero, y el Plantel lo muestra con su «muestra insuficiente».
@@ -31,7 +40,7 @@ usuario el 28 de septiembre.
 - **Si «altitud extrema» agrupa más de un estadio**, la lista mezcla equipos. Es justo la pregunta 1
   del Q&A.
 - **Un visitante frecuente puede colarse**, y un lesionado de Diablos puede quedar fuera.
-- **14 es una decisión de producto**, no una regla de la liga. Se cambia en una línea.
+- **14 y 150 son decisiones de producto**, no reglas de la liga. Se cambian en una línea.
 
 ## Consecuencias
 

@@ -4,15 +4,28 @@ import type { Environment, PitcherSeason, Role, SeasonEntry } from './types'
 /**
  * El plantel de P6 (Despliegue) y P8 (Plantel). **Es una aproximacion**: el
  * dataset viene anonimizado y sin equipo, asi que no se sabe quien es de
- * Diablos. Se toma a los lanzadores con mas lanzamientos en altitud extrema en
- * la temporada, que es como se ve quien lanza la mitad de sus juegos en casa.
- * La decision y sus limites estan en `docs/adr/0008`; las pantallas la declaran.
+ * Diablos. Se toma a quien lanza en casa: la mayor **proporcion** de sus
+ * lanzamientos en altitud extrema, con un minimo de volumen. Contar
+ * lanzamientos a secas daba 11 abridores y 3 relevistas, porque un abridor
+ * lanza mas; la proporcion no depende del rol. La decision y sus limites
+ * estan en `docs/adr/0008`; las pantallas la declaran.
  */
 
 /** El tamano del cuerpo de lanzadores que se toma. Es una decision de producto, ajustable (ADR 0008). */
 export const ROSTER_SIZE = 14
 
-/** Los `ROSTER_SIZE` con mas lanzamientos en altitud extrema en `season`, de mas a menos. */
+/**
+ * Lanzamientos en altitud extrema para contar como habitual de la casa. Con
+ * 100 entra quien no tiene muestra a nivel del mar y sale con 100%, que no
+ * dice que sea de casa sino que no se le vio de gira (ADR 0008).
+ */
+export const MIN_HOME_PITCHES = 150
+
+/** La proporcion de sus lanzamientos que fueron en altitud extrema, contando altitud extrema y nivel del mar. */
+export const homeShare = (entry: SeasonEntry): number =>
+  entry.nPitchesHh / Math.max(1, entry.nPitchesHh + entry.nPitchesSea)
+
+/** Los `size` con mayor proporcion en altitud extrema en `season`, de mas a menos. */
 export const approximateRoster = (
   seasonsByPitcher: ReadonlyMap<string, readonly SeasonEntry[]>,
   season: number,
@@ -21,9 +34,11 @@ export const approximateRoster = (
   [...seasonsByPitcher.entries()]
     .flatMap(([id, entries]) => {
       const entry = entries.find((e) => e.season === season)
-      return entry === undefined ? [] : [{ id, n: entry.nPitchesHh }]
+      return entry === undefined || entry.nPitchesHh < MIN_HOME_PITCHES
+        ? []
+        : [{ id, share: homeShare(entry) }]
     })
-    .sort((a, b) => b.n - a.n || a.id.localeCompare(b.id))
+    .sort((a, b) => b.share - a.share || a.id.localeCompare(b.id))
     .slice(0, size)
     .map((p) => p.id)
 

@@ -6,6 +6,8 @@ import {
   deploymentGroups,
   latestCards,
   orderShift,
+  homeShare,
+  MIN_HOME_PITCHES,
   ROSTER_SIZE,
 } from './roster'
 import { loadDataset } from '@/sources/mockupSource'
@@ -13,14 +15,24 @@ import { loadDataset } from '@/sources/mockupSource'
 vi.mock('server-only', () => ({}))
 
 describe('el plantel aproximado (ADR 0008)', () => {
-  it('son los que mas lanzan en altitud extrema en 2026, de mas a menos', async () => {
+  it('son los de mayor proporcion en altitud extrema en 2026, con volumen de habitual', async () => {
     const { seasonsByPitcher } = await loadDataset()
     const ids = approximateRoster(seasonsByPitcher, 2026)
     expect(ids).toHaveLength(ROSTER_SIZE)
-    const n = ids.map(
-      (id) => seasonsByPitcher.get(id)?.find((e) => e.season === 2026)?.nPitchesHh ?? -1,
-    )
-    for (let i = 1; i < n.length; i += 1) expect(n[i - 1]).toBeGreaterThanOrEqual(n[i] ?? 0)
+    const entries = ids.map((id) => seasonsByPitcher.get(id)?.find((e) => e.season === 2026))
+    const shares = entries.map((e) => (e === undefined ? -1 : homeShare(e)))
+    for (let i = 1; i < shares.length; i += 1) {
+      expect(shares[i - 1]).toBeGreaterThanOrEqual(shares[i] ?? 0)
+    }
+    for (const e of entries) expect(e?.nPitchesHh ?? 0).toBeGreaterThanOrEqual(MIN_HOME_PITCHES)
+  })
+
+  it('no se carga a un solo rol: contar lanzamientos daba 11 abridores y 3 relevistas', async () => {
+    const { cards, seasonsByPitcher } = await loadDataset()
+    const roster = latestCards(cards, approximateRoster(seasonsByPitcher, 2026))
+    const starters = roster.filter((c) => c.role === 'starter').length
+    const relievers = roster.filter((c) => c.role === 'reliever').length
+    expect(Math.min(starters, relievers)).toBeGreaterThanOrEqual(4)
   })
 
   it('en el tablero, cada lanzador entra con su ultima temporada con score', async () => {
