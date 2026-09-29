@@ -90,6 +90,23 @@ const toPanel = (
   })),
 })
 
+type ArsenalPitchRaw = NonNullable<ArsenalsRaw[string]['by_environment'][typeof SEA]>[number]
+
+const toArsenalPitch = (p: ArsenalPitchRaw): ArsenalPitch => ({
+  pitchType: p.pitch_type,
+  usage: p.usage,
+  n: p.n,
+  whiffPerSwing: p.whiff_per_swing,
+  releaseSpeed: p.release_speed,
+  ivb: p.ivb,
+  horizontalBreak: p.horizontal_break,
+  extension: p.extension,
+  releaseHeight: p.release_height,
+  releaseSide: p.release_side,
+  spinRate: p.spin_rate,
+  spinAxis: p.spin_axis,
+})
+
 const toArsenals = (raw: ArsenalsRaw): PitcherArsenal[] =>
   Object.entries(raw)
     .map(([key, rec]) => ({
@@ -97,22 +114,8 @@ const toArsenals = (raw: ArsenalsRaw): PitcherArsenal[] =>
       pitcherId: rec.pitcher_id,
       season: rec.season,
       hand: rec.pitcher_hand,
-      sea: (rec.by_environment[SEA] ?? []).map(
-        (p): ArsenalPitch => ({
-          pitchType: p.pitch_type,
-          usage: p.usage,
-          n: p.n,
-          whiffPerSwing: p.whiff_per_swing,
-          releaseSpeed: p.release_speed,
-          ivb: p.ivb,
-          horizontalBreak: p.horizontal_break,
-          extension: p.extension,
-          releaseHeight: p.release_height,
-          releaseSide: p.release_side,
-          spinRate: p.spin_rate,
-          spinAxis: p.spin_axis,
-        }),
-      ),
+      sea: (rec.by_environment[SEA] ?? []).map(toArsenalPitch),
+      hh: (rec.by_environment[EXT] ?? []).map(toArsenalPitch),
     }))
     // Sin forma a nivel del mar no hay de donde partir: el Simulador la toma de entrada.
     .filter((a) => a.sea.length > 0)
