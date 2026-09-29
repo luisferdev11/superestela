@@ -198,6 +198,48 @@ export const es = {
         `${String(n)} lanzadores del dataset se ausentaron una temporada completa y volvieron.`,
     },
   },
+  plan: {
+    title: 'Plan de Desarrollo',
+    subtitle: 'Qu\u00e9 cambiar de su arsenal para que sobreviva en casa, en orden de impacto.',
+    today: 'Stuff+ HH hoy',
+    pitcher: 'Lanzador',
+    deficitTitle: (deficit: string): string =>
+      `D\u00f3nde se pierde \u00b7 contribuci\u00f3n de cada lanzamiento al d\u00e9ficit de ${deficit} puntos`,
+    surplusTitle: 'D\u00f3nde gana \u00b7 contribuci\u00f3n de cada lanzamiento contra el promedio',
+    deficitRule: 'uso \u00d7 distancia a 100',
+    share: (usage: string, stuff: string): string => `${usage}% \u00b7 Stuff+ ${stuff}`,
+    culprit: (pitch: string): string =>
+      `Todo el d\u00e9ficit est\u00e1 en un solo lanzamiento: el ${pitch}. El plan no es arreglar todo, es arreglar ese pitch o usarlo menos.`,
+    spread: 'El d\u00e9ficit se reparte entre varios lanzamientos.',
+    noDeficit:
+      'No hay d\u00e9ficit: su arsenal rinde por encima del promedio en el Harp Hel\u00fa.',
+    labels: { degrades: 'Se degrada', holds: 'Aguanta', changes: 'Qu\u00e9 cambia' },
+    degrades: (pitch: string, delta: string, sea: string, hh: string, ivb: string): string =>
+      `Su ${pitch} cambia ${delta} puntos de Stuff+ en el Harp Hel\u00fa, de ${sea} a ${hh}. ${ivb}`,
+    ivb: (sea: string, hh: string): string => `Su IVB pasa de ${sea}\u2033 a ${hh}\u2033.`,
+    holds: (pitch: string, delta: string, sea: string, hh: string, ivb: string): string =>
+      `Su ${pitch} cambia ${delta} puntos (${sea} \u2192 ${hh}). ${ivb}`,
+    holdsWhy: (ivb: string, worstIvb: string, worst: string): string =>
+      `Tiene menos ride que perder: ${ivb}\u2033 de IVB contra ${worstIvb}\u2033 del ${worst}, y el aire delgado se lleva sobre todo el break.`,
+    changes: (
+      from: string,
+      fromBefore: string,
+      fromAfter: string,
+      to: string,
+      before: string,
+      after: string,
+    ): string =>
+      `Bajar el ${from} de ${fromBefore}% a ${fromAfter}% de uso y d\u00e1rselo al ${to} lleva su Stuff+ HH ponderado de ${before} a ${after}. Nada cambia en el brazo: solo qu\u00e9 lanza y cu\u00e1ndo.`,
+    noShift: (to: string, from: string): string =>
+      `Mover uso no lo compensa: el ${to} pierde menos, pero en el Harp Hel\u00fa sigue rindiendo menos que el ${from}. La palanca aqu\u00ed no es el reparto.`,
+    shiftBy: 'Mover',
+    points: (n: number): string => `${String(n)} pts`,
+    tryInSimulator: (pitch: string): string => `Probar el ${pitch} en el Simulador \u2192`,
+    none: 'No hay plan que proponer: hace falta al menos dos pitches con score en los dos entornos.',
+    limitTitle: 'L\u00edmite del modelo',
+    limit:
+      'Estas ganancias est\u00e1n en puntos de Stuff+, no en carreras. El puente de Stuff+ a carreras todav\u00eda no existe: construirlo es el trabajo del modelo final (A3), y es lo que convertir\u00eda este plan en carreras. Las bandas suponen que los pitches son muestras independientes.',
+  },
   sim: {
     title: 'Simulador de Pitch',
     subtitle:

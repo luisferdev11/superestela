@@ -1,7 +1,6 @@
 import type { Route } from 'next'
-import type { ReactNode } from 'react'
 import { notFound } from 'next/navigation'
-import { NavRail } from '@/components/chrome/NavRail'
+import { PageShell } from '@/components/chrome/PageShell'
 import { PitcherHeader } from './PitcherHeader'
 import { ArsenalMap } from './ArsenalMap'
 import { ArsenalTable } from './ArsenalTable'
@@ -18,6 +17,7 @@ import {
   fichaArsenalHref,
   fichaHref,
   pickSeason,
+  planHref,
   rankInSeason,
   seasonTimeline,
 } from '@/domain/pitcher'
@@ -64,6 +64,7 @@ export const FichaPage = async ({
       tabHrefs={{
         summary: fichaHref(pitcherId, card.season),
         arsenal: fichaArsenalHref(pitcherId, card.season),
+        plan: planHref(pitcherId, card.season),
       }}
     />
   )
@@ -74,7 +75,7 @@ export const FichaPage = async ({
     const hh = location?.hh ?? null
     const max = sharedMax([sea, hh])
     return (
-      <Shell density={density} nPitches={nPitches} seasons={seasons}>
+      <PageShell density={density} nPitches={nPitches} seasons={seasons} current="/radar">
         {header}
         <p className="text-[13px] text-(--color-text-muted)">
           {es.ficha.location.subtitle}{' '}
@@ -91,7 +92,7 @@ export const FichaPage = async ({
           <h2 className="text-[15px] font-bold">{es.ficha.location.readTitle}</h2>
           <p className="text-[13px] text-(--color-text-muted)">{es.ficha.location.readPending}</p>
         </section>
-      </Shell>
+      </PageShell>
     )
   }
 
@@ -99,7 +100,7 @@ export const FichaPage = async ({
   const rankHh = rankInSeason(cards, card, 'hh')
   const measured = arsenals.find((a) => a.pitcherId === pitcherId && a.season === card.season)
   return (
-    <Shell density={density} nPitches={nPitches} seasons={seasons}>
+    <PageShell density={density} nPitches={nPitches} seasons={seasons} current="/radar">
       {header}
       <PitcherKpis card={card} rank={{ sea: rankSea.rank, hh: rankHh.rank, of: rankSea.of }} />
       {measured === undefined ? null : (
@@ -112,23 +113,6 @@ export const FichaPage = async ({
         pitchersWithGap={pitchersWithGap}
       />
       <PitcherReading card={card} />
-    </Shell>
+    </PageShell>
   )
 }
-
-const Shell = ({
-  density,
-  nPitches,
-  seasons,
-  children,
-}: {
-  readonly density: Parameters<typeof NavRail>[0]['scale']
-  readonly nPitches: number
-  readonly seasons: readonly number[]
-  readonly children: ReactNode
-}) => (
-  <div className="flex min-h-screen bg-(--color-surface-page)">
-    <NavRail scale={density} nPitches={nPitches} seasons={seasons} current="/radar" />
-    <main className="flex min-w-0 grow flex-col gap-5 px-8 py-7">{children}</main>
-  </div>
-)
