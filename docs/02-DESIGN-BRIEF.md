@@ -166,7 +166,7 @@ Selector de entorno → el roster ordenado por Stuff+ de **ese** estadio, **agru
 
 El rol se infiere de la entrada en que el lanzador entra al juego — una regla medida sobre 22,569 apariciones, no un modelo: 469 lanzadores abren menos del 10% de las veces, 119 más del 90%, y el valle está en 40–50%. **Son dos categorías y nada más:** no hay "cerrador" —se define por situación de salvamento y no hay marcador— ni un tercer nivel por entrada tardía, porque la entrada de ingreso de los relevistas es unimodal con su moda justo en la séptima (`docs/adr/0004`).
 
-Lo que justifica la pantalla: la correlación de orden entre casa y gira es **0.700**, el cambio mediano es de **38 posiciones**, y **6 de los 10 mejores en casa no están entre los 10 mejores de gira**.
+Lo que justifica la pantalla: la correlación de orden entre casa y gira es **0.638** (Spearman), el cambio mediano es de **40 posiciones**, y **8 de los 10 mejores en casa no están entre los 10 mejores de gira**, sobre los 296 lanzadores del Radar en su última temporada. Lo calcula `orderShift` (`packages/web/src/domain/roster.ts`) desde `mockup_data.json`, y un test lo cruza con una corrida en Python. La versión anterior de este párrafo decía 0.700, 38 y 6, de una corrida vieja.
 
 ---
 
