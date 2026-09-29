@@ -49,6 +49,11 @@ export type PitcherSeason = {
   readonly medianEntryInning: number | null
   /** `null` cuando el impuesto no es significativo: entonces es "no concluyente". */
   readonly altitudeTax: Metric | null
+  /**
+   * Lo medido, significativo o no. La Ficha dice «no concluyente» y ademas
+   * cuanto midio, para que se vea que la banda cruza el cero.
+   */
+  readonly altitudeTaxMeasured: Metric | null
   readonly meanIvbLossIn: number | null
   readonly altitudeTrap: boolean
   readonly arsenal: readonly ArsenalEntry[]

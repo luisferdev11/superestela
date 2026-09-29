@@ -1,10 +1,11 @@
 import 'server-only'
 import { readFile } from 'node:fs/promises'
 import { evidencePath, mockupDataPath } from './paths'
-import { mockupDataSchema } from './schema'
+import { leagueShapesSchema, mockupDataSchema } from './schema'
 import { evidenceSchema } from './evidenceSchema'
 import { toDensityLevel, toPitcherSeason, toSeasonEntry } from './adapter'
 import { orderByDensity, type DensityScale } from '@/domain/density'
+import type { LeagueShapes } from '@/domain/arsenalMap'
 import type { PitcherSeason, SeasonEntry } from '@/domain/types'
 
 /**
@@ -19,6 +20,23 @@ export type Dataset = {
   /** Del audit: lo que respalda el pie del rail. */
   readonly nPitches: number
   readonly seasons: readonly number[]
+  /** Los que se ausentaron una temporada completa y volvieron (ADR 0005). */
+  readonly pitchersWithGap: number
+  /** La forma promedio de la liga por tipo, a nivel del mar y en altitud extrema. */
+  readonly leagueShapes: LeagueShapes
+}
+
+const toLeagueShapes = (raw: unknown, sea: string, extreme: string): LeagueShapes => {
+  const pick = (levels: Record<string, { ivb: number; abs_hb: number }>, label: string) => {
+    const level = levels[label]
+    return level === undefined ? null : { ivb: level.ivb, absHb: level.abs_hb }
+  }
+  return new Map(
+    Object.entries(leagueShapesSchema.parse(raw)).map(([pitchType, profile]) => [
+      pitchType,
+      { sea: pick(profile.levels, sea), hh: pick(profile.levels, extreme) },
+    ]),
+  )
 }
 
 export const loadDataset = async (): Promise<Dataset> => {
@@ -51,5 +69,7 @@ export const loadDataset = async (): Promise<Dataset> => {
     density: { levels, sea, extreme },
     nPitches: evidence.audit.n_pitches,
     seasons: evidence.audit.seasons,
+    pitchersWithGap: evidence.seasons.pitchers_with_a_gap,
+    leagueShapes: toLeagueShapes(parsed.pitch_profiles, sea.label, extreme.label),
   }
 }
