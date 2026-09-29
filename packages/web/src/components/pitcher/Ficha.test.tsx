@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { PitcherHeader } from './PitcherHeader'
 import { PitcherKpis } from './PitcherKpis'
+import { PitcherReading } from './PitcherReading'
 import { SeasonTable } from './SeasonTable'
 import { cardsOf, fichaHref, pickSeason, seasonTimeline } from '@/domain/pitcher'
 import { mockupDataPath } from '@/sources/paths'
@@ -56,5 +57,17 @@ describe('el hueco en la tabla de temporadas', () => {
     expect(screen.getByText(es.ficha.seasons.status.absent)).toBeInTheDocument()
     expect(screen.getByText(es.ficha.seasons.gap(2025))).toBeInTheDocument()
     expect(screen.getByText(es.ficha.seasons.gapContext(28))).toBeInTheDocument()
+  })
+})
+
+describe('la lectura del sistema', () => {
+  it('pitcher_00069: no al precio de nivel del mar, la palanca es el slider, y la regla se declara', async () => {
+    const { card } = await load('pitcher_00069')
+    render(<PitcherReading card={card} />)
+    expect(screen.getByText(es.ficha.reading.verdict.notAtSeaLevelPrice)).toBeInTheDocument()
+    expect(
+      screen.getByText(es.ficha.reading.lever('Slider', '−1.7 ± 1.3', 'Four-Seam', '−20.6 ± 1.1')),
+    ).toBeInTheDocument()
+    expect(screen.getByText(es.ficha.reading.rule)).toBeInTheDocument()
   })
 })
