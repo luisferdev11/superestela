@@ -1,12 +1,16 @@
+import type { Route } from 'next'
 import { notFound } from 'next/navigation'
 import { PageShell } from '@/components/chrome/PageShell'
 import { MetricValue } from '@/components/metric/MetricValue'
 import { PitcherHeader } from '@/components/pitcher/PitcherHeader'
 import { PitcherSelect } from './PitcherSelect'
 import { PlanDeficit } from './PlanDeficit'
+import { PlanSentences } from './PlanSentences'
 import { cardsOf, fichaArsenalHref, fichaHref, pickSeason, planHref } from '@/domain/pitcher'
 import { planOf } from '@/domain/plan'
+import { canSimulate, simulatorHref } from '@/domain/simulator'
 import { loadDataset } from '@/sources/mockupSource'
+import { loadSimulatorDataset } from '@/sources/simulatorSource'
 import { es } from '@/i18n/es'
 
 /**
@@ -21,12 +25,20 @@ export const PlanPage = async ({
   readonly pitcherId: string
   readonly season?: number
 }) => {
-  const { cards, density, nPitches, seasons } = await loadDataset()
+  const [{ cards, density, nPitches, seasons }, { arsenals }] = await Promise.all([
+    loadDataset(),
+    loadSimulatorDataset(),
+  ])
   const own = cardsOf(cards, pitcherId)
   const card = pickSeason(own, season)
   if (card === null) notFound()
 
   const plan = planOf(card)
+  const holds = plan?.holds.pitch
+  const tryHref =
+    holds !== undefined && canSimulate(arsenals, pitcherId, card.season, holds)
+      ? (simulatorHref(pitcherId, card.season, holds) as Route)
+      : null
   const options = [...cards]
     .sort((a, b) => a.pitcherId.localeCompare(b.pitcherId) || b.season - a.season)
     .map((c) => ({
@@ -68,7 +80,10 @@ export const PlanPage = async ({
           {es.plan.none}
         </p>
       ) : (
-        <PlanDeficit plan={plan} />
+        <>
+          <PlanDeficit plan={plan} />
+          <PlanSentences plan={plan} simulatorHref={tryHref} />
+        </>
       )}
       <aside className="flex gap-4 border-l-[3px] border-(--color-diablos) bg-(--color-diablos-wash) px-4.5 py-3.5">
         <span className="shrink-0 pt-0.5 text-[10px] font-bold tracking-widest text-(--color-diablos) uppercase">
