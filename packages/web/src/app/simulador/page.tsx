@@ -1,7 +1,9 @@
 import { loadDataset } from '@/sources/mockupSource'
 import { loadSimulatorDataset } from '@/sources/simulatorSource'
 import { NavRail } from '@/components/chrome/NavRail'
+import { Suspense } from 'react'
 import { Simulator } from '@/components/simulator/Simulator'
+import { SimulatorFromUrl } from '@/components/simulator/SimulatorFromUrl'
 import { es } from '@/i18n/es'
 
 /**
@@ -16,6 +18,13 @@ export default async function SimuladorPage() {
     loadDataset(),
     loadSimulatorDataset(),
   ])
+  const props = {
+    distributions: data.distributions,
+    maps: data.maps,
+    arsenals: data.arsenals,
+    scale: density,
+    validation: data.validation,
+  }
   return (
     <div className="flex min-h-screen bg-(--color-surface-page)">
       <NavRail scale={density} nPitches={nPitches} seasons={seasons} current="/simulador" />
@@ -24,13 +33,9 @@ export default async function SimuladorPage() {
           <h1 className="text-[26px] font-bold tracking-tight">{es.sim.title}</h1>
           <p className="mt-0.5 text-[13px] text-(--color-text-muted)">{es.sim.subtitle}</p>
         </div>
-        <Simulator
-          distributions={data.distributions}
-          maps={data.maps}
-          arsenals={data.arsenals}
-          scale={density}
-          validation={data.validation}
-        />
+        <Suspense fallback={<Simulator {...props} />}>
+          <SimulatorFromUrl {...props} />
+        </Suspense>
       </main>
     </div>
   )

@@ -1,3 +1,5 @@
+import type { Route } from 'next'
+import Link from 'next/link'
 import { MetricValue } from '@/components/metric/MetricValue'
 import { arsenalRows } from '@/domain/arsenal'
 import { formatNumber } from '@/domain/format'
@@ -31,12 +33,26 @@ const Score = ({ metric }: { readonly metric: Metric | null }) =>
     <MetricValue metric={metric} />
   )
 
+const SimulateLink = ({ pitch, href }: { readonly pitch: string; readonly href?: Route }) =>
+  href === undefined ? null : (
+    <Link href={href} aria-label={es.ficha.arsenal.simulateLabel(pitch)}>
+      {es.ficha.arsenal.simulate}
+    </Link>
+  )
+
 /**
  * El arsenal pitch por pitch, en los dos entornos (`Ficha.dc.html`). Cada
  * Stuff+ lleva su banda (#36); ninguna cifra se escribe aqui, todas salen de
  * la tarjeta.
  */
-export const ArsenalTable = ({ card }: { readonly card: PitcherSeason }) => (
+export const ArsenalTable = ({
+  card,
+  simulatorHrefs,
+}: {
+  readonly card: PitcherSeason
+  /** El enlace al Simulador de cada pitch que tiene de donde partir; los demas no llevan. */
+  readonly simulatorHrefs: Readonly<Partial<Record<string, Route>>>
+}) => (
   <section className="flex flex-col gap-2 border border-(--color-border) bg-(--color-surface-card) p-5">
     <h2 className="text-[15px] font-bold">{es.ficha.arsenal.title}</h2>
     <table className="w-full border-collapse text-[13px]">
@@ -69,6 +85,9 @@ export const ArsenalTable = ({ card }: { readonly card: PitcherSeason }) => (
             </td>
             <td className={cell}>
               {row.whiffPerSwing === null ? '—' : `${formatNumber(row.whiffPerSwing)}%`}
+            </td>
+            <td className={cell}>
+              <SimulateLink pitch={row.pitch} href={simulatorHrefs[row.pitch]} />
             </td>
           </tr>
         ))}
