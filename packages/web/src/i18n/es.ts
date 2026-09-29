@@ -109,6 +109,35 @@ export const es = {
         `A nivel del mar es el #${String(sea)} de ${String(of)} en su temporada; en el Harp Helú, el #${String(hh)}.`,
       belowAverage: 'En el Harp Helú queda por debajo del promedio.',
     },
+    arsenal: {
+      title: 'Arsenal \u00b7 nivel del mar \u2192 Harp Hel\u00fa',
+      columns: ['Pitch', 'Uso', 'Velo', 'IVB', '|HB|', 'Spin', 'Stuff+', 'Whiff'],
+      measuredAt:
+        'Uso, velocidad, spin y whiff, medidos en el Harp Hel\u00fa. IVB y |HB| en pulgadas; Stuff+ con su banda al 95%.',
+      noSea: 'sin muestra a nivel del mar',
+    },
+    map: {
+      title: 'Mapa de movimiento',
+      sea: 'nivel del mar',
+      hh: 'Harp Hel\u00fa',
+      league: 'promedio LMB',
+      up: 'sube',
+      down: 'cae',
+      arm: 'brazo \u25b8',
+      glove: '\u25c2 guante',
+      axisX: 'break horizontal (pulgadas)',
+      axisY: 'IVB',
+      usage: (share: number): string => `${(100 * share).toFixed(1)}% de uso`,
+      label: (pitch: string, sea: string, hh: string): string =>
+        `${pitch}: ${sea} a nivel del mar, ${hh} en el Harp Hel\u00fa`,
+      none: 'sin muestra',
+      note: 'Forma medida en cada entorno, no simulada. Break horizontal del lado del brazo. El uso es el de nivel del mar; la tabla da el del Harp Hel\u00fa.',
+    },
+    physics: {
+      title: 'El mecanismo f\u00edsico.',
+      body: (density: string, magnus: string): string =>
+        `El aire del Harp Hel\u00fa tiene densidad ${density} respecto al nivel del mar, medida desde la trayectoria de la bola. El efecto Magnus escala con esa densidad: ${magnus}. El brazo es el mismo; lo que cambia es cu\u00e1nto break puede sostener el aire.`,
+    },
     seasons: {
       title: 'Sus temporadas',
       rule: (min: number): string => `${String(min)} lanzamientos en cada entorno para tener score`,

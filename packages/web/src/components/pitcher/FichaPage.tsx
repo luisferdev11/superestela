@@ -1,10 +1,15 @@
 import { notFound } from 'next/navigation'
 import { NavRail } from '@/components/chrome/NavRail'
 import { PitcherHeader } from './PitcherHeader'
+import { ArsenalMap } from './ArsenalMap'
+import { ArsenalTable } from './ArsenalTable'
 import { PitcherKpis } from './PitcherKpis'
+import { PitcherPhysics } from './PitcherPhysics'
 import { SeasonTable } from './SeasonTable'
 import { cardsOf, fichaHref, pickSeason, rankInSeason, seasonTimeline } from '@/domain/pitcher'
+import { arsenalMapPitches } from '@/domain/arsenalMap'
 import { loadDataset } from '@/sources/mockupSource'
+import { loadSimulatorDataset } from '@/sources/simulatorSource'
 
 /**
  * P2, la Ficha (`docs/02` P2, `docs/10` T3): «¿que tengo enfrente y que le
@@ -18,8 +23,10 @@ export const FichaPage = async ({
   readonly pitcherId: string
   readonly season?: number
 }) => {
-  const { cards, seasonsByPitcher, density, nPitches, seasons, pitchersWithGap } =
-    await loadDataset()
+  const [
+    { cards, seasonsByPitcher, density, nPitches, seasons, pitchersWithGap, leagueShapes },
+    { arsenals },
+  ] = await Promise.all([loadDataset(), loadSimulatorDataset()])
   const own = cardsOf(cards, pitcherId)
   const card = pickSeason(own, season)
   if (card === null) notFound()
@@ -27,6 +34,7 @@ export const FichaPage = async ({
   const sea = rankInSeason(cards, card, 'sea')
   const hh = rankInSeason(cards, card, 'hh')
   const self = fichaHref(pitcherId, card.season)
+  const measured = arsenals.find((a) => a.pitcherId === pitcherId && a.season === card.season)
 
   return (
     <div className="flex min-h-screen bg-(--color-surface-page)">
@@ -39,6 +47,11 @@ export const FichaPage = async ({
           tabHrefs={{ summary: self }}
         />
         <PitcherKpis card={card} rank={{ sea: sea.rank, hh: hh.rank, of: sea.of }} />
+        {measured === undefined ? null : (
+          <ArsenalMap pitches={arsenalMapPitches(measured, leagueShapes)} />
+        )}
+        <ArsenalTable card={card} />
+        <PitcherPhysics scale={density} />
         <SeasonTable
           rows={seasonTimeline(seasonsByPitcher.get(pitcherId) ?? [], own)}
           pitchersWithGap={pitchersWithGap}

@@ -91,3 +91,15 @@ export const mockupDataSchema = z
 
 export type PitcherCardRaw = z.infer<typeof pitcherCardSchema>
 export type MockupData = z.infer<typeof mockupDataSchema>
+
+/**
+ * La forma promedio de la liga por tipo y entorno, de `pitch_profiles`. En
+ * `mockupDataSchema` ese campo es `unknown` porque trae muchas mas metricas;
+ * aqui se leen solo las dos que dibuja el mapa de la Ficha, sin exigir el resto.
+ */
+export const leagueShapesSchema = z.record(
+  z.string(),
+  z.object({
+    levels: z.record(z.string(), z.object({ ivb: z.number(), abs_hb: z.number() })),
+  }),
+)

@@ -38,6 +38,8 @@ const ARSENALS: PitcherArsenal[] = [
       // Cuatro pitches no son una linea base: no debe salir como opcion.
       { ...FOUR_SEAM, pitchType: 'Changeup', usage: 0.01, n: 4, whiffPerSwing: 0.5 },
     ],
+    // El Simulador parte del nivel del mar; lo medido en altura no lo toca.
+    hh: [],
   },
 ]
 const SCALE: DensityScale = {
