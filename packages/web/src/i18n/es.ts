@@ -111,7 +111,9 @@ export const es = {
     },
     arsenal: {
       title: 'Arsenal \u00b7 nivel del mar \u2192 Harp Hel\u00fa',
-      columns: ['Pitch', 'Uso', 'Velo', 'IVB', '|HB|', 'Spin', 'Stuff+', 'Whiff'],
+      columns: ['Pitch', 'Uso', 'Velo', 'IVB', '|HB|', 'Spin', 'Stuff+', 'Whiff', 'Simulador'],
+      simulate: 'abrir \u2192',
+      simulateLabel: (pitch: string): string => `Abrir el ${pitch} en el Simulador`,
       measuredAt:
         'Uso, velocidad, spin y whiff, medidos en el Harp Hel\u00fa. IVB y |HB| en pulgadas; Stuff+ con su banda al 95%.',
       noSea: 'sin muestra a nivel del mar',

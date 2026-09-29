@@ -18,7 +18,7 @@ const card = async () => {
 
 describe('la tabla del arsenal de pitcher_00069', () => {
   it('cada Stuff+ sale con su banda, en los dos entornos', async () => {
-    render(<ArsenalTable card={await card()} />)
+    render(<ArsenalTable card={await card()} simulatorHrefs={{}} />)
     const fastball = screen.getByText('Four-Seam').closest('tr')
     if (fastball === null) throw new Error('sin fila de la recta')
     expect(within(fastball).getByLabelText('111.0 ± 1.0')).toBeInTheDocument()
@@ -26,13 +26,27 @@ describe('la tabla del arsenal de pitcher_00069', () => {
   })
 
   it('una fila por pitch, en orden de uso', async () => {
-    render(<ArsenalTable card={await card()} />)
+    render(<ArsenalTable card={await card()} simulatorHrefs={{}} />)
     const rows = screen.getAllByRole('row').slice(1)
     expect(rows.map((r) => within(r).getAllByRole('cell')[0]?.textContent)).toEqual([
       'Four-Seam',
       'Slider',
       'Curveball',
     ])
+  })
+})
+
+describe('abrir en el Simulador', () => {
+  it('solo los pitches con enlace lo ofrecen, con una etiqueta que dice cual', async () => {
+    render(
+      <ArsenalTable
+        card={await card()}
+        simulatorHrefs={{ 'Four-Seam': '/simulador?pitcher=pitcher_00069%2F2025&pitch=Four-Seam' }}
+      />,
+    )
+    const link = screen.getByRole('link', { name: es.ficha.arsenal.simulateLabel('Four-Seam') })
+    expect(link.getAttribute('href')).toContain('pitch=Four-Seam')
+    expect(screen.getAllByRole('link')).toHaveLength(1)
   })
 })
 

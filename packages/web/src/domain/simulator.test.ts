@@ -1,11 +1,15 @@
 import { describe, expect, it } from 'vitest'
 import {
   buildRequest,
+  canSimulate,
   changedControls,
   leagueMedian,
+  parseSimulatorStart,
+  simulatorHref,
   sliderSpec,
   type ArsenalPitch,
   type Distributions,
+  type PitcherArsenal,
   type PitchValues,
 } from './simulator'
 
@@ -84,5 +88,48 @@ describe('lo que el coach movio', () => {
   it('el pitch real no tiene cambios y un slider movido si', () => {
     expect(changedControls(FOUR_SEAM, FOUR_SEAM)).toEqual([])
     expect(changedControls({ ...FOUR_SEAM, ivb: 18 }, FOUR_SEAM)).toEqual(['ivb'])
+  })
+})
+
+describe('abrir el Simulador desde la Ficha', () => {
+  const ARSENALS: PitcherArsenal[] = [
+    {
+      key: 'pitcher_00069/2025',
+      pitcherId: 'pitcher_00069',
+      season: 2025,
+      hand: 'Right',
+      sea: [
+        { ...FOUR_SEAM, pitchType: 'Four-Seam', usage: 0.7, n: 292, whiffPerSwing: 0.27 },
+        { ...FOUR_SEAM, pitchType: 'Changeup', usage: 0.01, n: 4, whiffPerSwing: 0.5 },
+      ],
+      hh: [],
+    },
+  ]
+  const params = (href: string) => new URL(href, 'http://x').searchParams
+
+  it('el enlace de la Ficha vuelve como la misma seleccion', () => {
+    const href = simulatorHref('pitcher_00069', 2025, 'Four-Seam')
+    expect(parseSimulatorStart(params(href), ARSENALS)).toEqual({
+      pitcherKey: 'pitcher_00069/2025',
+      pitchType: 'Four-Seam',
+    })
+  })
+
+  it('una URL que no corresponde a nada abre el Simulador como siempre', () => {
+    for (const href of [
+      '/simulador',
+      simulatorHref('pitcher_99999', 2025, 'Four-Seam'),
+      simulatorHref('pitcher_00069', 2025, 'Knuckleball'),
+      // Cuatro pitches no son una linea base: no se ofrece.
+      simulatorHref('pitcher_00069', 2025, 'Changeup'),
+    ]) {
+      expect(parseSimulatorStart(params(href), ARSENALS)).toBeNull()
+    }
+  })
+
+  it('la Ficha solo ofrece el enlace donde el Simulador tiene de donde partir', () => {
+    expect(canSimulate(ARSENALS, 'pitcher_00069', 2025, 'Four-Seam')).toBe(true)
+    expect(canSimulate(ARSENALS, 'pitcher_00069', 2025, 'Changeup')).toBe(false)
+    expect(canSimulate(ARSENALS, 'pitcher_00069', 2024, 'Four-Seam')).toBe(false)
   })
 })

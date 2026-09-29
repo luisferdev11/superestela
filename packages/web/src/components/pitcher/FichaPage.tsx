@@ -7,7 +7,9 @@ import { PitcherKpis } from './PitcherKpis'
 import { PitcherPhysics } from './PitcherPhysics'
 import { SeasonTable } from './SeasonTable'
 import { cardsOf, fichaHref, pickSeason, rankInSeason, seasonTimeline } from '@/domain/pitcher'
+import type { Route } from 'next'
 import { arsenalMapPitches } from '@/domain/arsenalMap'
+import { canSimulate, simulatorHref } from '@/domain/simulator'
 import { loadDataset } from '@/sources/mockupSource'
 import { loadSimulatorDataset } from '@/sources/simulatorSource'
 
@@ -34,6 +36,12 @@ export const FichaPage = async ({
   const sea = rankInSeason(cards, card, 'sea')
   const hh = rankInSeason(cards, card, 'hh')
   const self = fichaHref(pitcherId, card.season)
+  // `typedRoutes` no reconoce la consulta armada en tiempo de ejecucion.
+  const simulatorHrefs = Object.fromEntries(
+    card.arsenal
+      .filter((e) => canSimulate(arsenals, pitcherId, card.season, e.pitch))
+      .map((e) => [e.pitch, simulatorHref(pitcherId, card.season, e.pitch) as Route]),
+  )
   const measured = arsenals.find((a) => a.pitcherId === pitcherId && a.season === card.season)
 
   return (
@@ -50,7 +58,7 @@ export const FichaPage = async ({
         {measured === undefined ? null : (
           <ArsenalMap pitches={arsenalMapPitches(measured, leagueShapes)} />
         )}
-        <ArsenalTable card={card} />
+        <ArsenalTable card={card} simulatorHrefs={simulatorHrefs} />
         <PitcherPhysics scale={density} />
         <SeasonTable
           rows={seasonTimeline(seasonsByPitcher.get(pitcherId) ?? [], own)}

@@ -24,6 +24,7 @@ import {
   type PitchValues,
   type PitcherArsenal,
   type SimMode,
+  type SimulatorStart,
 } from '@/domain/simulator'
 import type { DensityScale } from '@/domain/density'
 import type { MovementMaps } from '@/domain/movementMap'
@@ -55,12 +56,15 @@ export const Simulator = ({
   arsenals,
   scale,
   validation,
+  start = null,
 }: {
   readonly distributions: Distributions
   readonly maps: MovementMaps
   readonly arsenals: readonly PitcherArsenal[]
   readonly scale: DensityScale
   readonly validation: Validation | null
+  /** De donde parte si se llega desde la Ficha; `null` es el lanzador por defecto. */
+  readonly start?: SimulatorStart | null
 }) => {
   const byKey = useMemo(() => new Map(arsenals.map((a) => [a.key, a])), [arsenals])
   const first = arsenals.find((a) => a.pitcherId === DEFAULT_PITCHER) ?? arsenals[0] ?? null
@@ -73,12 +77,20 @@ export const Simulator = ({
       : leagueMedian(distributions, sel.pitchType)
   }
 
-  const initial: Selection = {
-    mode: first === null ? 'lab' : 'pitcher',
-    pitcherKey: first?.key ?? '',
-    pitchType: baselinePitches(first?.sea ?? [])[0]?.pitchType ?? 'Four-Seam',
-    labHand: 'Right',
-  }
+  const initial: Selection =
+    start === null
+      ? {
+          mode: first === null ? 'lab' : 'pitcher',
+          pitcherKey: first?.key ?? '',
+          pitchType: baselinePitches(first?.sea ?? [])[0]?.pitchType ?? 'Four-Seam',
+          labHand: 'Right',
+        }
+      : {
+          mode: 'pitcher',
+          pitcherKey: start.pitcherKey,
+          pitchType: start.pitchType,
+          labHand: 'Right',
+        }
   const [selection, setSelection] = useState<Selection>(initial)
   const [values, setValues] = useState<PitchValues>(() => baselineOf(initial))
 
