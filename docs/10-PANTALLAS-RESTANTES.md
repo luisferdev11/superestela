@@ -6,6 +6,10 @@
 > Cada tarea dice qué es, por qué importa, qué entra y qué no, de dónde salen sus datos, qué código
 > ya existe para reutilizar y **cómo se sabe que está hecha**. `docs/08` sigue siendo la lista viva
 > de pendientes; este documento es el detalle de su carril de producto.
+>
+> **Nota del 28 de septiembre:** las pantallas se construyen sobre los artefactos de v0, como dice
+> §0. Lo que producto no hace es otro modelo ni otro puente: eso es del equipo de datos. Lo que se
+> necesita de ellos, y por qué, está en [`docs/11`](11-LO-QUE-NECESITA-PRODUCTO.md).
 
 ---
 
