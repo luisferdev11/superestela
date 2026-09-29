@@ -3,6 +3,7 @@ import type { Control, Hand, SimMode } from '@/domain/simulator'
 import type { StuffPlusReason } from '@/sources/simulateResponse'
 import type { FichaTab } from '@/domain/navigation'
 import type { SeasonStatus } from '@/domain/pitcher'
+import type { RosterGrouping } from '@/domain/roster'
 
 /**
  * El unico archivo con espanol. `CONVENTIONS.md` seccion 2.1 y seccion 4 regla
@@ -135,6 +136,32 @@ export const es = {
     approx: (n: number, season: number, min: number): string =>
       `El dataset no dice qui\u00e9n es de Diablos. Estos son los ${String(n)} lanzadores que en ${String(season)} lanzaron en altitud extrema la mayor parte de sus lanzamientos (m\u00ednimo ${String(min)} ah\u00ed): quien juega la mitad de sus juegos en casa lanza ah\u00ed la mayor\u00eda, sea abridor o relevista. Si \u00abaltitud extrema\u00bb incluye otro estadio, se cuela gente de otro equipo. Se reemplaza por la lista del club cuando la entregue (ADR 0008).`,
     lastScored: 'cada uno en su \u00faltima temporada con score',
+  },
+  plantel: {
+    title: 'Plantel',
+    subtitle:
+      'Lo que ya tenemos, temporada por temporada. El Radar mira candidatos; esto mira la casa.',
+    groupBy: 'Agrupar por',
+    groupings: { role: 'Rol', all: 'Todos' } satisfies Record<RosterGrouping, string>,
+    howTitle: 'C\u00f3mo leerlo',
+    how: (min: number): string =>
+      `Una l\u00ednea por lanzador y temporada, no por lanzador: el mismo brazo en dos a\u00f1os son dos mediciones, y la forma cambia m\u00e1s cuando hay un a\u00f1o de hueco (ADR 0005). Donde una temporada no alcanza los ${String(min)} lanzamientos en cada entorno, se dice; no se rellena con el promedio de las otras.`,
+    columns: [
+      'Pitcher',
+      'Mano',
+      'Temp.',
+      'Rol',
+      'Stuff+ HH',
+      'Nivel del mar',
+      '\u0394',
+      'Pitch principal',
+    ],
+    unscored: (hh: number, sea: number): string =>
+      `${String(hh)} en altitud, ${String(sea)} a nivel del mar`,
+    absent: 'no lanz\u00f3',
+    summary: (scored: number, unscored: number, pitchers: number): string =>
+      `${String(scored)} temporadas con score y ${String(unscored)} sin muestra suficiente, de ${String(pitchers)} lanzadores.`,
+    toFicha: 'Cada l\u00ednea con score lleva a su Ficha.',
   },
   deploy: {
     title: 'Despliegue',
