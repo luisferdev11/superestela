@@ -1,7 +1,9 @@
 import { notFound } from 'next/navigation'
 import { NavRail } from '@/components/chrome/NavRail'
 import { PitcherHeader } from './PitcherHeader'
+import { ArsenalTable } from './ArsenalTable'
 import { PitcherKpis } from './PitcherKpis'
+import { PitcherPhysics } from './PitcherPhysics'
 import { SeasonTable } from './SeasonTable'
 import { cardsOf, fichaHref, pickSeason, rankInSeason, seasonTimeline } from '@/domain/pitcher'
 import { loadDataset } from '@/sources/mockupSource'
@@ -39,6 +41,8 @@ export const FichaPage = async ({
           tabHrefs={{ summary: self }}
         />
         <PitcherKpis card={card} rank={{ sea: sea.rank, hh: hh.rank, of: sea.of }} />
+        <ArsenalTable card={card} />
+        <PitcherPhysics scale={density} />
         <SeasonTable
           rows={seasonTimeline(seasonsByPitcher.get(pitcherId) ?? [], own)}
           pitchersWithGap={pitchersWithGap}
