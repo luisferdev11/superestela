@@ -1,0 +1,40 @@
+name: PR base
+
+# A PR in a chain points at the previous PR's branch, and merging it there
+# lands nothing on main. It happened twice (#22-#31 and #37-#39): GitHub marks
+# them MERGED and main never gets the code. Branch protection only covers main,
+# so nothing stops a merge into a feat/ branch. This check cannot block it
+# either, but it turns the PR red and says why (CONVENTIONS.md section 6.3).
+#
+# Its own workflow, not a job in ci.yml: it has to rerun when the base is
+# changed (`edited`), and ci.yml would rerun every test on a title edit.
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, edited, ready_for_review]
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  base-is-main:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: the pr points at main
+        env:
+          BASE: ${{ github.event.pull_request.base.ref }}
+          IS_DRAFT: ${{ github.event.pull_request.draft }}
+        run: |
+          if [ "$BASE" = "main" ]; then
+            echo "Base: main."
+            exit 0
+          fi
+          echo "::error title=Este PR no apunta a main::Su base es '$BASE'. Fusionarlo ahi no lleva nada a main."
+          if [ "$IS_DRAFT" = "true" ]; then
+            echo "Es un draft de una cadena: esta bien que falle. Cuando el PR anterior entre a main, reapuntalo a main (Edit -> base) y marcalo listo."
+          else
+            echo "No lo fusiones asi. Espera a que el PR anterior entre a main, reapunta este a main (Edit -> base) y vuelve a correr."
+          fi
+          exit 1
