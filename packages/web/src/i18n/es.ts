@@ -154,6 +154,29 @@ export const es = {
         `Si ya estuviera en el roster, la palanca es el ${best}: es lo que mejor aguanta la altitud (${bestDelta} contra ${worstDelta} del ${worst}).`,
       rule: 'Regla provisional de producto: Trampa de Altitud, no al precio de nivel del mar; banda completa del Stuff+ HH arriba de 100, fichar; lo dem\u00e1s, con reservas. El veredicto final lo respalda el modelo del equipo de datos.',
     },
+    location: {
+      title: (id: string): string => `Arsenal \u00b7 ${id}`,
+      subtitle: 'C\u00f3mo son sus lanzamientos: la forma de cada uno, y d\u00f3nde los pone.',
+      withSample: (n: number): string =>
+        `${n.toLocaleString('es-MX')} lanzamientos suyos con ubicaci\u00f3n registrada.`,
+      panel: { sea: 'Nivel del mar', hh: 'Harp Hel\u00fa' } satisfies Record<Environment, string>,
+      pitches: (n: number): string => `${n.toLocaleString('es-MX')} lanzamientos`,
+      view: 'vista del c\u00e1tcher',
+      less: 'menos',
+      more: 'm\u00e1s',
+      stats: (height: string, zone: string, whiff: string): string =>
+        `Altura media ${height} ft \u00b7 ${zone}% en zona \u00b7 ${whiff}% de whiff por swing.`,
+      pending: 'Pendiente: la ubicaci\u00f3n la entrega el equipo de datos con Location+.',
+      pendingDetail:
+        'Aqu\u00ed va d\u00f3nde pone sus lanzamientos en cada entorno, su altura media, su porcentaje en zona y su whiff. El contrato est\u00e1 en docs/11.',
+      shapeTitle: 'Forma por lanzamiento \u00b7 mar \u2192 Harp Hel\u00fa',
+      readTitle: 'Lo que dice su ubicaci\u00f3n',
+      readPending:
+        'Si sobrecompensa la altura con la mira \u2014apunta m\u00e1s alto y pierde la zona\u2014 se lee aqu\u00ed cuando llegue la ubicaci\u00f3n. Sin ella no hay lectura: no se inventa.',
+      mapLabel: (env: string, n: number): string =>
+        `Ubicaci\u00f3n de ${String(n)} lanzamientos en ${env}, vista del c\u00e1tcher`,
+      pendingLabel: (env: string): string => `Ubicaci\u00f3n en ${env}: pendiente`,
+    },
     seasons: {
       title: 'Sus temporadas',
       rule: (min: number): string => `${String(min)} lanzamientos en cada entorno para tener score`,

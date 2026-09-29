@@ -27,3 +27,10 @@ export const arsenalsPath = (): string => path.join(dataDir(), 'arsenals.json')
 
 export const simulatorValidationPath = (): string =>
   path.join(dataDir(), 'simulator_validation.json')
+
+/**
+ * La ubicacion por lanzador-temporada y entorno. **Todavia no existe**: la
+ * entrega el equipo de datos con Location+ (`docs/11`). Mientras no este, la
+ * pestana Arsenal de la Ficha dice que esta pendiente.
+ */
+export const locationsPath = (): string => path.join(dataDir(), 'locations.json')
