@@ -9,6 +9,7 @@ import {
   homeShare,
   MIN_HOME_PITCHES,
   ROSTER_SIZE,
+  rosterRows,
 } from './roster'
 import { loadDataset } from '@/sources/mockupSource'
 
@@ -77,5 +78,47 @@ describe('lo que justifica la pantalla, sobre la cohorte del Radar', () => {
     expect(shift.rankCorrelation).toBeCloseTo(0.63845, 4)
     expect(shift.medianMove).toBe(40.25)
     expect(shift.topTenTurnover).toBe(8)
+  })
+})
+
+describe('el plantel, temporada por temporada', () => {
+  it('una fila por lanzador y temporada, de su primera a su ultima, con el hueco incluido', async () => {
+    const { cards, seasonsByPitcher } = await loadDataset()
+    const ids = approximateRoster(seasonsByPitcher, 2026)
+    const rows = rosterRows(ids, cards, seasonsByPitcher, 'all')
+    for (const id of ids) {
+      const seasons = (seasonsByPitcher.get(id) ?? []).map((e) => e.season)
+      const own = rows.filter((r) => r.pitcherId === id).map((r) => r.season)
+      expect(own[0]).toBe(Math.min(...seasons))
+      expect(own[own.length - 1]).toBe(Math.max(...seasons))
+      expect(own.length).toBe(Math.max(...seasons) - Math.min(...seasons) + 1)
+    }
+  })
+
+  it('una fila con score trae su tarjeta, y una sin score no inventa una', async () => {
+    const { cards, seasonsByPitcher } = await loadDataset()
+    const rows = rosterRows(
+      approximateRoster(seasonsByPitcher, 2026),
+      cards,
+      seasonsByPitcher,
+      'all',
+    )
+    for (const r of rows) expect(r.card !== null).toBe(r.status === 'scored')
+  })
+
+  it('por rol, los abridores van antes que los relevistas', async () => {
+    const { cards, seasonsByPitcher } = await loadDataset()
+    const rows = rosterRows(
+      approximateRoster(seasonsByPitcher, 2026),
+      cards,
+      seasonsByPitcher,
+      'role',
+    )
+    const lastRole = new Map(
+      rows.filter((r) => r.card !== null).map((r) => [r.pitcherId, r.card?.role ?? null]),
+    )
+    const order = rows.map((r) => lastRole.get(r.pitcherId) ?? null)
+    const firstReliever = order.indexOf('reliever')
+    if (firstReliever >= 0) expect(order.slice(firstReliever)).not.toContain('starter')
   })
 })

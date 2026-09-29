@@ -1,4 +1,4 @@
-import { cardsOf, pickSeason } from './pitcher'
+import { cardsOf, pickSeason, seasonTimeline, type SeasonRow } from './pitcher'
 import type { Environment, PitcherSeason, Role, SeasonEntry } from './types'
 
 /**
@@ -150,4 +150,45 @@ export const orderShift = (cohort: readonly PitcherSeason[]): OrderShift => {
     topTenTurnover: [...topHh].filter((id) => !topSea.has(id)).length,
     n,
   }
+}
+
+export type RosterRow = SeasonRow & {
+  readonly pitcherId: string
+  /** La tarjeta de esa temporada, si tiene score. */
+  readonly card: PitcherSeason | null
+}
+
+export type RosterGrouping = 'role' | 'all'
+
+const ROLE_ORDER: readonly (Role | null)[] = ['starter', 'reliever', null]
+
+/**
+ * El Plantel (P8): una fila por lanzador y temporada, con score o sin el, y el
+ * ano sin lanzar como su propia fila (ADR 0005). Nunca rellena una temporada
+ * con el promedio de las otras. Por rol, cada lanzador va con el rol de su
+ * ultima temporada con score.
+ */
+export const rosterRows = (
+  ids: readonly string[],
+  cards: readonly PitcherSeason[],
+  seasonsByPitcher: ReadonlyMap<string, readonly SeasonEntry[]>,
+  grouping: RosterGrouping,
+): readonly RosterRow[] => {
+  const rows = ids.flatMap((pitcherId) => {
+    const own = cardsOf(cards, pitcherId)
+    return seasonTimeline(seasonsByPitcher.get(pitcherId) ?? [], own).map((row) => ({
+      ...row,
+      pitcherId,
+      card: own.find((c) => c.season === row.season) ?? null,
+    }))
+  })
+  const roleOf = (id: string): Role | null => pickSeason(cardsOf(cards, id))?.role ?? null
+  return rows.sort(
+    (a, b) =>
+      (grouping === 'role'
+        ? ROLE_ORDER.indexOf(roleOf(a.pitcherId)) - ROLE_ORDER.indexOf(roleOf(b.pitcherId))
+        : 0) ||
+      a.pitcherId.localeCompare(b.pitcherId) ||
+      a.season - b.season,
+  )
 }
