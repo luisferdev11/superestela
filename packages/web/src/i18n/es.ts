@@ -130,6 +130,46 @@ export const es = {
         `${String(n)} lanzadores del dataset se ausentaron una temporada completa y volvieron.`,
     },
   },
+  roster: {
+    approxTitle: 'Plantel aproximado',
+    approx: (n: number, season: number, min: number): string =>
+      `El dataset no dice qui\u00e9n es de Diablos. Estos son los ${String(n)} lanzadores que en ${String(season)} lanzaron en altitud extrema la mayor parte de sus lanzamientos (m\u00ednimo ${String(min)} ah\u00ed): quien juega la mitad de sus juegos en casa lanza ah\u00ed la mayor\u00eda, sea abridor o relevista. Si \u00abaltitud extrema\u00bb incluye otro estadio, se cuela gente de otro equipo. Se reemplaza por la lista del club cuando la entregue (ADR 0008).`,
+    lastScored: 'cada uno en su \u00faltima temporada con score',
+  },
+  deploy: {
+    title: 'Despliegue',
+    subtitle: (n: number): string =>
+      `Los mejores del plantel para el estadio donde se juega. ${String(n)} lanzadores, cada uno en su \u00faltima temporada con score.`,
+    stadium: 'Estadio de la serie',
+    envs: {
+      hh: (rho: string): string => `Harp Hel\u00fa \u00b7 \u03c1 ${rho}`,
+      sea: (rho: string): string => `Nivel del mar \u00b7 \u03c1 ${rho}`,
+    },
+    ruleTitle: 'La regla',
+    rule: 'Se ordena por Stuff+ absoluto del entorno elegido, nunca por el \u0394: el \u0394 dice cu\u00e1nto te van a cobrar por \u00e9l, el absoluto dice qui\u00e9n es mejor hoy, aqu\u00ed. Se agrupa por rol porque comparar abridores y relevistas es comparar dos oficios. El orden de pitcheo no se sugiere: eso lo decide el m\u00e1nager, con contexto que este tablero no ve.',
+    whyTitle: 'Por qu\u00e9 existe',
+    why: (rho: string, move: string, turnover: number, n: number): string =>
+      `En los ${String(n)} lanzadores del Radar, el orden en casa y en gira correlaciona ${rho} (Spearman): el cambio mediano es de ${move} posiciones, y ${String(turnover)} de los 10 mejores en casa no est\u00e1n entre los 10 mejores de gira.`,
+    noMedium: 'Altitud media no est\u00e1: no hay Stuff+ por lanzador en ese entorno.',
+    groupCount: (n: number): string => (n === 1 ? '1 lanzador' : `${String(n)} lanzadores`),
+    noRole: 'Sin rol',
+    boardTitle: 'Plantel completo y c\u00f3mo cambia el orden entre entornos',
+    columns: [
+      'Pitcher',
+      'Temp.',
+      'Mano',
+      'Rol',
+      'Stuff+ HH',
+      'Nivel del mar',
+      'Pos. casa',
+      'Pos. gira',
+      'Cambio',
+      'Pitch principal',
+    ],
+    moveNote:
+      'Cambio: posiciones que gana o pierde al pasar de la gira a casa. La temporada en \u00e1mbar avisa que su dato no es de la temporada m\u00e1s reciente.',
+    band: 'Cada Stuff+ con su banda al 95%',
+  },
   sim: {
     title: 'Simulador de Pitch',
     subtitle:
