@@ -53,6 +53,7 @@ export const toPitcherSeason = (raw: PitcherCardRaw): PitcherSeason => ({
     raw.altitude_tax_se !== null
       ? { value: raw.altitude_tax_runs_per_9, se: raw.altitude_tax_se }
       : null,
+  altitudeTaxMeasured: toMetric(raw.altitude_tax_runs_per_9, raw.altitude_tax_se),
   meanIvbLossIn: raw.mean_ivb_loss_in,
   altitudeTrap: raw.altitude_trap,
   arsenal: raw.arsenal.map(toArsenalEntry),

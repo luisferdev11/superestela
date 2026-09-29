@@ -30,3 +30,11 @@ export const NAV_GROUPS: readonly NavGroup[] = [
     ],
   },
 ]
+
+/**
+ * Las pestanas de la Ficha. Proyeccion y Plan son sus propias pantallas
+ * (`docs/10` T4 y T6): se listan, pero no son enlaces hasta que existan.
+ */
+export type FichaTab = 'summary' | 'arsenal' | 'projection' | 'plan'
+
+export const FICHA_TABS: readonly FichaTab[] = ['summary', 'arsenal', 'projection', 'plan']

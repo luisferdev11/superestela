@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { MetricValue } from '@/components/metric/MetricValue'
 import { InconclusiveValue } from '@/components/metric/InconclusiveValue'
 import { RoleChip } from '@/components/chip/RoleChip'
@@ -5,6 +6,7 @@ import { TrapFlag } from '@/components/chip/TrapFlag'
 import { dominantPitch } from '@/domain/arsenal'
 import { hasLargeDelta, isStaleSeason } from '@/domain/emphasis'
 import { formatNumber, formatSigned } from '@/domain/format'
+import { fichaHref } from '@/domain/pitcher'
 import type { PitcherSeason } from '@/domain/types'
 
 const cell = 'px-3 py-2 text-right border-b border-(--color-border-hairline)'
@@ -23,11 +25,12 @@ export const RadarRow = ({
   return (
     <tr className={card.altitudeTrap ? 'bg-(--color-diablos-wash)' : undefined}>
       <td className={cellLeft}>
-        <span
-          className={`border-b border-(--color-border-underline) ${card.altitudeTrap ? 'font-semibold' : ''}`}
+        <Link
+          href={fichaHref(card.pitcherId, card.season)}
+          className={`border-b border-(--color-border-underline) text-inherit no-underline ${card.altitudeTrap ? 'font-semibold' : ''}`}
         >
           {card.pitcherId}
-        </span>{' '}
+        </Link>{' '}
         <TrapFlag trap={card.altitudeTrap} />
       </td>
       <td className={`${cell} ${stale ? 'text-(--color-semantic-stale)' : 'text-(--color-text)'}`}>
