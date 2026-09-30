@@ -18,6 +18,7 @@ import {
   fichaHref,
   pickSeason,
   planHref,
+  projectionHref,
   rankInSeason,
   seasonTimeline,
 } from '@/domain/pitcher'
@@ -64,6 +65,7 @@ export const FichaPage = async ({
       tabHrefs={{
         summary: fichaHref(pitcherId, card.season),
         arsenal: fichaArsenalHref(pitcherId, card.season),
+        projection: projectionHref(pitcherId, card.season),
         plan: planHref(pitcherId, card.season),
       }}
     />

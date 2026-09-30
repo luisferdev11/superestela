@@ -4,6 +4,7 @@ import type { StuffPlusReason } from '@/sources/simulateResponse'
 import type { FichaTab } from '@/domain/navigation'
 import type { SeasonStatus } from '@/domain/pitcher'
 import type { Verdict } from '@/domain/reading'
+import type { Target } from '@/domain/projection'
 
 /**
  * El unico archivo con espanol. `CONVENTIONS.md` seccion 2.1 y seccion 4 regla
@@ -239,6 +240,39 @@ export const es = {
     limitTitle: 'L\u00edmite del modelo',
     limit:
       'Estas ganancias est\u00e1n en puntos de Stuff+, no en carreras. El puente de Stuff+ a carreras todav\u00eda no existe: construirlo es el trabajo del modelo final (A3), y es lo que convertir\u00eda este plan en carreras. Las bandas suponen que los pitches son muestras independientes.',
+  },
+  projection: {
+    title: 'Proyecci\u00f3n',
+    subtitle:
+      'C\u00f3mo se ver\u00eda su arsenal en el estadio de la pr\u00f3xima serie, a partir de lo medido a nivel del mar.',
+    target: 'Estadio destino',
+    targets: {
+      hh: (rho: string): string => `Harp Hel\u00fa \u00b7 \u03c1 ${rho}`,
+      medium: (rho: string): string => `Altitud media \u00b7 \u03c1 ${rho}`,
+    } satisfies Record<Target, (rho: string) => string>,
+    physics: (rho: string, factor: string): string =>
+      `El aire del destino tiene densidad ${rho} respecto al nivel del mar. El break escala con la densidad medida: cada pulgada de IVB y de break horizontal se multiplica por ${factor}. Velocidad y release no cambian. Es la misma ley que usan el Simulador y el Traductor.`,
+    extrapolation:
+      'Extrapolaci\u00f3n: la ley y su banda se midieron entre nivel del mar y altitud extrema. En altitud media no hay Stuff+ por lanzador, as\u00ed que aqu\u00ed solo se proyecta la forma.',
+    measuredNote:
+      'Ya tiene muestra en el Harp Hel\u00fa: la Ficha trae la medici\u00f3n. La columna \u00abmedido\u00bb sirve para ver cu\u00e1nto acierta la proyecci\u00f3n.',
+    agreement: (inBand: number, checked: number): string =>
+      `${String(inBand)} de ${String(checked)} pitches con muestra en altura caen dentro de la banda al 95% en los dos ejes.`,
+    columns: [
+      'Pitch',
+      'Uso',
+      'IVB mar',
+      'IVB proyectado',
+      'HB mar',
+      'HB proyectado',
+      'Medido IVB \u00b7 HB',
+      'En banda',
+    ],
+    inBand: 'en banda',
+    outOfBand: 'fuera',
+    noSample: 'sin muestra',
+    note: 'Pulgadas; HB del lado del brazo. El \u00b1 es un error est\u00e1ndar: el error medido de la ley por tipo de pitch, el mismo que muestra el Simulador. \u00abEn banda\u00bb compara lo medido contra la banda al 95%, \u00b11.96 errores, en los dos ejes.',
+    none: 'Sin muestra a nivel del mar para proyectar esta temporada.',
   },
   sim: {
     title: 'Simulador de Pitch',
