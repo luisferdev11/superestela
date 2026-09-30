@@ -3,6 +3,7 @@ import type { Control, Hand, SimMode } from '@/domain/simulator'
 import type { StuffPlusReason } from '@/sources/simulateResponse'
 import type { FichaTab } from '@/domain/navigation'
 import type { SeasonStatus } from '@/domain/pitcher'
+import type { Verdict } from '@/domain/reading'
 import type { RosterGrouping } from '@/domain/roster'
 
 /**
@@ -110,6 +111,73 @@ export const es = {
         `A nivel del mar es el #${String(sea)} de ${String(of)} en su temporada; en el Harp Helú, el #${String(hh)}.`,
       belowAverage: 'En el Harp Helú queda por debajo del promedio.',
     },
+    arsenal: {
+      title: 'Arsenal \u00b7 nivel del mar \u2192 Harp Hel\u00fa',
+      columns: ['Pitch', 'Uso', 'Velo', 'IVB', '|HB|', 'Spin', 'Stuff+', 'Whiff', 'Simulador'],
+      simulate: 'abrir \u2192',
+      simulateLabel: (pitch: string): string => `Abrir el ${pitch} en el Simulador`,
+      measuredAt:
+        'Uso, velocidad, spin y whiff, medidos en el Harp Hel\u00fa. IVB y |HB| en pulgadas; Stuff+ con su banda al 95%.',
+      noSea: 'sin muestra a nivel del mar',
+    },
+    map: {
+      title: 'Mapa de movimiento',
+      sea: 'nivel del mar',
+      hh: 'Harp Hel\u00fa',
+      league: 'promedio LMB',
+      up: 'sube',
+      down: 'cae',
+      arm: 'brazo \u25b8',
+      glove: '\u25c2 guante',
+      axisX: 'break horizontal (pulgadas)',
+      axisY: 'IVB',
+      usage: (share: number): string => `${(100 * share).toFixed(1)}% de uso`,
+      label: (pitch: string, sea: string, hh: string): string =>
+        `${pitch}: ${sea} a nivel del mar, ${hh} en el Harp Hel\u00fa`,
+      none: 'sin muestra',
+      note: 'Forma medida en cada entorno, no simulada. Break horizontal del lado del brazo. El uso es el de nivel del mar; la tabla da el del Harp Hel\u00fa.',
+    },
+    physics: {
+      title: 'El mecanismo f\u00edsico.',
+      body: (density: string, magnus: string): string =>
+        `El aire del Harp Hel\u00fa tiene densidad ${density} respecto al nivel del mar, medida desde la trayectoria de la bola. El efecto Magnus escala con esa densidad: ${magnus}. El brazo es el mismo; lo que cambia es cu\u00e1nto break puede sostener el aire.`,
+    },
+    reading: {
+      title: 'Lectura del sistema',
+      verdict: {
+        sign: 'Fichar.',
+        signWithReservations: 'Fichar con reservas.',
+        notAtSeaLevelPrice: 'No fichar al precio que marcan sus n\u00fameros de nivel del mar.',
+      } satisfies Record<Verdict, string>,
+      main: (pitch: string, usage: string, delta: string): string =>
+        `Su pitch principal es el ${pitch}, al ${usage}% de uso, y en el Harp Hel\u00fa cambia ${delta} puntos de Stuff+.`,
+      lever: (best: string, bestDelta: string, worst: string, worstDelta: string): string =>
+        `Si ya estuviera en el roster, la palanca es el ${best}: es lo que mejor aguanta la altitud (${bestDelta} contra ${worstDelta} del ${worst}).`,
+      rule: 'Regla provisional de producto: Trampa de Altitud, no al precio de nivel del mar; banda completa del Stuff+ HH arriba de 100, fichar; lo dem\u00e1s, con reservas. El veredicto final lo respalda el modelo del equipo de datos.',
+    },
+    location: {
+      title: (id: string): string => `Arsenal \u00b7 ${id}`,
+      subtitle: 'C\u00f3mo son sus lanzamientos: la forma de cada uno, y d\u00f3nde los pone.',
+      withSample: (n: number): string =>
+        `${n.toLocaleString('es-MX')} lanzamientos suyos con ubicaci\u00f3n registrada.`,
+      panel: { sea: 'Nivel del mar', hh: 'Harp Hel\u00fa' } satisfies Record<Environment, string>,
+      pitches: (n: number): string => `${n.toLocaleString('es-MX')} lanzamientos`,
+      view: 'vista del c\u00e1tcher',
+      less: 'menos',
+      more: 'm\u00e1s',
+      stats: (height: string, zone: string, whiff: string): string =>
+        `Altura media ${height} ft \u00b7 ${zone}% en zona \u00b7 ${whiff}% de whiff por swing.`,
+      pending: 'Pendiente: la ubicaci\u00f3n la entrega el equipo de datos con Location+.',
+      pendingDetail:
+        'Aqu\u00ed va d\u00f3nde pone sus lanzamientos en cada entorno, su altura media, su porcentaje en zona y su whiff. El contrato est\u00e1 en docs/11.',
+      shapeTitle: 'Forma por lanzamiento \u00b7 mar \u2192 Harp Hel\u00fa',
+      readTitle: 'Lo que dice su ubicaci\u00f3n',
+      readPending:
+        'Si sobrecompensa la altura con la mira \u2014apunta m\u00e1s alto y pierde la zona\u2014 se lee aqu\u00ed cuando llegue la ubicaci\u00f3n. Sin ella no hay lectura: no se inventa.',
+      mapLabel: (env: string, n: number): string =>
+        `Ubicaci\u00f3n de ${String(n)} lanzamientos en ${env}, vista del c\u00e1tcher`,
+      pendingLabel: (env: string): string => `Ubicaci\u00f3n en ${env}: pendiente`,
+    },
     seasons: {
       title: 'Sus temporadas',
       rule: (min: number): string => `${String(min)} lanzamientos en cada entorno para tener score`,
@@ -130,6 +198,48 @@ export const es = {
       gapContext: (n: number): string =>
         `${String(n)} lanzadores del dataset se ausentaron una temporada completa y volvieron.`,
     },
+  },
+  plan: {
+    title: 'Plan de Desarrollo',
+    subtitle: 'Qu\u00e9 cambiar de su arsenal para que sobreviva en casa, en orden de impacto.',
+    today: 'Stuff+ HH hoy',
+    pitcher: 'Lanzador',
+    deficitTitle: (deficit: string): string =>
+      `D\u00f3nde se pierde \u00b7 contribuci\u00f3n de cada lanzamiento al d\u00e9ficit de ${deficit} puntos`,
+    surplusTitle: 'D\u00f3nde gana \u00b7 contribuci\u00f3n de cada lanzamiento contra el promedio',
+    deficitRule: 'uso \u00d7 distancia a 100',
+    share: (usage: string, stuff: string): string => `${usage}% \u00b7 Stuff+ ${stuff}`,
+    culprit: (pitch: string): string =>
+      `Todo el d\u00e9ficit est\u00e1 en un solo lanzamiento: el ${pitch}. El plan no es arreglar todo, es arreglar ese pitch o usarlo menos.`,
+    spread: 'El d\u00e9ficit se reparte entre varios lanzamientos.',
+    noDeficit:
+      'No hay d\u00e9ficit: su arsenal rinde por encima del promedio en el Harp Hel\u00fa.',
+    labels: { degrades: 'Se degrada', holds: 'Aguanta', changes: 'Qu\u00e9 cambia' },
+    degrades: (pitch: string, delta: string, sea: string, hh: string, ivb: string): string =>
+      `Su ${pitch} cambia ${delta} puntos de Stuff+ en el Harp Hel\u00fa, de ${sea} a ${hh}. ${ivb}`,
+    ivb: (sea: string, hh: string): string => `Su IVB pasa de ${sea}\u2033 a ${hh}\u2033.`,
+    holds: (pitch: string, delta: string, sea: string, hh: string, ivb: string): string =>
+      `Su ${pitch} cambia ${delta} puntos (${sea} \u2192 ${hh}). ${ivb}`,
+    holdsWhy: (ivb: string, worstIvb: string, worst: string): string =>
+      `Tiene menos ride que perder: ${ivb}\u2033 de IVB contra ${worstIvb}\u2033 del ${worst}, y el aire delgado se lleva sobre todo el break.`,
+    changes: (
+      from: string,
+      fromBefore: string,
+      fromAfter: string,
+      to: string,
+      before: string,
+      after: string,
+    ): string =>
+      `Bajar el ${from} de ${fromBefore}% a ${fromAfter}% de uso y d\u00e1rselo al ${to} lleva su Stuff+ HH ponderado de ${before} a ${after}. Nada cambia en el brazo: solo qu\u00e9 lanza y cu\u00e1ndo.`,
+    noShift: (to: string, from: string): string =>
+      `Mover uso no lo compensa: el ${to} pierde menos, pero en el Harp Hel\u00fa sigue rindiendo menos que el ${from}. La palanca aqu\u00ed no es el reparto.`,
+    shiftBy: 'Mover',
+    points: (n: number): string => `${String(n)} pts`,
+    tryInSimulator: (pitch: string): string => `Probar el ${pitch} en el Simulador \u2192`,
+    none: 'No hay plan que proponer: hace falta al menos dos pitches con score en los dos entornos.',
+    limitTitle: 'L\u00edmite del modelo',
+    limit:
+      'Estas ganancias est\u00e1n en puntos de Stuff+, no en carreras. El puente de Stuff+ a carreras todav\u00eda no existe: construirlo es el trabajo del modelo final (A3), y es lo que convertir\u00eda este plan en carreras. Las bandas suponen que los pitches son muestras independientes.',
   },
   roster: {
     approxTitle: 'Plantel aproximado',

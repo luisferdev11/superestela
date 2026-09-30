@@ -111,3 +111,11 @@ export const fichaHref = (pitcherId: string, season?: number): Route =>
   (season === undefined
     ? `/pitchers/${pitcherId}`
     : `/pitchers/${pitcherId}/${String(season)}`) as Route
+
+/** La pestana Arsenal de una temporada. Siempre con temporada: el arsenal es de un ano. */
+export const fichaArsenalHref = (pitcherId: string, season: number): Route =>
+  `${fichaHref(pitcherId, season)}/arsenal` as Route
+
+/** El Plan de Desarrollo de una temporada (P5). */
+export const planHref = (pitcherId: string, season: number): Route =>
+  `/plan/${pitcherId}/${String(season)}` as Route

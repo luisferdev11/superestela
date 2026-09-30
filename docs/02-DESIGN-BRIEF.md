@@ -148,7 +148,9 @@ Lo que el reto pide, literal: ingresar las características físicas de un pitch
 
 > *Qué se degrada* — cuál lanzamiento pierde más y cuántas pulgadas.
 > *Qué aguanta* — cuál conserva su forma y por qué físicamente.
-> *Qué cambia* — qué reparto de uso lo compensa, en puntos de Stuff+ HH y en carreras por 9 entradas.
+> *Qué cambia* — qué reparto de uso lo compensa, en puntos de Stuff+ HH.
+
+**Sin carreras.** Esta plantilla pedía también carreras por 9 entradas, pero el puente Stuff+ → carreras no existe (r = −0.08, `docs/05`). La P5 imprime solo Stuff+, con su banda, y dice por qué. Cuando A3 cierre el puente, las carreras vuelven aquí. Si el pitch que aguanta rinde menos en altura que el que se degrada, pasarle uso empeora el arsenal: la pantalla lo dice en lugar de proponerlo (47 de 349 tarjetas con plan).
 
 Deriva del contraste entre el arsenal actual y los perfiles resistentes de la cohorte.
 
