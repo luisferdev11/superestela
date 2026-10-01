@@ -45,7 +45,7 @@ export const OutcomesTable = ({
       </thead>
       <tbody>
         {[...entries]
-          .sort((a, b) => b.season - a.season)
+          .sort((a, b) => a.season - b.season)
           .flatMap((entry) =>
             ENVIRONMENTS.map((env) => {
               const o = outcomesOf(entry, env)

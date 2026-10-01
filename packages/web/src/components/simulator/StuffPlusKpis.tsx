@@ -27,13 +27,13 @@ export const StuffPlusKpis = ({
   const delta = result.altitudeDelta
   const tile = (label: string, env: 'sea' | 'harpHelu', accent: string) => (
     <div
-      className="flex grow flex-col gap-1 border border-t-[3px] border-(--color-border) bg-(--color-surface-card) px-5 py-4"
+      className="flex min-w-0 grow basis-0 flex-col gap-1 border border-t-[3px] border-(--color-border) bg-(--color-surface-card) px-5 py-4"
       style={{ borderTopColor: `var(${accent})` }}
     >
       <div className="text-[10px] font-bold tracking-widest text-(--color-text-muted) uppercase">
         {label}
       </div>
-      <div className="text-[40px] leading-none tracking-tight">
+      <div className="text-[32px] leading-none tracking-tight 2xl:text-[40px]">
         <MetricValue metric={result[env].stuffPlus} />
       </div>
       {baseline?.[env].stuffPlus ? (
@@ -47,13 +47,13 @@ export const StuffPlusKpis = ({
     <div className="flex gap-4">
       {tile(es.sim.kpi.sea, 'sea', '--color-altitude-sea')}
       {tile(es.sim.kpi.hh, 'harpHelu', '--color-altitude-extreme')}
-      <div className="flex grow flex-col gap-1 bg-(--color-ink) px-5 py-4 text-white">
+      <div className="flex min-w-0 grow basis-0 flex-col gap-1 bg-(--color-ink) px-5 py-4 text-white">
         <div className="text-[10px] font-bold tracking-widest text-(--color-text-faint) uppercase">
           {es.sim.kpi.delta}
         </div>
         {delta === null ? null : (
           <>
-            <div className="text-[40px] leading-none tracking-tight tabular-nums">
+            <div className="text-[32px] leading-none tracking-tight whitespace-nowrap tabular-nums 2xl:text-[40px]">
               {formatSigned(delta.total.value)}
               <span className="pl-2 text-base text-(--color-text-faint)">
                 {'±'} {formatNumber(delta.total.se)}

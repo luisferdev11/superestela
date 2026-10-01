@@ -24,6 +24,8 @@ export const es = {
   unknownRole: 'Sin rol',
   insufficientSample: 'muestra insuficiente',
   insufficientSampleShort: 'muestra insuf.',
+  handShort: { Right: 'D', Left: 'Z' } as Record<string, string | undefined>,
+  handLong: { Right: 'Diestro', Left: 'Zurdo' } as Record<string, string | undefined>,
   inconclusive: 'no concluyente',
   inconclusiveShort: 'no concl.',
   brand: { top: 'SUPER', bottom: 'ESTELA' },
@@ -258,7 +260,7 @@ export const es = {
         `Altura media ${height} ft \u00b7 ${zone}% en zona \u00b7 ${whiff}% de whiff por swing.`,
       pending: 'Pendiente: la ubicaci\u00f3n la entrega el equipo de datos con Location+.',
       pendingDetail:
-        'Aqu\u00ed va d\u00f3nde pone sus lanzamientos en cada entorno, su altura media, su porcentaje en zona y su whiff. El contrato est\u00e1 en docs/11.',
+        'Aqu\u00ed va d\u00f3nde pone sus lanzamientos en cada entorno, su altura media, su porcentaje en zona y su whiff.',
       shapeTitle: 'Forma por lanzamiento \u00b7 mar → altitud extrema',
       readTitle: 'Lo que dice su ubicaci\u00f3n',
       readPending:
@@ -337,7 +339,7 @@ export const es = {
     none: 'No hay plan que proponer: hace falta al menos dos pitches con score en los dos entornos.',
     limitTitle: 'L\u00edmite del modelo',
     limit:
-      'Estas ganancias est\u00e1n en puntos de Stuff+, no en carreras. El puente de Stuff+ a carreras todav\u00eda no existe: construirlo es el trabajo del modelo final (A3), y es lo que convertir\u00eda este plan en carreras. Las bandas suponen que los pitches son muestras independientes.',
+      'Estas ganancias est\u00e1n en puntos de Stuff+, no en carreras. El puente de Stuff+ a carreras todav\u00eda no existe: construirlo es el trabajo del modelo final, y es lo que convertir\u00eda este plan en carreras. Las bandas suponen que los pitches son muestras independientes.',
   },
   projection: {
     title: 'Proyecci\u00f3n',
@@ -358,7 +360,7 @@ export const es = {
       `${String(inBand)} de ${String(checked)} pitches con muestra en altura caen dentro de la banda al 95% en los dos ejes.`,
     columns: [
       'Pitch',
-      'Uso',
+      'Uso (mar)',
       'IVB mar',
       'IVB proyectado',
       'HB mar',
@@ -375,7 +377,7 @@ export const es = {
   roster: {
     approxTitle: 'Plantel aproximado',
     approx: (n: number, season: number, min: number): string =>
-      `El dataset no dice qui\u00e9n es de Diablos. Estos son los ${String(n)} lanzadores que en ${String(season)} lanzaron en altitud extrema la mayor parte de sus lanzamientos (m\u00ednimo ${String(min)} ah\u00ed): quien juega la mitad de sus juegos en casa lanza ah\u00ed la mayor\u00eda, sea abridor o relevista. «Altitud extrema» son cinco parques, así que la lista mezcla lanzadores de esos cinco equipos: el Despliegue y el Plantel son demostrativos, para enseñar cómo se usarían. Se reemplaza por la lista del club cuando la entregue (ADR 0008).`,
+      `El dataset no dice qui\u00e9n es de Diablos. Estos son los ${String(n)} lanzadores que en ${String(season)} lanzaron en altitud extrema la mayor parte de sus lanzamientos (m\u00ednimo ${String(min)} ah\u00ed): quien juega la mitad de sus juegos en casa lanza ah\u00ed la mayor\u00eda, sea abridor o relevista. «Altitud extrema» son cinco parques, así que la lista mezcla lanzadores de esos cinco equipos: el Despliegue y el Plantel son demostrativos, para enseñar cómo se usarían. Se reemplaza por la lista del club si la entrega.`,
     lastScored: 'cada uno en su \u00faltima temporada con score',
   },
   plantel: {
@@ -386,7 +388,7 @@ export const es = {
     groupings: { role: 'Rol', all: 'Todos' } satisfies Record<RosterGrouping, string>,
     howTitle: 'C\u00f3mo leerlo',
     how: (min: number): string =>
-      `Una l\u00ednea por lanzador y temporada, no por lanzador: el mismo brazo en dos a\u00f1os son dos mediciones, y la forma cambia m\u00e1s cuando hay un a\u00f1o de hueco (ADR 0005). Donde una temporada no alcanza los ${String(min)} lanzamientos en cada entorno, se dice; no se rellena con el promedio de las otras.`,
+      `Una l\u00ednea por lanzador y temporada, no por lanzador: el mismo brazo en dos a\u00f1os son dos mediciones, y la forma cambia m\u00e1s cuando hay un a\u00f1o de hueco. Donde una temporada no alcanza los ${String(min)} lanzamientos en cada entorno, se dice; no se rellena con el promedio de las otras.`,
     columns: [
       'Pitcher',
       'Mano',
@@ -554,7 +556,7 @@ export const es = {
       whiff: (value: string): string => `${value} whiff`,
     },
     provenance: (modelId: string, passed: number, total: number, usesArsenal: boolean): string =>
-      `Stuff+ del modelo ${modelId} · pasó ${String(passed)} de ${String(total)} compuertas · ${usesArsenal ? 'usa' : 'no usa'} el arsenal`,
+      `Stuff+ del modelo ${modelId} · pasó ${String(passed)} de ${String(total)} compuertas · ${usesArsenal ? 'usa' : 'no usa'} el arsenal.`,
   },
   translator: {
     title: 'Traductor de Altitud',

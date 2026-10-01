@@ -99,7 +99,15 @@ export const Plantel = ({
                   )}{' '}
                   {card === null ? null : <TrapFlag trap={card.altitudeTrap} />}
                 </td>
-                <td className={cell}>{card?.throws ?? ''}</td>
+                <td className={cell}>
+                  {card === null ? (
+                    ''
+                  ) : (
+                    <span title={es.handLong[card.throws] ?? card.throws}>
+                      {es.handShort[card.throws] ?? card.throws}
+                    </span>
+                  )}
+                </td>
                 <td
                   className={`${cell} ${card !== null && season < latestSeason ? 'text-(--color-semantic-stale)' : ''}`}
                 >

@@ -9,6 +9,7 @@ import { hasLargeDelta, isStaleSeason } from '@/domain/emphasis'
 import { formatNumber, formatSigned } from '@/domain/format'
 import { fichaHref } from '@/domain/pitcher'
 import type { PitcherSeason } from '@/domain/types'
+import { es } from '@/i18n/es'
 
 // Base sin alineacion: con `text-right` en la base, un `text-left` agregado
 // pierde segun el orden de Tailwind, no segun el orden de las clases.
@@ -40,7 +41,11 @@ export const RadarRow = ({
       <td className={`${cell} ${stale ? 'text-(--color-semantic-stale)' : 'text-(--color-text)'}`}>
         {card.season}
       </td>
-      <td className={cell}>{card.throws}</td>
+      <td className={cell}>
+        <span title={es.handLong[card.throws] ?? card.throws}>
+          {es.handShort[card.throws] ?? card.throws}
+        </span>
+      </td>
       <td className={cell}>
         <MetricValue metric={card.stuffPlusHh} />
       </td>
