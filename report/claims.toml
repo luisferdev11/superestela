@@ -1,0 +1,43 @@
+# Lo que el documento técnico afirma, y de dónde sale cada número.
+#
+# `report/build.py` comprueba cada afirmación contra su artefacto y FALLA si la fuente no existe
+# o si el número ya no coincide, a los dígitos que se citan (`docs/05` §4.3). Una afirmación sin
+# corrida se declara con `awaits` y no puede aparecer en el documento hasta que la tenga.
+#
+# Para agregar una: id, texto tal como va en el documento, sección (`docs/05` §5), y `source` +
+# `path` (+ `value`, si el texto cita un número) o `awaits`. Un paso `"id=S7"` elige, en una
+# lista, el elemento cuyo `id` es `S7`.
+
+# --- §1 Entorno ------------------------------------------------------------------------------
+
+[[claim]]
+id = "ra9-sea"
+text = "A nivel del mar la liga anota 4.84 carreras por 9 entradas"
+section = "§1"
+source = "evidence.json"
+path = ["run_environment", "No Altitude", "ra9"]
+value = 4.84
+
+[[claim]]
+id = "ra9-extreme"
+text = "En altitud extrema anota 7.55"
+section = "§1"
+source = "evidence.json"
+path = ["run_environment", "Extreme Altitude", "ra9"]
+value = 7.55
+
+[[claim]]
+id = "ra9-effect"
+text = "La altitud extrema suma 56% de carreras"
+section = "§1"
+source = "evidence.json"
+path = ["run_environment", "altitude_effect", "ra9_pct"]
+value = 56.0
+
+# --- Sin corrida todavía ---------------------------------------------------------------------
+
+[[claim]]
+id = "stuff-to-runs"
+text = "Un cambio de Stuff+ vale carreras"
+section = "§7"
+awaits = "A3 (equipo de datos)"
