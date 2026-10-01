@@ -122,3 +122,30 @@ def test_a_file_missing_a_required_column_is_refused_by_its_vendor_name(model):
 def test_a_model_that_needs_the_arsenal_is_refused(model):
     with pytest.raises(NotImplementedError, match="ADR 0009"):
         score_frame(raw_pitches(), replace(model, uses_arsenal=True), REFERENCE)
+
+
+def test_scoring_in_chunks_gives_the_same_scores(model):
+    raw = raw_pitches()
+    whole = score_frame(raw, model, REFERENCE)
+    chunked = score_frame(raw, model, REFERENCE, chunk_size=7)
+    assert np.allclose(whole.stuff_plus, chunked.stuff_plus)
+    assert np.allclose(whole.stuff_plus_se, chunked.stuff_plus_se)
+
+
+def test_a_pitch_without_environment_does_not_move_its_games_density(model):
+    raw = raw_pitches()
+    with_gap = raw.copy()
+    with_gap.loc[0, "altitude_category"] = None
+    base = score_frame(raw, model, REFERENCE).density_index
+    gap = score_frame(with_gap, model, REFERENCE).density_index
+    # Row 0 left the mean of its game (g0, the even rows), as in training;
+    # the other game (g1, the odd rows) is untouched.
+    assert gap[2] != base[2]
+    assert gap[1] == base[1]
+
+
+def test_a_row_with_several_problems_reports_the_first_in_order(model):
+    raw = raw_pitches(n=1)
+    raw.loc[0, "AutoPitchType"] = "Splitter"
+    raw.loc[0, "SpinRate"] = np.nan
+    assert score_frame(raw, model, REFERENCE).status[0] == UNSUPPORTED_PITCH_TYPE

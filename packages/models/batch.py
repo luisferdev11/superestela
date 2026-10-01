@@ -57,6 +57,7 @@ NUMERIC = REQUIRED[2:]
 # The trajectory at release and the game, as the tracking system delivers them.
 TRAJECTORY = ("vx0", "vy0", "vz0", "ax0", "ay0", "az0")
 GAME = "game_anon_id"
+PITCHER = "pitcher_anon_id"
 
 # A game's density is the mean of its pitches' readings, and one reading is
 # noisy: sd 0.0765 around its game's mean (evidence.json ->
@@ -114,7 +115,14 @@ def density_index(frame: pd.DataFrame, reference_game_drag_k: float) -> tuple[pd
 
     if all(c in frame for c in (*TRAJECTORY, GAME)):
         traj = frame[list(TRAJECTORY)].astype(float)
+        # The same rows training averaged (analysis/evidence.py, main): a pitch
+        # with no environment or no pitcher never entered a game's mean there,
+        # so it does not enter it here either, or one pitch would score
+        # differently depending on what else the file holds.
         ok = traj.notna().all(axis=1) & frame[GAME].notna()
+        for column in ("environment", PITCHER):
+            if column in frame:
+                ok &= frame[column].notna()
         if ok.any():
             parts = decompose_trajectory(*(traj.loc[ok, c].to_numpy() for c in TRAJECTORY))
             drag = pd.Series(parts.drag_k, index=traj.index[ok])
@@ -139,7 +147,7 @@ def score_frame(
     raw: pd.DataFrame,
     scorer: Scorer,
     reference_game_drag_k: float,
-    chunk_size: int = 50_000,
+    chunk_size: int = 50_000,  # ~1 GB of draws at 20 bags; bounds memory, not results
 ) -> pd.DataFrame:
     """Score every row of a file with the dataset's columns.
 
@@ -176,12 +184,17 @@ def score_frame(
     status[frame[list(NUMERIC)].isna().any(axis=1)] = MISSING_FEATURES
     status[~frame["pitch_type"].isin(scorer.pitch_types)] = UNSUPPORTED_PITCH_TYPE
 
+    # Several problems on one row report the first of: unsupported type,
+    # missing features, unknown hand, missing density (the assignments above
+    # run in reverse, so the earlier ones win).
     value = np.full(len(frame), np.nan)
     se = np.full(len(frame), np.nan)
     rows = np.flatnonzero(status.to_numpy() == SCORED)
     for start in range(0, len(rows), chunk_size):
         at = rows[start : start + chunk_size]
         draws = scorer.draws(_pitch_inputs(frame.iloc[at]), rho.iloc[at].tolist())
+        if draws.shape[0] < 2:
+            raise ValueError(f"{scorer.model_id} returned one draw: a score needs its spread")
         # The contract's draws are the model's uncertainty: their mean is the
         # Stuff+ and their spread its standard error, as the API reports them.
         value[at] = draws.mean(axis=0)
