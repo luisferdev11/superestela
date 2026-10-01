@@ -24,7 +24,7 @@ export const MetricValue = ({
   }
 
   return (
-    <span className="tabular-nums" aria-label={formatMetric(metric, digits)}>
+    <span className="tabular-nums whitespace-nowrap" aria-label={formatMetric(metric, digits)}>
       <span className="font-semibold">{formatNumber(metric.value, digits)}</span>{' '}
       <span className="text-(--color-text-muted)">
         {'±'} {formatNumber(metric.se, digits)}

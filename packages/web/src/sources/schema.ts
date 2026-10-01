@@ -101,8 +101,13 @@ export const densityLevelSchema = z
   })
   .strict()
 
+export const scaleSchema = z
+  .object({ kind: z.enum(['league', 'per_environment']), description: z.string() })
+  .strict()
+
 export const mockupDataSchema = z
   .object({
+    scale: scaleSchema,
     pitchers: z.array(pitcherCardSchema),
     pitcher_seasons: z.record(z.string(), z.array(seasonEntrySchema)),
     pitch_profiles: z.record(z.string(), z.unknown()),

@@ -12,9 +12,14 @@ import {
   type RadarFilters as Filters,
 } from '@/domain/filters'
 import { summarize, type CohortSummary } from '@/domain/cohort'
-import { rankBy } from '@/domain/ranking'
-import type { Environment, PitcherSeason } from '@/domain/types'
+import { RADAR_SORTS, sortRadar, type RadarSort } from '@/domain/ranking'
+import { RadarGuide } from './RadarGuide'
+import type { PitcherSeason } from '@/domain/types'
+import type { ScaleKind } from '@/domain/scale'
 import { es } from '@/i18n/es'
+
+/** Pitcher, Rol y Pitch principal: las columnas de texto, por su posicion en `es.columns`. */
+const LEFT_ALIGNED = new Set([0, 9, 10])
 
 /**
  * La unica isla de cliente de la pantalla, y lo mas abajo posible del arbol
@@ -26,20 +31,25 @@ export const RadarTable = ({
   latestSeason,
   cohortSummary,
   pitches,
+  scale = 'league',
 }: {
   readonly cards: readonly PitcherSeason[]
   readonly latestSeason: number
   readonly cohortSummary: CohortSummary
   readonly pitches: readonly string[]
+  /** Como se define el 100 (`domain/scale.ts`): cambia la ayuda del Δ y la guia. */
+  readonly scale?: ScaleKind
 }) => {
-  const [environment, setEnvironment] = useState<Environment>('hh')
+  // La ayuda del Δ depende de la escala; las demas columnas no.
+  const help = [...es.columnHelp.slice(0, 5), es.scale[scale].deltaHelp, ...es.columnHelp.slice(5)]
+  const [sort, setSort] = useState<RadarSort>('hh')
   const [filters, setFilters] = useState<Filters>(NO_FILTERS)
-  const handleSortChange = (next: Environment) => () => {
-    setEnvironment(next)
+  const handleSortChange = (next: RadarSort) => () => {
+    setSort(next)
   }
 
   const matching = applyFilters(cards, filters)
-  const rows = rankBy(matching, environment)
+  const rows = sortRadar(matching, sort)
   const shown = summarize(matching)
 
   return (
@@ -58,23 +68,25 @@ export const RadarTable = ({
           {es.sortBy}
         </span>
         <div className="flex border border-(--color-border-strong)">
-          {(['hh', 'sea'] as const).map((option) => (
+          {RADAR_SORTS.map((option) => (
             <button
               key={option}
               type="button"
               onClick={handleSortChange(option)}
-              aria-pressed={environment === option}
+              aria-pressed={sort === option}
               className={
-                environment === option
+                sort === option
                   ? 'bg-(--color-ink) px-3.5 py-1.5 text-xs font-semibold text-white'
                   : 'bg-(--color-surface-card) px-3.5 py-1.5 text-xs text-(--color-text)'
               }
             >
-              {es.environment[option]}
+              {es.radarSort[option]}
             </button>
           ))}
         </div>
       </div>
+
+      <RadarGuide scale={scale} />
 
       <div className="border border-(--color-border) bg-(--color-surface-card) p-5">
         <table className="w-full border-collapse">
@@ -84,8 +96,9 @@ export const RadarTable = ({
                 <th
                   key={column}
                   scope="col"
+                  title={help[index]}
                   className={`border-b border-(--color-border-strong) px-3 pb-2 text-[10px] font-bold tracking-wider whitespace-nowrap text-(--color-text-muted) uppercase ${
-                    index === 0 || index === 7 || index === 8 ? 'text-left' : 'text-right'
+                    LEFT_ALIGNED.has(index) ? 'text-left' : 'text-right'
                   }`}
                 >
                   {column}

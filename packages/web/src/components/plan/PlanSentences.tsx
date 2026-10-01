@@ -12,6 +12,7 @@ import {
   type Plan,
   type ShapeLoss,
 } from '@/domain/plan'
+import type { ScaleKind } from '@/domain/scale'
 import { es } from '@/i18n/es'
 
 const Row = ({
@@ -53,8 +54,11 @@ const ivbText = (p: ShapeLoss): string =>
 export const PlanSentences = ({
   plan,
   simulatorHref,
+  scale = 'league',
 }: {
   readonly plan: Plan
+  /** Como se define el 100: decide si el Δ es «cuanto cambia» o «cuanto cambia su lugar». */
+  readonly scale?: ScaleKind
   /** Para probar en el Simulador el pitch que aguanta, si tiene de donde partir. */
   readonly simulatorHref: Route | null
 }) => {
@@ -70,7 +74,7 @@ export const PlanSentences = ({
       <div className="flex grow flex-col gap-3.5 px-6 py-5">
         <Row label={es.plan.labels.degrades} first>
           <p className="m-0">
-            {es.plan.degrades(
+            {es.scale[scale].degrades(
               degrades.pitch,
               formatSignedMetric(degrades.delta),
               formatNumber(seaOf(degrades, plan)),
@@ -81,7 +85,7 @@ export const PlanSentences = ({
         </Row>
         <Row label={es.plan.labels.holds}>
           <p className="m-0">
-            {es.plan.holds(
+            {es.scale[scale].holds(
               holds.pitch,
               formatSignedMetric(holds.delta),
               formatNumber(seaOf(holds, plan)),

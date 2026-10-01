@@ -1,4 +1,8 @@
 {
+  "scale": {
+    "kind": "league",
+    "description": "stuff_plus_v0: 100 - 10 z over the whole league, both environments and all pitch types"
+  },
   "pitchers": [
     {
       "pitcher_id": "pitcher_01075",

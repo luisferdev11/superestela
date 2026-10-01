@@ -6,7 +6,14 @@ import { PitcherHeader } from '@/components/pitcher/PitcherHeader'
 import { PitcherSelect } from './PitcherSelect'
 import { PlanDeficit } from './PlanDeficit'
 import { PlanSentences } from './PlanSentences'
-import { cardsOf, fichaArsenalHref, fichaHref, pickSeason, planHref } from '@/domain/pitcher'
+import {
+  cardsOf,
+  fichaArsenalHref,
+  fichaHref,
+  pickSeason,
+  planHref,
+  projectionHref,
+} from '@/domain/pitcher'
 import { planOf } from '@/domain/plan'
 import { canSimulate, simulatorHref } from '@/domain/simulator'
 import { loadDataset } from '@/sources/mockupSource'
@@ -25,7 +32,7 @@ export const PlanPage = async ({
   readonly pitcherId: string
   readonly season?: number
 }) => {
-  const [{ cards, density, nPitches, seasons }, { arsenals }] = await Promise.all([
+  const [{ scale, cards, density, nPitches, seasons }, { arsenals }] = await Promise.all([
     loadDataset(),
     loadSimulatorDataset(),
   ])
@@ -55,6 +62,7 @@ export const PlanPage = async ({
         tabHrefs={{
           summary: fichaHref(pitcherId, card.season),
           arsenal: fichaArsenalHref(pitcherId, card.season),
+          projection: projectionHref(pitcherId, card.season),
           plan: planHref(pitcherId, card.season),
         }}
       />
@@ -82,7 +90,7 @@ export const PlanPage = async ({
       ) : (
         <>
           <PlanDeficit plan={plan} />
-          <PlanSentences plan={plan} simulatorHref={tryHref} />
+          <PlanSentences plan={plan} simulatorHref={tryHref} scale={scale} />
         </>
       )}
       <aside className="flex gap-4 border-l-[3px] border-(--color-diablos) bg-(--color-diablos-wash) px-4.5 py-3.5">

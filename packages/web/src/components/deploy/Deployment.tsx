@@ -133,7 +133,11 @@ export const Deployment = ({
                 >
                   {card.season}
                 </td>
-                <td className={cell}>{card.throws}</td>
+                <td className={cell}>
+                  <span title={es.handLong[card.throws] ?? card.throws}>
+                    {es.handShort[card.throws] ?? card.throws}
+                  </span>
+                </td>
                 <td className={cellLeft}>
                   {card.role === null ? es.unknownRole : es.role[card.role]}
                 </td>
@@ -157,6 +161,12 @@ export const Deployment = ({
         </table>
         <div className="flex flex-wrap justify-between gap-2 border-t border-(--color-ink) pt-3 text-[12px] text-(--color-text-muted)">
           <span>{es.deploy.moveNote}</span>
+          <span>
+            <span aria-hidden="true" className="font-bold text-(--color-semantic-trap)">
+              {'▌ '}
+            </span>
+            {es.legend.trap}
+          </span>
           <span>{es.deploy.band}</span>
         </div>
       </section>

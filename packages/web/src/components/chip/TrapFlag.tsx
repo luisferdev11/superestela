@@ -1,7 +1,7 @@
 import { es } from '@/i18n/es'
 
 /**
- * Se ve fuerte a nivel del mar y colapsa en el Harp Helu. 58 de 370
+ * Se ve fuerte a nivel del mar y colapsa en altitud extrema. 58 de 370
  * temporadas.
  *
  * **Nunca depende solo del color** (docs/02 seccion 1, semanticos): lleva

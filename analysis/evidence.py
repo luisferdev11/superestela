@@ -1185,6 +1185,13 @@ def main():
     with open(os.path.join(OUT, "mockup_data.json"), "w") as f:
         json.dump(
             {
+                # How 100 is defined for these scores. The web words the delta and the
+                # trap from this, so when the final model moves to 100 per environment
+                # (Q&A, 30 sep; docs/11 section 8.3) the screens follow without edits.
+                "scale": {
+                    "kind": "league",
+                    "description": "stuff_plus_v0: 100 - 10 z over the whole league, both environments and all pitch types",
+                },
                 "pitchers": cards,
                 "pitcher_seasons": history,
                 "pitch_profiles": R["pitch_profiles"],

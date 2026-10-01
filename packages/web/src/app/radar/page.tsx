@@ -15,7 +15,7 @@ import { es } from '@/i18n/es'
 export const dynamic = 'force-static'
 
 export default async function RadarPage() {
-  const { cards, seasonsByPitcher, density, nPitches, seasons } = await loadDataset()
+  const { scale, cards, seasonsByPitcher, density, nPitches, seasons } = await loadDataset()
   const cohort = selectRadarCohort(cards, seasonsByPitcher)
   const summary = summarize(cohort)
 
@@ -34,6 +34,7 @@ export default async function RadarPage() {
           latestSeason={Math.max(...seasons)}
           cohortSummary={summary}
           pitches={dominantPitchTypes(cohort)}
+          scale={scale}
         />
       </main>
     </div>
