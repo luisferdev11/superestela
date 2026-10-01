@@ -407,7 +407,8 @@ orden de valor para la demo:
 1. **El «±» no significa lo mismo en todas las pantallas.** En el Radar, la Ficha y el Despliegue es
    la banda al 95%. En el Simulador, el Traductor y la Proyección es un error estándar, y la
    Proyección lo dice. En el Plan, «93.3 ± 0.7» (la tarjeta) convive con «93.3 ± 0.4» (el arsenal
-   ponderado). Propuesta: una sola convención, la banda al 95%, y que cada pantalla lo diga.
+   ponderado). **Decidido el 1 de octubre:** una sola convención, la banda al 95%, y que cada pantalla
+   lo diga (`docs/12` §2.1). Falta aplicarlo en el código.
 2. **La Ficha Técnica del prototipo** («de dónde vienen los −23.0 del four-seam»: cuánto se debe al
    IVB, al HB, a la velocidad y al spin) no existe. Para cada feature hace falta una atribución del
    modelo (SHAP, A1), así que es **trabajo de datos**; el Simulador ya separa forma de entorno.

@@ -75,9 +75,10 @@ decide datos (los textos ya están listos para las dos, `es.scale`).
 
       ✔ Un CSV de prueba generado (nunca commiteado) llena la tabla, y su test pasa. El ejemplo
       muestra lo proyectado contra lo medido. El subtítulo dice para quién es.
-- [ ] **5 · Decidir la convención del «±».** Hoy, en el Radar y la Ficha es la banda al 95%; en el
-      Impuesto, el Simulador y el Traductor es un error estándar. Propuesta: banda al 95% en todas.
-      ✔ Una sola convención, y la guía del Radar la dice.
+- [ ] **5 · Aplicar la convención del «±».** **Decidida el 1 de octubre: la banda al 95% en todas las
+      pantallas** (`docs/12` §2.1). Hoy, en el Radar y la Ficha ya es la banda; en el Impuesto, el
+      Simulador, el Traductor y la Proyección es un error estándar, y hay que pasarlos a la banda.
+      ✔ Ninguna pantalla muestra un error estándar como «±», y la guía del Radar dice la convención.
 - [ ] **6 · Cifras de los documentos sin corrida** (tabla abajo, en «Revisión de código»): se
       calculan en `evidence.py` o se quitan de los documentos.
       ✔ `grep` de cada una en `docs/` solo devuelve citas con su artefacto.
