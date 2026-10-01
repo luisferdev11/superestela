@@ -8,7 +8,7 @@
 
 | Componente | n | Tasa base | AUC fuera de pliegue |
 | :--- | ---: | ---: | ---: |
-| P(whiff | swing) | 290,817 | 0.240 | 0.637 |
-| P(chase | out of zone) | 401,607 | 0.342 | 0.544 |
-| P(groundball | batted) | 220,611 | 0.282 | 0.606 |
-| P(hard hit 95+ | batted) | 178,760 | 0.166 | 0.568 |
+| P(whiff \| swing) | 290,817 | 0.240 | 0.637 |
+| P(chase \| out of zone) | 401,607 | 0.342 | 0.544 |
+| P(groundball \| batted) | 220,611 | 0.282 | 0.606 |
+| P(hard hit 95+ \| batted) | 178,760 | 0.166 | 0.568 |
