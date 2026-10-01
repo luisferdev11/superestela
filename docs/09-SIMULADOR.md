@@ -343,6 +343,15 @@ $$
   «modelo en validación».
 - **El score es el mismo del Radar.** Un pitch no puede valer distinto en dos pantallas (compuerta S4).
 - Detalle del contrato: [ADR 0007](adr/0007-contrato-del-scorer-y-escala.md).
+- **Origen distinto del nivel del mar** (1 oct, para el Traductor, P3). `POST /simulate` acepta
+  `originDensityIndex`, que por defecto es 1.0. Un pitch medido en altitud media (0.903) se lleva
+  primero al nivel del mar con la misma ley de §3.2, y desde ahí se simula como siempre.
+  - Su forma a nivel del mar ya no es la entrada: lleva la banda de esa traslación.
+  - La banda en altitud extrema suma las dos en cuadratura. Es conservador, porque la ley y su error
+    se midieron entre nivel del mar y altitud extrema; desde altitud media es extrapolación (🟡), y
+    la pantalla lo dice.
+  - El arsenal que acompaña al pitch se traslada con el mismo factor, para que los diferenciales
+    contra la recta se midan en el mismo aire.
 
 ---
 

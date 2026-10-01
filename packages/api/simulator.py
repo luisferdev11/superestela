@@ -47,13 +47,23 @@ class SimulatorService:
     arsenals: dict[str, Any]  # arsenals.json
 
     def simulate(self, req: s.SimulateRequest) -> s.SimulateResponse:
-        """Simulate one pitch at sea level and at Harp Helu."""
+        """Simulate one pitch at sea level and at extreme altitude.
+
+        A pitch measured elsewhere (``origin_density_index`` below 1) is first
+        brought to sea level by the same density law, and its sea-level shape
+        then carries that translation's band. The altitude band adds both in
+        quadrature: conservative, since the law was measured from sea level and
+        its error from medium altitude is an extrapolation.
+        """
+        req, sea_se = _to_sea_level(req)
         p = req.pitch
         factor = break_scaling_factor(DENSITY_INDEX_SEA_LEVEL, DENSITY_INDEX_EXTREME)
         moved = translate(_shape(p), DENSITY_INDEX_SEA_LEVEL, DENSITY_INDEX_EXTREME, p.pitch_type)
         high = p.model_copy(
             update={"ivb": moved.shape.ivb, "horizontal_break": moved.shape.horizontal_break}
         )
+        high_ivb_se = float(np.hypot(sea_se[0], moved.ivb_se))
+        high_hb_se = float(np.hypot(sea_se[1], moved.horizontal_break_se))
 
         fastball, sea_diff, high_diff = self._differentials(req, factor)
         stuff_sea, stuff_high, delta = self._score(p, high)
@@ -62,6 +72,7 @@ class SimulatorService:
         percentiles = self.evidence["plausibility"][p.pitch_type]["movement_per_krpm_percentiles"]
 
         return s.SimulateResponse(
+            origin_density_index=req.origin_density_index,
             model_id=self.scorer.model_id if self.scorer else None,
             uses_arsenal=bool(self.scorer and self.scorer.uses_arsenal),
             stuff_plus_shown=self.reason is None,
@@ -72,8 +83,8 @@ class SimulatorService:
                 DENSITY_INDEX_SEA_LEVEL,
                 p,
                 s.Shape(
-                    ivb=s.Metric(value=p.ivb, se=0.0),
-                    horizontal_break=s.Metric(value=p.horizontal_break, se=0.0),
+                    ivb=s.Metric(value=p.ivb, se=sea_se[0]),
+                    horizontal_break=s.Metric(value=p.horizontal_break, se=sea_se[1]),
                 ),
                 stuff_sea,
                 sea_diff,
@@ -85,10 +96,8 @@ class SimulatorService:
                 DENSITY_INDEX_EXTREME,
                 high,
                 s.Shape(
-                    ivb=s.Metric(value=moved.shape.ivb, se=moved.ivb_se),
-                    horizontal_break=s.Metric(
-                        value=moved.shape.horizontal_break, se=moved.horizontal_break_se
-                    ),
+                    ivb=s.Metric(value=moved.shape.ivb, se=high_ivb_se),
+                    horizontal_break=s.Metric(value=moved.shape.horizontal_break, se=high_hb_se),
                 ),
                 stuff_high,
                 high_diff,
@@ -224,6 +233,32 @@ class SimulatorService:
             )
             for _, rec, q in found[:COMPARABLES_SHOWN]
         ]
+
+
+def _to_sea_level(req: s.SimulateRequest) -> tuple[s.SimulateRequest, tuple[float, float]]:
+    """Bring a pitch and its arsenal measured elsewhere to sea level, with the band it costs.
+
+    Returns the request as if measured at sea level, and the (ivb, horizontal
+    break) standard error of that translation: zero when it already was.
+    """
+    origin = req.origin_density_index
+    if origin == DENSITY_INDEX_SEA_LEVEL:
+        return req, (0.0, 0.0)
+    moved = translate(_shape(req.pitch), origin, DENSITY_INDEX_SEA_LEVEL, req.pitch.pitch_type)
+    factor = break_scaling_factor(origin, DENSITY_INDEX_SEA_LEVEL)
+    pitch = req.pitch.model_copy(
+        update={"ivb": moved.shape.ivb, "horizontal_break": moved.shape.horizontal_break}
+    )
+    arsenal = [
+        a.model_copy(
+            update={"ivb": a.ivb * factor, "horizontal_break": a.horizontal_break * factor}
+        )
+        for a in req.arsenal or []
+    ] or req.arsenal
+    return req.model_copy(update={"pitch": pitch, "arsenal": arsenal}), (
+        moved.ivb_se,
+        moved.horizontal_break_se,
+    )
 
 
 def _shape(p: s.PitchIn) -> PitchShape:
