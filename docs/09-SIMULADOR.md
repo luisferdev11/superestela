@@ -346,10 +346,12 @@ $$
 - **Origen distinto del nivel del mar** (1 oct, para el Traductor, P3). `POST /simulate` acepta
   `originDensityIndex`, que por defecto es 1.0. Un pitch medido en altitud media (0.903) se lleva
   primero al nivel del mar con la misma ley de §3.2, y desde ahí se simula como siempre.
-  - Su forma a nivel del mar ya no es la entrada: lleva la banda de esa traslación.
-  - La banda en altitud extrema suma las dos en cuadratura. Es conservador, porque la ley y su error
-    se midieron entre nivel del mar y altitud extrema; desde altitud media es extrapolación (🟡), y
-    la pantalla lo dice.
+  - Cada forma proyectada lleva la banda de la ley **escalada por lo que viaja**, en log-densidad:
+    cero donde se midió y la banda completa para el viaje medido, de nivel del mar a altitud extrema.
+    Desde altitud media, la forma a nivel del mar lleva unos dos tercios de la banda y la de altitud
+    extrema un tercio. Es la misma ley aplicada a un viaje más corto, no dos errores independientes;
+    que el error crezca así es un supuesto (🟡), porque solo se midió un viaje.
+  - El origen acepta el rango medido del índice (`contracts.schemas`, 0.70 a 1.05); fuera de él, 422.
   - El arsenal que acompaña al pitch se traslada con el mismo factor, para que los diferenciales
     contra la recta se midan en el mismo aire.
 

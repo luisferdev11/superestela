@@ -9,6 +9,7 @@ translates, and the rest of the screen still works.
 from __future__ import annotations
 
 import json
+import math
 import os
 from dataclasses import dataclass, replace
 from typing import Any, Literal, cast
@@ -50,20 +51,25 @@ class SimulatorService:
         """Simulate one pitch at sea level and at extreme altitude.
 
         A pitch measured elsewhere (``origin_density_index`` below 1) is first
-        brought to sea level by the same density law, and its sea-level shape
-        then carries that translation's band. The altitude band adds both in
-        quadrature: conservative, since the law was measured from sea level and
-        its error from medium altitude is an extrapolation.
+        brought to sea level by the same density law. Each projected shape
+        carries the law's band scaled by how far it travels (``_trip_share``):
+        zero where it was measured, the full measured band for the trip from
+        sea level to extreme altitude. One law applied over a shorter trip, not
+        two independent errors added.
         """
-        req, sea_se = _to_sea_level(req)
+        origin = req.origin_density_index
+        req = _to_sea_level(req)
         p = req.pitch
         factor = break_scaling_factor(DENSITY_INDEX_SEA_LEVEL, DENSITY_INDEX_EXTREME)
         moved = translate(_shape(p), DENSITY_INDEX_SEA_LEVEL, DENSITY_INDEX_EXTREME, p.pitch_type)
         high = p.model_copy(
             update={"ivb": moved.shape.ivb, "horizontal_break": moved.shape.horizontal_break}
         )
-        high_ivb_se = float(np.hypot(sea_se[0], moved.ivb_se))
-        high_hb_se = float(np.hypot(sea_se[1], moved.horizontal_break_se))
+        to_sea = _trip_share(origin, DENSITY_INDEX_SEA_LEVEL)
+        to_high = _trip_share(origin, DENSITY_INDEX_EXTREME)
+        sea_se = (moved.ivb_se * to_sea, moved.horizontal_break_se * to_sea)
+        high_ivb_se = moved.ivb_se * to_high
+        high_hb_se = moved.horizontal_break_se * to_high
 
         fastball, sea_diff, high_diff = self._differentials(req, factor)
         stuff_sea, stuff_high, delta = self._score(p, high)
@@ -235,19 +241,28 @@ class SimulatorService:
         ]
 
 
-def _to_sea_level(req: s.SimulateRequest) -> tuple[s.SimulateRequest, tuple[float, float]]:
-    """Bring a pitch and its arsenal measured elsewhere to sea level, with the band it costs.
+def _trip_share(origin: float, target: float) -> float:
+    """How much of the measured trip (sea level to extreme altitude) a translation covers.
 
-    Returns the request as if measured at sea level, and the (ivb, horizontal
-    break) standard error of that translation: zero when it already was.
+    The law's band (``core.translate.BREAK_ERROR_IN``) was measured on that one
+    trip. A shorter one, in log-density, carries a proportional share of it:
+    zero when the shape stays where it was measured. Beyond that trip it is an
+    extrapolation, and the share grows past 1.
     """
+    return abs(math.log(target / origin)) / abs(math.log(DENSITY_INDEX_EXTREME))
+
+
+def _to_sea_level(req: s.SimulateRequest) -> s.SimulateRequest:
+    """Bring a pitch and its arsenal measured elsewhere to sea level, by the density law."""
     origin = req.origin_density_index
     if origin == DENSITY_INDEX_SEA_LEVEL:
-        return req, (0.0, 0.0)
-    moved = translate(_shape(req.pitch), origin, DENSITY_INDEX_SEA_LEVEL, req.pitch.pitch_type)
+        return req
     factor = break_scaling_factor(origin, DENSITY_INDEX_SEA_LEVEL)
     pitch = req.pitch.model_copy(
-        update={"ivb": moved.shape.ivb, "horizontal_break": moved.shape.horizontal_break}
+        update={
+            "ivb": req.pitch.ivb * factor,
+            "horizontal_break": req.pitch.horizontal_break * factor,
+        }
     )
     arsenal = [
         a.model_copy(
@@ -255,10 +270,7 @@ def _to_sea_level(req: s.SimulateRequest) -> tuple[s.SimulateRequest, tuple[floa
         )
         for a in req.arsenal or []
     ] or req.arsenal
-    return req.model_copy(update={"pitch": pitch, "arsenal": arsenal}), (
-        moved.ivb_se,
-        moved.horizontal_break_se,
-    )
+    return req.model_copy(update={"pitch": pitch, "arsenal": arsenal})
 
 
 def _shape(p: s.PitchIn) -> PitchShape:
