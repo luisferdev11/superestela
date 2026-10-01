@@ -169,12 +169,16 @@ export type FilePitch = PitchValues & { readonly pitchType: PitchType; readonly 
 
 /**
  * Lo que la API resumio de un archivo de TrackMan, como filas de la tabla: el
- * uso en porcentaje, que es como se captura a mano. La API ya lo dejo del lado
+ * uso en porcentaje, que es como se captura a mano, y cada valor a dos decimales. La API ya lo dejo del lado
  * del brazo y en a lo mas seis tipos.
  */
 export const fileRows = (pitches: readonly FilePitch[]): TranslatorRow[] =>
   pitches.slice(0, MAX_ROWS).map((p) => ({
-    ...pickValues(p),
+    // Dos decimales, como `arsenals.json`: una mediana trae seis y no cabe en la celda.
+    ...(Object.fromEntries(CONTROLS.map((c) => [c, Math.round(100 * p[c]) / 100])) as Record<
+      Control,
+      number
+    >),
     pitchType: p.pitchType,
     usage: Math.round(1000 * p.usage) / 10,
   }))

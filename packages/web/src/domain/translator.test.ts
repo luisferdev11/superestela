@@ -145,6 +145,9 @@ describe('el archivo y la validacion', () => {
       { ...PITCH, pitchType: 'Slider', usage: 0.3333 },
     ])
     expect(rows.map((r) => r.usage)).toEqual([66.7, 33.3])
+    expect(fileRows([{ ...PITCH, ivb: -16.9504, pitchType: 'Curveball', usage: 1 }])[0]?.ivb).toBe(
+      -16.95,
+    )
     expect(isReady(rows)).toBe(true)
   })
 
