@@ -1,6 +1,6 @@
 # ADR 0009 · El comando que puntúa un archivo es de producto; el modelo que contesta es de datos
 
-**Fecha:** 1 de octubre de 2026 · **Estado:** aceptada
+**Fecha:** 1 de octubre de 2026 · **Estado:** propuesta, en revisión (#61–#63)
 
 ## Contexto
 
@@ -59,9 +59,14 @@ uv run python -m models.score pitches.csv scores.csv [--model artifacts/<modelo>
   arrastre medio del juego dividido entre el arrastre de referencia a nivel del mar del
   entrenamiento (`evidence.json` → `scoring_reference.reference_game_drag_k`). Así el número
   significa lo mismo que en los datos con que se entrenó: `density_source = trajectory`.
+- **La media del juego usa las mismas filas que el entrenamiento:** las que tienen entorno y
+  lanzador. Sin ese filtro, el mismo pitch cambiaba hasta 4 puntos según qué más trajera el archivo.
+- **El archivo debe traer todos los lanzamientos de cada juego.** Un archivo con un solo lanzador
+  mide el aire con menos lecturas; por eso existe el mínimo de abajo.
 - **Un juego necesita al menos 50 lanzamientos.** Una lectura sola tiene desviación de 0.0765
   alrededor de la media de su juego (`scoring_reference.within_game_pitch_sd`). Con 50, el error de
-  la media es 0.011, una cuarta parte de la variación entre juegos (`per_game_sd`, 0.04).
+  la media es 0.011, entre una cuarta y una tercera parte de la variación entre juegos (`per_game_sd`:
+  0.04 a nivel del mar, 0.032 en altitud extrema).
 - Con menos de 50, o sin trayectoria, la fila toma la densidad medida de su `altitude_category`
   (`density_source = category`). Si tampoco hay categoría, conserva la lectura ruidosa y lo dice
   (`thin_game`), o se queda sin score (`missing`).
@@ -75,8 +80,10 @@ uv run python -m models.score pitches.csv scores.csv [--model artifacts/<modelo>
 
 ## Verificación
 
-- Sobre los 619,648 lanzamientos con trayectoria del dataset, con el mismo filtro del entrenamiento,
-  el comando reproduce **exactamente** el Stuff+ y la banda del puente (diferencia máxima 0.0).
+- Sobre el dataset completo, **sin filtrar**, el comando reproduce **exactamente** el Stuff+, la banda
+  y el índice de densidad del puente en los 619,648 lanzamientos con trayectoria que usó el
+  entrenamiento (diferencia máxima 0.0). Es una corrida a mano, porque necesita el dataset; la
+  mecánica la fijan los tests.
 - 108 lanzamientos de juegos con menos de 50 toman la densidad de su categoría, por la regla del
   punto 3.
 - Al mover el reflejo al contrato, las compuertas dan el mismo veredicto, número por número; solo

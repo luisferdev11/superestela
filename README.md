@@ -94,7 +94,8 @@ uv run python -m models.score pitches.csv scores.csv
   - Obligatorias: `AutoPitchType`, `PitcherThrows`, `RelSpeed`, `SpinRate`, `SpinAxis`,
     `InducedVertBreak`, `HorzBreak`, `Extension`, `RelHeight`, `RelSide`.
   - Para medir la densidad del aire por juego, como en el entrenamiento: `vx0`, `vy0`, `vz0`, `ax0`,
-    `ay0`, `az0` y `game_anon_id`. Sin ellas, o en un juego con menos de 50 lanzamientos, se usa la
+    `ay0`, `az0` y `game_anon_id`, **con todos los lanzamientos de cada juego**. Sin ellas, o en un
+    juego con menos de 50 lanzamientos, se usa la
     densidad medida de su `altitude_category`.
 - **Salida:** una fila por cada fila de entrada, con `pitch_id`, `stuff_plus`, `stuff_plus_se`,
   `status`, `density_index`, `density_source` y `model_id`.
@@ -110,7 +111,7 @@ uv run python -m models.score pitches.csv scores.csv
 | `artifacts/*.joblib` | El modelo: cualquier objeto que cumpla `models.scoring.Scorer` | Datos | Con cada modelo |
 
 Por defecto contesta el **puente v0** (`artifacts/stuff_plus_v0_bridge.joblib`, que entrena
-`analysis/simulator_gates.py`). **No es el modelo final**: su R² es 0.003 y está ahí para que el
+`analysis/simulator_gates.py`). **No es el modelo final**: su modelo base, el v0, tiene R² 0.003 (`evidence.json → stuff_plus_v0`), y está ahí para que el
 comando exista antes que el modelo (ADR 0007). El modelo final entra con `--model`, sin tocar el
 comando, y el `model_id` de cada fila dice siempre cuál contestó.
 
