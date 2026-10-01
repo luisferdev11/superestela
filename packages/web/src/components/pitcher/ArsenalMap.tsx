@@ -40,7 +40,16 @@ const PitchLabel = ({
  * simulado. SVG a mano (`docs/07` seccion 5.1), con las cifras en la etiqueta
  * para un lector de pantalla.
  */
-export const ArsenalMap = ({ pitches }: { readonly pitches: readonly MapPitch[] }) => {
+export const ArsenalMap = ({
+  pitches,
+  legend = { sea: es.ficha.map.sea, hh: es.ficha.map.hh },
+  note = es.ficha.map.note,
+}: {
+  readonly pitches: readonly MapPitch[]
+  /** El Traductor dibuja formas proyectadas, no medidas, y lo dice en la leyenda y la nota. */
+  readonly legend?: { readonly sea: string; readonly hh: string }
+  readonly note?: string
+}) => {
   const half = mapHalfSpan(pitches)
   const x = (hb: number): number => M.left + (SIZE * (hb + half)) / (2 * half)
   const y = (ivb: number): number => M.top + (SIZE * (half - ivb)) / (2 * half)
@@ -56,18 +65,20 @@ export const ArsenalMap = ({ pitches }: { readonly pitches: readonly MapPitch[] 
             <span aria-hidden="true" className="text-(--color-altitude-sea)">
               {'○ '}
             </span>
-            {es.ficha.map.sea}
+            {legend.sea}
           </span>
           <span>
             <span aria-hidden="true" className="text-(--color-diablos)">
               {'● '}
             </span>
-            {es.ficha.map.hh}
+            {legend.hh}
           </span>
-          <span>
-            <span aria-hidden="true">{'+ '}</span>
-            {es.ficha.map.league}
-          </span>
+          {pitches.some((p) => p.league !== null) ? (
+            <span>
+              <span aria-hidden="true">{'+ '}</span>
+              {es.ficha.map.league}
+            </span>
+          ) : null}
         </span>
       </figcaption>
       <svg
@@ -198,7 +209,7 @@ export const ArsenalMap = ({ pitches }: { readonly pitches: readonly MapPitch[] 
           </g>
         ))}
       </svg>
-      <p className="text-[11px] text-(--color-text-muted)">{es.ficha.map.note}</p>
+      <p className="text-[11px] text-(--color-text-muted)">{note}</p>
     </figure>
   )
 }

@@ -6,6 +6,7 @@ import type { SeasonStatus } from '@/domain/pitcher'
 import type { Verdict } from '@/domain/reading'
 import type { Target } from '@/domain/projection'
 import type { RosterGrouping } from '@/domain/roster'
+import type { Origin } from '@/domain/translator'
 
 /**
  * El unico archivo con espanol. `CONVENTIONS.md` seccion 2.1 y seccion 4 regla
@@ -460,5 +461,77 @@ export const es = {
     },
     provenance: (modelId: string, passed: number, total: number, usesArsenal: boolean): string =>
       `Stuff+ del modelo ${modelId} · pasó ${String(passed)} de ${String(total)} compuertas · ${usesArsenal ? 'usa' : 'no usa'} el arsenal`,
+  },
+  translator: {
+    title: 'Traductor de Altitud',
+    subtitle:
+      'Un candidato nunca ha lanzado en altitud extrema. Entra su arsenal, medido donde se haya medido; sale cómo se movería ahí y cuánto valdría.',
+    examples: 'Cargar un arsenal real',
+    example: (id: string, season: number): string => `${id} · ${String(season)}`,
+    origin: 'Dónde se midió',
+    origins: {
+      sea: (rho: string): string => `Nivel del mar · ρ ${rho}`,
+      medium: (rho: string): string => `Altitud media · ρ ${rho}`,
+    } satisfies Record<Origin, (rho: string) => string>,
+    originNote: (rho: string, factor: string): string =>
+      `El aire en altitud extrema tiene densidad ${rho} respecto al nivel del mar. Desde donde se midió, cada pulgada de IVB y de break horizontal se multiplica por ${factor}. Velocidad, spin y release son del brazo: no cambian.`,
+    extrapolation:
+      'Extrapolación: la ley y su banda se midieron entre nivel del mar y altitud extrema. Desde altitud media, la banda suma las dos traslaciones y es conservadora.',
+    kpi: {
+      sea: 'Stuff+ a nivel del mar',
+      hh: 'Stuff+ en altitud extrema',
+      delta: 'Δ por altitud',
+      weighted:
+        'Arsenal ponderado por uso. La banda supone pitches independientes; comparten modelo, así que es optimista.',
+      none: 'sin score',
+    },
+    editor: {
+      title: 'Arsenal medido',
+      pitch: 'Pitch',
+      usage: 'Uso %',
+      short: {
+        releaseSpeed: 'Velo',
+        ivb: 'IVB',
+        horizontalBreak: 'HB',
+        extension: 'Ext.',
+        releaseHeight: 'Altura',
+        releaseSide: 'Lado',
+        spinRate: 'Spin',
+        spinAxis: 'Eje',
+      } satisfies Record<Control, string>,
+      add: 'Agregar pitch',
+      remove: (pitch: string): string => `Quitar ${pitch}`,
+      outOfRange: 'Hay valores fuera de lo que se lanza: revisa las celdas marcadas.',
+      duplicate: 'Cada tipo de pitch va una sola vez.',
+      noUsage: 'Captura el uso de al menos un pitch.',
+      note: 'Velocidad en mph; break en pulgadas y lado en pies, positivos hacia el brazo que lanza; spin en rpm; eje en grados.',
+    },
+    results: {
+      title: 'Traducción por lanzamiento',
+      columns: [
+        'Pitch',
+        'Uso',
+        'IVB mar → alt. extrema',
+        'HB mar → alt. extrema',
+        'Stuff+ mar',
+        'Stuff+ alt. extrema',
+        'Δ',
+        'Vs. su recta, en altitud',
+      ],
+      anchor: 'es la recta',
+      noFastball: 'sin recta',
+      versusFastball: (velo: string, ivb: string): string => `${velo} mph · ${ivb}″`,
+      unusual: 'forma inusual',
+      unusualNote:
+        'Marcado como forma inusual: esa combinación no se ha lanzado en la LMB, y su Stuff+ es una extrapolación.',
+      openInSimulator: 'Abrir en el Simulador',
+      note: 'Pulgadas; HB del lado del brazo. El ± es un error estándar: el de la ley por tipo de pitch, el mismo que muestra el Simulador. El Stuff+ es el del Simulador para la misma forma.',
+    },
+    map: {
+      sea: 'a nivel del mar',
+      hh: 'proyectado en altitud extrema',
+      note: 'Forma proyectada con la ley de densidad, no medida. Break horizontal del lado del brazo.',
+    },
+    noRuns: 'El Traductor no imprime carreras: el puente de Stuff+ a carreras todavía no existe.',
   },
 } as const
