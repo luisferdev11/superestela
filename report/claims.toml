@@ -42,7 +42,7 @@ text = "El dataset tiene 635,002 lanzamientos"
 section = "§2"
 source = "evidence.json"
 path = ["audit", "n_pitches"]
-value = 635002
+value = "635002"
 
 [[claim]]
 id = "within-pitcher-ivb"
@@ -50,15 +50,15 @@ text = "Dentro del mismo lanzador, la recta pierde 3.77 pulgadas de IVB en altit
 section = "§2"
 source = "evidence.json"
 path = ["within_pitcher", "Four-Seam", "ivb", "delta_mean"]
-value = -3.77
+value = "-3.77"
 
 [[claim]]
 id = "within-pitcher-all-lose"
-text = "El 100% de los 268 lanzadores medidos pierde ride"
+text = "El 100% de los lanzadores medidos pierde ride"
 section = "§2"
 source = "evidence.json"
 path = ["within_pitcher", "Four-Seam", "ivb", "pct_pitchers_losing"]
-value = 100.0
+value = "100"
 
 [[claim]]
 id = "spin-unchanged"
@@ -66,7 +66,7 @@ text = "El spin no cambia: +1 rpm en promedio"
 section = "§2"
 source = "evidence.json"
 path = ["within_pitcher", "Four-Seam", "spin", "delta_mean"]
-value = 1.01
+value = "1"
 
 [[claim]]
 id = "best-lose-more"
@@ -74,25 +74,25 @@ text = "Los que más ride tienen más pierden: correlación −0.518"
 section = "§2"
 source = "evidence.json"
 path = ["within_pitcher", "Four-Seam", "heterogeneity", "corr_sea_ivb_vs_delta"]
-value = -0.518
+value = "-0.518"
 
 # --- §3 Índice de Densidad -------------------------------------------------------------------
 
 [[claim]]
 id = "density-extreme"
-text = "El aire en altitud extrema tiene densidad 0.858 respecto al nivel del mar"
+text = "El Índice de Densidad, la razón de arrastre medida desde la pelota, es 0.858 en altitud extrema"
 section = "§3"
 source = "evidence.json"
 path = ["density", "Extreme Altitude", "per_game_mean"]
-value = 0.858
+value = "0.858"
 
 [[claim]]
 id = "density-medium"
-text = "En altitud media, 0.903"
+text = "En altitud media, el índice es 0.903"
 section = "§3"
 source = "evidence.json"
 path = ["density", "Medium Altitude", "per_game_mean"]
-value = 0.903
+value = "0.903"
 
 [[claim]]
 id = "magnus-extreme"
@@ -100,7 +100,7 @@ text = "El efecto Magnus cae a 0.754 de su valor a nivel del mar"
 section = "§3"
 source = "evidence.json"
 path = ["translator", "magnus_ratio_measured"]
-value = 0.754
+value = "0.754"
 
 [[claim]]
 id = "density-validated"
@@ -116,7 +116,7 @@ text = "Ajustar el run value directo no aprende casi nada: R² 0.003"
 section = "§4"
 source = "evidence.json"
 path = ["stuff_plus_v0", "oof_r2"]
-value = 0.003
+value = "0.003"
 
 [[claim]]
 id = "whiff-learnable"
@@ -124,15 +124,15 @@ text = "El whiff sí se aprende: AUC 0.637 fuera de pliegue"
 section = "§4"
 source = "evidence.json"
 path = ["target_learnability", "P(whiff | swing)", "oof_auc"]
-value = 0.637
+value = "0.637"
 
 [[claim]]
 id = "skill-persists"
-text = "La habilidad se repite de un año a otro (whiff, r = 0.556) y el resultado casi no (RA/9, r = 0.216)"
+text = "La habilidad se repite de un año a otro: el whiff, con r = 0.556"
 section = "§4"
 source = "evidence.json"
 path = ["season_stability", "skill_persistence_whiff"]
-value = 0.556
+value = "0.556"
 
 [[claim]]
 id = "components-beat-direct"
@@ -192,7 +192,7 @@ awaits = "su cálculo en analysis/evidence.py (hoy solo está en docs/01 §8.5)"
 
 [[claim]]
 id = "gates-display"
-text = "El modelo del Simulador pasa las cuatro compuertas que deciden si se muestra"
+text = "El modelo del Simulador pasa las compuertas que deciden si se muestra"
 section = "§7"
 source = "simulator_validation.json"
 path = ["stuff_plus_shown"]
@@ -226,7 +226,7 @@ text = "La física traduce el IVB de la recta con error de 0.92 pulgadas en hold
 section = "§8"
 source = "evidence.json"
 path = ["translator", "by_pitch", "Four-Seam", "ivb", "holdout_rmse_physics_in"]
-value = 0.92
+value = "0.92"
 
 [[claim]]
 id = "translator-naive"
@@ -234,4 +234,20 @@ text = "Sin traducir, el error sería de 3.88 pulgadas"
 section = "§8"
 source = "evidence.json"
 path = ["translator", "by_pitch", "Four-Seam", "ivb", "holdout_rmse_naive_in"]
-value = 3.88
+value = "3.88"
+
+[[claim]]
+id = "result-does-not-persist"
+text = "El resultado casi no se repite: las carreras permitidas, con r = 0.216"
+section = "§4"
+source = "evidence.json"
+path = ["season_stability", "result_persistence_ra9"]
+value = "0.216"
+
+[[claim]]
+id = "within-pitcher-n"
+text = "Se midieron 268 lanzadores con la recta en los dos entornos"
+section = "§2"
+source = "evidence.json"
+path = ["within_pitcher", "Four-Seam", "n_pitchers"]
+value = "268"
