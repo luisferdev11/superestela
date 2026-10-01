@@ -106,7 +106,7 @@ Para un pitcher ya en roster: qué lanzamiento se degrada más, cuál aguanta, y
 ### 5. Tablero de Despliegue
 Selector de estadio → el roster ordenado por Stuff+ de **ese** entorno, agrupado por rol: abridores y relevistas. **No sugiere orden de pitcheo**: esa decisión es del mánager y no es nuestra para automatizar.
 
-Que el tablero exista lo justifica el dato: la correlación de orden entre casa y gira es **0.700**, el cambio mediano es de **38 posiciones**, y **6 de los 10 mejores en casa no están entre los 10 mejores de gira**.
+Que el tablero exista lo justifica el dato: la correlación de orden entre casa y gira es **0.638** (Spearman), el cambio mediano es de **40 posiciones**, y **8 de los 10 mejores en casa no están entre los 10 mejores de gira**, sobre los 296 lanzadores del Radar en su última temporada. Lo calcula `orderShift` (`packages/web/src/domain/roster.ts`) desde `mockup_data.json`, y un test lo cruza con una corrida en Python. La versión anterior de este párrafo decía 0.700, 38 y 6, de una corrida vieja.
 
 El rol se infiere de la entrada en que el lanzador entra al juego — una regla medida, no un modelo. **No incluye "cerrador":** un cerrador se define por entrar en situación de salvamento y el dataset no trae marcador.
 
