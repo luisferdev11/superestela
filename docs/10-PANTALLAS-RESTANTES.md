@@ -10,6 +10,12 @@
 > **Nota del 28 de septiembre:** las pantallas se construyen sobre los artefactos de v0, como dice
 > §0. Lo que producto no hace es otro modelo ni otro puente: eso es del equipo de datos. Lo que se
 > necesita de ellos, y por qué, está en [`docs/11`](11-LO-QUE-NECESITA-PRODUCTO.md).
+>
+> **Estado al 1 de octubre.** En `main`: P1 Radar, P2 Ficha y su pestaña Arsenal (#36–#48), P4
+> Simulador, P5 Plan (#49–#51), P6 Despliegue y P8 Plantel (#56). La P7 Proyección tiene sus datos en
+> `main` (#57) y su pantalla en el #58, listo para revisión. **Solo falta la P3 Traductor**, que bajó de
+> prioridad tras el Q&A (§5). Lo que sigue, con criterio de hecho, está en la checklist de
+> [`docs/08`](08-PLAN-DE-ARRANQUE.md).
 
 ---
 
@@ -112,7 +118,7 @@ falta tiempo (`docs/00` §10).
 
 ## 2. Tareas
 
-### T1 · Fusionar el #32 · **bloquea a las demás**
+### T1 · Fusionar el #32 · ✅ hecho
 
 **Qué:** el PR de integración #32 (`chore/simulador-a-main` → `main`) lleva a `main` toda la P4, la
 guía de arranque del README y el veredicto del modelo junto al modelo. Necesita una aprobación de
@@ -125,7 +131,7 @@ Es la última rama vieja.
 
 ---
 
-### T2 · P3 · Traductor de Altitud · **la siguiente pantalla**
+### T2 · P3 · Traductor de Altitud · **baja prioridad tras el Q&A (§5)**
 
 **Pregunta:** *Este pitcher nunca ha lanzado aquí. ¿Cuánto vale en el Harp Helú?* (`docs/02` P3)
 
@@ -185,7 +191,7 @@ componentes visuales ya existen por la P4.
 
 ---
 
-### T3 · P2 · Ficha de Pitcher
+### T3 · P2 · Ficha de Pitcher · ✅ en `main`
 
 **Pregunta:** *¿Qué tengo enfrente y qué le pasa en la altura?* (`docs/02` P2)
 
@@ -231,7 +237,7 @@ release). Todo existe; no hace falta correr nada nuevo.
 
 ---
 
-### T4 · P5 · Plan de Desarrollo
+### T4 · P5 · Plan de Desarrollo · ✅ en `main`
 
 **Pregunta:** *¿Qué le arreglo a este pitcher?* (`docs/02` P5)
 
@@ -271,7 +277,7 @@ de referencia es `pitcher_00566` (aguanta con el slider) contra `pitcher_00069` 
 
 ---
 
-### T5 · P6 · Tablero de Despliegue · **tiene una pregunta abierta**
+### T5 · P6 · Tablero de Despliegue · ✅ en `main` (#56), demostrativa
 
 **Pregunta:** *¿Quiénes son los mejores para el estadio donde se juega?* (`docs/02` P6)
 
@@ -299,7 +305,7 @@ de una corrida y se asertan en tests; la decisión sobre el roster está escrita
 
 ---
 
-### T6 · P7 · Proyección
+### T6 · P7 · Proyección · datos en `main` (#57), pantalla en #58
 
 **Pregunta:** *¿Cómo se vería este lanzador en el estadio de la próxima serie?* (`docs/02` P7)
 
@@ -320,7 +326,7 @@ sus pitches (test sobre `pitcher_00069`); la extrapolación a altitud media se d
 
 ---
 
-### T7 · P8 · Plantel · **misma pregunta abierta que T5**
+### T7 · P8 · Plantel · ✅ en `main` (#56), demostrativa
 
 **Qué entra:** los lanzadores con su Stuff+ por temporada y su rol. Es la contraparte del Radar y la
 puerta a la Ficha.
@@ -345,13 +351,10 @@ plantel» (T5) está aplicada y declarada. Si se elige mockup, que sea explícit
 
 ---
 
-### Preguntas abiertas que se llevan al Q&A con Diablos (30 de septiembre, 17:00)
+### Preguntas que se llevaron al Q&A con Diablos (30 de septiembre, 17:00)
 
-El documento de preguntas vive fuera del repo, en Claude Docs:
-https://claude.ai/code/artifact/1cdb16ee-211f-42ee-9ddb-eb4f3148f966. Cinco partes de este plan
-dependen de sus respuestas: el plantel de P6/P8 (T5 y T7), la escala y el target del modelo final, qué
-significa «Stuff+ HH» (estadios por categoría), si hay que desplegar, y qué se entrega el 15. **Después
-del Q&A, pasar las respuestas aquí y ajustar las tareas afectadas.**
+Las preguntas vivían en Claude Docs
+(https://claude.ai/code/artifact/1cdb16ee-211f-42ee-9ddb-eb4f3148f966). Las respuestas están en §5.
 
 ## 4. Lo que queda del Simulador (P4)
 
@@ -365,3 +368,27 @@ No bloquea las pantallas nuevas, pero hay que cerrarlo antes del 13 de octubre:
 
 La explicación completa del Simulador, para el equipo, está en
 https://claude.ai/artifact/Fgr192a2cnf5gKK3HvXFuL (es privada: hay que compartirla desde su menú).
+
+---
+
+## 5. Respuestas del Q&A con Diablos (30 de septiembre)
+
+Respondió Emilio, analista de Diablos. La transcripción está fuera del repo; esto es lo que cambia el
+plan, citado donde importa.
+
+| Tema | Lo que dijo | Qué cambia |
+|---|---|---|
+| **Categorías de altitud** | No Altitude 0–700 m; Medium 800–1,600 m (Oaxaca); **Extreme: Puebla, CDMX, Aguascalientes, Querétaro y León** | «Stuff+ HH» es el promedio de **cinco parques**, no el Harp Helú. Nombre híbrido decidido el 1 oct: «altitud extrema» en cifras y tablas, «Harp Helú» solo en narrativa. Detalle en [`reference/categorias-altitud.md`](reference/categorias-altitud.md) |
+| **Escala de 100** | «Ese sería **por estadio** […] el mismo picheo puede valer 120 a nivel del mar, pero 150 en la altura, o viceversa» | 100 es el promedio **de cada entorno**, probablemente por tipo de pitch. El v0 normaliza sobre toda la liga y el ADR 0007 proponía normalizar a nivel del mar: los dos difieren de esto. Decide datos antes del 12, **y se confirma por correo** con un ejemplo. Cambia el significado del Δ y de la Trampa: de «cuánto pierde» a «cuánto cambia su lugar» |
+| **Evaluación** | Holdout propio: **la postemporada 2026**. No imponen definición de run value: cómo definimos la calidad del picheo también se evalúa | Hace falta un **scorer reproducible** que corra sobre sus datos (`docs/11` §8) |
+| **Location+ y Pitching+** | «Vamos a evaluar sobre todo Stuff+»; los otros dos «salen y nacen de Stuff+», son un *nice to have*. Cuenta incluir **qué harían con más tiempo** | Se incluyen después del scorer. Si no alcanza, van en esa sección |
+| **Qué mira Diablos** | Swings abanicados y ponches, porque en la altura hasta el contacto débil se vuelve hit; y ponches contra bases por bolas, como comando | El target pesa el whiff por entorno, desde los datos (`docs/11` §8). En producto: whiff, K y K−BB más visibles |
+| **¿Solo Diablos?** | No: evaluar a todos. Ellos saben quién es cada ID anonimizado y buscan lanzadores que rindan en la altura | **El Radar es la pantalla central.** El plantel de Diablos **no se va a obtener**: P6 y P8 quedan demostrativas (ADR 0008) |
+| **Simulación física** | Interesante como complemento, «pero no sería el entregable principal» | **La P3 Traductor baja de prioridad.** El Simulador (P4) y la Proyección (P7) ya cubren la física |
+| **Fuentes externas** | Se valen si son públicas y reproducibles, explicando para qué se usaron | Clima o altitud por parque se pueden usar, documentados |
+| **Datos faltantes** | Normales en las métricas de batazo; quitaron los parques con radar mal calibrado; hay temporadas incompletas | Política de exclusión o imputación escrita en el documento técnico |
+| **Uso** | Pretemporada (¿llega con menos movimiento o velocidad?), juntas semanales con los pitchers, quizá en vivo | La Ficha y su tabla de temporadas son la vista de pretemporada |
+| **Entrega y presentación** | Por correo; detalles después. Valoran claridad para una audiencia no técnica, interactividad («super plus») y reproducibilidad. Revisa Octavio Hernández | Ensayar para no técnicos; README reproducible |
+
+**Lo que no se respondió:** si la demo puede ser local o debe estar en internet. Se pregunta por
+correo, junto con la confirmación de la escala.

@@ -264,17 +264,17 @@ Enforced by `commitlint` in pre-commit. It also generates the changelog for free
 - **CI green is required to merge.** If it can be bypassed, it is not CI.
 - Every PR gets a review. Not for control — it is how four people stay in the same codebase.
 
-**Chained PRs.** The 400-line limit means a screen ships as a chain, each PR on top of the previous
-one's branch. Merging one of those lands its code on that branch, **not on `main`**, and GitHub still
-marks it MERGED. It happened twice (#22–#31, #37–#39). So:
+**Chained PRs.** The 400-line limit means a screen ships in several PRs. Stacking each one on the
+previous one's branch failed three times (#22–#31, #37–#39, #52–#54): a PR merged into a `feat/`
+branch lands nothing on `main`, GitHub still marks it MERGED, and drafts did not stop it either. So:
 
-- Only the bottom PR of a chain points at `main` and is ready for review. **Every PR above it opens
-  as a draft**: a draft cannot be merged.
-- When the PR below lands on `main`, the next one is retargeted to `main` (Edit → base) and marked
-  ready. Merge with a merge commit and **do not delete the branch**: deleting a base branch closes
-  the PR on top of it.
-- `.github/workflows/pr-base.yml` turns any PR whose base is not `main` red, with the reason. A red
-  draft in a chain is expected; a red PR that is ready for review is not to be merged.
+- **Every PR points at `main`.** The one on top contains the one below it, so until the bottom one
+  lands its diff shows both; afterwards it shows only its own. If it is merged first by mistake, the
+  code still reaches `main`, and nothing has to be retargeted.
+- The PR on top opens as a **draft** and says which PR to review first. Mark it ready once the one
+  below is in `main`.
+- Merge with a merge commit and **do not delete the branch**.
+- `.github/workflows/pr-base.yml` turns any PR whose base is not `main` red, with the reason.
 - Whether something reached `main` is checked with `git ls-tree origin/main <path>`, not with the
   PR's MERGED label.
 

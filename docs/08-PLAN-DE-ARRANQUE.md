@@ -1,6 +1,7 @@
 # SuperEstela — Plan hacia el 15 de octubre
 
-> Actualizado el **23 de septiembre de 2026**. Quedan **22 días**.
+> Actualizado el **1 de octubre de 2026**. Quedan **14 días** (congelamiento el 12, ensayo el 13,
+> entrega el 15). La §0 es lo que sigue; de la §1 en adelante es el plan del 23 de septiembre.
 >
 > Este documento es la lista viva de pendientes. Cada uno lleva su **criterio de
 > hecho**, y los que una máquina puede verificar los verifica
@@ -9,6 +10,54 @@
 ```bash
 uv run python scripts/check_pendientes.py       # el estado, ahora mismo
 ```
+
+---
+
+## 0. Dónde estamos al 1 de octubre, y la checklist
+
+### Lo que se hizo del 28 de septiembre al 1 de octubre
+
+| Qué | Dónde |
+|---|---|
+| **P2 Ficha** (resumen, arsenal con banda por pitch, mapa de movimiento, temporadas con hueco, «Lectura del sistema», pestaña Arsenal con contrato de ubicación) | `main`, #36–#47 |
+| **P5 Plan de Desarrollo** (déficit por pitch, tres frases, reparto de uso que solo se propone si ayuda) | `main`, #49–#51 |
+| **P6 Despliegue y P8 Plantel**, sobre el plantel aproximado del ADR 0008 | `main`, #52–#54 llevados por #56 |
+| **P7 Proyección**: datos y dominio (`analysis/projection_evidence.py`, aplica `core.translate`) | `main`, #57 |
+| P7 Proyección: la pantalla | **#58, listo para revisión** |
+| Copy de prohibición de apuestas en el rail; check `pr-base.yml`; `docs/11` (lo que producto necesita de datos) | `main`, #34, #41, #35, #48 |
+| Q&A con Diablos y sus consecuencias | `docs/10` §5, `docs/11` §8, `docs/reference/categorias-altitud.md` |
+
+**Pantallas:** 7 de 8 construidas; falta la P3 Traductor. **Datos:** Martín entrena modelos por
+componente en MLflow, pero en `main` todavía no hay nada en `packages/models/targets`, `train.py` ni
+`evaluate.py`. La puerta de A3 es hoy.
+
+### Checklist de producto, en orden
+
+| # | Tarea | Hecho cuando |
+|---|---|---|
+| 1 | **Renombre híbrido.** «Altitud extrema» en cifras, columnas y tablas; «Harp Helú» solo en la narrativa. Una nota única lista los cinco parques. Son ~24 textos en `packages/web/src/i18n/es.ts` («Stuff+ HH», «Harp Helú»), más `docs/00`, `02`, `09` y `10`, más el deck | `grep "Harp Hel" packages/web/src/i18n/es.ts` solo devuelve textos de narrativa, y los tests pasan |
+| 2 | **Aviso del plantel:** ADR 0008 y `components/deploy/RosterNotice.tsx` dicen que la aproximación mezcla lanzadores de cinco parques, y que P6 y P8 son demostrativas | El texto y el ADR lo dicen |
+| 3 | **Fusionar el #58** (pantalla de P7) | `check_pendientes` marca P7 ✅ en `main` |
+| 4 | **Textos listos para la escala por entorno** (`docs/11` §8.3): el Δ como «cambio de lugar» en vez de «pierde X puntos», en el Radar, la Ficha, el Plan y la Trampa | Se aplica cuando datos confirme la escala; ningún texto asume la escala vieja |
+| 5 | **Whiff más visible:** whiff por swing, ponches y ponches menos bases por bolas por lanzador-temporada, calculados en `analysis/evidence.py` (descriptivo), en el Radar y la Ficha | La columna sale del artefacto y tiene su test |
+| 6 | **`report/build.py`**: las tablas del documento técnico, generadas desde la evidencia | Antes del 12; `check_pendientes` ✅ |
+| 7 | **Entregables de texto:** documento técnico, ficha ejecutiva, Perfil Físico Ideal, Decision Log y **«qué haríamos con más tiempo»** (Emilio dijo que cuenta) | Existen en `docs/` o `report/` |
+| 8 | **Reproducibilidad para el jurado:** README con «cómo correr esto con sus datos» | Un tercero lo sigue de punta a punta |
+| 9 | **P3 Traductor** (baja prioridad: la física es complemento, según el Q&A) | `check_pendientes` ✅ |
+| 10 | **La web lee de la API** (`sources/apiSource.ts`) y `GET /api/v1/pitchers/{id}/scores` | `check_pendientes` ✅ |
+| 11 | **Prototipo y deck:** cifras nuevas (0.638, 40 posiciones, 8 de 10), cinco parques, renombre | El artifact dice «maqueta» donde no cuadre |
+| 12 | **Ensayo cronometrado** de las tres historias (`docs/09` §5.2), pensado para una audiencia no técnica | El 13 de octubre, ≤ 10 s por pregunta |
+
+**Fuera de producto, pero bloqueante:**
+- El scorer reproducible y el modelo final, del equipo de datos (`docs/11` §8.1–8.2).
+- **Correo a Diablos:** confirmar la escala con el ejemplo de `docs/11` §8.3, y preguntar si la demo
+  puede ser local.
+
+**Cómo se trabaja:**
+- **PRs:** el de arriba apunta a `main` y contiene al de abajo, nunca sobre la rama del anterior
+  (`CONVENTIONS.md` §6.3).
+- **Verificación:** lo fusionado se comprueba con `git ls-tree origin/main <ruta>`, no con la etiqueta
+  MERGED.
 
 ---
 
