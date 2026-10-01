@@ -119,3 +119,7 @@ export const fichaArsenalHref = (pitcherId: string, season: number): Route =>
 /** El Plan de Desarrollo de una temporada (P5). */
 export const planHref = (pitcherId: string, season: number): Route =>
   `/plan/${pitcherId}/${String(season)}` as Route
+
+/** La Proyeccion de una temporada (P7). */
+export const projectionHref = (pitcherId: string, season: number): Route =>
+  `/proyeccion/${pitcherId}/${String(season)}` as Route

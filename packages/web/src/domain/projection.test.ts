@@ -17,7 +17,7 @@ const pitcher = async (key: string) => {
 }
 
 describe('la proyeccion de pitcher_00069 2025', () => {
-  it('la recta proyecta 15.6 ± 0.9 de IVB en el Harp Helu, el mismo numero que el Simulador', async () => {
+  it('la recta proyecta 15.6 ± 0.9 de IVB en altitud extrema, el mismo numero que el Simulador', async () => {
     const [fastball] = projectedPitches(await pitcher('pitcher_00069/2025'))
     expect(fastball?.pitchType).toBe('Four-Seam')
     expect(fastball?.projected.hh.ivb.value).toBeCloseTo(15.61, 2)
@@ -58,12 +58,12 @@ describe('la proyeccion en toda la liga', () => {
     expect(hb / n).toBeGreaterThan(0.9)
   })
 
-  it('la altitud media se declara extrapolacion y el Harp Helu no', () => {
+  it('la altitud media se declara extrapolacion y altitud extrema no', () => {
     expect(isExtrapolation('medium')).toBe(true)
     expect(isExtrapolation('hh')).toBe(false)
   })
 
-  it('el factor a altitud media es menor que 1 y mayor que el del Harp Helu', async () => {
+  it('el factor a altitud media es menor que 1 y mayor que el de altitud extrema', async () => {
     const { factors } = await loadProjections()
     expect(factors.medium).toBeLessThan(1)
     expect(factors.medium).toBeGreaterThan(factors.hh)

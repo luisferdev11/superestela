@@ -20,10 +20,10 @@ export const SINGLE_PITCH_SHARE = 0.8
 
 export type Contribution = {
   readonly pitch: string
-  /** Entre 0 y 1: el uso en el Harp Helu. */
+  /** Entre 0 y 1: el uso en altitud extrema. */
   readonly share: number
   readonly stuffPlusHh: Metric
-  /** Uso × (Stuff+ HH − 100): cuanto aporta al deficit (negativo) o al superavit. */
+  /** Uso × (Stuff+ en altitud extrema − 100): cuanto aporta al deficit (negativo) o al superavit. */
   readonly contribution: Metric
 }
 
@@ -64,7 +64,7 @@ export const singleCulprit = (items: readonly Contribution[]): Contribution | nu
     : null
 }
 
-/** Stuff+ HH del arsenal ponderado por uso, sobre los pitches que tienen score. */
+/** Stuff+ en altitud extrema del arsenal ponderado por uso, sobre los pitches que tienen score. */
 export const weightedStuffPlus = (
   items: readonly Contribution[],
   shares: ReadonlyMap<string, number>,

@@ -16,7 +16,7 @@ const Arrow = () => (
   </span>
 )
 
-/** Una forma medida en los dos entornos: la del Harp Helu en negritas, que es la que cambia. */
+/** Una forma medida en los dos entornos: la de altitud extrema en negritas, que es la que cambia. */
 const Shape = ({ sea, hh }: { readonly sea: number | null; readonly hh: number | null }) => (
   <>
     <span className="text-(--color-text-muted)">{sea === null ? '—' : formatNumber(sea)}</span>

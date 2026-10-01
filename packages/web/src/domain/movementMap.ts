@@ -38,7 +38,7 @@ export type MovementMaps = Readonly<Record<PitchType, Readonly<Record<Environmen
  * Cuantos puntos de whiff por encima o por debajo de la referencia trae la
  * celda. La referencia es la media **a nivel del mar** del tipo, para los dos
  * paneles: el reto pregunta que pitches son mas y menos efectivos entre los de
- * su tipo, y medir el panel del Harp Helu contra su propia media esconderia
+ * su tipo, y medir el panel de altitud extrema contra su propia media esconderia
  * justo lo que la altura le hace a todo el tipo.
  */
 export const relativeWhiff = (cell: MapCell, reference: number): number =>
@@ -46,7 +46,7 @@ export const relativeWhiff = (cell: MapCell, reference: number): number =>
 
 /**
  * Una sola escala, simetrica, para los dos paneles del mismo tipo: el mismo
- * tono significa lo mismo a nivel del mar y en el Harp Helu.
+ * tono significa lo mismo a nivel del mar y en altitud extrema.
  */
 export const sharedWhiffRange = (panels: readonly MapPanel[], reference: number): number => {
   const spreads = panels.flatMap((p) => p.cells.map((c) => Math.abs(relativeWhiff(c, reference))))

@@ -41,7 +41,7 @@ const toArsenalEntry = (raw: z.infer<typeof arsenalEntrySchema>): ArsenalEntry =
   whiffPerSwing: raw.whiff_per_swing,
 })
 
-const toOutcomes = (raw: z.infer<typeof outcomesSchema>): Outcomes => ({
+export const toOutcomes = (raw: z.infer<typeof outcomesSchema>): Outcomes => ({
   plateAppearances: raw.pa,
   swings: raw.swings,
   kPct: toMetric(raw.k_pct, raw.k_pct_ci95),

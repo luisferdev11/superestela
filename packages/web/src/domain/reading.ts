@@ -20,12 +20,12 @@ export const verdictOf = (card: PitcherSeason): Verdict => {
 export type PitchDelta = {
   readonly pitch: string
   readonly usagePct: number
-  /** Harp Helu menos nivel del mar, con su banda. */
+  /** Altitud extrema menos nivel del mar, con su banda. */
   readonly delta: Metric
 }
 
 /**
- * Lo que pierde cada pitch en el Harp Helu. La banda suma las dos en
+ * Lo que pierde cada pitch en altitud extrema. La banda suma las dos en
  * cuadratura: son muestras distintas, una en cada entorno, y se suponen
  * independientes.
  */
