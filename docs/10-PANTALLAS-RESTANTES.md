@@ -37,7 +37,7 @@ reales de v0:
 
 | Archivo | Qué trae | Lo genera |
 |---|---|---|
-| `analysis/outputs/mockup_data.json` | 370 tarjetas lanzador-temporada: Stuff+ HH y a nivel del mar, Impuesto, rol, Trampa, arsenal resumido | `analysis/evidence.py` |
+| `analysis/outputs/mockup_data.json` | 370 tarjetas lanzador-temporada: Stuff+ en altitud extrema y a nivel del mar, Impuesto, rol, Trampa, arsenal resumido | `analysis/evidence.py` |
 | `analysis/outputs/evidence.json` | Densidad, within-pitcher, perfiles por tipo, traductor, hipótesis | `analysis/evidence.py` |
 | `analysis/outputs/simulator.json` | Rangos por tipo, mapa de efectividad, envolvente de plausibilidad, bandas de traducción | `analysis/simulator_evidence.py` |
 | `analysis/outputs/arsenals.json` | Arsenal completo por lanzador-temporada y entorno: release, eje y HB con signo | `analysis/simulator_evidence.py` |
@@ -131,7 +131,7 @@ Es la última rama vieja.
 
 ---
 
-### T2 · P3 · Traductor de Altitud · **baja prioridad tras el Q&A (§5)**
+### T2 · P3 · Traductor de Altitud · construida (#67–#71), en revisión
 
 **Pregunta:** *Este pitcher nunca ha lanzado aquí. ¿Cuánto vale en el Harp Helú?* (`docs/02` P3)
 
@@ -147,7 +147,7 @@ componentes visuales ya existen por la P4.
   (`evidence.json → density`).
 - **Salida, las tres cosas juntas que pide `docs/02`:**
   1. la forma proyectada en CDMX por pitch, IVB y HB **con banda**;
-  2. el **Stuff+ HH proyectado con banda** por pitch y del arsenal ponderado por uso;
+  2. el **Stuff+ en altitud extrema proyectado con banda** por pitch y del arsenal ponderado por uso;
   3. **por qué**: el factor Magnus (0.754) y el Índice de Densidad aplicados, visibles, con una frase
      de física.
 - El **mapa de movimiento** con el arsenal completo, antes y después. Reutiliza `MovementMap`.
@@ -176,7 +176,7 @@ componentes visuales ya existen por la P4.
 **Criterios de aceptación:**
 - [ ] `packages/web/src/app/traductor/page.tsx` existe y `check_pendientes` marca P3 ✅.
 - [ ] Con «cargar ejemplo» sobre `pitcher_00069` (2025), la recta proyecta **15.6″ ± 0.9″** de IVB y
-      el Stuff+ HH coincide con el del Simulador para el mismo pitch (**92.9 ± 4.1**). Mismo pitch,
+      el Stuff+ en altitud extrema coincide con el del Simulador para el mismo pitch (**92.9 ± 4.1**). Mismo pitch,
       mismo número en toda la app.
 - [ ] Cada número de salida lleva banda; ninguno sale solo.
 - [ ] El factor Magnus y el Índice de Densidad que se muestran salen de `evidence.json`, no del JSX.
@@ -204,7 +204,7 @@ pitcher y arsenal»). Hoy el Radar no tiene a dónde llevar.
   `node_modules/next/dist/docs/` antes de escribirla (`packages/web/AGENTS.md`).
 - **Selector de temporada** con todas las que tenga, y una tabla compacta de sus temporadas con rol.
   El hueco se ve: si tiene 2024 y 2026, no hay promedio (ADR 0005).
-- **Encabezado:** Stuff+ HH ± banda, nivel del mar ± banda, Δ, Impuesto de Altitud (o «no
+- **Encabezado:** Stuff+ en altitud extrema ± banda, nivel del mar ± banda, Δ, Impuesto de Altitud (o «no
   concluyente»), rol, bandera de Trampa, muestra por entorno, pérdida media de IVB.
 - **Arsenal por pitch:** uso, velocidad, IVB y HB en los dos entornos, spin, Stuff+ en los dos
   entornos, whiff.
@@ -224,7 +224,7 @@ release). Todo existe; no hace falta correr nada nuevo.
 
 **Criterios de aceptación:**
 - [ ] `packages/web/src/app/pitchers/[pitcherId]/page.tsx` existe y `check_pendientes` marca P2 ✅.
-- [ ] `/pitchers/pitcher_00069` muestra, para 2025: Stuff+ HH **93.3 ± 0.7**, nivel del mar
+- [ ] `/pitchers/pitcher_00069` muestra, para 2025: Stuff+ en altitud extrema **93.3 ± 0.7**, nivel del mar
       **110.5 ± 0.8**, Δ −17.2, Impuesto **no concluyente**, rol Abridor y Trampa. Las cifras salen
       de `mockup_data.json` y un test lo aserta.
 - [ ] Un lanzador con hueco entre temporadas muestra el hueco, no un promedio. Tiene su test, con
@@ -249,9 +249,9 @@ quien se sienta en la entrevista de 10 minutos.
 - **No son tarjetas: son dos o tres frases con plantilla fija** (`docs/02` P5):
   - *Qué se degrada*: cuál pitch pierde más y cuántas pulgadas.
   - *Qué aguanta*: cuál conserva su forma, y por qué físicamente.
-  - *Qué cambia*: qué reparto de uso lo compensa, en puntos de Stuff+ HH ponderado.
+  - *Qué cambia*: qué reparto de uso lo compensa, en puntos de Stuff+ en altitud extrema ponderado.
 - Cada frase se arma en `domain/` desde datos; ningún texto con cifras escrito a mano.
-- El **cambio de uso** se calcula como el Stuff+ HH ponderado del arsenal con los usos actuales contra
+- El **cambio de uso** se calcula como el Stuff+ en altitud extrema ponderado del arsenal con los usos actuales contra
   los propuestos. Es aritmética sobre las cifras por pitch que ya existen; no hace falta un modelo nuevo.
 - Enlace a «probar el cambio en el Simulador».
 
@@ -270,7 +270,7 @@ de referencia es `pitcher_00566` (aguanta con el slider) contra `pitcher_00069` 
       salen de las cifras reales (20.7″ → 15.0″), no del JSX.
 - [ ] La propuesta de uso nunca da usos que no sumen 100% ni usa un pitch que el lanzador no tiene.
       Test de propiedad.
-- [ ] El Stuff+ HH ponderado antes y después lleva banda (propagada desde las bandas por pitch; basta
+- [ ] El Stuff+ en altitud extrema ponderado antes y después lleva banda (propagada desde las bandas por pitch; basta
       documentar el supuesto) y el mecanismo físico va en una frase.
 - [ ] Ninguna frase imprime carreras.
 - [ ] Captura headless revisada contra `Plan.dc.html`.
@@ -378,7 +378,7 @@ plan, citado donde importa.
 
 | Tema | Lo que dijo | Qué cambia |
 |---|---|---|
-| **Categorías de altitud** | No Altitude 0–700 m; Medium 800–1,600 m (Oaxaca); **Extreme: Puebla, CDMX, Aguascalientes, Querétaro y León** | «Stuff+ HH» es el promedio de **cinco parques**, no el Harp Helú. Nombre híbrido decidido el 1 oct: «altitud extrema» en cifras y tablas, «Harp Helú» solo en narrativa. Detalle en [`reference/categorias-altitud.md`](reference/categorias-altitud.md) |
+| **Categorías de altitud** | No Altitude 0–700 m; Medium 800–1,600 m (Oaxaca); **Extreme: Puebla, CDMX, Aguascalientes, Querétaro y León** | «Stuff+ en altitud extrema» es el promedio de **cinco parques**, no el Harp Helú. Nombre híbrido decidido el 1 oct: «altitud extrema» en cifras y tablas, «Harp Helú» solo en narrativa. Detalle en [`reference/categorias-altitud.md`](reference/categorias-altitud.md) |
 | **Escala de 100** | «Ese sería **por estadio** […] el mismo picheo puede valer 120 a nivel del mar, pero 150 en la altura, o viceversa» | 100 es el promedio **de cada entorno**, probablemente por tipo de pitch. El v0 normaliza sobre toda la liga y el ADR 0007 proponía normalizar a nivel del mar: los dos difieren de esto. Decide datos antes del 12, **y se confirma por correo** con un ejemplo. Cambia el significado del Δ y de la Trampa: de «cuánto pierde» a «cuánto cambia su lugar» |
 | **Evaluación** | Holdout propio: **la postemporada 2026**. No imponen definición de run value: cómo definimos la calidad del picheo también se evalúa | Hace falta un **scorer reproducible** que corra sobre sus datos (`docs/11` §8) |
 | **Location+ y Pitching+** | «Vamos a evaluar sobre todo Stuff+»; los otros dos «salen y nacen de Stuff+», son un *nice to have*. Cuenta incluir **qué harían con más tiempo** | Se incluyen después del scorer. Si no alcanza, van en esa sección |

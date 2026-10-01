@@ -78,7 +78,7 @@ Renaming happens **once**, at the raw→curated boundary, in `packages/contracts
 | `PitchUID` | `pitch_id` | — |
 | — | `density_index` | Índice de Densidad |
 | — | `stuff_plus` | Stuff+ |
-| — | `stuff_plus_hh` | Stuff+ HH |
+| — | `stuff_plus_hh` | Stuff+ altitud extrema (`hh`: el bucket `Extreme Altitude`, cinco parques) |
 | — | `altitude_tax` | Impuesto de Altitud |
 | — | `altitude_seal` | Sello de Altitud |
 | — | `altitude_trap` | Trampa de Altitud |

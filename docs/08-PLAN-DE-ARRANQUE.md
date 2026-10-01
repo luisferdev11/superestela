@@ -31,6 +31,31 @@ uv run python scripts/check_pendientes.py       # el estado, ahora mismo
 componente en MLflow, pero en `main` todavía no hay nada en `packages/models/targets`, `train.py` ni
 `evaluate.py`. La puerta de A3 es hoy.
 
+### Avance del 1 de octubre (segunda sesión): todo en PRs, nada en `main` todavía
+
+Los PRs de la web van **en cadena**: cada uno apunta a `main` y contiene al anterior. Se revisan en
+este orden: #58 → #60 → #68 → #69 → #70 → #71 → #73 → #74 → #75. Los demás salen de `main` y son
+independientes.
+
+| # | Tarea | PRs | Estado |
+|---|---|---|---|
+| 1 | Renombre híbrido | #60 (web) y este PR (docs) | ✅ en revisión |
+| 2 | Aviso del plantel | #60 (texto) y este PR (ADR 0008) | ✅ en revisión |
+| 3 | Fusionar el #58 | — | ⏳ falta una aprobación |
+| 4 | Textos listos para la escala por entorno | #75 | ✅ en revisión. Cambian solos cuando la evidencia declare `per_environment` |
+| 5 | Whiff, K y K−BB | #72 (datos y contrato), #73 (Radar y Ficha) | ✅ en revisión |
+| 6 | `report/build.py` | #64 → #65 → #66 | ✅ en revisión. 22 de 28 afirmaciones con corrida |
+| 7 | Entregables de texto | #76 (`docs/12` Decision Log, `docs/13` esqueleto del documento, `docs/14` ficha ejecutiva) | 🟡 borradores; se terminan contra cifras congeladas |
+| 8 | README reproducible | #62 → #63 → #61 (`python -m models.score`, ADR 0009) | ✅ en revisión. Falta que alguien que no lo escribió lo corra |
+| 9 | P3 Traductor | #67 (API) y #68 → #71 (web) | ✅ en revisión. Recta de `pitcher_00069`: 15.6″ ± 0.9″ y 92.9 ± 4.1, igual que el Simulador |
+| — | Radar legible para no técnicos | #74 | ✅ en revisión |
+| 10 | `apiSource` y GET scores | — | ⬜ |
+| 11 | Prototipo y deck | — | ⬜ después del congelamiento |
+| 12 | Ensayo | — | ⬜ 13 de octubre |
+
+**Para el equipo de datos** (`docs/11` §8.1): el comando que Diablos va a correr ya existe. Lo que les
+toca es el modelo que contesta por él (ADR 0009).
+
 ### Checklist de producto, en orden
 
 | # | Tarea | Hecho cuando |

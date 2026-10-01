@@ -119,7 +119,7 @@ decide una **regla provisional de producto**, declarada en pantalla
 (`packages/web/src/domain/reading.ts`):
 
 - Trampa de Altitud → no al precio de nivel del mar.
-- Banda completa del Stuff+ HH por encima de 100 → fichar.
+- Banda completa del Stuff+ en altitud extrema por encima de 100 → fichar.
 - Lo demás → con reservas.
 
 La regla se apoya en v0. Para que el veredicto deje de ser provisional hace falta que A3 muestre que
@@ -152,9 +152,9 @@ Para que se vea por qué importa cada una:
 
 | Pantalla | Qué muestra de su trabajo | Estado |
 |---|---|---|
-| P1 Radar | Stuff+ HH y nivel del mar por lanzador-temporada, Impuesto de Altitud | En `main`, sobre v0 |
+| P1 Radar | Stuff+ en altitud extrema y nivel del mar por lanzador-temporada, Impuesto de Altitud | En `main`, sobre v0 |
 | P4 Simulador | Stuff+ de un pitch que nadie lanzó, en los dos entornos, con Δ | En `main`, sobre el puente |
-| P3 Traductor | Stuff+ HH proyectado de un lanzador de fuera | En construcción, sobre v0 |
+| P3 Traductor | Stuff+ en altitud extrema proyectado de un lanzador de fuera | En construcción, sobre v0 |
 | P2 Ficha | Stuff+ por pitch y arsenal; ubicación (§3.1); SHAP cuando llegue A1 | Construida sobre v0; la ubicación y el veredicto esperan (§3.1) |
 | P5 Plan | Stuff+ ponderado por uso, antes y después | En construcción, sobre v0 |
 | P6–P8 | Stuff+ por entorno y rol | En `main`; demostrativas, con el plantel aproximado (ADR 0008) |
@@ -202,6 +202,12 @@ es que el modelo generalice. Sin algo que corra sobre sus datos, no hay entrega.
 - **Contrato:** `packages/models/scoring.py` (`Scorer`), el mismo que ya llena el puente v0.
 - **Hecho cuando:** el README documenta el comando, y alguien que no lo escribió lo corre sobre un
   CSV de prueba y obtiene un archivo con `stuff_plus` y `stuff_plus_se` por fila.
+- **Actualización del 1 de octubre: el comando ya existe** y lo construyó producto: `python -m
+  models.score` (#61–#63, [ADR 0009](adr/0009-arnes-de-scoring.md)). Hoy contesta el puente v0.
+  **Lo que les toca es el modelo, no el comando:** un objeto que cumpla `Scorer`, guardado con
+  `joblib` en `artifacts/`, que pase las compuertas. Entra con `--model` y el `model_id` de cada fila
+  dice cuál contestó. Si su modelo usa el arsenal, hay que extender `Scorer.draws`, y eso se acuerda
+  entre los dos equipos.
 
 ### 8.2 El target · el enfoque que decidió Martín
 

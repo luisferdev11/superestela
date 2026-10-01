@@ -25,7 +25,7 @@ Correlación entre el ride (IVB) de un fastball a nivel del mar y cuánto pierde
 
 Y es un juego con *superestrella*: la superestrella es el lanzador que el mercado persigue y que peor sobrevive aquí. Una letra de diferencia cambia la tesis — **no persigues a la estrella, lees la estela.**
 
-Forma corta: **Estela**. Las métricas firmadas no dependen del nombre: Stuff+ HH, Impuesto de Altitud, Índice de Densidad y Trampa de Altitud se mantienen.
+Forma corta: **Estela**. Las métricas firmadas no dependen del nombre: Stuff+ en altitud extrema (`stuff_plus_hh` en el código), Impuesto de Altitud, Índice de Densidad y Trampa de Altitud se mantienen.
 
 ---
 
@@ -72,7 +72,7 @@ Son activos de marca tanto como métricas. Aparecen con nombre propio en app, de
 
 | Métrica | Definición | Usuario |
 |---|---|---|
-| **Stuff+ HH** | Stuff+ calibrado a las condiciones del Harp Helú. 100 = pitch promedio de la LMB. | Pitching coach |
+| **Stuff+ en altitud extrema** | Stuff+ en las condiciones de la altitud extrema: el promedio de **cinco parques** (Puebla, CDMX, Aguascalientes, Querétaro y León), no solo el Harp Helú ([`reference/categorias-altitud.md`](reference/categorias-altitud.md)). En el v0, 100 = pitch promedio de la LMB, los dos entornos juntos. | Pitching coach |
 | **Impuesto de Altitud** | Carreras adicionales concedidas **por cada 9 entradas** al mover a este pitcher a CDMX. Con error estándar; donde no alcanza significancia se muestra *no concluyente*, nunca un número. | Director deportivo |
 | **Índice de Densidad** | Densidad del aire **medida** desde la trayectoria de la bola, juego a juego. Sea level = 1.000. | Credibilidad científica |
 | **Trampa de Altitud** | Bandera roja: se ve fuerte a nivel del mar, colapsa en CDMX. **58 de 370 temporadas** de la cohorte. | Director deportivo |
@@ -81,7 +81,9 @@ Son activos de marca tanto como métricas. Aparecen con nombre propio en app, de
 >
 > **Y por qué es un piso, no el efecto completo.** El Impuesto se construye con pesos lineales por lanzamiento, que valoran el resultado de cada pitch pero nunca ven el secuenciamiento. Contra las carreras realmente admitidas recupera **+1.77 de los +2.70 RA/9 observados**, cerca del 65%. Se reporta como cota inferior y se dice así.
 
-> **Nota de escala.** Stuff+ HH se normaliza sobre toda la liga (ambos entornos), así que los pitches en altitud promedian **por debajo de 100 por construcción**. Esa brecha *es* el efecto altitud, no un error de calibración. El mismo lanzador puntúa en promedio **8.6 puntos menos** en casa que a nivel del mar.
+> **Nota de escala.** Stuff+ en altitud extrema se normaliza sobre toda la liga (ambos entornos), así que los pitches en altitud promedian **por debajo de 100 por construcción**. Esa brecha *es* el efecto altitud, no un error de calibración. El mismo lanzador puntúa en promedio **8.6 puntos menos** en casa que a nivel del mar.
+>
+> **Pendiente de confirmar (1 oct):** en el Q&A, Diablos pidió que 100 sea el promedio **de cada entorno**. Si datos lo adopta antes del 12, esta nota cambia: el Δ deja de ser «cuánto pierde» y pasa a ser «cuánto cambia su lugar frente a los de su entorno» (`docs/11` §8.3). Los textos de la app ya están listos para las dos escalas (#75).
 >
 > **Esto difiere de la letra del reto**, que define 100 como «promedio LMB ajustado por temporada y estadio» y pide que «>100» signifique mejor que promedio «independientemente del pitch type». La propuesta de escala por tipo y temporada, con el entorno reportado como Δ, está en el [ADR 0007](adr/0007-contrato-del-scorer-y-escala.md) y la decide el equipo de datos en A3.
 
@@ -90,10 +92,10 @@ Son activos de marca tanto como métricas. Aparecen con nombre propio en app, de
 ## 5. Los ocho módulos
 
 ### 1. Traductor de Altitud *(el wedge)*
-Entra el arsenal de un pitcher medido en cualquier parte → sale su forma proyectada y su Stuff+ HH, con banda de confianza. Cubre el entregable 3 del reto ("cómo perfilar un prospecto o agente libre").
+Entra el arsenal de un pitcher medido en cualquier parte → sale su forma proyectada y su Stuff+ en altitud extrema, con banda de confianza. Cubre el entregable 3 del reto ("cómo perfilar un prospecto o agente libre").
 
 ### 2. Radar de Fichajes
-Ranking de candidatos por valor proyectado **en CDMX**, no por sus números crudos. Columnas de temporada, rol, Stuff+ HH, Stuff+ a nivel del mar, Δ, Impuesto de Altitud y bandera de Trampa. Ordena por lo que importa aquí.
+Ranking de candidatos por valor proyectado **en altitud extrema**, no por sus números crudos. Columnas de temporada, rol, Stuff+ en altitud extrema, Stuff+ a nivel del mar, Δ, Impuesto de Altitud y bandera de Trampa. Ordena por lo que importa aquí.
 
 Cada candidato aparece con su **última temporada jugada**, y la temporada es una columna visible: de los 296 lanzadores con score, 95 tienen 2024 como última, 134 el 2025 y solo 67 el 2026. Un candidato cuyo último dato es de hace dos años no es comparable con uno de este año, y la pantalla no lo puede esconder.
 
@@ -101,7 +103,7 @@ Cada candidato aparece con su **última temporada jugada**, y la temporada es un
 Parte de **un pitch real de un lanzador** (o del promedio de la liga, en modo laboratorio). Controles de los features físicos que el reto nombra: velocidad, IVB, HB, spin rate y eje, extensión, altura y lado de release, tipo y mano. Sale **lado a lado, Harp Helú vs nivel del mar**: Stuff+ con banda, la forma proyectada, el VAA y la velocidad al plato, y los diferenciales contra la recta del lanzador en cada entorno. Incluye el **mapa de movimiento de los pitches más y menos efectivos** que pide el reto, construido con whiff observado. Fundamento, fórmulas y criterios de aceptación en [`docs/09`](09-SIMULADOR.md).
 
 ### 4. Plan de Desarrollo
-Para un pitcher ya en roster: qué lanzamiento se degrada más, cuál aguanta, y qué cambio de uso lo compensa — cuantificado en Stuff+ HH y en carreras, **en dos o tres frases con su mecanismo físico**. No en tarjetas: un coach no lee tarjetas, escucha una razón. Cubre el entregable 3 del reto junto con el Traductor.
+Para un pitcher ya en roster: qué lanzamiento se degrada más, cuál aguanta, y qué cambio de uso lo compensa — cuantificado en Stuff+ en altitud extrema y en carreras, **en dos o tres frases con su mecanismo físico**. No en tarjetas: un coach no lee tarjetas, escucha una razón. Cubre el entregable 3 del reto junto con el Traductor.
 
 ### 5. Tablero de Despliegue
 Selector de estadio → el roster ordenado por Stuff+ de **ese** entorno, agrupado por rol: abridores y relevistas. **No sugiere orden de pitcheo**: esa decisión es del mánager y no es nuestra para automatizar.
@@ -124,7 +126,7 @@ Cada score viene con su explicación: contribución por feature (SHAP) **y la ra
 ## 6. Principios de producto
 
 1. **Decisión, no exploración.** Cada pantalla responde su pregunta en menos de 10 segundos. Un coach no navega dashboards; decide.
-2. **La incertidumbre es feature.** "Stuff+ HH 107.1 ± 4.2" gana confianza; un número desnudo la pierde. Los pitchers con poca muestra muestran bandas anchas, y eso está bien.
+2. **La incertidumbre es feature.** "Stuff+ en altitud extrema 107.1 ± 4.2" gana confianza; un número desnudo la pierde. Los pitchers con poca muestra muestran bandas anchas, y eso está bien.
 3. **Física visible.** Toda recomendación se acompaña de su mecanismo físico. Es lo que separa un modelo creíble de un oráculo.
 4. **Nada inventado.** Cada cifra del prototipo sale de `analysis/outputs/`. No hay *lorem ipsum* ni datos ficticios en ningún entregable.
 5. **Honestidad de alcance.** Lo construido y lo diseñado se marcan explícitamente ante el jurado.
