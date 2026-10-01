@@ -21,7 +21,7 @@ const inches = (v: number): string => `${formatNumber(v)}″`
 
 /**
  * La isla de P7: el estadio destino cambia la proyeccion. Contra lo medido
- * solo se compara en el Harp Helu, que es el unico destino con muestra por
+ * solo se compara en altitud extrema, que es el unico destino con muestra por
  * lanzador. Toda la cuenta vive en `domain/projection.ts`.
  */
 export const ProjectionTable = ({

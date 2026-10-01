@@ -8,6 +8,9 @@ import { es } from '@/i18n/es'
  * mismos tokens de la escala de altitud que codifican entorno en toda la app, y
  * la cifra sale de `evidence.py`, nunca escrita aqui.
  *
+ * Debajo va la unica nota de la app que dice que «altitud extrema» son cinco
+ * parques (Q&A con Diablos, 30 sep): el rail esta en todas las pantallas.
+ *
  * `role="img"` con un `aria-label` que contiene el numero real, como pide
  * `docs/07` seccion 5.2 regla 4: un lector de pantalla debe poder leer el
  * hallazgo.
@@ -15,7 +18,7 @@ import { es } from '@/i18n/es'
 export const DensityBar = ({ scale }: { readonly scale: DensityScale }) => {
   const ratio = scale.extreme.densityRatio
   const marker = positionInScale(scale, 'hh')
-  const label = `${es.densityIndex}: ${formatNumber(ratio, 3)} ${es.atHarpHelu}`
+  const label = `${es.densityIndex}: ${formatNumber(ratio, 3)} ${es.atExtreme}`
 
   return (
     <div className="flex flex-col gap-2">
@@ -48,8 +51,9 @@ export const DensityBar = ({ scale }: { readonly scale: DensityScale }) => {
         />
       </svg>
       <div className="text-[11px] font-semibold text-white tabular-nums">
-        {formatNumber(ratio, 3)} {es.atHarpHelu}
+        {formatNumber(ratio, 3)} {es.atExtreme}
       </div>
+      <p className="text-[10px] leading-snug text-(--color-text-muted)">{es.extremeParks}</p>
     </div>
   )
 }

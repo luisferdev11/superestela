@@ -22,7 +22,7 @@ const setup = async () => {
 }
 
 describe('la tabla de proyeccion', () => {
-  it('en el Harp Helu compara con lo medido y dice cuantos caen en la banda', async () => {
+  it('en altitud extrema compara con lo medido y dice cuantos caen en la banda', async () => {
     const { projection } = await setup()
     const { inBand, checked } = bandAgreement(projection)
     expect(

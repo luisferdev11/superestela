@@ -118,7 +118,7 @@ export type PitcherArsenal = {
   readonly hand: Hand
   /** Nivel del mar: la forma que el Simulador toma como entrada. */
   readonly sea: readonly ArsenalPitch[]
-  /** Harp Helu, medido: el Simulador no lo usa; la Ficha lo dibuja junto al del mar. */
+  /** Altitud extrema, medido: el Simulador no lo usa; la Ficha lo dibuja junto al del mar. */
   readonly hh: readonly ArsenalPitch[]
 }
 

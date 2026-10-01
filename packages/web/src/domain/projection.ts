@@ -55,7 +55,7 @@ const inBand = (measured: number, projected: Metric): boolean =>
   Math.abs(measured - projected.value) <= Z95 * projected.se
 
 /**
- * Lo medido en el Harp Helu contra lo proyectado, eje por eje, solo si hay
+ * Lo medido en altitud extrema contra lo proyectado, eje por eje, solo si hay
  * muestra en altura. Con menos de 30 lanzamientos lo medido es ruido, no un
  * juez de la proyeccion.
  */

@@ -2,7 +2,11 @@ import type { ROLES } from './constants'
 
 export type Role = (typeof ROLES)[number]
 
-/** Los dos entornos que el producto compara. `hh` es Harp Helu, a 2,240 m. */
+/**
+ * Los dos entornos que el producto compara. `hh` es la categoria `Extreme Altitude`
+ * del dataset: cinco parques (Puebla, CDMX, Aguascalientes, Queretaro y Leon), no
+ * solo el Harp Helu. El identificador se queda por compatibilidad del contrato.
+ */
 export type Environment = 'hh' | 'sea'
 
 /**

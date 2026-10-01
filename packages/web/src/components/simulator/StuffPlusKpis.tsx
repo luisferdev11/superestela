@@ -4,7 +4,7 @@ import type { SimulateResponse } from '@/sources/simulateResponse'
 import { es } from '@/i18n/es'
 
 /**
- * Los tres numeros de arriba, siempre lado a lado: nivel del mar, Harp Helu y
+ * Los tres numeros de arriba, siempre lado a lado: nivel del mar, altitud extrema y
  * lo que cuesta la altura, partido en forma y entorno (`docs/09` seccion 3.9).
  * Si el modelo no paso sus compuertas no hay Stuff+ que mostrar, y se dice por
  * que en vez de dejar un hueco.

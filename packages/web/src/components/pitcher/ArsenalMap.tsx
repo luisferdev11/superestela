@@ -35,7 +35,7 @@ const PitchLabel = ({
 
 /**
  * El arsenal completo sobre el plano de break (`Ficha.dc.html`): cada pitch a
- * nivel del mar y en el Harp Helu, unidos por la flecha de lo que pierde, con
+ * nivel del mar y en altitud extrema, unidos por la flecha de lo que pierde, con
  * el promedio de la liga de su tipo como referencia. Todo medido, nada
  * simulado. SVG a mano (`docs/07` seccion 5.1), con las cifras en la etiqueta
  * para un lector de pantalla.

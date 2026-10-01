@@ -44,7 +44,9 @@ export const es = {
     ],
   },
   densityIndex: '\u00cdndice de Densidad',
-  atHarpHelu: '\u00b7 Harp Hel\u00fa',
+  atExtreme: '· altitud extrema',
+  extremeParks:
+    'Promedio de cinco parques: Puebla, Ciudad de México, Aguascalientes, Querétaro y León. El dataset no distingue entre ellos.',
   baselineNote: (pitches: number, seasons: number): string =>
     `Stuff+ v0 baseline \u00b7 ${pitches.toLocaleString('es-MX')} lanzamientos \u00b7 ${String(seasons)} temporadas`,
   filter: 'Filtrar',
@@ -55,7 +57,7 @@ export const es = {
   rolePlural: { starter: 'Abridores', reliever: 'Relevistas' } satisfies Record<Role, string>,
   sortBy: 'Ordenar por',
   legend: {
-    trap: 'Trampa de Altitud \u2014 se ve fuerte a nivel del mar, colapsa en el Harp Hel\u00fa.',
+    trap: 'Trampa de Altitud \u2014 se ve fuerte a nivel del mar, colapsa en altitud extrema.',
     inconclusive: (significant: number, total: number): string =>
       `\u2014 el Impuesto no alcanza significancia: solo ${String(significant)} de ${String(total)} la alcanzan.`,
     stale:
@@ -63,12 +65,12 @@ export const es = {
     showing: (shown: number, total: number): string =>
       `Mostrando ${String(shown)} de ${String(total)} \u00b7 \u00faltima temporada jugada de cada uno \u00b7 banda al 95%`,
   },
-  environment: { hh: 'Stuff+ HH', sea: 'Stuff+ nivel del mar' },
+  environment: { hh: 'Stuff+ altitud extrema', sea: 'Stuff+ nivel del mar' },
   columns: [
     'Pitcher',
     'Temp.',
     'Mano',
-    'Stuff+ HH',
+    'Stuff+ alt. extrema',
     'Nivel del mar',
     '\u0394',
     'Impuesto c/9 ent.',
@@ -78,14 +80,14 @@ export const es = {
   ],
   title: 'Radar de Fichajes',
   subtitle:
-    'Candidatos en su \u00faltima temporada jugada, ordenados por su valor proyectado en el Harp Hel\u00fa.',
+    'Candidatos en su \u00faltima temporada jugada, ordenados por su valor en altitud extrema, la de la casa de Diablos.',
   evaluated: 'Evaluados',
   conclusiveTax: 'Impuesto concluyente',
   traps: 'Trampas de Altitud',
   trapsOver: (total: number): string => `Trampas \u00b7 ${String(total)} temporadas`,
   outOf: (total: number): string => `de ${String(total)}`,
   trap: 'Trampa de Altitud',
-  trapDescription: 'Se ve fuerte a nivel del mar y colapsa en el Harp Helú.',
+  trapDescription: 'Se ve fuerte a nivel del mar y colapsa en altitud extrema.',
   ficha: {
     breadcrumb: 'Fichajes',
     tabs: {
@@ -99,7 +101,7 @@ export const es = {
       `${hand} · ${hh.toLocaleString('es-MX')} lanzamientos en altitud · ${sea.toLocaleString('es-MX')} a nivel del mar`,
     hands: { Right: 'Diestro', Left: 'Zurdo' } as Record<string, string | undefined>,
     kpi: {
-      hh: 'Stuff+ Harp Helú',
+      hh: 'Stuff+ altitud extrema',
       sea: 'Nivel del mar',
       delta: 'Δ por altitud',
       tax: 'Impuesto de Altitud',
@@ -109,22 +111,22 @@ export const es = {
       loss: 'Pierde',
       lossUnit: 'de IVB promedio en su arsenal.',
       rank: (sea: number, hh: number, of: number): string =>
-        `A nivel del mar es el #${String(sea)} de ${String(of)} en su temporada; en el Harp Helú, el #${String(hh)}.`,
-      belowAverage: 'En el Harp Helú queda por debajo del promedio.',
+        `A nivel del mar es el #${String(sea)} de ${String(of)} en su temporada; en altitud extrema, el #${String(hh)}.`,
+      belowAverage: 'En altitud extrema queda por debajo del promedio.',
     },
     arsenal: {
-      title: 'Arsenal \u00b7 nivel del mar \u2192 Harp Hel\u00fa',
+      title: 'Arsenal \u00b7 nivel del mar → altitud extrema',
       columns: ['Pitch', 'Uso', 'Velo', 'IVB', '|HB|', 'Spin', 'Stuff+', 'Whiff', 'Simulador'],
       simulate: 'abrir \u2192',
       simulateLabel: (pitch: string): string => `Abrir el ${pitch} en el Simulador`,
       measuredAt:
-        'Uso, velocidad, spin y whiff, medidos en el Harp Hel\u00fa. IVB y |HB| en pulgadas; Stuff+ con su banda al 95%.',
+        'Uso, velocidad, spin y whiff, medidos en altitud extrema. IVB y |HB| en pulgadas; Stuff+ con su banda al 95%.',
       noSea: 'sin muestra a nivel del mar',
     },
     map: {
       title: 'Mapa de movimiento',
       sea: 'nivel del mar',
-      hh: 'Harp Hel\u00fa',
+      hh: 'Altitud extrema',
       league: 'promedio LMB',
       up: 'sube',
       down: 'cae',
@@ -134,14 +136,14 @@ export const es = {
       axisY: 'IVB',
       usage: (share: number): string => `${(100 * share).toFixed(1)}% de uso`,
       label: (pitch: string, sea: string, hh: string): string =>
-        `${pitch}: ${sea} a nivel del mar, ${hh} en el Harp Hel\u00fa`,
+        `${pitch}: ${sea} a nivel del mar, ${hh} en altitud extrema`,
       none: 'sin muestra',
-      note: 'Forma medida en cada entorno, no simulada. Break horizontal del lado del brazo. El uso es el de nivel del mar; la tabla da el del Harp Hel\u00fa.',
+      note: 'Forma medida en cada entorno, no simulada. Break horizontal del lado del brazo. El uso es el de nivel del mar; la tabla da el de altitud extrema.',
     },
     physics: {
       title: 'El mecanismo f\u00edsico.',
       body: (density: string, magnus: string): string =>
-        `El aire del Harp Hel\u00fa tiene densidad ${density} respecto al nivel del mar, medida desde la trayectoria de la bola. El efecto Magnus escala con esa densidad: ${magnus}. El brazo es el mismo; lo que cambia es cu\u00e1nto break puede sostener el aire.`,
+        `El aire en altitud extrema tiene densidad ${density} respecto al nivel del mar, medida desde la trayectoria de la bola. El efecto Magnus escala con esa densidad: ${magnus}. El brazo es el mismo; lo que cambia es cu\u00e1nto break puede sostener el aire.`,
     },
     reading: {
       title: 'Lectura del sistema',
@@ -151,17 +153,17 @@ export const es = {
         notAtSeaLevelPrice: 'No fichar al precio que marcan sus n\u00fameros de nivel del mar.',
       } satisfies Record<Verdict, string>,
       main: (pitch: string, usage: string, delta: string): string =>
-        `Su pitch principal es el ${pitch}, al ${usage}% de uso, y en el Harp Hel\u00fa cambia ${delta} puntos de Stuff+.`,
+        `Su pitch principal es el ${pitch}, al ${usage}% de uso, y en altitud extrema cambia ${delta} puntos de Stuff+.`,
       lever: (best: string, bestDelta: string, worst: string, worstDelta: string): string =>
         `Si ya estuviera en el roster, la palanca es el ${best}: es lo que mejor aguanta la altitud (${bestDelta} contra ${worstDelta} del ${worst}).`,
-      rule: 'Regla provisional de producto: Trampa de Altitud, no al precio de nivel del mar; banda completa del Stuff+ HH arriba de 100, fichar; lo dem\u00e1s, con reservas. El veredicto final lo respalda el modelo del equipo de datos.',
+      rule: 'Regla provisional de producto: Trampa de Altitud, no al precio de nivel del mar; banda completa del Stuff+ en altitud extrema arriba de 100, fichar; lo dem\u00e1s, con reservas. El veredicto final lo respalda el modelo del equipo de datos.',
     },
     location: {
       title: (id: string): string => `Arsenal \u00b7 ${id}`,
       subtitle: 'C\u00f3mo son sus lanzamientos: la forma de cada uno, y d\u00f3nde los pone.',
       withSample: (n: number): string =>
         `${n.toLocaleString('es-MX')} lanzamientos suyos con ubicaci\u00f3n registrada.`,
-      panel: { sea: 'Nivel del mar', hh: 'Harp Hel\u00fa' } satisfies Record<Environment, string>,
+      panel: { sea: 'Nivel del mar', hh: 'Altitud extrema' } satisfies Record<Environment, string>,
       pitches: (n: number): string => `${n.toLocaleString('es-MX')} lanzamientos`,
       view: 'vista del c\u00e1tcher',
       less: 'menos',
@@ -171,7 +173,7 @@ export const es = {
       pending: 'Pendiente: la ubicaci\u00f3n la entrega el equipo de datos con Location+.',
       pendingDetail:
         'Aqu\u00ed va d\u00f3nde pone sus lanzamientos en cada entorno, su altura media, su porcentaje en zona y su whiff. El contrato est\u00e1 en docs/11.',
-      shapeTitle: 'Forma por lanzamiento \u00b7 mar \u2192 Harp Hel\u00fa',
+      shapeTitle: 'Forma por lanzamiento \u00b7 mar → altitud extrema',
       readTitle: 'Lo que dice su ubicaci\u00f3n',
       readPending:
         'Si sobrecompensa la altura con la mira \u2014apunta m\u00e1s alto y pierde la zona\u2014 se lee aqu\u00ed cuando llegue la ubicaci\u00f3n. Sin ella no hay lectura: no se inventa.',
@@ -203,7 +205,7 @@ export const es = {
   plan: {
     title: 'Plan de Desarrollo',
     subtitle: 'Qu\u00e9 cambiar de su arsenal para que sobreviva en casa, en orden de impacto.',
-    today: 'Stuff+ HH hoy',
+    today: 'Stuff+ alt. extrema hoy',
     pitcher: 'Lanzador',
     deficitTitle: (deficit: string): string =>
       `D\u00f3nde se pierde \u00b7 contribuci\u00f3n de cada lanzamiento al d\u00e9ficit de ${deficit} puntos`,
@@ -213,11 +215,10 @@ export const es = {
     culprit: (pitch: string): string =>
       `Todo el d\u00e9ficit est\u00e1 en un solo lanzamiento: el ${pitch}. El plan no es arreglar todo, es arreglar ese pitch o usarlo menos.`,
     spread: 'El d\u00e9ficit se reparte entre varios lanzamientos.',
-    noDeficit:
-      'No hay d\u00e9ficit: su arsenal rinde por encima del promedio en el Harp Hel\u00fa.',
+    noDeficit: 'No hay d\u00e9ficit: su arsenal rinde por encima del promedio en altitud extrema.',
     labels: { degrades: 'Se degrada', holds: 'Aguanta', changes: 'Qu\u00e9 cambia' },
     degrades: (pitch: string, delta: string, sea: string, hh: string, ivb: string): string =>
-      `Su ${pitch} cambia ${delta} puntos de Stuff+ en el Harp Hel\u00fa, de ${sea} a ${hh}. ${ivb}`,
+      `Su ${pitch} cambia ${delta} puntos de Stuff+ en altitud extrema, de ${sea} a ${hh}. ${ivb}`,
     ivb: (sea: string, hh: string): string => `Su IVB pasa de ${sea}\u2033 a ${hh}\u2033.`,
     holds: (pitch: string, delta: string, sea: string, hh: string, ivb: string): string =>
       `Su ${pitch} cambia ${delta} puntos (${sea} \u2192 ${hh}). ${ivb}`,
@@ -231,9 +232,9 @@ export const es = {
       before: string,
       after: string,
     ): string =>
-      `Bajar el ${from} de ${fromBefore}% a ${fromAfter}% de uso y d\u00e1rselo al ${to} lleva su Stuff+ HH ponderado de ${before} a ${after}. Nada cambia en el brazo: solo qu\u00e9 lanza y cu\u00e1ndo.`,
+      `Bajar el ${from} de ${fromBefore}% a ${fromAfter}% de uso y d\u00e1rselo al ${to} lleva su Stuff+ ponderado en altitud extrema de ${before} a ${after}. Nada cambia en el brazo: solo qu\u00e9 lanza y cu\u00e1ndo.`,
     noShift: (to: string, from: string): string =>
-      `Mover uso no lo compensa: el ${to} pierde menos, pero en el Harp Hel\u00fa sigue rindiendo menos que el ${from}. La palanca aqu\u00ed no es el reparto.`,
+      `Mover uso no lo compensa: el ${to} pierde menos, pero en altitud extrema sigue rindiendo menos que el ${from}. La palanca aqu\u00ed no es el reparto.`,
     shiftBy: 'Mover',
     points: (n: number): string => `${String(n)} pts`,
     tryInSimulator: (pitch: string): string => `Probar el ${pitch} en el Simulador \u2192`,
@@ -245,10 +246,10 @@ export const es = {
   projection: {
     title: 'Proyecci\u00f3n',
     subtitle:
-      'C\u00f3mo se ver\u00eda su arsenal en el estadio de la pr\u00f3xima serie, a partir de lo medido a nivel del mar.',
-    target: 'Estadio destino',
+      'C\u00f3mo se ver\u00eda su arsenal en el entorno de la próxima serie, a partir de lo medido a nivel del mar.',
+    target: 'Entorno destino',
     targets: {
-      hh: (rho: string): string => `Harp Hel\u00fa \u00b7 \u03c1 ${rho}`,
+      hh: (rho: string): string => `Altitud extrema · ρ ${rho}`,
       medium: (rho: string): string => `Altitud media \u00b7 \u03c1 ${rho}`,
     } satisfies Record<Target, (rho: string) => string>,
     physics: (rho: string, factor: string): string =>
@@ -256,7 +257,7 @@ export const es = {
     extrapolation:
       'Extrapolaci\u00f3n: la ley y su banda se midieron entre nivel del mar y altitud extrema. En altitud media no hay Stuff+ por lanzador, as\u00ed que aqu\u00ed solo se proyecta la forma.',
     measuredNote:
-      'Ya tiene muestra en el Harp Hel\u00fa: la Ficha trae la medici\u00f3n. La columna \u00abmedido\u00bb sirve para ver cu\u00e1nto acierta la proyecci\u00f3n.',
+      'Ya tiene muestra en altitud extrema: la Ficha trae la medici\u00f3n. La columna \u00abmedido\u00bb sirve para ver cu\u00e1nto acierta la proyecci\u00f3n.',
     agreement: (inBand: number, checked: number): string =>
       `${String(inBand)} de ${String(checked)} pitches con muestra en altura caen dentro de la banda al 95% en los dos ejes.`,
     columns: [
@@ -278,7 +279,7 @@ export const es = {
   roster: {
     approxTitle: 'Plantel aproximado',
     approx: (n: number, season: number, min: number): string =>
-      `El dataset no dice qui\u00e9n es de Diablos. Estos son los ${String(n)} lanzadores que en ${String(season)} lanzaron en altitud extrema la mayor parte de sus lanzamientos (m\u00ednimo ${String(min)} ah\u00ed): quien juega la mitad de sus juegos en casa lanza ah\u00ed la mayor\u00eda, sea abridor o relevista. Si \u00abaltitud extrema\u00bb incluye otro estadio, se cuela gente de otro equipo. Se reemplaza por la lista del club cuando la entregue (ADR 0008).`,
+      `El dataset no dice qui\u00e9n es de Diablos. Estos son los ${String(n)} lanzadores que en ${String(season)} lanzaron en altitud extrema la mayor parte de sus lanzamientos (m\u00ednimo ${String(min)} ah\u00ed): quien juega la mitad de sus juegos en casa lanza ah\u00ed la mayor\u00eda, sea abridor o relevista. «Altitud extrema» son cinco parques, así que la lista mezcla lanzadores de esos cinco equipos: el Despliegue y el Plantel son demostrativos, para enseñar cómo se usarían. Se reemplaza por la lista del club cuando la entregue (ADR 0008).`,
     lastScored: 'cada uno en su \u00faltima temporada con score',
   },
   plantel: {
@@ -295,7 +296,7 @@ export const es = {
       'Mano',
       'Temp.',
       'Rol',
-      'Stuff+ HH',
+      'Stuff+ alt. extrema',
       'Nivel del mar',
       '\u0394',
       'Pitch principal',
@@ -310,10 +311,10 @@ export const es = {
   deploy: {
     title: 'Despliegue',
     subtitle: (n: number): string =>
-      `Los mejores del plantel para el estadio donde se juega. ${String(n)} lanzadores, cada uno en su \u00faltima temporada con score.`,
-    stadium: 'Estadio de la serie',
+      `Los mejores del plantel para el entorno donde se juega. ${String(n)} lanzadores, cada uno en su \u00faltima temporada con score.`,
+    stadium: 'Entorno de la serie',
     envs: {
-      hh: (rho: string): string => `Harp Hel\u00fa \u00b7 \u03c1 ${rho}`,
+      hh: (rho: string): string => `Altitud extrema · ρ ${rho}`,
       sea: (rho: string): string => `Nivel del mar \u00b7 \u03c1 ${rho}`,
     },
     ruleTitle: 'La regla',
@@ -330,7 +331,7 @@ export const es = {
       'Temp.',
       'Mano',
       'Rol',
-      'Stuff+ HH',
+      'Stuff+ alt. extrema',
       'Nivel del mar',
       'Pos. casa',
       'Pos. gira',
@@ -344,7 +345,7 @@ export const es = {
   sim: {
     title: 'Simulador de Pitch',
     subtitle:
-      'Parte del pitch real de un lanzador, muévelo y compara lo que vale a nivel del mar y en el Harp Helú.',
+      'Parte del pitch real de un lanzador, muévelo y compara lo que vale a nivel del mar y en altitud extrema.',
     modes: { pitcher: 'Desde un lanzador', lab: 'Laboratorio' } satisfies Record<SimMode, string>,
     pitcher: 'Lanzador',
     pitcherOption: (id: string, season: number): string => `${id} · ${String(season)}`,
@@ -384,7 +385,7 @@ export const es = {
     resetLab: 'Volver a la mediana de la liga',
     kpi: {
       sea: 'Stuff+ a nivel del mar',
-      hh: 'Stuff+ en Harp Helú',
+      hh: 'Stuff+ en altitud extrema',
       delta: 'Δ por altitud',
       shape: 'por la forma',
       environment: 'por el entorno',
@@ -401,7 +402,7 @@ export const es = {
       vaa: 'VAA a media zona',
       unchanged: 'no cambia',
       explanation: (density: string, magnus: string): string =>
-        `En el Harp Helú el efecto Magnus —lo que mueve la pelota— cae a ${magnus} de su valor a nivel del mar, y todo el break se contrae en esa proporción. El aire también la frena menos (Índice de Densidad ${density}, medido desde la pelota), así que llega más rápida al plato. La velocidad de salida y el spin son del brazo, no del aire: no se tocan.`,
+        `En altitud extrema el efecto Magnus —lo que mueve la pelota— cae a ${magnus} de su valor a nivel del mar, y todo el break se contrae en esa proporción. El aire también la frena menos (Índice de Densidad ${density}, medido desde la pelota), así que llega más rápida al plato. La velocidad de salida y el spin son del brazo, no del aire: no se tocan.`,
     },
     spin: {
       perKrpm: (value: string, percentile: string): string =>
@@ -420,7 +421,7 @@ export const es = {
       title: 'Mapa de movimiento · pitches más y menos efectivos',
       subtitle: (pitchType: string): string =>
         `Whiff por swing observado de cada zona de forma de ${pitchType}, comparado con su media a nivel del mar. Vista del lanzador: el brazo a la derecha.`,
-      panel: { sea: 'Nivel del mar', hh: 'Harp Helú' } satisfies Record<Environment, string>,
+      panel: { sea: 'Nivel del mar', hh: 'Altitud extrema' } satisfies Record<Environment, string>,
       armSide: 'brazo ▸',
       gloveSide: '◂ guante',
       rises: 'sube',
