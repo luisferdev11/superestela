@@ -5,6 +5,7 @@ import type { FichaTab } from '@/domain/navigation'
 import type { SeasonStatus } from '@/domain/pitcher'
 import type { Verdict } from '@/domain/reading'
 import type { Target } from '@/domain/projection'
+import type { RosterGrouping } from '@/domain/roster'
 
 /**
  * El unico archivo con espanol. `CONVENTIONS.md` seccion 2.1 y seccion 4 regla
@@ -273,6 +274,72 @@ export const es = {
     noSample: 'sin muestra',
     note: 'Pulgadas; HB del lado del brazo. El \u00b1 es un error est\u00e1ndar: el error medido de la ley por tipo de pitch, el mismo que muestra el Simulador. \u00abEn banda\u00bb compara lo medido contra la banda al 95%, \u00b11.96 errores, en los dos ejes.',
     none: 'Sin muestra a nivel del mar para proyectar esta temporada.',
+  },
+  roster: {
+    approxTitle: 'Plantel aproximado',
+    approx: (n: number, season: number, min: number): string =>
+      `El dataset no dice qui\u00e9n es de Diablos. Estos son los ${String(n)} lanzadores que en ${String(season)} lanzaron en altitud extrema la mayor parte de sus lanzamientos (m\u00ednimo ${String(min)} ah\u00ed): quien juega la mitad de sus juegos en casa lanza ah\u00ed la mayor\u00eda, sea abridor o relevista. Si \u00abaltitud extrema\u00bb incluye otro estadio, se cuela gente de otro equipo. Se reemplaza por la lista del club cuando la entregue (ADR 0008).`,
+    lastScored: 'cada uno en su \u00faltima temporada con score',
+  },
+  plantel: {
+    title: 'Plantel',
+    subtitle:
+      'Lo que ya tenemos, temporada por temporada. El Radar mira candidatos; esto mira la casa.',
+    groupBy: 'Agrupar por',
+    groupings: { role: 'Rol', all: 'Todos' } satisfies Record<RosterGrouping, string>,
+    howTitle: 'C\u00f3mo leerlo',
+    how: (min: number): string =>
+      `Una l\u00ednea por lanzador y temporada, no por lanzador: el mismo brazo en dos a\u00f1os son dos mediciones, y la forma cambia m\u00e1s cuando hay un a\u00f1o de hueco (ADR 0005). Donde una temporada no alcanza los ${String(min)} lanzamientos en cada entorno, se dice; no se rellena con el promedio de las otras.`,
+    columns: [
+      'Pitcher',
+      'Mano',
+      'Temp.',
+      'Rol',
+      'Stuff+ HH',
+      'Nivel del mar',
+      '\u0394',
+      'Pitch principal',
+    ],
+    unscored: (hh: number, sea: number): string =>
+      `${String(hh)} en altitud, ${String(sea)} a nivel del mar`,
+    absent: 'no lanz\u00f3',
+    summary: (scored: number, unscored: number, pitchers: number): string =>
+      `${String(scored)} temporadas con score y ${String(unscored)} sin muestra suficiente, de ${String(pitchers)} lanzadores.`,
+    toFicha: 'Cada l\u00ednea con score lleva a su Ficha.',
+  },
+  deploy: {
+    title: 'Despliegue',
+    subtitle: (n: number): string =>
+      `Los mejores del plantel para el estadio donde se juega. ${String(n)} lanzadores, cada uno en su \u00faltima temporada con score.`,
+    stadium: 'Estadio de la serie',
+    envs: {
+      hh: (rho: string): string => `Harp Hel\u00fa \u00b7 \u03c1 ${rho}`,
+      sea: (rho: string): string => `Nivel del mar \u00b7 \u03c1 ${rho}`,
+    },
+    ruleTitle: 'La regla',
+    rule: 'Se ordena por Stuff+ absoluto del entorno elegido, nunca por el \u0394: el \u0394 dice cu\u00e1nto te van a cobrar por \u00e9l, el absoluto dice qui\u00e9n es mejor hoy, aqu\u00ed. Se agrupa por rol porque comparar abridores y relevistas es comparar dos oficios. El orden de pitcheo no se sugiere: eso lo decide el m\u00e1nager, con contexto que este tablero no ve.',
+    whyTitle: 'Por qu\u00e9 existe',
+    why: (rho: string, move: string, turnover: number, n: number): string =>
+      `En los ${String(n)} lanzadores del Radar, el orden en casa y en gira correlaciona ${rho} (Spearman): el cambio mediano es de ${move} posiciones, y ${String(turnover)} de los 10 mejores en casa no est\u00e1n entre los 10 mejores de gira.`,
+    noMedium: 'Altitud media no est\u00e1: no hay Stuff+ por lanzador en ese entorno.',
+    groupCount: (n: number): string => (n === 1 ? '1 lanzador' : `${String(n)} lanzadores`),
+    noRole: 'Sin rol',
+    boardTitle: 'Plantel completo y c\u00f3mo cambia el orden entre entornos',
+    columns: [
+      'Pitcher',
+      'Temp.',
+      'Mano',
+      'Rol',
+      'Stuff+ HH',
+      'Nivel del mar',
+      'Pos. casa',
+      'Pos. gira',
+      'Cambio',
+      'Pitch principal',
+    ],
+    moveNote:
+      'Cambio: posiciones que gana o pierde al pasar de la gira a casa. La temporada en \u00e1mbar avisa que su dato no es de la temporada m\u00e1s reciente.',
+    band: 'Cada Stuff+ con su banda al 95%',
   },
   sim: {
     title: 'Simulador de Pitch',

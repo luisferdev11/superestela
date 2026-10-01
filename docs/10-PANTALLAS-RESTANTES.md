@@ -294,7 +294,7 @@ cuál de estas usar:
 lanzador: habría que agregarlo en `analysis/evidence.py` o limitar el selector a dos entornos.
 
 **Hecho cuando:** `packages/web/src/app/despliegue/page.tsx` existe; la correlación de orden entre
-casa y gira (**0.700**) y el cambio mediano (**38 posiciones**) que justifican la pantalla salen
+casa y gira (**0.638**, antes citada como 0.700) y el cambio mediano (**40 posiciones**, antes 38) que justifican la pantalla salen
 de una corrida y se asertan en tests; la decisión sobre el roster está escrita en un ADR.
 
 ---
