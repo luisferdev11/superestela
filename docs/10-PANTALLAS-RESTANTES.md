@@ -392,3 +392,37 @@ plan, citado donde importa.
 
 **Lo que no se respondió:** si la demo puede ser local o debe estar en internet. Se pregunta por
 correo, junto con la confirmación de la escala.
+
+---
+
+## 6. Pasada de paridad contra el prototipo (1 de octubre)
+
+Revisé cada pantalla construida contra su `.dc.html`, con capturas a 1440 y a 1280 px. Lo que estaba
+roto y no requería decidir nada se arregló en el #78: la mano en inglés, las referencias internas en
+el texto para el coach, cifras partidas en dos renglones y un par de rótulos. **Lo que queda**, en
+orden de valor para la demo:
+
+### Requiere una decisión
+
+1. **El «±» no significa lo mismo en todas las pantallas.** En el Radar, la Ficha y el Despliegue es
+   la banda al 95%. En el Simulador, el Traductor y la Proyección es un error estándar, y la
+   Proyección lo dice. En el Plan, «93.3 ± 0.7» (la tarjeta) convive con «93.3 ± 0.4» (el arsenal
+   ponderado). Propuesta: una sola convención, la banda al 95%, y que cada pantalla lo diga.
+2. **La Ficha Técnica del prototipo** («de dónde vienen los −23.0 del four-seam»: cuánto se debe al
+   IVB, al HB, a la velocidad y al spin) no existe. Para cada feature hace falta una atribución del
+   modelo (SHAP, A1), así que es **trabajo de datos**; el Simulador ya separa forma de entorno.
+3. **El orden de la Ficha a 1280 px:** el mapa ocupa la primera pantalla y la tabla del arsenal queda
+   abajo. El prototipo los pone lado a lado.
+
+### Arreglos chicos (menos de 30 líneas cada uno)
+
+- **Plantel:** «Agrupar por rol» no muestra dónde terminan los abridores. Falta una fila separadora.
+- **Despliegue:** la nota dinámica del prototipo («pitcher_X es último en casa y N° de gira»), que
+  convierte la columna Cambio en una historia.
+- **Pestaña Arsenal de la Ficha:** sin datos de ubicación solo repite la tabla. Agregar el enlace
+  «Palanca para el coach» al Plan, y achicar los mapas vacíos mientras llega Location+.
+- **Proyección:** el recuadro «Cuándo sirve» del prototipo, y explicar por qué un pitch queda «fuera»
+  de la banda (break chico, error relativo grande).
+- **Ficha:** la temporada sin score como chip gris con su motivo, en la barra de contexto.
+- **Simulador:** la banda gris de cada slider (p5–p95 de la liga) no tiene leyenda, y el panel
+  «Contra su recta» queda casi vacío cuando el pitch es la recta misma.

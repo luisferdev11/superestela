@@ -34,7 +34,7 @@ componente en MLflow, pero en `main` todavía no hay nada en `packages/models/ta
 ### Avance del 1 de octubre (segunda sesión): todo en PRs, nada en `main` todavía
 
 Los PRs de la web van **en cadena**: cada uno apunta a `main` y contiene al anterior. Se revisan en
-este orden: #58 → #60 → #68 → #69 → #70 → #71 → #73 → #74 → #75. Los demás salen de `main` y son
+este orden: #58 → #60 → #68 → #69 → #70 → #71 → #73 → #74 → #75 → #78. Los demás salen de `main` y son
 independientes.
 
 | # | Tarea | PRs | Estado |
@@ -49,6 +49,7 @@ independientes.
 | 8 | README reproducible | #62 → #63 → #61 (`python -m models.score`, ADR 0009) | ✅ en revisión. Falta que alguien que no lo escribió lo corra |
 | 9 | P3 Traductor | #67 (API) y #68 → #71 (web) | ✅ en revisión. Recta de `pitcher_00069`: 15.6″ ± 0.9″ y 92.9 ± 4.1, igual que el Simulador |
 | — | Radar legible para no técnicos | #74 | ✅ en revisión |
+| — | Pasada de paridad contra el prototipo | #78 (arreglos), `docs/10` §6 (lo que queda) | ✅ en revisión |
 | 10 | `apiSource` y GET scores | — | ⬜ |
 | 11 | Prototipo y deck | — | ⬜ después del congelamiento |
 | 12 | Ensayo | — | ⬜ 13 de octubre |
