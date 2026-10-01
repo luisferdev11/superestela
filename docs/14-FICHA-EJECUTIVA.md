@@ -48,6 +48,6 @@
 - **Opción B:** una tabla de `report/build.py` por lanzador, en Markdown y luego PDF. Es más rápida,
   pero pierde el mapa.
 
-Para la entrega bastan **tres fichas**, una por historia de `docs/09` §5.2: `pitcher_00069` (la
-recta que pierde en la altura), `pitcher_00566` (el slider que aguanta) y un lanzador que sí se
-recomienda fichar, a elegir de la cohorte con la regla de arriba.
+Para la entrega bastan **tres fichas**: `pitcher_00069` (historia 1 de `docs/09` §5.2, la recta que
+pierde en la altura), `pitcher_00566` (el slider que aguanta) y un lanzador que la regla de arriba
+recomiende fichar, elegido de la cohorte.

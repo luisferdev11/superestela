@@ -45,7 +45,7 @@ regla:
 | Caso | Qué hacemos | Por qué | Dónde |
 |---|---|---|---|
 | `altitude_category` vacía | Se excluye del análisis por entorno | Sin entorno no hay comparación | `analysis/evidence.py`, filtro en `main` |
-| Trayectoria incompleta (`vx0` … `az0`) | Se excluye del índice de densidad | El índice se mide desde la trayectoria; no se imputa | `evidence.py`, `add_physics` |
+| Trayectoria incompleta (`vx0` … `az0`) | Se excluye de todo el análisis | El índice se mide desde la trayectoria; no se imputa | `evidence.py`, `main` |
 | Rasgos físicos faltantes en un pitch | Ese pitch no recibe Stuff+, y la salida dice por qué | Un score imputado sería inventado | `models/batch.py`, `status = missing_features` |
 | Tipo de pitch fuera de los seis | Sin Stuff+ (`unsupported_pitch_type`), pero cuenta para K y BB | El modelo no lo vio; el ponche sí ocurrió | `models/batch.py`, `evidence.py` |
 | Métricas de batazo faltantes | No entran a ningún target del v0 | El v0 usa linear weights por evento, no la velocidad de salida | `evidence.py`, `RUN_VALUE` |
@@ -68,7 +68,7 @@ regla:
 - **El pitch de diferencial de velocidad no gana** (H2, refutada). El que mejor aguanta es la curva
   (`hypotheses → H2`).
 - **La rola sube en la altura para todos los tipos, pero las carreras también suben** (H3, con matiz).
-- **Lo que más pesa en la altura es abanicar.** La K−BB% de la liga cae de nivel del mar a altitud
+- **Hipótesis, por validar: en la altura lo que más pesa es abanicar.** La K−BB% de la liga cae de nivel del mar a altitud
   extrema (`evidence.json → league_outcomes`; falta su afirmación en `claims.toml`). Es lo que
   Diablos dijo que mira primero.
 

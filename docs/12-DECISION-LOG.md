@@ -68,7 +68,7 @@ de un año a otro mucho más que el resultado (`report/claims.toml` → `skill-p
 {
   "decision_id": "(se genera)",
   "decided_at": "(al registrar)",
-  "model_id": "stuff_plus_v0 · mockup_data.json",
+  "model_id": "0.1.0+<sha7>",
   "scale": "league",
   "module": "ficha",
   "pitcher_id": "pitcher_00069",
@@ -99,20 +99,20 @@ Si no alcanza antes de la entrega, va en «qué haríamos con más tiempo» del 
 
 ## 2. El registro de las decisiones del proyecto
 
-Cada decisión vive en su ADR, con el razonamiento completo. Esto es el índice auditable: qué se
-decidió, contra qué y con qué evidencia.
+Cada decisión vive en su ADR, con el razonamiento completo y quién la tomó. Esto es el índice
+auditable: qué se decidió, contra qué y con qué evidencia.
 
-| # | Fecha | Decisión | Alternativa descartada | Evidencia | Decidió |
-|---|---|---|---|---|---|
-| [0001](adr/0001-toolchain-pinning.md) | 18 sep | Fijar el toolchain (`uv.lock`), aunque las cifras del v0 se movieron al hacerlo | Volver al entorno viejo para conservar las cifras | La reproducibilidad gana: las cifras se regeneran, no se copian | Producto |
-| [0002](adr/0002-generated-fixtures.md) | 18 sep | Los fixtures se generan desde una semilla | Versionar un parquet de prueba | El reglamento prohíbe redistribuir datos; un fixture generado no los contiene | Producto |
-| [0003](adr/0003-metricas-de-producto.md) | 18 sep | El Impuesto de Altitud en carreras por 9 entradas, y «no concluyente» si no es significativo; sin Sello | Carreras por 100 lanzamientos; mostrar el Sello | Nueve entradas es la unidad que el béisbol ya lee | Producto y datos |
-| [0004](adr/0004-rol-de-dos-categorias.md) | 20 sep | El rol tiene dos categorías | Tres, con «relevista tardío» | El histograma de la entrada es bimodal; no hay tercer modo | Datos (Martín), medido por producto |
-| [0005](adr/0005-eje-de-temporada.md) | 20 sep | La llave es lanzador y temporada | Un promedio de carrera | Quien se ausentó un año y volvió son dos mediciones | Producto y datos |
-| [0006](adr/0006-gobierno-con-el-equipo-dentro.md) | 21 sep | Una revisión obligatoria por PR, con CODEOWNERS | Sin revisión obligatoria | Hasta que entró el equipo no había quién revisara | Equipo |
-| [0007](adr/0007-contrato-del-scorer-y-escala.md) | 23 sep | El Stuff+ se pide por un contrato y se muestra solo si pasa compuertas | Esperar al modelo final; una fórmula a mano | Las compuertas S1–S4 (`report/tables/compuertas.md`) | Producto; la escala la decide datos |
-| [0008](adr/0008-plantel-aproximado.md) | 28 sep | El plantel se aproxima por proporción de lanzamientos en altitud extrema | Inventar la lista; dejar P6 y P8 como mockup | Tres reglas probadas sobre 2026, en el ADR | Producto |
-| [0009](adr/0009-arnes-de-scoring.md) | 1 oct | El comando que puntúa un archivo es de producto; el modelo es de datos | Que cada modelo traiga su script | Reproduce el puente exactamente sobre el dataset | Producto (en revisión, #61–#63) |
+| # | Fecha | Decisión | Alternativa descartada | Evidencia |
+|---|---|---|---|---|
+| [0001](adr/0001-toolchain-pinning.md) | 18 sep | Fijar el toolchain (`uv.lock`), aunque las cifras del v0 se movieron al hacerlo | Volver al entorno viejo para conservar las cifras | La reproducibilidad gana: las cifras se regeneran, no se copian |
+| [0002](adr/0002-generated-fixtures.md) | 18 sep | Los fixtures se generan desde una semilla | Versionar un parquet de prueba | El reglamento prohíbe redistribuir datos; un fixture generado no los contiene |
+| [0003](adr/0003-metricas-de-producto.md) | 18 sep | El Impuesto de Altitud en carreras por 9 entradas, y «no concluyente» si no es significativo; sin Sello | Carreras por 100 lanzamientos; mostrar el Sello | Nueve entradas es la unidad que el béisbol ya lee |
+| [0004](adr/0004-rol-de-dos-categorias.md) | 20 sep | El rol tiene dos categorías | Tres, con «relevista tardío» | Abrir el juego es bimodal (469 abren menos del 10% de sus juegos, 119 más del 90%); la entrada de los relevistas no separa un tercer grupo |
+| [0005](adr/0005-eje-de-temporada.md) | 20 sep | La llave es lanzador y temporada | Un promedio de carrera | Quien se ausentó un año y volvió son dos mediciones |
+| [0006](adr/0006-gobierno-con-el-equipo-dentro.md) | 21 sep | Una revisión obligatoria por PR, con CODEOWNERS | Sin revisión obligatoria | Hasta que entró el equipo no había quién revisara |
+| [0007](adr/0007-contrato-del-scorer-y-escala.md) | 23 sep | El Stuff+ se pide por un contrato y se muestra solo si pasa compuertas | Esperar al modelo final; una fórmula a mano | Las compuertas S1–S4 (`report/tables/compuertas.md`) |
+| [0008](adr/0008-plantel-aproximado.md) | 28 sep | El plantel se aproxima por proporción de lanzamientos en altitud extrema | Inventar la lista; dejar P6 y P8 como mockup | Tres reglas probadas sobre 2026, en el ADR |
+| [0009](adr/0009-arnes-de-scoring.md) | 1 oct | El comando que puntúa un archivo es de producto; el modelo es de datos | Que cada modelo traiga su script | Reproduce el puente exactamente sobre el dataset |
 
 ### 2.1 Reglas de producto que no tienen ADR propio
 
