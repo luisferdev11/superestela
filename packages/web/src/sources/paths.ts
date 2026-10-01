@@ -34,3 +34,6 @@ export const simulatorValidationPath = (): string =>
  * pestana Arsenal de la Ficha dice que esta pendiente.
  */
 export const locationsPath = (): string => path.join(dataDir(), 'locations.json')
+
+/** La proyeccion de P7: el arsenal a nivel del mar movido con `core.translate` (`analysis/projection_evidence.py`). */
+export const projectionsPath = (): string => path.join(dataDir(), 'projections.json')
