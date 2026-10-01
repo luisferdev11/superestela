@@ -1,6 +1,6 @@
 # ADR 0008 · El plantel de Diablos se aproxima, y se dice
 
-**Fecha:** 28 de septiembre de 2026 · **Estado:** aceptada, **provisional** hasta el Q&A del 30 de septiembre
+**Fecha:** 28 de septiembre de 2026 · **Estado:** aceptada. Tras el Q&A del 30 de septiembre, **P6 y P8 quedan como pantallas demostrativas** (§ «Resultado del Q&A»)
 
 ## Contexto
 
@@ -37,8 +37,8 @@ septiembre («aproximar por apariciones en Harp Helú»).
 
 ## Límites que se aceptan
 
-- **Si «altitud extrema» agrupa más de un estadio**, la lista mezcla equipos. Es justo la pregunta 1
-  del Q&A.
+- **«Altitud extrema» agrupa cinco parques**, así que la lista mezcla equipos. Era la pregunta 1 del
+  Q&A, y la respuesta lo confirmó (abajo).
 - **Un visitante frecuente puede colarse**, y un lesionado de Diablos puede quedar fuera.
 - **14 y 150 son decisiones de producto**, no reglas de la liga. Se cambian en una línea.
 
@@ -49,3 +49,15 @@ septiembre («aproximar por apariciones en Harp Helú»).
   quita el aviso y este ADR pasa a «sustituida». Las pantallas no cambian.
 - Lo que justifica el tablero —cuánto cambia el orden entre casa y gira— se calcula sobre la
   cohorte completa del Radar, no sobre el plantel aproximado, para que no dependa de esta decisión.
+
+## Resultado del Q&A (30 de septiembre)
+
+- **«Extreme Altitude» son cinco parques:** Puebla, Ciudad de México, Aguascalientes, Querétaro y León
+  ([`reference/categorias-altitud.md`](../reference/categorias-altitud.md)). La regla de proporción
+  encuentra a quien lanza la mayor parte en altitud extrema, pero eso incluye a los lanzadores de casa
+  de los cinco equipos, no solo de Diablos.
+- **No habrá lista del club.** Diablos sabe quién es cada ID anonimizado, pero evalúa a todos y no va a
+  compartir su plantel.
+- **Por eso P6 y P8 quedan como pantallas demostrativas:** muestran cómo se usaría el tablero con un
+  plantel real, y el aviso de las dos pantallas lo dice (#60). La regla y este ADR se quedan.
+  `approximateRoster` se reemplaza por una lista solo si un club la entrega.
