@@ -6,7 +6,7 @@ import type { SeasonStatus } from '@/domain/pitcher'
 import type { Verdict } from '@/domain/reading'
 import type { Target } from '@/domain/projection'
 import type { RosterGrouping } from '@/domain/roster'
-import type { Origin } from '@/domain/translator'
+import type { FileProblem, Origin } from '@/domain/translator'
 import type { RadarSort } from '@/domain/ranking'
 import type { ScaleKind } from '@/domain/scale'
 
@@ -553,9 +553,51 @@ export const es = {
   translator: {
     title: 'Traductor de Altitud',
     subtitle:
-      'Un candidato nunca ha lanzado en altitud extrema. Entra su arsenal, medido donde se haya medido; sale cómo se movería ahí y cuánto valdría.',
-    examples: 'Cargar un arsenal real',
-    example: (id: string, season: number): string => `${id} · ${String(season)}`,
+      'Para lanzadores que no están en nuestros datos: un agente libre, alguien de MLB o de Japón. Entra su arsenal, medido donde se haya medido; sale cómo se movería en altitud extrema y cuánto valdría.',
+    upload: {
+      label: 'Subir su export de TrackMan',
+      hint: 'Un CSV con un renglón por lanzamiento y las columnas de TrackMan: AutoPitchType, PitcherThrows, RelSpeed, InducedVertBreak, HorzBreak, SpinRate, SpinAxis, Extension, RelHeight y RelSide. Si trae altitude_category, de ahí sale dónde se midió.',
+      manual: 'O captura el arsenal a mano en la tabla.',
+      reading: 'Leyendo el archivo…',
+      loaded: (name: string, used: string, types: string): string =>
+        `${name}: ${used} lanzamientos en ${types} tipos de pitch.`,
+      left: (unsupported: string, missing: string): string =>
+        `Fuera del arsenal: ${unsupported} de tipos que el modelo no puntúa y ${missing} con datos incompletos.`,
+      unsupportedTypes: (types: string): string => `Tipos sin modelo: ${types}.`,
+      omittedTypes: (types: string): string =>
+        `Solo caben seis tipos; quedaron fuera los menos usados: ${types}.`,
+      extreme:
+        'Este archivo ya se midió en altitud extrema: el Traductor es para quien no ha lanzado ahí. Su Ficha lo mide directamente.',
+      problems: {
+        unreadable: 'El archivo no se pudo leer como CSV.',
+        empty: 'El archivo no trae lanzamientos.',
+        missing_columns: 'Faltan columnas de TrackMan:',
+        mixed_pitchers: 'El archivo mezcla lanzadores: sube uno por lanzador.',
+        mixed_hands: 'La mano del lanzador (PitcherThrows) debe ser una sola, Right o Left.',
+        tooLarge: 'El archivo pasa de 10 MB: sube una temporada de un lanzador.',
+        unreachable: 'No se pudo contactar a la API para leer el archivo.',
+      } satisfies Record<FileProblem | 'tooLarge' | 'unreachable', string>,
+    },
+    example: {
+      load: 'Cargar el ejemplo de validación',
+      title: 'Validación con un lanzador real',
+      lead: (id: string, season: string): string =>
+        `${id} lanzó en ${season} a nivel del mar y en altitud extrema. Su arsenal del mar entra al Traductor como si fuera de fuera; lo proyectado se compara con lo que se midió en la altura.`,
+      columns: [
+        'Pitch',
+        'IVB proyectado',
+        'IVB medido',
+        'HB proyectado',
+        'HB medido',
+        'Medidos',
+        'Dentro de la banda',
+      ],
+      within: 'sí',
+      outside: 'no',
+      noSample: 'sin muestra',
+      note: 'Pulgadas; HB del lado del brazo. Dentro de la banda: lo medido cae en la banda al 95% de lo proyectado en los dos ejes. Con menos de 30 lanzamientos en la altura no se juzga.',
+      ficha: '¿Ya juega en la LMB? → su Ficha',
+    },
     origin: 'Dónde se midió',
     origins: {
       sea: (rho: string): string => `Nivel del mar · ρ ${rho}`,

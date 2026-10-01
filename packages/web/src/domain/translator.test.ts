@@ -5,9 +5,11 @@ import {
   LIMITS,
   checkRows,
   exampleRows,
+  fileRows,
   isReady,
   normalizedUsage,
   translatorRequests,
+  validationRows,
   weightedMetric,
   type TranslatorRow,
 } from './translator'
@@ -122,5 +124,54 @@ describe('el arsenal ponderado', () => {
 
   it('sin ningun score no hay numero', () => {
     expect(weightedMetric([null, null], [0.5, 0.5])).toBeNull()
+  })
+})
+
+describe('el archivo y la validacion', () => {
+  const PITCH = {
+    releaseSpeed: 92,
+    ivb: 17,
+    horizontalBreak: 8,
+    spinRate: 2300,
+    spinAxis: 210,
+    extension: 6,
+    releaseHeight: 6,
+    releaseSide: 2,
+  }
+
+  it('el resumen del archivo pasa a filas con el uso en porcentaje', () => {
+    const rows = fileRows([
+      { ...PITCH, pitchType: 'Four-Seam', usage: 0.6667 },
+      { ...PITCH, pitchType: 'Slider', usage: 0.3333 },
+    ])
+    expect(rows.map((r) => r.usage)).toEqual([66.7, 33.3])
+    expect(isReady(rows)).toBe(true)
+  })
+
+  it('lo medido se juzga contra la banda al 95% y solo con 30 lanzamientos o mas', () => {
+    const projected = { ivb: { value: 15, se: 1 }, horizontalBreak: { value: 6, se: 1 } }
+    const measured = (pitchType: 'Four-Seam' | 'Slider', ivb: number, n: number) => ({
+      ...PITCH,
+      ivb,
+      horizontalBreak: 6,
+      pitchType,
+      usage: 0.5,
+      n,
+      whiffPerSwing: null,
+    })
+    const rows = [
+      row({ pitchType: 'Four-Seam' }),
+      row({ pitchType: 'Slider' }),
+      row({ pitchType: 'Cutter' }),
+    ]
+    const out = validationRows(
+      rows,
+      [projected, projected, projected],
+      [measured('Four-Seam', 16.5, 200), measured('Slider', 30, 10)],
+    )
+    expect(out.map((r) => r.isWithinBand)).toEqual([true, null, null])
+    expect(
+      validationRows(rows, [projected], [measured('Four-Seam', 20, 200)])[0]?.isWithinBand,
+    ).toBe(false)
   })
 })
