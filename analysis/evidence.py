@@ -30,6 +30,8 @@ from simulator_evidence import simulator_evidence
 from sklearn.ensemble import HistGradientBoostingRegressor
 from sklearn.model_selection import GroupKFold
 
+from contracts.schemas import MIN_PLATE_APPEARANCES_FOR_RATE, MIN_SWINGS_FOR_RATE
+from core.rates import difference_band, rate_band
 from models.features.role import STARTER_FIRST_INNING_SHARE, classify_roles
 
 warnings.filterwarnings("ignore")
@@ -44,10 +46,10 @@ GRAVITY = 32.174  # ft/s^2
 # Product rule, mirrored from contracts.schemas.MIN_PITCHES_FOR_SCORE: below
 # this in EITHER environment there is no comparison to show.
 MIN_PITCHES = 100
-# Product rules, mirrored from contracts.schemas: below these a rate is "muestra
-# insuficiente". At 50 plate appearances a K% of 20 still carries +-11 points.
-MIN_PLATE_APPEARANCES = 50
-MIN_SWINGS = 50
+# Product rules from contracts.schemas, imported so they cannot drift: below
+# these a rate is "muestra insuficiente".
+MIN_PLATE_APPEARANCES = MIN_PLATE_APPEARANCES_FOR_RATE
+MIN_SWINGS = MIN_SWINGS_FOR_RATE
 
 # The dataset has no plate-appearance id. A plate appearance ends on the pitch
 # whose result closes it; a fieldable foul only when it made an out (73 of 1,917).
@@ -764,7 +766,9 @@ def outcome_counts(df, keys):
 
     Counted on every pitch type, not only the six the model scores: 2.4% of
     strikeouts end on a pitch the model leaves out, and they are still the
-    pitcher's strikeouts. Walks exclude hit-by-pitch, as BB% does.
+    pitcher's strikeouts. Walks exclude hit-by-pitch, as BB% does. The frame is
+    the physics one, so the ~6,000 pitches without a trajectory (287
+    strikeouts among them) are not counted.
     """
     ends = df.play_result.isin(PA_ENDING) | (
         (df.play_result == "FoulBallFieldable") & (df.OutsOnPlay > 0)
@@ -782,22 +786,24 @@ def outcome_counts(df, keys):
 def outcome_rates(row):
     """K%, BB%, K-BB% and whiff per swing, in percent, each with its 95% half-width.
 
-    Binomial bands; K-BB% takes the covariance of two shares of the same plate
-    appearances. Below the product minimum a rate is None, never a number with
-    a band nobody could read.
+    The bands are Agresti-Coull (core.rates): a plain binomial band collapses to
+    zero at a rate of 0, and "BB% 0.0 +- 0.0" claims a certainty nobody has.
+    Below the product minimum a rate is None, never a number with a band
+    nobody could read.
     """
     pa, k, bb = int(row["pa"]), int(row["k"]), int(row["bb"])
     swings, whiffs = int(row["swings"]), int(row["whiffs"])
     out = {"pa": pa, "swings": swings}
     if pa >= MIN_PLATE_APPEARANCES:
-        pk, pb = k / pa, bb / pa
+        (pk, hk), (pb, hb) = rate_band(k, pa), rate_band(bb, pa)
+        dk, hd = difference_band(k, bb, pa)
         out.update(
             k_pct=round(100 * pk, 1),
-            k_pct_ci95=round(196 * np.sqrt(pk * (1 - pk) / pa), 1),
+            k_pct_ci95=round(100 * hk, 1),
             bb_pct=round(100 * pb, 1),
-            bb_pct_ci95=round(196 * np.sqrt(pb * (1 - pb) / pa), 1),
-            k_minus_bb_pct=round(100 * (pk - pb), 1),
-            k_minus_bb_pct_ci95=round(196 * np.sqrt((pk + pb - (pk - pb) ** 2) / pa), 1),
+            bb_pct_ci95=round(100 * hb, 1),
+            k_minus_bb_pct=round(100 * dk, 1),
+            k_minus_bb_pct_ci95=round(100 * hd, 1),
         )
     else:
         out.update(
@@ -809,11 +815,8 @@ def outcome_rates(row):
             k_minus_bb_pct_ci95=None,
         )
     if swings >= MIN_SWINGS:
-        pw = whiffs / swings
-        out.update(
-            whiff_per_swing=round(100 * pw, 1),
-            whiff_per_swing_ci95=round(196 * np.sqrt(pw * (1 - pw) / swings), 1),
-        )
+        pw, hw = rate_band(whiffs, swings)
+        out.update(whiff_per_swing=round(100 * pw, 1), whiff_per_swing_ci95=round(100 * hw, 1))
     else:
         out.update(whiff_per_swing=None, whiff_per_swing_ci95=None)
     return out
@@ -843,8 +846,9 @@ def mockup(d, df_phys, roles=None, entries=None, pitches_per_inning=None):
     # MIN_PITCHES_FOR_SCORE, the rule the contract already declared and this
     # script was quietly ignoring by using 150.
     ok = sorted(set(n_ext[n_ext >= MIN_PITCHES].index) & set(n_sea[n_sea >= MIN_PITCHES].index))
-    # Diablos reads whiff, strikeouts and K-BB (Q&A, 30 sep): per season on the
-    # card, both environments together; per environment in the season history.
+    # Diablos reads whiff, strikeouts and K-BB (Q&A, 30 sep): for the whole
+    # season on the card (every environment, medium altitude included); per
+    # environment in the season history.
     pooled = outcome_counts(df_phys, ["pitcher_anon_id", "year"])
     by_env = outcome_counts(df_phys, ["pitcher_anon_id", "year", "altitude_category"])
     empty = pd.Series({"pa": 0, "k": 0, "bb": 0, "swings": 0, "whiffs": 0})
