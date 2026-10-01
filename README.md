@@ -81,6 +81,39 @@ corrido los dos comandos de arriba. `docker compose down` los apaga.
 | Un commit rechazado por commitlint | El asunto debe ir en inglés y todo en minúsculas | `feat(web): add the translator screen` |
 | `next dev` modifica `packages/web/AGENTS.md` | Next lo reescribe solo al arrancar | Ya está commiteado; no hay que hacer nada |
 
+## Correr el modelo con sus datos
+
+Para puntuar un archivo de lanzamientos que no está en el dataset, por ejemplo la postemporada:
+
+```bash
+uv run python -m models.score pitches.csv scores.csv
+```
+
+- **Entrada:** un CSV o parquet con las columnas del dataset y sus nombres de origen
+  ([`docs/reference/stuff_plus_data_dictionary.csv`](docs/reference/stuff_plus_data_dictionary.csv)).
+  - Obligatorias: `AutoPitchType`, `PitcherThrows`, `RelSpeed`, `SpinRate`, `SpinAxis`,
+    `InducedVertBreak`, `HorzBreak`, `Extension`, `RelHeight`, `RelSide`.
+  - Para medir la densidad del aire por juego, como en el entrenamiento: `vx0`, `vy0`, `vz0`, `ax0`,
+    `ay0`, `az0` y `game_anon_id`. Sin ellas, o en un juego con menos de 50 lanzamientos, se usa la
+    densidad medida de su `altitude_category`.
+- **Salida:** una fila por cada fila de entrada, con `pitch_id`, `stuff_plus`, `stuff_plus_se`,
+  `status`, `density_index`, `density_source` y `model_id`.
+  - Una fila sin score lo deja vacío y dice por qué en `status`. Nunca sale un número sin su banda.
+- **Procedencia:** junto a la salida queda `scores.csv.meta.json` con el modelo que contestó, si pasó
+  las compuertas, los hashes del modelo y de la entrada, y el conteo por `status`.
+
+**El comando y el modelo son piezas distintas** ([ADR 0009](docs/adr/0009-arnes-de-scoring.md)):
+
+| | Qué es | De quién | Cuándo cambia |
+|---|---|---|---|
+| `python -m models.score` | El comando: lee, renombra, mide la densidad, pregunta y escribe | Producto | Casi nunca |
+| `artifacts/*.joblib` | El modelo: cualquier objeto que cumpla `models.scoring.Scorer` | Datos | Con cada modelo |
+
+Por defecto contesta el **puente v0** (`artifacts/stuff_plus_v0_bridge.joblib`, que entrena
+`analysis/simulator_gates.py`). **No es el modelo final**: su R² es 0.003 y está ahí para que el
+comando exista antes que el modelo (ADR 0007). El modelo final entra con `--model`, sin tocar el
+comando, y el `model_id` de cada fila dice siempre cuál contestó.
+
 ## Comandos del día a día
 
 ```bash
@@ -119,7 +152,7 @@ Diez pantallas de aplicación y trece láminas de deck, con datos reales de `ana
 |---|---|
 | `packages/core/` | Física y método. Funciones puras, sin datos del reto. **Es la frontera de IP** (`docs/04` §5.1) y una prueba la vigila |
 | `packages/contracts/` | Los esquemas ejecutables entre datos y producto. **Empieza por aquí** |
-| `packages/models/` | Entrenamiento. Toca el dataset |
+| `packages/models/` | El contrato del Stuff+ (`scoring.py`), el puente v0 y el comando que puntúa un archivo (`score.py`, ADR 0009) |
 | `packages/api/` | FastAPI: sirve scores y el simulador |
 | `packages/web/` | Next.js. El Radar (P1) y el Simulador (P4) están completos — [su README](packages/web/README.md) tiene lo que cuesta redescubrir |
 | `analysis/evidence.py` | El baseline v0. Reproduce cada cifra citada en los documentos |

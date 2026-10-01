@@ -74,6 +74,7 @@ convention = "google"
 [tool.ruff.lint.per-file-ignores]
 "**/tests/**" = ["ANN", "D", "T20"]
 "scripts/**" = ["T20"]  # these are CLIs; printing is the whole point
+"packages/models/score.py" = ["T20"]  # a CLI too
 "analysis/**" = ["ANN", "D", "T20", "N", "PD", "RUF", "E501"]  # v0 baseline, frozen as written
 
 [tool.ruff.format]
