@@ -43,6 +43,13 @@ describe('la tabla del Traductor', () => {
     expect(isReady([row(), row({ usage: 0.2 })])).toBe(false)
   })
 
+  it('un uso vacio, negativo o arriba de 100 no es un reparto', () => {
+    for (const usage of [Number.NaN, -5, 120]) {
+      expect(checkRows([row({ usage })])[0]?.problems.has('badUsage'), String(usage)).toBe(true)
+      expect(isReady([row({ usage }), row({ pitchType: 'Slider' })])).toBe(false)
+    }
+  })
+
   it('sin ningun uso no hay arsenal que ponderar', () => {
     expect(isReady([row({ usage: 0 })])).toBe(false)
     expect(isReady([row(), row({ pitchType: 'Slider', usage: 0.4 })])).toBe(true)
@@ -80,6 +87,10 @@ describe('las preguntas a la API', () => {
     expect(requests[1]?.pitch).toMatchObject({ pitchType: 'Slider', pitcherHand: 'Left', ivb: 2 })
     expect(requests[0]?.arsenal.map((a) => a.usage)).toEqual([0.6, 0.4])
     expect(requests.every((r) => r.originDensityIndex === 0.903 && r.pitcherId === null)).toBe(true)
+    // A nivel del mar el origen no viaja: es el default de la API.
+    expect(translatorRequests(rows, 'Left', 1).every((r) => !('originDensityIndex' in r))).toBe(
+      true,
+    )
     // Uso no es perilla: la API rechaza campos que no conoce.
     expect(Object.keys(requests[0]?.pitch ?? {}).sort()).toEqual(
       [...CONTROLS, 'pitchType', 'pitcherHand'].sort(),

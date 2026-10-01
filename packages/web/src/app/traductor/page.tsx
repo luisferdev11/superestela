@@ -33,7 +33,7 @@ export default async function TraductorPage() {
         <p className="mt-0.5 text-[13px] text-(--color-text-muted)">{es.translator.subtitle}</p>
       </div>
       <Translator
-        arsenals={data.arsenals}
+        arsenals={data.arsenals.filter((a) => EXAMPLES.includes(a.key))}
         examples={EXAMPLES}
         densities={projections.densities}
         factors={projections.factors}

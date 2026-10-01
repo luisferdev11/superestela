@@ -1,12 +1,14 @@
 'use client'
 
-import { CONTROLS, PITCH_TYPES, type Control, type PitchType } from '@/domain/simulator'
+import { CONTROLS, PITCH_TYPES, type Control } from '@/domain/simulator'
 import { MAX_ROWS, checkRows, type TranslatorRow } from '@/domain/translator'
 import { es } from '@/i18n/es'
 
-const cell =
-  'w-[72px] border border-(--color-border) bg-(--color-surface-card) px-1.5 py-1 text-right text-[13px] tabular-nums'
+// Sin borde ni fondo en la base: con los dos aqui, el rojo de una celda invalida
+// perdia contra el fondo normal por el orden de Tailwind.
+const cell = 'w-[72px] border px-1.5 py-1 text-right text-[13px] tabular-nums'
 const bad = 'border-(--color-diablos) bg-(--color-diablos-wash)'
+const ok = 'border-(--color-border) bg-(--color-surface-card)'
 
 /**
  * La tabla que se captura: un pitch por fila, sus ocho perillas y su uso. Las
@@ -30,6 +32,7 @@ export const ArsenalEditor = ({
   }
   const unused = PITCH_TYPES.filter((t) => !rows.some((r) => r.pitchType === t))
   const outOfRange = checks.some((c) => c.problems.has('outOfRange'))
+  const badUsage = checks.some((c) => c.problems.has('badUsage'))
   const duplicate = checks.some((c) => c.problems.has('duplicateType'))
   const noUsage = rows.length > 0 && !rows.some((r) => r.usage > 0)
 
@@ -57,6 +60,10 @@ export const ArsenalEditor = ({
             {rows.map((r, i) => {
               const check = checks[i]
               const key = `${String(resetKey)}-${String(i)}`
+              const isBad = (control: Control | 'usage'): boolean =>
+                control === 'usage'
+                  ? check?.problems.has('badUsage') === true
+                  : check?.cells.has(control) === true
               const numeric = (control: Control | 'usage', value: number) => (
                 <input
                   key={`${key}-${control}`}
@@ -66,9 +73,9 @@ export const ArsenalEditor = ({
                   aria-label={`${r.pitchType} · ${
                     control === 'usage' ? es.translator.editor.usage : es.sim.controls[control]
                   }`}
-                  aria-invalid={control !== 'usage' && check?.cells.has(control) === true}
+                  aria-invalid={isBad(control)}
                   defaultValue={Number.isFinite(value) ? value : ''}
-                  className={`${cell} ${control !== 'usage' && check?.cells.has(control) === true ? bad : ''}`}
+                  className={`${cell} ${isBad(control) ? bad : ok}`}
                   onChange={(e) => {
                     set(i, {
                       [control]: e.target.value === '' ? Number.NaN : Number(e.target.value),
@@ -80,13 +87,14 @@ export const ArsenalEditor = ({
                 <tr key={key} className="border-t border-(--color-border-hairline)">
                   <td className="py-1.5 pr-1.5">
                     <select
-                      aria-label={es.translator.editor.pitch}
+                      aria-label={`${es.translator.editor.pitch} ${String(i + 1)}`}
                       value={r.pitchType}
-                      className={`border border-(--color-border) bg-(--color-surface-card) px-1.5 py-1 text-[13px] ${
-                        check?.problems.has('duplicateType') === true ? bad : ''
+                      className={`border px-1.5 py-1 text-[13px] ${
+                        check?.problems.has('duplicateType') === true ? bad : ok
                       }`}
                       onChange={(e) => {
-                        set(i, { pitchType: e.target.value as PitchType })
+                        const picked = PITCH_TYPES.find((t) => t === e.target.value)
+                        if (picked !== undefined) set(i, { pitchType: picked })
                       }}
                     >
                       {PITCH_TYPES.map((t) => (
@@ -141,11 +149,13 @@ export const ArsenalEditor = ({
         <span role="alert" className="text-[12px] text-(--color-diablos)">
           {outOfRange
             ? es.translator.editor.outOfRange
-            : duplicate
-              ? es.translator.editor.duplicate
-              : noUsage
-                ? es.translator.editor.noUsage
-                : null}
+            : badUsage
+              ? es.translator.editor.badUsage
+              : duplicate
+                ? es.translator.editor.duplicate
+                : noUsage
+                  ? es.translator.editor.noUsage
+                  : null}
         </span>
       </div>
     </section>

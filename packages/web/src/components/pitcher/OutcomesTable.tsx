@@ -13,8 +13,10 @@ const ENVIRONMENTS: readonly Environment[] = ['hh', 'sea']
 const outcomesOf = (entry: SeasonEntry, env: Environment): Outcomes =>
   env === 'hh' ? entry.outcomesHh : entry.outcomesSea
 
-const show = (o: Outcomes | undefined, pick: (o: Outcomes) => number | undefined): string =>
-  o === undefined ? '' : formatNumber(pick(o) ?? Number.NaN)
+const show = (o: Outcomes, pick: (o: Outcomes) => number | undefined): string => {
+  const value = pick(o)
+  return value === undefined ? es.insufficientSampleShort : formatNumber(value)
+}
 
 /**
  * K%, BB%, K-BB% y whiff por swing de cada temporada, en cada entorno, con su

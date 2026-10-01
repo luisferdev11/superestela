@@ -122,7 +122,7 @@ export const es = {
     'Mano con la que lanza.',
     'Calidad de su arsenal en altitud extrema, ponderada por uso, con su banda al 95%.',
     'La misma medida a nivel del mar.',
-    'Carreras de más por 9 entradas en altitud extrema. «No concl.» si la banda cruza el cero.',
+    'Carreras de más por 9 entradas en altitud extrema, ± un error estándar. «No concl.» si no es significativo al 95%.',
     'Ponches menos bases por bolas, por cada 100 turnos, en la temporada.',
     'Swings abanicados por cada 100 swings, en la temporada.',
     'Abridor o relevista, por cómo entra a los juegos.',
@@ -138,7 +138,7 @@ export const es = {
     items: [
       {
         term: 'La banda «±»',
-        text: 'Cuánto podría moverse el número con más lanzamientos. Si dos lanzadores se traslapan en su banda, no hay diferencia que defender.',
+        text: 'Cuánto podría moverse el número con más lanzamientos. En el Radar y la Ficha, el ± del Stuff+ y de las tasas es la banda al 95%; el del Impuesto, el Simulador y el Traductor es un error estándar. Si dos lanzadores se traslapan, no hay diferencia que defender.',
       },
       {
         term: 'Altitud extrema',
@@ -174,7 +174,6 @@ export const es = {
   evaluated: 'Evaluados',
   conclusiveTax: 'Impuesto concluyente',
   traps: 'Trampas de Altitud',
-  trapsOver: (total: number): string => `Trampas \u00b7 ${String(total)} temporadas`,
   outOf: (total: number): string => `de ${String(total)}`,
   trap: 'Trampa de Altitud',
   trapDescription: 'Se ve fuerte a nivel del mar y su Stuff+ cae mucho en altitud extrema.',
@@ -197,7 +196,6 @@ export const es = {
       tax: 'Impuesto de Altitud',
       taxMeasured: (measured: string): string =>
         `mide ${measured} c/9 ent.; la banda cruza el cero`,
-      taxUnit: 'c/9 ent.',
       loss: 'Pierde',
       lossUnit: 'de IVB promedio en su arsenal.',
       rank: (sea: number, hh: number, of: number): string =>
@@ -261,7 +259,6 @@ export const es = {
       pending: 'Pendiente: la ubicaci\u00f3n la entrega el equipo de datos con Location+.',
       pendingDetail:
         'Aqu\u00ed va d\u00f3nde pone sus lanzamientos en cada entorno, su altura media, su porcentaje en zona y su whiff.',
-      shapeTitle: 'Forma por lanzamiento \u00b7 mar → altitud extrema',
       readTitle: 'Lo que dice su ubicaci\u00f3n',
       readPending:
         'Si sobrecompensa la altura con la mira \u2014apunta m\u00e1s alto y pierde la zona\u2014 se lee aqu\u00ed cuando llegue la ubicaci\u00f3n. Sin ella no hay lectura: no se inventa.',
@@ -378,7 +375,6 @@ export const es = {
     approxTitle: 'Plantel aproximado',
     approx: (n: number, season: number, min: number): string =>
       `El dataset no dice qui\u00e9n es de Diablos. Estos son los ${String(n)} lanzadores que en ${String(season)} lanzaron en altitud extrema la mayor parte de sus lanzamientos (m\u00ednimo ${String(min)} ah\u00ed): quien juega la mitad de sus juegos en casa lanza ah\u00ed la mayor\u00eda, sea abridor o relevista. «Altitud extrema» son cinco parques, así que la lista mezcla lanzadores de esos cinco equipos: el Despliegue y el Plantel son demostrativos, para enseñar cómo se usarían. Se reemplaza por la lista del club si la entrega.`,
-    lastScored: 'cada uno en su \u00faltima temporada con score',
   },
   plantel: {
     title: 'Plantel',
@@ -522,16 +518,12 @@ export const es = {
       armSide: 'brazo ▸',
       gloveSide: '◂ guante',
       rises: 'sube',
-      drops: 'cae',
-      axisIvb: 'IVB (pulgadas)',
-      axisHb: 'break horizontal (pulgadas)',
       legend: {
         more: 'más whiff que la media',
         less: 'menos whiff que la media',
         most: '10% más efectivos',
         least: '10% menos efectivos',
         simulated: 'el pitch simulado',
-        seaGhost: 'su forma a nivel del mar',
       },
       zone: (env: string, whiff: string, reference: string): string =>
         `${env}: la liga hace ${whiff} de whiff por swing en esta zona (media del tipo a nivel del mar: ${reference}).`,
@@ -598,6 +590,7 @@ export const es = {
       add: 'Agregar pitch',
       remove: (pitch: string): string => `Quitar ${pitch}`,
       outOfRange: 'Hay valores fuera de lo que se lanza: revisa las celdas marcadas.',
+      badUsage: 'El uso de cada pitch va de 0 a 100.',
       duplicate: 'Cada tipo de pitch va una sola vez.',
       noUsage: 'Captura el uso de al menos un pitch.',
       note: 'Velocidad en mph; break en pulgadas y lado en pies, positivos hacia el brazo que lanza; spin en rpm; eje en grados.',

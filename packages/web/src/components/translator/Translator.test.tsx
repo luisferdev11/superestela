@@ -102,7 +102,8 @@ describe('el Traductor', () => {
     renderTranslator()
     await settle()
     expect(bodies().map((b) => b.pitch.pitchType)).toEqual(['Four-Seam', 'Slider'])
-    expect(bodies().every((b) => b.originDensityIndex === 1)).toBe(true)
+    // A nivel del mar no se manda el origen: es la misma pregunta que la del Simulador.
+    expect(bodies().every((b) => !('originDensityIndex' in b))).toBe(true)
   })
 
   it('pondera el arsenal por uso con lo que contesta la API', async () => {
@@ -132,6 +133,32 @@ describe('el Traductor', () => {
     await settle()
     expect(bodies()).toHaveLength(asked)
     expect(screen.getByText(es.translator.editor.outOfRange)).toBeInTheDocument()
+  })
+
+  it('un uso vacio se marca y no se pregunta, en vez de pesar todo el arsenal en cero', async () => {
+    renderTranslator()
+    await settle()
+    const asked = bodies().length
+    fireEvent.change(screen.getByLabelText(`Slider · ${es.translator.editor.usage}`), {
+      target: { value: '' },
+    })
+    await settle()
+    expect(bodies()).toHaveLength(asked)
+    expect(screen.getByText(es.translator.editor.badUsage)).toBeInTheDocument()
+  })
+
+  it('tras un error no deja respuestas viejas bajo un pitch que ya cambio', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => undefined)
+    renderTranslator()
+    await settle()
+    expect(screen.getByText('97.0 ± 3.2')).toBeInTheDocument()
+    vi.mocked(fetch).mockImplementation(() => Promise.reject(new Error('down')))
+    fireEvent.change(screen.getByLabelText(`${es.translator.editor.pitch} 2`), {
+      target: { value: 'Curveball' },
+    })
+    await settle()
+    expect(screen.getByText(es.sim.status.unreachable)).toBeInTheDocument()
+    expect(screen.queryByText('97.0 ± 3.2')).not.toBeInTheDocument()
   })
 
   it('si la API no contesta lo dice, y la tabla sigue editable', async () => {

@@ -1,17 +1,28 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import type { TranslatorRequest } from '@/domain/translator'
 import { simulateResponseSchema, type SimulateResponse } from '@/sources/simulateResponse'
 
 export type Translation =
   | { readonly status: 'idle' }
-  | { readonly status: 'loading'; readonly last: readonly SimulateResponse[] | null }
+  | { readonly status: 'loading'; readonly last: Answer | null }
   | { readonly status: 'ready'; readonly results: readonly SimulateResponse[] }
   | {
       readonly status: 'error'
       readonly kind: 'rejected' | 'unreachable'
-      readonly last: readonly SimulateResponse[] | null
+      readonly last: Answer | null
     }
+
+/**
+ * Las respuestas anteriores junto con lo que preguntaban. Sin las preguntas,
+ * la pantalla emparejaria por posicion respuestas de un Slider con una fila que
+ * ya es Curveball.
+ */
+export type Answer = {
+  readonly requests: readonly TranslatorRequest[]
+  readonly results: readonly SimulateResponse[]
+}
 
 /** Se captura con teclado: se espera a que deje de teclear antes de preguntar. */
 const DEBOUNCE_MS = 300
@@ -25,11 +36,11 @@ class Rejected extends Error {}
  *
  * `requests` vacio (la tabla no esta lista) no pregunta nada.
  */
-export const useTranslation = (requests: readonly unknown[]): Translation => {
+export const useTranslation = (requests: readonly TranslatorRequest[]): Translation => {
   const body = JSON.stringify(requests)
   const [settled, setSettled] = useState<{
     readonly body: string
-    readonly results: readonly SimulateResponse[] | null
+    readonly answer: Answer | null
     readonly failed: 'rejected' | 'unreachable' | null
   } | null>(null)
 
@@ -37,7 +48,7 @@ export const useTranslation = (requests: readonly unknown[]): Translation => {
     if (requests.length === 0) return
     const controller = new AbortController()
     const timer = setTimeout(() => {
-      const ask = (request: unknown): Promise<SimulateResponse> =>
+      const ask = (request: TranslatorRequest): Promise<SimulateResponse> =>
         fetch('/api/simulate', {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
@@ -53,7 +64,7 @@ export const useTranslation = (requests: readonly unknown[]): Translation => {
 
       Promise.all(requests.map(ask))
         .then((results) => {
-          setSettled({ body, results, failed: null })
+          setSettled({ body, answer: { requests, results }, failed: null })
         })
         .catch((error: unknown) => {
           if (controller.signal.aborted) return
@@ -62,7 +73,7 @@ export const useTranslation = (requests: readonly unknown[]): Translation => {
             error instanceof Rejected || (error instanceof Error && error.name === 'ZodError')
               ? 'rejected'
               : 'unreachable'
-          setSettled((prev) => ({ body, results: prev?.results ?? null, failed: kind }))
+          setSettled((prev) => ({ body, answer: prev?.answer ?? null, failed: kind }))
         })
     }, DEBOUNCE_MS)
     return () => {
@@ -74,9 +85,9 @@ export const useTranslation = (requests: readonly unknown[]): Translation => {
   }, [body])
 
   if (requests.length === 0) return { status: 'idle' }
-  const last = settled?.results ?? null
+  const last = settled?.answer ?? null
   if (settled?.body !== body) return { status: 'loading', last }
   if (settled.failed !== null) return { status: 'error', kind: settled.failed, last }
   if (last === null) return { status: 'error', kind: 'unreachable', last }
-  return { status: 'ready', results: last }
+  return { status: 'ready', results: last.results }
 }

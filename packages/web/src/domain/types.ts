@@ -37,10 +37,6 @@ export type ArsenalEntry = {
 }
 
 /**
- * Una tarjeta del Contrato B: un lanzador en una temporada. La llave es
- * `(pitcherId, season)` — ver `docs/adr/0005`.
- */
-/**
  * Lo que Diablos lee primero (Q&A, 30 sep): ponches, bases por bolas y swings
  * abanicados, en porcentaje y con su banda al 95%. Es descriptivo: se cuenta,
  * no se modela. `null` es «muestra insuficiente».
@@ -54,6 +50,10 @@ export type Outcomes = {
   readonly whiffPerSwing: Metric | null
 }
 
+/**
+ * Una tarjeta del Contrato B: un lanzador en una temporada. La llave es
+ * `(pitcherId, season)` — ver `docs/adr/0005`.
+ */
 export type PitcherSeason = {
   readonly pitcherId: string
   readonly season: number
@@ -74,7 +74,7 @@ export type PitcherSeason = {
   readonly altitudeTaxMeasured: Metric | null
   readonly meanIvbLossIn: number | null
   readonly altitudeTrap: boolean
-  /** Los dos entornos juntos: la temporada completa. */
+  /** La temporada completa: todos sus juegos, altitud media incluida. */
   readonly outcomes: Outcomes
   readonly arsenal: readonly ArsenalEntry[]
 }

@@ -98,13 +98,20 @@ export const Translator = ({
   const ready = isReady(rows)
   const requests = ready ? translatorRequests(rows, hand, densities[origin]) : []
   const translation = useTranslation(requests)
-  const results =
+  // Mientras llega la respuesta nueva se conserva la anterior, atenuada, pero
+  // solo si preguntaba por los mismos pitches en el mismo orden. Tras un error
+  // no se dibuja nada viejo: el estado lo dice.
+  const samePitches = (asked: readonly { readonly pitch: { readonly pitchType: string } }[]) =>
+    asked.length === rows.length && asked.every((q, i) => q.pitch.pitchType === rows[i]?.pitchType)
+  const current =
     translation.status === 'ready'
       ? translation.results
-      : translation.status === 'idle'
-        ? null
-        : translation.last
-  const current = results !== null && results.length === rows.length ? results : null
+      : translation.status === 'loading' &&
+          translation.last !== null &&
+          samePitches(translation.last.requests)
+        ? translation.last.results
+        : null
+  const isStale = translation.status === 'loading' && current !== null
 
   const shares = normalizedUsage(rows)
   const shown = current?.every((r) => r.stuffPlusShown) ?? false
@@ -197,11 +204,7 @@ export const Translator = ({
 
       <ArsenalEditor rows={rows} onChange={edit} resetKey={loads} />
 
-      <div
-        role="status"
-        aria-busy={translation.status === 'loading'}
-        className="text-[12px] text-(--color-text-muted)"
-      >
+      <div role="status" className="text-[12px] text-(--color-text-muted)">
         {translation.status === 'error'
           ? es.sim.status[translation.kind]
           : translation.status === 'loading'
@@ -210,7 +213,7 @@ export const Translator = ({
       </div>
 
       {current === null ? null : (
-        <>
+        <div className={`flex flex-col gap-4 ${isStale ? 'opacity-50' : ''}`}>
           <TranslationTable
             rows={rows}
             shares={shares}
@@ -224,7 +227,7 @@ export const Translator = ({
               note={es.translator.map.note}
             />
           </div>
-        </>
+        </div>
       )}
 
       <p className="text-[12px] text-(--color-text-muted)">{es.translator.noRuns}</p>

@@ -1,5 +1,7 @@
 'use client'
 
+import { useId } from 'react'
+
 /** Una opcion de un grupo de botones: la etiqueta ya viene traducida. */
 export type ChipOption = {
   readonly key: string
@@ -20,23 +22,29 @@ export const ChipGroup = ({
 }: {
   readonly label: string
   readonly options: readonly ChipOption[]
-}) => (
-  <div className="flex items-center gap-2">
-    <span className="text-[10px] font-bold tracking-widest text-(--color-text-muted) uppercase">
-      {label}
-    </span>
-    <div className="flex border border-(--color-ink)">
-      {options.map((o) => (
-        <button
-          key={o.key}
-          type="button"
-          aria-pressed={o.isActive}
-          className={chip(o.isActive)}
-          onClick={o.onPick}
-        >
-          {o.label}
-        </button>
-      ))}
+}) => {
+  const id = useId()
+  return (
+    <div className="flex items-center gap-2">
+      <span
+        id={id}
+        className="text-[10px] font-bold tracking-widest text-(--color-text-muted) uppercase"
+      >
+        {label}
+      </span>
+      <div role="group" aria-labelledby={id} className="flex border border-(--color-ink)">
+        {options.map((o) => (
+          <button
+            key={o.key}
+            type="button"
+            aria-pressed={o.isActive}
+            className={chip(o.isActive)}
+            onClick={o.onPick}
+          >
+            {o.label}
+          </button>
+        ))}
+      </div>
     </div>
-  </div>
-)
+  )
+}

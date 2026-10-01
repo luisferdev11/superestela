@@ -8,8 +8,9 @@ import { es } from '@/i18n/es'
  * mismos tokens de la escala de altitud que codifican entorno en toda la app, y
  * la cifra sale de `evidence.py`, nunca escrita aqui.
  *
- * Debajo va la unica nota de la app que dice que «altitud extrema» son cinco
- * parques (Q&A con Diablos, 30 sep): el rail esta en todas las pantallas.
+ * Debajo va la nota que dice que «altitud extrema» son cinco parques (Q&A con
+ * Diablos, 30 sep): el rail esta en todas las pantallas. La guia del Radar la
+ * repite con sus palabras.
  *
  * `role="img"` con un `aria-label` que contiene el numero real, como pide
  * `docs/07` seccion 5.2 regla 4: un lector de pantalla debe poder leer el

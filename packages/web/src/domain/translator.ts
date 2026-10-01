@@ -51,7 +51,7 @@ export const LIMITS: Readonly<Record<Control, { readonly min: number; readonly m
   releaseSide: { min: -5, max: 5 },
 }
 
-export type RowProblem = 'outOfRange' | 'duplicateType'
+export type RowProblem = 'outOfRange' | 'badUsage' | 'duplicateType'
 
 /** Que esta mal en cada fila, celda por celda. Vacio: la fila se puede preguntar. */
 export type RowCheck = {
@@ -71,6 +71,8 @@ export const checkRows = (rows: readonly TranslatorRow[]): readonly RowCheck[] =
     )
     const problems = new Set<RowProblem>()
     if (cells.size > 0) problems.add('outOfRange')
+    // Un uso vacio o fuera de 0-100 no es un reparto: con un NaN, todo el arsenal pesaba cero.
+    if (!Number.isFinite(r.usage) || r.usage < 0 || r.usage > 100) problems.add('badUsage')
     if ((seen.get(r.pitchType) ?? 0) > 1) problems.add('duplicateType')
     return { cells, problems }
   })
@@ -84,8 +86,9 @@ export const isReady = (rows: readonly TranslatorRow[]): boolean =>
 
 /** El uso de cada fila como fraccion del total: el usuario captura porcentajes que no suman 100. */
 export const normalizedUsage = (rows: readonly TranslatorRow[]): readonly number[] => {
-  const total = rows.reduce((s, r) => s + Math.max(0, r.usage), 0)
-  return rows.map((r) => (total > 0 ? Math.max(0, r.usage) / total : 0))
+  const usable = (u: number): number => (Number.isFinite(u) ? Math.max(0, u) : 0)
+  const total = rows.reduce((s, r) => s + usable(r.usage), 0)
+  return rows.map((r) => (total > 0 ? usable(r.usage) / total : 0))
 }
 
 /**
@@ -97,6 +100,8 @@ export const exampleRows = (arsenal: PitcherArsenal): readonly TranslatorRow[] =
     .slice(0, MAX_ROWS)
     .map((p) => ({ ...pickValues(p), pitchType: p.pitchType, usage: p.usage }))
 
+export type TranslatorRequest = SimulateRequest & { readonly originDensityIndex?: number }
+
 /**
  * Una pregunta por pitch, con el arsenal entero de contexto para que los
  * diferenciales se midan contra su recta. `originDensityIndex` le dice a la API
@@ -106,7 +111,7 @@ export const translatorRequests = (
   rows: readonly TranslatorRow[],
   hand: Hand,
   originDensityIndex: number,
-): readonly (SimulateRequest & { readonly originDensityIndex: number })[] => {
+): readonly TranslatorRequest[] => {
   const shares = normalizedUsage(rows)
   const arsenal = rows.map((r, i) => ({
     pitchType: r.pitchType,
@@ -117,11 +122,14 @@ export const translatorRequests = (
     releaseHeight: r.releaseHeight,
     releaseSide: r.releaseSide,
   }))
+  // A nivel del mar no se manda el origen: es el default de la API, y asi la
+  // pregunta es la misma que la del Simulador.
+  const origin = originDensityIndex === 1 ? {} : { originDensityIndex }
   return rows.map((r) => ({
     pitch: { ...pickValues(r), pitchType: r.pitchType, pitcherHand: hand },
     pitcherId: null,
     arsenal,
-    originDensityIndex,
+    ...origin,
   }))
 }
 
