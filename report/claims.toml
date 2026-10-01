@@ -16,7 +16,7 @@ text = "A nivel del mar la liga anota 4.84 carreras por 9 entradas"
 section = "§1"
 source = "evidence.json"
 path = ["run_environment", "No Altitude", "ra9"]
-value = 4.84
+value = "4.84"
 
 [[claim]]
 id = "ra9-extreme"
@@ -24,7 +24,7 @@ text = "En altitud extrema anota 7.55"
 section = "§1"
 source = "evidence.json"
 path = ["run_environment", "Extreme Altitude", "ra9"]
-value = 7.55
+value = "7.55"
 
 [[claim]]
 id = "ra9-effect"
@@ -32,7 +32,7 @@ text = "La altitud extrema suma 56% de carreras"
 section = "§1"
 source = "evidence.json"
 path = ["run_environment", "altitude_effect", "ra9_pct"]
-value = 56.0
+value = "56"
 
 # --- Sin corrida todavía ---------------------------------------------------------------------
 

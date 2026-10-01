@@ -30,7 +30,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OUTPUTS = ROOT / "analysis" / "outputs"
 TABLES = ROOT / "report" / "tables"
 
-SOURCES = ("evidence.json", "simulator_validation.json", "projections.json")
+SOURCES = ("evidence.json", "simulator_validation.json")
 
 
 def load_artifacts(outputs: Path = OUTPUTS) -> Artifacts:
@@ -40,7 +40,16 @@ def load_artifacts(outputs: Path = OUTPUTS) -> Artifacts:
 
 def build(artifacts: Artifacts, claims: Sequence[Claim]) -> dict[str, str]:
     """Every generated file, by name. Raises if a claim is broken."""
-    files = {name: builder(artifacts) for name, builder in TABLE_BUILDERS.items()}
+    files = {}
+    for name, builder in TABLE_BUILDERS.items():
+        try:
+            files[name] = builder(artifacts)
+        except KeyError as err:
+            # An artifact gained a key the table does not know (an H5, an F6): say which.
+            raise BrokenClaimError(
+                f"{name}: the artifact has {err}, which the table does not map"
+            ) from err
+
     files["trazabilidad.md"] = traceability_page(verify(claims, artifacts))
     return files
 
@@ -63,6 +72,8 @@ def main(argv: list[str] | None = None) -> int:
             for name, text in files.items()
             if not (TABLES / name).exists() or (TABLES / name).read_text(encoding="utf-8") != text
         ]
+        # A table renamed or dropped leaves its old file behind; that is stale too.
+        stale += sorted(p.name for p in TABLES.glob("*.md") if p.name not in files)
         if stale:
             print(
                 f"Stale tables: {', '.join(stale)}. Run `uv run python -m report.build`.",
@@ -73,6 +84,9 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     TABLES.mkdir(parents=True, exist_ok=True)
+    for orphan in TABLES.glob("*.md"):
+        if orphan.name not in files:
+            orphan.unlink()
     for name, text in files.items():
         (TABLES / name).write_text(text, encoding="utf-8")
     print(f"Wrote {len(files)} files to {TABLES.relative_to(ROOT)}.")
