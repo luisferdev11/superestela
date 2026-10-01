@@ -100,6 +100,12 @@ class Scorer(Protocol):
         Joint draws are what put a band on a DIFFERENCE: the altitude delta of
         a pitch compares two scores that share every draw, so their errors are
         correlated and adding the two se's would overstate the band.
+
+        The draws ARE the score: the API and ``models.score`` report their mean
+        as the Stuff+ and their standard deviation (ddof=1) as its se, so a model
+        must return at least two draws, and their mean must be what ``score``
+        returns. A model with a point estimate and a separate posterior has to
+        honour this, or the API and the file scorer would disagree.
         """
         ...
 
@@ -118,14 +124,21 @@ def to_arm_side(
     The vendor reports horizontal break and release side from the catcher's
     view and spin axis in the right-hander's frame, so a left-hander's numbers
     are a right-hander's flipped. Mirroring them makes a left-hander and his
-    mirrored right-hander the same input apart from the hand. Every caller that
-    turns raw pitches into scoring input goes through here, so the rule lives
-    in one place: the gates, the API and ``models.score`` alike.
+    mirrored right-hander the same input apart from the hand. The gates and
+    ``models.score`` go through here; the API receives pitches already on the
+    arm side, as ``PitchInput`` defines them.
 
     Returns:
         ``(horizontal_break, release_side, spin_axis)`` on the arm side.
+
+    Raises:
+        ValueError: On a hand other than "Right" or "Left": mirroring an
+            "Undefined" as a left-hander would invent a pitch.
     """
-    sign = np.where(np.asarray(pitcher_hand) == "Right", 1.0, -1.0)
+    hands = np.asarray(pitcher_hand)
+    if not np.isin(hands, ["Right", "Left"]).all():
+        raise ValueError("pitcher_hand must be 'Right' or 'Left' on every row")
+    sign = np.where(hands == "Right", 1.0, -1.0)
     axis = np.asarray(spin_axis, dtype=float)
     return (
         np.asarray(horizontal_break, dtype=float) * sign,

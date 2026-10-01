@@ -1,6 +1,7 @@
 """Tests for the pieces of the scoring contract that are not a model."""
 
 import numpy as np
+import pytest
 
 from models.scoring import to_arm_side, verdict_path
 
@@ -24,3 +25,8 @@ def test_mirroring_twice_is_the_identity_for_the_spin_axis():
 
 def test_the_verdict_lives_next_to_the_model_file():
     assert verdict_path("artifacts/m.joblib") == "artifacts/m.validation.json"
+
+
+def test_a_hand_that_is_neither_side_is_refused_not_mirrored():
+    with pytest.raises(ValueError, match="pitcher_hand"):
+        to_arm_side(["Undefined"], [8.0], [1.9], [215.0])
