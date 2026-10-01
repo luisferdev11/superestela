@@ -1041,6 +1041,44 @@
     "pitchers_with_multiple_seasons": 347,
     "pitchers_changing_role_between_seasons": 43
   },
+  "league_outcomes": {
+    "No Altitude": {
+      "pa": 75344,
+      "swings": 138129,
+      "k_pct": 20.2,
+      "k_pct_ci95": 0.3,
+      "bb_pct": 9.3,
+      "bb_pct_ci95": 0.2,
+      "k_minus_bb_pct": 10.9,
+      "k_minus_bb_pct_ci95": 0.4,
+      "whiff_per_swing": 24.8,
+      "whiff_per_swing_ci95": 0.2
+    },
+    "Medium Altitude": {
+      "pa": 40122,
+      "swings": 72478,
+      "k_pct": 17.8,
+      "k_pct_ci95": 0.4,
+      "bb_pct": 9.6,
+      "bb_pct_ci95": 0.3,
+      "k_minus_bb_pct": 8.2,
+      "k_minus_bb_pct_ci95": 0.5,
+      "whiff_per_swing": 24.0,
+      "whiff_per_swing_ci95": 0.3
+    },
+    "Extreme Altitude": {
+      "pa": 47818,
+      "swings": 84840,
+      "k_pct": 16.6,
+      "k_pct_ci95": 0.3,
+      "bb_pct": 10.0,
+      "bb_pct_ci95": 0.3,
+      "k_minus_bb_pct": 6.7,
+      "k_minus_bb_pct_ci95": 0.5,
+      "whiff_per_swing": 23.1,
+      "whiff_per_swing_ci95": 0.3
+    }
+  },
   "cohort": {
     "altitude_tax_runs_per_9": {
       "mean": 1.53,

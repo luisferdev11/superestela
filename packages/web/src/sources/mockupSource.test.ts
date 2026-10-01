@@ -3,7 +3,11 @@ import { describe, expect, it } from 'vitest'
 import { mockupDataPath } from './paths'
 import { mockupDataSchema } from './schema'
 import { toPitcherSeason } from './adapter'
-import { MIN_PITCHES_FOR_SCORE } from '@/domain/constants'
+import {
+  MIN_PITCHES_FOR_SCORE,
+  MIN_PLATE_APPEARANCES_FOR_RATE,
+  MIN_SWINGS_FOR_RATE,
+} from '@/domain/constants'
 
 /**
  * El contrato con el equipo de datos, ejecutable. Corre sobre el
@@ -58,6 +62,32 @@ describe('el artefacto de analisis cumple el contrato', () => {
           season.n_pitches_sea >= MIN_PITCHES_FOR_SCORE
         expect(season.scored).toBe(qualifies)
       }
+    }
+  })
+})
+
+describe('las tasas que lee Diablos', () => {
+  it('hay K% y K-BB% justo cuando hay turnos suficientes, y siempre con banda', async () => {
+    const parsed = mockupDataSchema.parse(await readMockup())
+    const all = [
+      ...parsed.pitchers.map((c) => c.outcomes),
+      ...Object.values(parsed.pitcher_seasons).flatMap((h) =>
+        h.flatMap((e) => [e.outcomes_hh, e.outcomes_sea]),
+      ),
+    ]
+    for (const o of all) {
+      const enough = o.pa >= MIN_PLATE_APPEARANCES_FOR_RATE
+      expect(o.k_pct !== null, `pa=${String(o.pa)}`).toBe(enough)
+      expect(o.k_minus_bb_pct_ci95 !== null).toBe(enough)
+      expect(o.whiff_per_swing !== null).toBe(o.swings >= MIN_SWINGS_FOR_RATE)
+    }
+  })
+
+  it('K-BB% es K% menos BB%, al decimal que se publica', async () => {
+    const parsed = mockupDataSchema.parse(await readMockup())
+    for (const { outcomes: o } of parsed.pitchers) {
+      if (o.k_pct === null || o.bb_pct === null || o.k_minus_bb_pct === null) continue
+      expect(Math.abs(o.k_pct - o.bb_pct - o.k_minus_bb_pct)).toBeLessThanOrEqual(0.11)
     }
   })
 })
