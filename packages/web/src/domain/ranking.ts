@@ -15,6 +15,31 @@ export const rankBy = (
 ): readonly PitcherSeason[] =>
   [...cards].sort((a, b) => scoreIn(b, environment) - scoreIn(a, environment))
 
+/**
+ * Lo que el Radar puede ordenar: el Stuff+ de un entorno, o las tasas que lee
+ * Diablos (Q&A, 30 sep). Una tasa con muestra insuficiente va al final, nunca
+ * en medio como si fuera cero.
+ */
+export type RadarSort = Environment | 'kMinusBb' | 'whiff'
+
+export const RADAR_SORTS: readonly RadarSort[] = ['hh', 'sea', 'kMinusBb', 'whiff']
+
+const rateOf = (card: PitcherSeason, sort: 'kMinusBb' | 'whiff'): number | null =>
+  (sort === 'kMinusBb' ? card.outcomes.kMinusBbPct : card.outcomes.whiffPerSwing)?.value ?? null
+
+export const sortRadar = (
+  cards: readonly PitcherSeason[],
+  sort: RadarSort,
+): readonly PitcherSeason[] => {
+  if (sort === 'hh' || sort === 'sea') return rankBy(cards, sort)
+  return [...cards].sort((a, b) => {
+    const x = rateOf(a, sort)
+    const y = rateOf(b, sort)
+    if (x === null || y === null) return x === y ? 0 : x === null ? 1 : -1
+    return y - x || b.stuffPlusHh.value - a.stuffPlusHh.value
+  })
+}
+
 /** Correlacion de rangos de Spearman entre los dos ordenes. */
 export const rankCorrelation = (cards: readonly PitcherSeason[]): number => {
   const n = cards.length

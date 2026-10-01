@@ -12,6 +12,8 @@ export const InconclusiveValue = ({ short = false }: { readonly short?: boolean 
 )
 
 /** Debajo del umbral de muestra no se dice un numero con banda enorme. */
-export const InsufficientSample = () => (
-  <span className="text-(--color-semantic-inconclusive)">{es.insufficientSample}</span>
+export const InsufficientSample = ({ short = false }: { readonly short?: boolean }) => (
+  <span className="text-(--color-semantic-inconclusive)" title={es.insufficientSample}>
+    {short ? es.insufficientSampleShort : es.insufficientSample}
+  </span>
 )

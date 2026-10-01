@@ -34,9 +34,13 @@ jobs:
       - name: ruff format
         run: uv run ruff format --check .
       - name: mypy --strict
-        run: uv run mypy packages/
+        run: uv run mypy packages/ report/
       - name: pytest
         run: uv run pytest --cov=packages --cov-report=term-missing
+      # The document's tables are generated, never typed: stale tables or a claim
+      # without its run fail here (docs/05 section 4.3).
+      - name: report tables up to date
+        run: uv run python -m report.build --check
 
   web:
     runs-on: ubuntu-24.04

@@ -17,7 +17,7 @@ const TICK_EVERY_IN = 6
  * etiqueta, para que un lector de pantalla lea lo mismo que se ve.
  *
  * El color es la distancia a la media **a nivel del mar** del tipo, con la
- * misma escala en los dos paneles: si el panel del Harp Helu sale mas naranja,
+ * misma escala en los dos paneles: si el panel de altitud extrema sale mas naranja,
  * es la altura, no la leyenda.
  */
 export const MovementMap = ({

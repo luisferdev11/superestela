@@ -1,7 +1,12 @@
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { MIN_PITCHES_FOR_SCORE, ROLES } from './constants'
+import {
+  MIN_PITCHES_FOR_SCORE,
+  MIN_PLATE_APPEARANCES_FOR_RATE,
+  MIN_SWINGS_FOR_RATE,
+  ROLES,
+} from './constants'
 
 /**
  * Guardia de deriva entre lenguajes. `packages/contracts/` es la frontera entre
@@ -20,6 +25,14 @@ describe('las constantes no se separan de packages/contracts', () => {
     const match = /^MIN_PITCHES_FOR_SCORE\s*=\s*(\d+)/m.exec(await contracts('schemas.py'))
     expect(match?.[1], 'no se encontro MIN_PITCHES_FOR_SCORE en schemas.py').toBeDefined()
     expect(Number(match?.[1])).toBe(MIN_PITCHES_FOR_SCORE)
+  })
+
+  it('los minimos de las tasas coinciden con los de Python', async () => {
+    const source = await contracts('schemas.py')
+    const pa = /^MIN_PLATE_APPEARANCES_FOR_RATE\s*=\s*(\d+)/m.exec(source)
+    const swings = /^MIN_SWINGS_FOR_RATE\s*=\s*(\d+)/m.exec(source)
+    expect(Number(pa?.[1])).toBe(MIN_PLATE_APPEARANCES_FOR_RATE)
+    expect(Number(swings?.[1])).toBe(MIN_SWINGS_FOR_RATE)
   })
 
   it('los roles coinciden con ROLES, y siguen siendo dos', async () => {

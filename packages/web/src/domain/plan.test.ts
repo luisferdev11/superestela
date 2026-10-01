@@ -31,7 +31,7 @@ describe('el plan de pitcher_00069 2025, el del prototipo', () => {
     expect(planOf(card)?.culprit?.pitch).toBe('Four-Seam')
   })
 
-  it('bajar la recta a 50% sube el Stuff+ HH ponderado de 93.3 a 95.3', async () => {
+  it('bajar la recta a 50% sube el Stuff+ en altitud extrema ponderado de 93.3 a 95.3', async () => {
     const plan = planOf(await find('pitcher_00069', 2025))
     if (plan === null) throw new Error('sin plan')
     const shift = shiftUsage(plan, 21.3)

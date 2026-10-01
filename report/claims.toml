@@ -1,0 +1,253 @@
+# Lo que el documento técnico afirma, y de dónde sale cada número.
+#
+# `report/build.py` comprueba cada afirmación contra su artefacto y FALLA si la fuente no existe
+# o si el número ya no coincide, a los dígitos que se citan (`docs/05` §4.3). Una afirmación sin
+# corrida se declara con `awaits` y no puede aparecer en el documento hasta que la tenga.
+#
+# Para agregar una: id, texto tal como va en el documento, sección (`docs/05` §5), y `source` +
+# `path` (+ `value`, si el texto cita un número) o `awaits`. Un paso `"id=S7"` elige, en una
+# lista, el elemento cuyo `id` es `S7`.
+
+# --- §1 Entorno ------------------------------------------------------------------------------
+
+[[claim]]
+id = "ra9-sea"
+text = "A nivel del mar la liga anota 4.84 carreras por 9 entradas"
+section = "§1"
+source = "evidence.json"
+path = ["run_environment", "No Altitude", "ra9"]
+value = "4.84"
+
+[[claim]]
+id = "ra9-extreme"
+text = "En altitud extrema anota 7.55"
+section = "§1"
+source = "evidence.json"
+path = ["run_environment", "Extreme Altitude", "ra9"]
+value = "7.55"
+
+[[claim]]
+id = "ra9-effect"
+text = "La altitud extrema suma 56% de carreras"
+section = "§1"
+source = "evidence.json"
+path = ["run_environment", "altitude_effect", "ra9_pct"]
+value = "56"
+
+# --- §2 Datos --------------------------------------------------------------------------------
+
+[[claim]]
+id = "n-pitches"
+text = "El dataset tiene 635,002 lanzamientos"
+section = "§2"
+source = "evidence.json"
+path = ["audit", "n_pitches"]
+value = "635002"
+
+[[claim]]
+id = "within-pitcher-ivb"
+text = "Dentro del mismo lanzador, la recta pierde 3.77 pulgadas de IVB en altitud extrema"
+section = "§2"
+source = "evidence.json"
+path = ["within_pitcher", "Four-Seam", "ivb", "delta_mean"]
+value = "-3.77"
+
+[[claim]]
+id = "within-pitcher-all-lose"
+text = "El 100% de los lanzadores medidos pierde ride"
+section = "§2"
+source = "evidence.json"
+path = ["within_pitcher", "Four-Seam", "ivb", "pct_pitchers_losing"]
+value = "100"
+
+[[claim]]
+id = "spin-unchanged"
+text = "El spin no cambia: +1 rpm en promedio"
+section = "§2"
+source = "evidence.json"
+path = ["within_pitcher", "Four-Seam", "spin", "delta_mean"]
+value = "1"
+
+[[claim]]
+id = "best-lose-more"
+text = "Los que más ride tienen más pierden: correlación −0.518"
+section = "§2"
+source = "evidence.json"
+path = ["within_pitcher", "Four-Seam", "heterogeneity", "corr_sea_ivb_vs_delta"]
+value = "-0.518"
+
+# --- §3 Índice de Densidad -------------------------------------------------------------------
+
+[[claim]]
+id = "density-extreme"
+text = "El Índice de Densidad, la razón de arrastre medida desde la pelota, es 0.858 en altitud extrema"
+section = "§3"
+source = "evidence.json"
+path = ["density", "Extreme Altitude", "per_game_mean"]
+value = "0.858"
+
+[[claim]]
+id = "density-medium"
+text = "En altitud media, el índice es 0.903"
+section = "§3"
+source = "evidence.json"
+path = ["density", "Medium Altitude", "per_game_mean"]
+value = "0.903"
+
+[[claim]]
+id = "magnus-extreme"
+text = "El efecto Magnus cae a 0.754 de su valor a nivel del mar"
+section = "§3"
+source = "evidence.json"
+path = ["translator", "magnus_ratio_measured"]
+value = "0.754"
+
+[[claim]]
+id = "density-validated"
+text = "El índice de densidad está validado contra la densidad física del aire"
+section = "§3"
+awaits = "D4 (docs/05)"
+
+# --- §4 Modelado -----------------------------------------------------------------------------
+
+[[claim]]
+id = "v0-r2"
+text = "Ajustar el run value directo no aprende casi nada: R² 0.003"
+section = "§4"
+source = "evidence.json"
+path = ["stuff_plus_v0", "oof_r2"]
+value = "0.003"
+
+[[claim]]
+id = "whiff-learnable"
+text = "El whiff sí se aprende: AUC 0.637 fuera de pliegue"
+section = "§4"
+source = "evidence.json"
+path = ["target_learnability", "P(whiff | swing)", "oof_auc"]
+value = "0.637"
+
+[[claim]]
+id = "skill-persists"
+text = "La habilidad se repite de un año a otro: el whiff, con r = 0.556"
+section = "§4"
+source = "evidence.json"
+path = ["season_stability", "skill_persistence_whiff"]
+value = "0.556"
+
+[[claim]]
+id = "components-beat-direct"
+text = "Los modelos por componente superan al ajuste directo del run value"
+section = "§4"
+awaits = "A1 (equipo de datos)"
+
+# --- §5 Escala -------------------------------------------------------------------------------
+
+[[claim]]
+id = "scale-meaning"
+text = "Stuff+ en altitud extrema significa calidad de pitch, con 100 como promedio del entorno"
+section = "§5"
+awaits = "A1–A3, F1–F2 y la confirmación de la escala con Diablos"
+
+# --- §6 Hipótesis ----------------------------------------------------------------------------
+
+[[claim]]
+id = "h1"
+text = "H1, menos densidad reduce el break: confirmada"
+section = "§6"
+source = "evidence.json"
+path = ["hypotheses", "H1_low_density_reduces_break", "verdict"]
+value = "CONFIRMED"
+
+[[claim]]
+id = "h2"
+text = "H2, los pitches de diferencial de velocidad ganan: refutada"
+section = "§6"
+source = "evidence.json"
+path = ["hypotheses", "H2_speed_differential_pitches_gain", "verdict"]
+value = "REFUTED"
+
+[[claim]]
+id = "h3"
+text = "H3, la rola vale más en la altura: confirmada con matiz"
+section = "§6"
+source = "evidence.json"
+path = ["hypotheses", "H3_groundballs_more_valuable", "verdict"]
+value = "CONFIRMED_WITH_NUANCE"
+
+[[claim]]
+id = "h4"
+text = "H4, el spin rate no basta: confirmada"
+section = "§6"
+source = "evidence.json"
+path = ["hypotheses", "H4_spin_rate_insufficient", "verdict"]
+value = "CONFIRMED"
+
+[[claim]]
+id = "low-ride-survives"
+text = "Lo que sobrevive la altitud es el poco ride: correlación +0.531 entre |IVB| y Stuff+ perdido"
+section = "§6"
+awaits = "su cálculo en analysis/evidence.py (hoy solo está en docs/01 §8.5)"
+
+# --- §7 Validación ---------------------------------------------------------------------------
+
+[[claim]]
+id = "gates-display"
+text = "El modelo del Simulador pasa las compuertas que deciden si se muestra"
+section = "§7"
+source = "simulator_validation.json"
+path = ["stuff_plus_shown"]
+value = true
+
+[[claim]]
+id = "gate-s7"
+text = "Y no le gana al modelo nulo del reto, el run value por conteo (S7)"
+section = "§7"
+source = "simulator_validation.json"
+path = ["gates", "id=S7", "passed"]
+value = false
+
+[[claim]]
+id = "stuff-to-runs"
+text = "Un cambio de Stuff+ vale carreras"
+section = "§7"
+awaits = "A3 (equipo de datos)"
+
+[[claim]]
+id = "generalizes"
+text = "El modelo generaliza a lanzadores y temporadas nuevas"
+section = "§7"
+awaits = "F4–F5 y el holdout de Diablos (postemporada 2026)"
+
+# --- §8 Traductor ----------------------------------------------------------------------------
+
+[[claim]]
+id = "translator-fastball"
+text = "La física traduce el IVB de la recta con error de 0.92 pulgadas en holdout"
+section = "§8"
+source = "evidence.json"
+path = ["translator", "by_pitch", "Four-Seam", "ivb", "holdout_rmse_physics_in"]
+value = "0.92"
+
+[[claim]]
+id = "translator-naive"
+text = "Sin traducir, el error sería de 3.88 pulgadas"
+section = "§8"
+source = "evidence.json"
+path = ["translator", "by_pitch", "Four-Seam", "ivb", "holdout_rmse_naive_in"]
+value = "3.88"
+
+[[claim]]
+id = "result-does-not-persist"
+text = "El resultado casi no se repite: las carreras permitidas, con r = 0.216"
+section = "§4"
+source = "evidence.json"
+path = ["season_stability", "result_persistence_ra9"]
+value = "0.216"
+
+[[claim]]
+id = "within-pitcher-n"
+text = "Se midieron 268 lanzadores con la recta en los dos entornos"
+section = "§2"
+source = "evidence.json"
+path = ["within_pitcher", "Four-Seam", "n_pitchers"]
+value = "268"

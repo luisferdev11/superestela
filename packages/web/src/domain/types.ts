@@ -2,7 +2,11 @@ import type { ROLES } from './constants'
 
 export type Role = (typeof ROLES)[number]
 
-/** Los dos entornos que el producto compara. `hh` es Harp Helu, a 2,240 m. */
+/**
+ * Los dos entornos que el producto compara. `hh` es la categoria `Extreme Altitude`
+ * del dataset: cinco parques (Puebla, CDMX, Aguascalientes, Queretaro y Leon), no
+ * solo el Harp Helu. El identificador se queda por compatibilidad del contrato.
+ */
 export type Environment = 'hh' | 'sea'
 
 /**
@@ -33,6 +37,20 @@ export type ArsenalEntry = {
 }
 
 /**
+ * Lo que Diablos lee primero (Q&A, 30 sep): ponches, bases por bolas y swings
+ * abanicados, en porcentaje y con su banda al 95%. Es descriptivo: se cuenta,
+ * no se modela. `null` es «muestra insuficiente».
+ */
+export type Outcomes = {
+  readonly plateAppearances: number
+  readonly swings: number
+  readonly kPct: Metric | null
+  readonly bbPct: Metric | null
+  readonly kMinusBbPct: Metric | null
+  readonly whiffPerSwing: Metric | null
+}
+
+/**
  * Una tarjeta del Contrato B: un lanzador en una temporada. La llave es
  * `(pitcherId, season)` — ver `docs/adr/0005`.
  */
@@ -56,6 +74,8 @@ export type PitcherSeason = {
   readonly altitudeTaxMeasured: Metric | null
   readonly meanIvbLossIn: number | null
   readonly altitudeTrap: boolean
+  /** La temporada completa: todos sus juegos, altitud media incluida. */
+  readonly outcomes: Outcomes
   readonly arsenal: readonly ArsenalEntry[]
 }
 
@@ -65,4 +85,6 @@ export type SeasonEntry = {
   readonly nPitchesHh: number
   readonly nPitchesSea: number
   readonly scored: boolean
+  readonly outcomesHh: Outcomes
+  readonly outcomesSea: Outcomes
 }
