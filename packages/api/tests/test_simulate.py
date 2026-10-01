@@ -112,6 +112,52 @@ def test_simulate_returns_both_environments_side_by_side(client):
     assert len(sea["comparables"]) == 3
 
 
+def test_a_pitch_from_sea_level_carries_no_translation_band(client):
+    body = client.post("/api/v1/simulate", json={"pitch": FOUR_SEAM}).json()
+    assert body["originDensityIndex"] == 1.0
+    assert body["sea"]["shape"]["horizontalBreak"]["se"] == 0
+
+
+def test_a_pitch_from_medium_altitude_is_brought_to_sea_level_first(client):
+    sea = client.post("/api/v1/simulate", json={"pitch": FOUR_SEAM}).json()
+    medium = client.post(
+        "/api/v1/simulate", json={"pitch": FOUR_SEAM, "originDensityIndex": 0.903}
+    ).json()
+    # The same arm in thicker air would ride more, and the trip costs a band.
+    assert medium["sea"]["shape"]["ivb"]["value"] > sea["sea"]["shape"]["ivb"]["value"]
+    assert medium["sea"]["shape"]["ivb"]["se"] > 0
+    # From medium altitude the trip to extreme is shorter, so its band is narrower.
+    assert medium["harpHelu"]["shape"]["ivb"]["se"] < sea["harpHelu"]["shape"]["ivb"]["se"]
+    # Both land in the same air at altitude: the projection is one law, applied twice.
+    ratio = medium["harpHelu"]["shape"]["ivb"]["value"] / medium["sea"]["shape"]["ivb"]["value"]
+    assert ratio == pytest.approx(
+        sea["harpHelu"]["shape"]["ivb"]["value"] / sea["sea"]["shape"]["ivb"]["value"]
+    )
+
+
+def test_the_band_is_continuous_at_sea_level_and_zero_where_it_was_measured(client):
+    at = client.post("/api/v1/simulate", json={"pitch": FOUR_SEAM}).json()
+    near = client.post(
+        "/api/v1/simulate", json={"pitch": FOUR_SEAM, "originDensityIndex": 0.9999}
+    ).json()
+    assert near["harpHelu"]["shape"]["ivb"]["se"] == pytest.approx(
+        at["harpHelu"]["shape"]["ivb"]["se"], abs=0.01
+    )
+    there = client.post(
+        "/api/v1/simulate", json={"pitch": FOUR_SEAM, "originDensityIndex": 0.858}
+    ).json()
+    assert there["harpHelu"]["shape"]["ivb"]["value"] == pytest.approx(FOUR_SEAM["ivb"])
+    assert there["harpHelu"]["shape"]["ivb"]["se"] == pytest.approx(0.0)
+
+
+def test_a_non_physical_origin_is_rejected(client):
+    for origin in (0, 0.05, 1.3):
+        bad = client.post(
+            "/api/v1/simulate", json={"pitch": FOUR_SEAM, "originDensityIndex": origin}
+        )
+        assert bad.status_code == 422, origin
+
+
 def test_the_altitude_delta_is_split_into_shape_and_environment(client):
     delta = client.post("/api/v1/simulate", json={"pitch": FOUR_SEAM}).json()["altitudeDelta"]
     parts = delta["shape"]["value"] + delta["environment"]["value"]

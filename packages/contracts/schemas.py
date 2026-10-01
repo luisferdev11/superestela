@@ -24,6 +24,13 @@ from pandera.typing import Series
 # Product rule: below this sample size we suppress the score entirely.
 MIN_PITCHES_FOR_SCORE = 100  # product rule, docs/07 section 1.2
 
+# Product rules for the descriptive rates Diablos reads (Q&A, 30 sep): K%, BB%
+# and K-BB% need this many plate appearances, whiff per swing this many swings.
+# At 50 a K% of 20 still carries a 95% band of +-11 points; below it the screen
+# says "muestra insuficiente".
+MIN_PLATE_APPEARANCES_FOR_RATE = 50
+MIN_SWINGS_FOR_RATE = 50
+
 # MAJOR.MINOR.PATCH+<git-sha7>, e.g. 1.2.0+a3f9c1 (CONVENTIONS.md section 5.3)
 MODEL_VERSION_PATTERN = r"^\d+\.\d+\.\d+\+[0-9a-f]{7,40}$"
 

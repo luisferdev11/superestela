@@ -12,6 +12,8 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field
 from pydantic.alias_generators import to_camel
 
+from contracts.schemas import DENSITY_INDEX_MAX, DENSITY_INDEX_MIN
+
 PitchType = Literal["Four-Seam", "Sinker", "Slider", "Changeup", "Curveball", "Cutter"]
 Hand = Literal["Right", "Left"]
 
@@ -57,6 +59,12 @@ class SimulateRequest(Wire):
     # When the pitch is a real pitcher's, he is left out of his own comparables:
     # being closest to yourself is true and says nothing.
     pitcher_id: str | None = None
+    # Where the pitch and its arsenal were measured. 1.0 is sea level; the
+    # translator (P3) also sends medium altitude, 0.903. The shape is first
+    # brought to sea level with the same law, then simulated as usual.
+    # Bounded by the measured range of the index (contracts.schemas), not by
+    # physics: an origin of 0.05 would project 4,000 in of break.
+    origin_density_index: float = Field(default=1.0, ge=DENSITY_INDEX_MIN, le=DENSITY_INDEX_MAX)
 
 
 class Metric(Wire):
@@ -140,6 +148,7 @@ class MovementPerKrpm(Wire):
 class SimulateResponse(Wire):
     """Both environments side by side, and whether the Stuff+ is shown."""
 
+    origin_density_index: float
     model_id: str | None
     uses_arsenal: bool
     stuff_plus_shown: bool
@@ -168,7 +177,9 @@ class TranslateRequest(Wire):
 
     shape: TranslateShapeIn
     pitch_type: PitchType | None = None
-    origin_density_index: float = Field(default=1.0, gt=0, le=1.2)
+    # Bounded by the measured range of the index (contracts.schemas), not by
+    # physics: an origin of 0.05 would project 4,000 in of break.
+    origin_density_index: float = Field(default=1.0, ge=DENSITY_INDEX_MIN, le=DENSITY_INDEX_MAX)
     target_density_index: float = Field(default=0.858, gt=0, le=1.2)
 
 

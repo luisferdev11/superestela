@@ -105,6 +105,13 @@ ITEMS: list[Item] = [
     Item("Ingenieria", "API - GET scores", api_route("/scores")),
     Item("Ingenieria", "API - POST simulate", api_route("/simulate")),
     Item("Ingenieria", "API - POST translate", api_route("/translate")),
+    # The holdout is theirs (Q&A, 30 sep): without a command, there is no delivery. ADR 0009.
+    Item(
+        "Ingenieria",
+        "Scorer reproducible (models.score)",
+        exists("packages", "models", "score.py"),
+        note="el modelo final lo entrega datos por el mismo comando",
+    ),
     Item(
         "Ingenieria",
         "La web lee de la API",

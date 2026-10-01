@@ -37,6 +37,24 @@ export const arsenalEntrySchema = z
   })
   .strict()
 
+const percent = z.number().min(-100).max(100)
+
+/** K%, BB%, K-BB% y whiff por swing, en porcentaje y con su banda al 95%. `null` debajo del minimo. */
+export const outcomesSchema = z
+  .object({
+    pa: z.number().int().nonnegative(),
+    swings: z.number().int().nonnegative(),
+    k_pct: percent.nullable(),
+    k_pct_ci95: band.nullable(),
+    bb_pct: percent.nullable(),
+    bb_pct_ci95: band.nullable(),
+    k_minus_bb_pct: percent.nullable(),
+    k_minus_bb_pct_ci95: band.nullable(),
+    whiff_per_swing: percent.nullable(),
+    whiff_per_swing_ci95: band.nullable(),
+  })
+  .strict()
+
 export const pitcherCardSchema = z
   .object({
     pitcher_id: z.string(),
@@ -55,6 +73,7 @@ export const pitcherCardSchema = z
     altitude_tax_se: z.number().positive().nullable(),
     altitude_tax_significant: z.boolean(),
     mean_ivb_loss_in: z.number().nullable(),
+    outcomes: outcomesSchema,
     arsenal: z.array(arsenalEntrySchema),
     altitude_trap: z.boolean(),
   })
@@ -66,6 +85,8 @@ export const seasonEntrySchema = z
     n_pitches_hh: z.number().int().nonnegative(),
     n_pitches_sea: z.number().int().nonnegative(),
     scored: z.boolean(),
+    outcomes_hh: outcomesSchema,
+    outcomes_sea: outcomesSchema,
   })
   .strict()
 

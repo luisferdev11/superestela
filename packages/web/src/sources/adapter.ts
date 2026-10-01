@@ -1,7 +1,12 @@
-import type { ArsenalEntry, Metric, PitcherSeason, SeasonEntry } from '@/domain/types'
+import type { ArsenalEntry, Metric, Outcomes, PitcherSeason, SeasonEntry } from '@/domain/types'
 import type { PitcherCardRaw } from './schema'
 import type { z } from 'zod'
-import type { arsenalEntrySchema, densityLevelSchema, seasonEntrySchema } from './schema'
+import type {
+  arsenalEntrySchema,
+  densityLevelSchema,
+  outcomesSchema,
+  seasonEntrySchema,
+} from './schema'
 import type { DensityLevel } from '@/domain/density'
 
 /**
@@ -36,6 +41,15 @@ const toArsenalEntry = (raw: z.infer<typeof arsenalEntrySchema>): ArsenalEntry =
   whiffPerSwing: raw.whiff_per_swing,
 })
 
+const toOutcomes = (raw: z.infer<typeof outcomesSchema>): Outcomes => ({
+  plateAppearances: raw.pa,
+  swings: raw.swings,
+  kPct: toMetric(raw.k_pct, raw.k_pct_ci95),
+  bbPct: toMetric(raw.bb_pct, raw.bb_pct_ci95),
+  kMinusBbPct: toMetric(raw.k_minus_bb_pct, raw.k_minus_bb_pct_ci95),
+  whiffPerSwing: toMetric(raw.whiff_per_swing, raw.whiff_per_swing_ci95),
+})
+
 export const toPitcherSeason = (raw: PitcherCardRaw): PitcherSeason => ({
   pitcherId: raw.pitcher_id,
   season: raw.season,
@@ -56,6 +70,7 @@ export const toPitcherSeason = (raw: PitcherCardRaw): PitcherSeason => ({
   altitudeTaxMeasured: toMetric(raw.altitude_tax_runs_per_9, raw.altitude_tax_se),
   meanIvbLossIn: raw.mean_ivb_loss_in,
   altitudeTrap: raw.altitude_trap,
+  outcomes: toOutcomes(raw.outcomes),
   arsenal: raw.arsenal.map(toArsenalEntry),
 })
 
@@ -64,6 +79,8 @@ export const toSeasonEntry = (raw: z.infer<typeof seasonEntrySchema>): SeasonEnt
   nPitchesHh: raw.n_pitches_hh,
   nPitchesSea: raw.n_pitches_sea,
   scored: raw.scored,
+  outcomesHh: toOutcomes(raw.outcomes_hh),
+  outcomesSea: toOutcomes(raw.outcomes_sea),
 })
 
 export const toDensityLevel = (
