@@ -15,6 +15,7 @@ import { summarize, type CohortSummary } from '@/domain/cohort'
 import { RADAR_SORTS, sortRadar, type RadarSort } from '@/domain/ranking'
 import { RadarGuide } from './RadarGuide'
 import type { PitcherSeason } from '@/domain/types'
+import type { ScaleKind } from '@/domain/scale'
 import { es } from '@/i18n/es'
 
 /** Pitcher, Rol y Pitch principal: las columnas de texto, por su posicion en `es.columns`. */
@@ -30,12 +31,17 @@ export const RadarTable = ({
   latestSeason,
   cohortSummary,
   pitches,
+  scale = 'league',
 }: {
   readonly cards: readonly PitcherSeason[]
   readonly latestSeason: number
   readonly cohortSummary: CohortSummary
   readonly pitches: readonly string[]
+  /** Como se define el 100 (`domain/scale.ts`): cambia la ayuda del Δ y la guia. */
+  readonly scale?: ScaleKind
 }) => {
+  // La ayuda del Δ depende de la escala; las demas columnas no.
+  const help = [...es.columnHelp.slice(0, 5), es.scale[scale].deltaHelp, ...es.columnHelp.slice(5)]
   const [sort, setSort] = useState<RadarSort>('hh')
   const [filters, setFilters] = useState<Filters>(NO_FILTERS)
   const handleSortChange = (next: RadarSort) => () => {
@@ -80,7 +86,7 @@ export const RadarTable = ({
         </div>
       </div>
 
-      <RadarGuide />
+      <RadarGuide scale={scale} />
 
       <div className="border border-(--color-border) bg-(--color-surface-card) p-5">
         <table className="w-full border-collapse">
@@ -90,7 +96,7 @@ export const RadarTable = ({
                 <th
                   key={column}
                   scope="col"
-                  title={es.columnHelp[index]}
+                  title={help[index]}
                   className={`border-b border-(--color-border-strong) px-3 pb-2 text-[10px] font-bold tracking-wider whitespace-nowrap text-(--color-text-muted) uppercase ${
                     LEFT_ALIGNED.has(index) ? 'text-left' : 'text-right'
                   }`}

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { TrapFlag } from '@/components/chip/TrapFlag'
 import { MetricValue } from '@/components/metric/MetricValue'
+import { hasLargeDelta } from '@/domain/emphasis'
 import { dominantPitch } from '@/domain/arsenal'
 import { formatSigned } from '@/domain/format'
 import { fichaHref } from '@/domain/pitcher'
@@ -122,7 +123,7 @@ export const Plantel = ({
                       <MetricValue metric={card.stuffPlusSea} />
                     </td>
                     <td
-                      className={`${cell} ${card.stuffPlusDelta <= -10 ? 'font-semibold text-(--color-diablos)' : ''}`}
+                      className={`${cell} ${hasLargeDelta(card) ? 'font-semibold text-(--color-diablos)' : ''}`}
                     >
                       {formatSigned(card.stuffPlusDelta)}
                     </td>

@@ -8,6 +8,7 @@ import type { Target } from '@/domain/projection'
 import type { RosterGrouping } from '@/domain/roster'
 import type { Origin } from '@/domain/translator'
 import type { RadarSort } from '@/domain/ranking'
+import type { ScaleKind } from '@/domain/scale'
 
 /**
  * El unico archivo con espanol. `CONVENTIONS.md` seccion 2.1 y seccion 4 regla
@@ -60,7 +61,7 @@ export const es = {
   rolePlural: { starter: 'Abridores', reliever: 'Relevistas' } satisfies Record<Role, string>,
   sortBy: 'Ordenar por',
   legend: {
-    trap: 'Trampa de Altitud \u2014 se ve fuerte a nivel del mar, colapsa en altitud extrema.',
+    trap: 'Trampa de Altitud \u2014 se ve fuerte a nivel del mar y su Stuff+ cae mucho en altitud extrema.',
     inconclusive: (significant: number, total: number): string =>
       `\u2014 el Impuesto no alcanza significancia: solo ${String(significant)} de ${String(total)} la alcanzan.`,
     stale:
@@ -69,6 +70,44 @@ export const es = {
       `Mostrando ${String(shown)} de ${String(total)} \u00b7 \u00faltima temporada jugada de cada uno \u00b7 banda al 95%`,
   },
   environment: { hh: 'Stuff+ altitud extrema', sea: 'Stuff+ nivel del mar' },
+  scale: {
+    league: {
+      readingMain: (pitch: string, usage: string, delta: string): string =>
+        `Su pitch principal es el ${pitch}, al ${usage}% de uso, y en altitud extrema cambia ${delta} puntos de Stuff+.`,
+      degrades: (pitch: string, delta: string, sea: string, hh: string, ivb: string): string =>
+        `Su ${pitch} cambia ${delta} puntos de Stuff+ en altitud extrema, de ${sea} a ${hh}. ${ivb}`,
+      holds: (pitch: string, delta: string, sea: string, hh: string, ivb: string): string =>
+        `Su ${pitch} cambia ${delta} puntos (${sea} \u2192 ${hh}). ${ivb}`,
+      deployRule:
+        'Se ordena por Stuff+ absoluto del entorno elegido, nunca por el \u0394: el \u0394 dice cu\u00e1nto te van a cobrar por \u00e9l, el absoluto dice qui\u00e9n es mejor hoy, aqu\u00ed. Se agrupa por rol porque comparar abridores y relevistas es comparar dos oficios. El orden de pitcheo no se sugiere: eso lo decide el m\u00e1nager, con contexto que este tablero no ve.',
+      deltaHelp: 'Cuánto cambia su Stuff+ al subir a la altitud extrema.',
+      stuffPlus:
+        'La calidad física de un pitch: velocidad, movimiento, spin y release. Hoy lo da un modelo base (v0), y 100 es el pitch promedio de toda la liga, con los dos entornos juntos: por eso en altitud extrema casi todos bajan.',
+    },
+    perEnvironment: {
+      readingMain: (pitch: string, usage: string, delta: string): string =>
+        `Su pitch principal es el ${pitch}, al ${usage}% de uso. Frente a los de cada entorno, su lugar cambia ${delta} puntos de Stuff+ al subir a la altitud extrema.`,
+      degrades: (pitch: string, delta: string, sea: string, hh: string, ivb: string): string =>
+        `Frente a los de su entorno, su ${pitch} pasa de ${sea} a ${hh}: su lugar cambia ${delta} puntos. ${ivb}`,
+      holds: (pitch: string, delta: string, sea: string, hh: string, ivb: string): string =>
+        `Su ${pitch} conserva su lugar: cambia ${delta} puntos frente a los de su entorno (${sea} \u2192 ${hh}). ${ivb}`,
+      deployRule:
+        'Se ordena por el Stuff+ del entorno elegido, nunca por el \u0394: el \u0394 dice cu\u00e1nto cambia su lugar al subir, el Stuff+ del entorno dice qui\u00e9n es mejor aqu\u00ed, frente a los que lanzan aqu\u00ed. Se agrupa por rol porque comparar abridores y relevistas es comparar dos oficios. El orden de pitcheo no se sugiere: eso lo decide el m\u00e1nager, con contexto que este tablero no ve.',
+      deltaHelp: 'Cuánto cambia su lugar frente a los de su entorno al subir a la altitud extrema.',
+      stuffPlus:
+        'La calidad física de un pitch: velocidad, movimiento, spin y release. 100 es el pitch promedio de cada entorno: un 110 en altitud extrema es mejor que los que lanzan ahí.',
+    },
+  } satisfies Record<
+    ScaleKind,
+    {
+      readonly readingMain: (pitch: string, usage: string, delta: string) => string
+      readonly degrades: (p: string, d: string, sea: string, hh: string, ivb: string) => string
+      readonly holds: (p: string, d: string, sea: string, hh: string, ivb: string) => string
+      readonly deployRule: string
+      readonly deltaHelp: string
+      readonly stuffPlus: string
+    }
+  >,
   radarSort: {
     hh: 'Stuff+ altitud extrema',
     sea: 'Stuff+ nivel del mar',
@@ -81,7 +120,6 @@ export const es = {
     'Mano con la que lanza.',
     'Calidad de su arsenal en altitud extrema, ponderada por uso, con su banda al 95%.',
     'La misma medida a nivel del mar.',
-    'Cuánto cambia su Stuff+ al subir a la altitud extrema.',
     'Carreras de más por 9 entradas en altitud extrema. «No concl.» si la banda cruza el cero.',
     'Ponches menos bases por bolas, por cada 100 turnos, en la temporada.',
     'Swings abanicados por cada 100 swings, en la temporada.',
@@ -91,14 +129,11 @@ export const es = {
   ],
   guide: {
     title: 'Cómo leer esta tabla',
+    stuffPlusTerm: 'Stuff+',
     insufficient: { term: 'Muestra insuficiente' },
     insufficientText: (pitches: number, pa: number): string =>
       `Menos de ${String(pitches)} lanzamientos en un entorno, o de ${String(pa)} turnos para una tasa. No se muestra un número con una banda tan ancha que no diga nada.`,
     items: [
-      {
-        term: 'Stuff+',
-        text: 'La calidad física de un pitch: velocidad, movimiento, spin y release. 100 es el pitch promedio de la liga; arriba de 100 es mejor. Hoy lo da un modelo base (v0), declarado como tal.',
-      },
       {
         term: 'La banda «±»',
         text: 'Cuánto podría moverse el número con más lanzamientos. Si dos lanzadores se traslapan en su banda, no hay diferencia que defender.',
@@ -140,7 +175,7 @@ export const es = {
   trapsOver: (total: number): string => `Trampas \u00b7 ${String(total)} temporadas`,
   outOf: (total: number): string => `de ${String(total)}`,
   trap: 'Trampa de Altitud',
-  trapDescription: 'Se ve fuerte a nivel del mar y colapsa en altitud extrema.',
+  trapDescription: 'Se ve fuerte a nivel del mar y su Stuff+ cae mucho en altitud extrema.',
   ficha: {
     breadcrumb: 'Fichajes',
     tabs: {
@@ -205,8 +240,6 @@ export const es = {
         signWithReservations: 'Fichar con reservas.',
         notAtSeaLevelPrice: 'No fichar al precio que marcan sus n\u00fameros de nivel del mar.',
       } satisfies Record<Verdict, string>,
-      main: (pitch: string, usage: string, delta: string): string =>
-        `Su pitch principal es el ${pitch}, al ${usage}% de uso, y en altitud extrema cambia ${delta} puntos de Stuff+.`,
       lever: (best: string, bestDelta: string, worst: string, worstDelta: string): string =>
         `Si ya estuviera en el roster, la palanca es el ${best}: es lo que mejor aguanta la altitud (${bestDelta} contra ${worstDelta} del ${worst}).`,
       rule: 'Regla provisional de producto: Trampa de Altitud, no al precio de nivel del mar; banda completa del Stuff+ en altitud extrema arriba de 100, fichar; lo dem\u00e1s, con reservas. El veredicto final lo respalda el modelo del equipo de datos.',
@@ -284,11 +317,7 @@ export const es = {
     spread: 'El d\u00e9ficit se reparte entre varios lanzamientos.',
     noDeficit: 'No hay d\u00e9ficit: su arsenal rinde por encima del promedio en altitud extrema.',
     labels: { degrades: 'Se degrada', holds: 'Aguanta', changes: 'Qu\u00e9 cambia' },
-    degrades: (pitch: string, delta: string, sea: string, hh: string, ivb: string): string =>
-      `Su ${pitch} cambia ${delta} puntos de Stuff+ en altitud extrema, de ${sea} a ${hh}. ${ivb}`,
     ivb: (sea: string, hh: string): string => `Su IVB pasa de ${sea}\u2033 a ${hh}\u2033.`,
-    holds: (pitch: string, delta: string, sea: string, hh: string, ivb: string): string =>
-      `Su ${pitch} cambia ${delta} puntos (${sea} \u2192 ${hh}). ${ivb}`,
     holdsWhy: (ivb: string, worstIvb: string, worst: string): string =>
       `Tiene menos ride que perder: ${ivb}\u2033 de IVB contra ${worstIvb}\u2033 del ${worst}, y el aire delgado se lleva sobre todo el break.`,
     changes: (
@@ -385,7 +414,6 @@ export const es = {
       sea: (rho: string): string => `Nivel del mar \u00b7 \u03c1 ${rho}`,
     },
     ruleTitle: 'La regla',
-    rule: 'Se ordena por Stuff+ absoluto del entorno elegido, nunca por el \u0394: el \u0394 dice cu\u00e1nto te van a cobrar por \u00e9l, el absoluto dice qui\u00e9n es mejor hoy, aqu\u00ed. Se agrupa por rol porque comparar abridores y relevistas es comparar dos oficios. El orden de pitcheo no se sugiere: eso lo decide el m\u00e1nager, con contexto que este tablero no ve.',
     whyTitle: 'Por qu\u00e9 existe',
     why: (rho: string, move: string, turnover: number, n: number): string =>
       `En los ${String(n)} lanzadores del Radar, el orden en casa y en gira correlaciona ${rho} (Spearman): el cambio mediano es de ${move} posiciones, y ${String(turnover)} de los 10 mejores en casa no est\u00e1n entre los 10 mejores de gira.`,

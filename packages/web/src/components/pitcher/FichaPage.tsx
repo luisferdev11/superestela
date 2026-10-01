@@ -45,6 +45,7 @@ export const FichaPage = async ({
 }) => {
   const [
     {
+      scale,
       cards,
       seasonsByPitcher,
       density,
@@ -125,7 +126,7 @@ export const FichaPage = async ({
         pitchersWithGap={pitchersWithGap}
       />
       <OutcomesTable entries={seasonsByPitcher.get(pitcherId) ?? []} league={leagueOutcomes} />
-      <PitcherReading card={card} />
+      <PitcherReading card={card} scale={scale} />
     </PageShell>
   )
 }

@@ -21,6 +21,15 @@ describe('como leer el Radar', () => {
   })
 
   it('cada columna del Radar tiene su explicacion', () => {
-    expect(es.columnHelp).toHaveLength(es.columns.length)
+    // La del Δ vive en `es.scale`, porque depende de como se define el 100.
+    expect(es.columnHelp).toHaveLength(es.columns.length - 1)
+  })
+})
+
+describe('la guia sigue a la escala que declaran los datos', () => {
+  it('con 100 por entorno no dice que en la altura casi todos bajan', () => {
+    render(<RadarGuide scale="perEnvironment" />)
+    expect(screen.getByText(es.scale.perEnvironment.stuffPlus)).toBeInTheDocument()
+    expect(screen.queryByText(es.scale.league.stuffPlus)).not.toBeInTheDocument()
   })
 })

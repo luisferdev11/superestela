@@ -6,6 +6,7 @@ import { evidenceSchema, type EvidenceRaw } from './evidenceSchema'
 import { toDensityLevel, toOutcomes, toPitcherSeason, toSeasonEntry } from './adapter'
 import { orderByDensity, type DensityScale } from '@/domain/density'
 import type { LeagueShapes } from '@/domain/arsenalMap'
+import type { ScaleKind } from '@/domain/scale'
 import type { Environment, Outcomes, PitcherSeason, SeasonEntry } from '@/domain/types'
 
 /**
@@ -14,6 +15,8 @@ import type { Environment, Outcomes, PitcherSeason, SeasonEntry } from '@/domain
  */
 
 export type Dataset = {
+  /** Como se define el 100 de estos scores; los textos del Δ dependen de esto. */
+  readonly scale: ScaleKind
   readonly cards: readonly PitcherSeason[]
   readonly seasonsByPitcher: ReadonlyMap<string, readonly SeasonEntry[]>
   readonly density: DensityScale
@@ -72,6 +75,7 @@ export const loadDataset = async (): Promise<Dataset> => {
   }
 
   return {
+    scale: parsed.scale.kind === 'league' ? 'league' : 'perEnvironment',
     cards: parsed.pitchers.map(toPitcherSeason),
     seasonsByPitcher: new Map(
       Object.entries(parsed.pitcher_seasons).map(([pitcherId, seasons]) => [

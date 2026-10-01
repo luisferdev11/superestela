@@ -21,7 +21,7 @@ import { es } from '@/i18n/es'
 export const dynamic = 'force-static'
 
 export default async function DeploymentPage() {
-  const { cards, seasonsByPitcher, density, nPitches, seasons } = await loadDataset()
+  const { scale, cards, seasonsByPitcher, density, nPitches, seasons } = await loadDataset()
   const latest = Math.max(...seasons)
   const roster = latestCards(cards, approximateRoster(seasonsByPitcher, latest))
   const shift = orderShift(selectRadarCohort(cards, seasonsByPitcher))
@@ -42,7 +42,7 @@ export default async function DeploymentPage() {
             <span className="pr-2 text-[10px] font-bold tracking-widest text-(--color-text-muted) uppercase">
               {es.deploy.ruleTitle}
             </span>
-            {es.deploy.rule}
+            {es.scale[scale].deployRule}
           </p>
           <p className="m-0">
             <span className="pr-2 text-[10px] font-bold tracking-widest text-(--color-text-muted) uppercase">

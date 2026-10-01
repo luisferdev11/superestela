@@ -32,7 +32,7 @@ export const PlanPage = async ({
   readonly pitcherId: string
   readonly season?: number
 }) => {
-  const [{ cards, density, nPitches, seasons }, { arsenals }] = await Promise.all([
+  const [{ scale, cards, density, nPitches, seasons }, { arsenals }] = await Promise.all([
     loadDataset(),
     loadSimulatorDataset(),
   ])
@@ -90,7 +90,7 @@ export const PlanPage = async ({
       ) : (
         <>
           <PlanDeficit plan={plan} />
-          <PlanSentences plan={plan} simulatorHref={tryHref} />
+          <PlanSentences plan={plan} simulatorHref={tryHref} scale={scale} />
         </>
       )}
       <aside className="flex gap-4 border-l-[3px] border-(--color-diablos) bg-(--color-diablos-wash) px-4.5 py-3.5">
