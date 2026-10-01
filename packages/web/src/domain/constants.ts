@@ -6,5 +6,12 @@
  */
 export const MIN_PITCHES_FOR_SCORE = 100
 
+/**
+ * Los minimos de las tasas descriptivas (K%, BB%, K-BB% y whiff por swing).
+ * Espejo de `packages/contracts/schemas.py`, con el mismo test de deriva.
+ */
+export const MIN_PLATE_APPEARANCES_FOR_RATE = 50
+export const MIN_SWINGS_FOR_RATE = 50
+
 /** Los dos roles que el dato separa. Ver `docs/adr/0004`. */
 export const ROLES = ['starter', 'reliever'] as const
