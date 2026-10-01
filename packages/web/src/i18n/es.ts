@@ -126,7 +126,7 @@ export const es = {
     map: {
       title: 'Mapa de movimiento',
       sea: 'nivel del mar',
-      hh: 'Altitud extrema',
+      hh: 'altitud extrema',
       league: 'promedio LMB',
       up: 'sube',
       down: 'cae',
