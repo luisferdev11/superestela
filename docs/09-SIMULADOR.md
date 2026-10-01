@@ -422,7 +422,7 @@ Son los datos de las historias de P1. **El cronometraje de los 10 segundos queda
 
 | Historia | Lo que contesta el Simulador |
 |---|---|
-| 1 · recta de `pitcher_00069` | 113.7 ± 6.6 → 92.9 ± 4.1, Δ −20.8 ± 6.3 (−13.5 por la forma, −7.3 por el entorno). En el mapa cae en una zona de 28% de whiff a nivel del mar y de 20% en altitud extrema Helú (media del tipo: 21%). **Con +2 mph, en Harp Helú sube de 92.9 a 100.0**: es la pregunta «¿qué le arreglo?» contestada con un número y su banda |
+| 1 · recta de `pitcher_00069` | 113.7 ± 6.6 → 92.9 ± 4.1, Δ −20.8 ± 6.3 (−13.5 por la forma, −7.3 por el entorno). En el mapa cae en una zona de 28% de whiff a nivel del mar y de 20% en altitud extrema (media del tipo: 21%). **Con +2 mph, en altitud extrema sube de 92.9 a 100.0**: es la pregunta «¿qué le arreglo?» contestada con un número y su banda |
 | 2 · `pitcher_00566` | Su slider aguanta: 121.3 → 113.4 (Δ −8.0 ± 4.3). Su recta cae más: 106.1 → 93.8 (Δ −12.4 ± 4.6). Es el mecanismo de por qué sobrevive |
 | 3 · changeup de `pitcher_00816` | Contra su recta, la separación de IVB pasa de −16.3″ a **−12.3″** en altura; la de velocidad se queda en −9.9 mph. Pierde engaño por forma, no por velocidad: H2 visto desde el arsenal |
 

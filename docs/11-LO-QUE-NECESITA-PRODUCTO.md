@@ -154,10 +154,11 @@ Para que se vea por qué importa cada una:
 |---|---|---|
 | P1 Radar | Stuff+ en altitud extrema y nivel del mar por lanzador-temporada, Impuesto de Altitud | En `main`, sobre v0 |
 | P4 Simulador | Stuff+ de un pitch que nadie lanzó, en los dos entornos, con Δ | En `main`, sobre el puente |
-| P3 Traductor | Stuff+ en altitud extrema proyectado de un lanzador de fuera | En construcción, sobre v0 |
+| P3 Traductor | Stuff+ en altitud extrema proyectado de un lanzador de fuera | En PRs (#67–#71), sobre el puente |
 | P2 Ficha | Stuff+ por pitch y arsenal; ubicación (§3.1); SHAP cuando llegue A1 | Construida sobre v0; la ubicación y el veredicto esperan (§3.1) |
-| P5 Plan | Stuff+ ponderado por uso, antes y después | En construcción, sobre v0 |
-| P6–P8 | Stuff+ por entorno y rol | En `main`; demostrativas, con el plantel aproximado (ADR 0008) |
+| P5 Plan | Stuff+ ponderado por uso, antes y después | En `main`, sobre v0 |
+| P6 y P8 | Stuff+ por entorno y rol | En `main`; demostrativas, con el plantel aproximado (ADR 0008) |
+| P7 Proyección | Forma proyectada por pitch | Datos en `main` (#57), pantalla en #58 |
 | Documento técnico | Las tablas de A1–A3 y C1–C3 | Se congela el 12 oct |
 
 Ninguna pantalla imprime carreras: el puente Stuff+ → carreras no existe mientras A3 no lo muestre.

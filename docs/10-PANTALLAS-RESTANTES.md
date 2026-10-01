@@ -13,8 +13,8 @@
 >
 > **Estado al 1 de octubre.** En `main`: P1 Radar, P2 Ficha y su pestaña Arsenal (#36–#48), P4
 > Simulador, P5 Plan (#49–#51), P6 Despliegue y P8 Plantel (#56). La P7 Proyección tiene sus datos en
-> `main` (#57) y su pantalla en el #58, listo para revisión. **Solo falta la P3 Traductor**, que bajó de
-> prioridad tras el Q&A (§5). Lo que sigue, con criterio de hecho, está en la checklist de
+> `main` (#57) y su pantalla en el #58, listo para revisión. La P3 Traductor, que bajó de prioridad tras
+> el Q&A (§5), quedó construida después, en #67–#71. Lo que sigue, con criterio de hecho, está en la checklist de
 > [`docs/08`](08-PLAN-DE-ARRANQUE.md).
 
 ---

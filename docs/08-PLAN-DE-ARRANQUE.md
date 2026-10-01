@@ -27,15 +27,18 @@ uv run python scripts/check_pendientes.py       # el estado, ahora mismo
 | Copy de prohibición de apuestas en el rail; check `pr-base.yml`; `docs/11` (lo que producto necesita de datos) | `main`, #34, #41, #35, #48 |
 | Q&A con Diablos y sus consecuencias | `docs/10` §5, `docs/11` §8, `docs/reference/categorias-altitud.md` |
 
-**Pantallas:** 7 de 8 construidas; falta la P3 Traductor. **Datos:** Martín entrena modelos por
+**Pantallas:** 7 de 8 construidas; la P3 Traductor quedó construida después, en #67–#71. **Datos:** Martín entrena modelos por
 componente en MLflow, pero en `main` todavía no hay nada en `packages/models/targets`, `train.py` ni
 `evaluate.py`. La puerta de A3 es hoy.
 
 ### Avance del 1 de octubre (segunda sesión): todo en PRs, nada en `main` todavía
 
 Los PRs de la web van **en cadena**: cada uno apunta a `main` y contiene al anterior. Se revisan en
-este orden: #58 → #60 → #68 → #69 → #70 → #71 → #73 → #74 → #75 → #78. Los demás salen de `main` y son
-independientes.
+este orden: #58 → #60 → #68 → #69 → #70 → #71 → #73 → #74 → #75 → #78 → #79. Salen de `main`: #62 →
+#63 → #61 (scorer), #64 → #65 → #66 (`report/`), #67 (API), #72 (tasas) y #76 (borradores).
+**Dos dependencias:** el #73 contiene al #72, y **el #67 tiene que entrar antes que el #71**; sin él,
+la API rechaza el origen en altitud media. El #79 corrige lo que encontró la revisión de código
+(abajo, «Revisión de código»).
 
 | # | Tarea | PRs | Estado |
 |---|---|---|---|
@@ -53,6 +56,30 @@ independientes.
 | 10 | `apiSource` y GET scores | — | ⬜ |
 | 11 | Prototipo y deck | — | ⬜ después del congelamiento |
 | 12 | Ensayo | — | ⬜ 13 de octubre |
+
+### Revisión de código del 1 de octubre
+
+Una revisión de todo lo de la sesión (Python, `report/`, la web y los documentos) encontró, y se
+corrigió en las mismas ramas:
+
+| Dónde | Qué estaba mal | PR |
+|---|---|---|
+| `models.score` | La densidad de un juego se promediaba sobre filas distintas a las del entrenamiento: el mismo pitch cambiaba hasta 4 puntos según qué más trajera el archivo | #63 |
+| API, origen | La banda brincaba en el default y no era cero donde se midió el pitch; un origen de 0.05 se aceptaba | #67 |
+| Tasas | Un BB% de 0 salía con banda ± 0.0 | #72 |
+| `report/` | Un `\|` en una celda rompía la tabla; la precisión de una afirmación salía del `repr` de un float; «0.858» se llamaba densidad, cuando es un índice de arrastre | #64–#66 |
+| Traductor | Sin el #67 todas las preguntas daban 422; un uso vacío ponía el arsenal en cero; respuestas viejas bajo filas nuevas; el rojo de las celdas no se veía | #79 |
+
+**Cifras de los documentos sin corrida detrás.** No se pueden usar en el documento técnico hasta que un
+artefacto las calcule, o se quitan:
+
+| Cifra | Dónde aparece | Qué hacer |
+|---|---|---|
+| r = −0.08 (Stuff+ contra el impuesto observado) | `docs/02`, `04`, `05`, `09` | Lo mide A3; mientras tanto, no citarla |
+| +0.531 (\|IVB\| contra Stuff+ perdido) | `docs/01` §8.5, `docs/13` | Calcularla en `evidence.py` o quitarla |
+| 8.6 puntos menos en casa | `docs/00` | La media de las tarjetas hoy es otra: citar el artefacto, no el número |
+| 40 de 286 | `docs/04` | La cohorte es de 370 tarjetas: regenerar desde `evidence.json → cohort` |
+| 0.674 | un comentario de `evidence.py` | Llevarla a `evidence.json` si se va a citar |
 
 **Para el equipo de datos** (`docs/11` §8.1): el comando que Diablos va a correr ya existe. Lo que les
 toca es el modelo que contesta por él (ADR 0009).
@@ -259,9 +286,10 @@ El prototipo tiene el HTML, los tokens y las cifras de las ocho:
 - [ ] **Entregable 2 del reto, «Perfil Físico Ideal».** Aparece **una sola vez
       en todo el repositorio**, en el mapeo de `docs/00` §9. **Decidido:** se
       cubre como **sección del documento técnico más lámina del deck**, no como
-      pantalla — sale de las features que sobreviven la altitud (corr |IVB| vs
-      pérdida = **+0.531**, `docs/01` §8.5), que es un hallazgo y no una
-      herramienta. Falta escribirlo.
+      pantalla — sale de las features que sobreviven la altitud, que es un
+      hallazgo y no una herramienta. **El +0.531 de `docs/01` §8.5 no lo calcula
+      ningún artefacto:** está pendiente en `report/claims.toml`. Borrador en
+      `docs/13` (#76).
 - [ ] **Decision Log auditable.** `docs/00` §9 lo lista dentro del 25% de
       Aplicabilidad real. No existe ni en código ni en plan.
 - [ ] **Copy de cumplimiento en la app.** `docs/03` §9: la prohibición de
