@@ -94,6 +94,10 @@
       "per_game_n": 604
     }
   },
+  "scoring_reference": {
+    "reference_game_drag_k": 0.0015906131846598506,
+    "within_game_pitch_sd": 0.0765
+  },
   "within_pitcher": {
     "Four-Seam": {
       "pitch": "Four-Seam",

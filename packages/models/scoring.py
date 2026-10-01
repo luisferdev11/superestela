@@ -11,9 +11,10 @@ what CONVENTIONS.md section 8.2 requires of anything the product shows.
 
 from __future__ import annotations
 
+import os
 from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Protocol
+from typing import Protocol, runtime_checkable
 
 import numpy as np
 import numpy.typing as npt
@@ -71,12 +72,19 @@ class Score:
     model_id: str
 
 
+@runtime_checkable
 class Scorer(Protocol):
-    """What any Stuff+ model must provide to be shown in the product."""
+    """What any Stuff+ model must provide to be shown in the product.
+
+    ``pitch_types`` lists the ``pitch_type`` values the model was trained on.
+    Anything else gets no score: a tree model fed a type it never saw returns
+    a number, and that number means nothing.
+    """
 
     model_id: str
     uses_arsenal: bool
     scale: ScaleSpec
+    pitch_types: tuple[str, ...]
 
     def score(
         self, pitch: PitchInput, arsenal: ArsenalContext | None, density_index: float
@@ -94,3 +102,38 @@ class Scorer(Protocol):
         correlated and adding the two se's would overstate the band.
         """
         ...
+
+
+FloatArray = npt.NDArray[np.float64]
+
+
+def to_arm_side(
+    pitcher_hand: npt.ArrayLike,
+    horizontal_break: npt.ArrayLike,
+    release_side: npt.ArrayLike,
+    spin_axis: npt.ArrayLike,
+) -> tuple[FloatArray, FloatArray, FloatArray]:
+    """Mirror the tracking system's horizontals to the arm side, as PitchInput expects.
+
+    The vendor reports horizontal break and release side from the catcher's
+    view and spin axis in the right-hander's frame, so a left-hander's numbers
+    are a right-hander's flipped. Mirroring them makes a left-hander and his
+    mirrored right-hander the same input apart from the hand. Every caller that
+    turns raw pitches into scoring input goes through here, so the rule lives
+    in one place: the gates, the API and ``models.score`` alike.
+
+    Returns:
+        ``(horizontal_break, release_side, spin_axis)`` on the arm side.
+    """
+    sign = np.where(np.asarray(pitcher_hand) == "Right", 1.0, -1.0)
+    axis = np.asarray(spin_axis, dtype=float)
+    return (
+        np.asarray(horizontal_break, dtype=float) * sign,
+        np.asarray(release_side, dtype=float) * sign,
+        np.where(sign > 0, axis, (360.0 - axis) % 360.0),
+    )
+
+
+def verdict_path(model_path: str) -> str:
+    """Where analysis/simulator_gates.py leaves the gates' verdict for a model file."""
+    return os.path.splitext(model_path)[0] + ".validation.json"

@@ -285,6 +285,19 @@ def density_table(df):
     return out
 
 
+def scoring_reference(df):
+    """What scoring a new file needs to measure its air the way training did. ADR 0009.
+
+    The sea-level drag coefficient every density index is a ratio to, so a new
+    file's per-game drag divided by it means what the training data's does; and
+    how noisy one pitch's reading is around its game's mean, which sets how many
+    pitches a game needs before its density index can be trusted.
+    """
+    sea_k = float(df.loc[df.altitude_category == SEA, "game_drag_k"].mean())
+    within = (df.drag_k - df.game_drag_k) / sea_k
+    return {"reference_game_drag_k": sea_k, "within_game_pitch_sd": round(float(within.std()), 4)}
+
+
 # --------------------------------------------------------------------------
 # 3. Within-pitcher altitude effect (causal identification)
 # --------------------------------------------------------------------------
@@ -958,6 +971,7 @@ def main():
     )
     df = add_physics(df)
     R["density"] = density_table(df)
+    R["scoring_reference"] = scoring_reference(df)
     log(
         f"Density index: Extreme={R['density'][EXT]['density_ratio']} "
         f"Magnus={R['density'][EXT]['magnus_ratio']}"

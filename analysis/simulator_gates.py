@@ -32,11 +32,12 @@ from core.density import DENSITY_INDEX_EXTREME, DENSITY_INDEX_SEA_LEVEL
 from core.spin import Bounds, Envelope, assess_plausibility
 from core.trajectory import approach
 from core.translate import BREAK_ERROR_IN, break_scaling_factor
+from models.scoring import to_arm_side, verdict_path
 from models.stuff.v0_bridge import PITCH_TYPES, BridgeModel, fit_bridge
 
 ARTIFACT = os.path.join(E.ROOT, "artifacts", "stuff_plus_v0_bridge.joblib")
 # The verdict for the model in artifacts/, read by the API. Never committed.
-VERDICT = os.path.splitext(ARTIFACT)[0] + ".validation.json"
+VERDICT = verdict_path(ARTIFACT)
 # The published record, committed; written only with --publish.
 VALIDATION = os.path.join(E.OUT, "simulator_validation.json")
 DISPLAY_GATES = ("S1", "S2", "S3", "S4")
@@ -61,19 +62,19 @@ def canonical(df):
     """Raw vendor columns to the bridge's canonical frame, horizontals on the arm side."""
     d = df[df.AutoPitchType.isin(PITCH_TYPES) & df.PitcherThrows.isin(["Right", "Left"])]
     d = d.dropna(subset=[*E.STUFF_FEATURES, "pitcher_anon_id"])
-    sign = np.where(d.PitcherThrows == "Right", 1.0, -1.0)
+    hb, side, axis = to_arm_side(d.PitcherThrows, d.HorzBreak, d.RelSide, d.SpinAxis)
     return pd.DataFrame(
         {
             "pitch_type": d.AutoPitchType.astype(str),
             "pitcher_hand": d.PitcherThrows.astype(str),
             "release_speed": d.RelSpeed,
             "spin_rate": d.SpinRate,
-            "spin_axis": np.where(sign > 0, d.SpinAxis, (360.0 - d.SpinAxis) % 360.0),
+            "spin_axis": axis,
             "ivb": d.InducedVertBreak,
-            "horizontal_break": d.HorzBreak * sign,
+            "horizontal_break": hb,
             "extension": d.Extension,
             "release_height": d.RelHeight,
-            "release_side": d.RelSide * sign,
+            "release_side": side,
             "density_index": d.density_index,
             "is_same_side": (d.PitcherThrows == d.BatterSide).astype(float),
             "pitcher_id": d.pitcher_anon_id.astype(str),

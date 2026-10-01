@@ -22,7 +22,7 @@ from core.density import DENSITY_INDEX_EXTREME, DENSITY_INDEX_SEA_LEVEL
 from core.spin import Bounds, Envelope, assess_plausibility, movement_per_krpm, percentile_rank
 from core.trajectory import approach
 from core.translate import PitchShape, break_scaling_factor, translate
-from models.scoring import PitchInput, Scorer
+from models.scoring import PitchInput, Scorer, verdict_path
 from models.stuff.v0_bridge import BridgeModel
 
 SEA, EXT = "No Altitude", "Extreme Altitude"
@@ -252,11 +252,6 @@ def _diff(d: Differentials) -> s.Differentials:
         horizontal_break=d.horizontal_break,
         release_distance=d.release_distance,
     )
-
-
-def verdict_path(model_path: str) -> str:
-    """Where analysis/simulator_gates.py leaves the verdict for this model file."""
-    return os.path.splitext(model_path)[0] + ".validation.json"
 
 
 def load_service(outputs_dir: str, model_path: str) -> SimulatorService:
