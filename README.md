@@ -163,7 +163,7 @@ Quién revisa qué lo dice [`.github/CODEOWNERS`](.github/CODEOWNERS): `models/`
 Sincronización lunes, miércoles y viernes. Los contratos con el equipo de
 datos y su cadencia están en [`docs/07`](docs/07-INGENIERIA-Y-EQUIPO.md) §1.
 
-El calendario hacia la entrega del **15 de octubre**, y la lista viva de
+El calendario hacia la entrega del **22 de octubre**, y la lista viva de
 pendientes con su criterio de hecho, están en
 [`docs/08`](docs/08-PLAN-DE-ARRANQUE.md). Lo que una máquina puede verificar lo
 verifica `scripts/check_pendientes.py`.

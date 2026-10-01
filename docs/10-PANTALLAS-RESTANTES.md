@@ -108,7 +108,7 @@ Si se trabaja en un worktree, necesita su propio `uv sync --all-extras` y un enl
 |---|---|---|
 | 3 | 24 sep – 1 oct | Fusionar el #32 · **P3 Traductor** · **P2 Ficha** |
 | 4 | 2 – 8 oct | **P5 Plan** · P6/P7/P8 · la web lee de la API · `report/build.py` |
-| 5 | 9 – 15 oct | Congelamiento el **12** · ensayo el **13** · entrega el **15** |
+| 5 | 9 – 22 oct | Entrega el **22** (era el 15). Congelamiento y ensayo propuestos: **19** y **20** |
 
 El orden sigue lo que el reto exige por nombre: la P3 cubre el entregable 3 y es el diferenciador;
 la P2, el entregable 1; la P5, el entregable 3. P6, P7 y P8 degradan a mockup de alta fidelidad si

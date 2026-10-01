@@ -177,7 +177,7 @@ Entregables obligatorios del reto: **1** → Radar + Ficha de Pitcher · **2** �
 | El equipo de datos no llega al modelo final | El Traductor funciona con **física pura, sin entrenamiento**. Producto defendible aunque el ML se retrase |
 | Refutar H2 se lee como arrogancia | Enmarcar como *"la convocatoria pidió cuantificar antes de asumir; esto encontramos"* |
 | `Extreme Altitude` mezcla varios estadios | Es exactamente por qué modelamos densidad continua y no el bucket |
-| ~~Confusión de fechas (15 oct vs 9 dic)~~ | **Resuelto.** La entrega es el **15 de octubre de 2026**, confirmado con ISAC. Finalistas el 20 de octubre y **presentaciones el 10 y 11 de noviembre** según la página oficial; el «9 dic» de las notas viejas no aparece en ella |
+| ~~Confusión de fechas (15 oct vs 9 dic)~~ | **Resuelto.** La entrega es el **22 de octubre de 2026** (era el 15 hasta el 1 de octubre; la página oficial lo cambió). Finalistas el 20 de octubre y **presentaciones el 10 y 11 de noviembre** según la página oficial; el «9 dic» de las notas viejas no aparece en ella |
 
 ---
 

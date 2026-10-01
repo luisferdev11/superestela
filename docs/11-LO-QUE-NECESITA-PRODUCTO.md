@@ -173,7 +173,7 @@ Ninguna pantalla imprime carreras: el puente Stuff+ → carreras no existe mient
 | **1 oct** | **Puerta A3.** Si no hay un xRV que correlacione con el run value observado, se recorta alcance de producto, no de validación (`docs/08` §2) |
 | 12 oct | Congelamiento: ningún número cambia después |
 | 13 oct | Ensayo de los 10 minutos |
-| 15 oct | Entrega |
+| 22 oct | Entrega (era el 15) |
 
 La escala es un cambio MAJOR del modelo y obliga a reescalar el Radar. Si cambia, tiene que ser
 antes del 12.
