@@ -9,6 +9,7 @@ import { PitcherKpis } from './PitcherKpis'
 import { PitcherPhysics } from './PitcherPhysics'
 import { PitcherReading } from './PitcherReading'
 import { SeasonTable } from './SeasonTable'
+import { OutcomesTable } from './OutcomesTable'
 import { arsenalMapPitches } from '@/domain/arsenalMap'
 import { locationKey, sharedMax } from '@/domain/location'
 import type { FichaTab } from '@/domain/navigation'
@@ -43,7 +44,16 @@ export const FichaPage = async ({
   readonly tab?: Extract<FichaTab, 'summary' | 'arsenal'>
 }) => {
   const [
-    { cards, seasonsByPitcher, density, nPitches, seasons, pitchersWithGap, leagueShapes },
+    {
+      cards,
+      seasonsByPitcher,
+      density,
+      nPitches,
+      seasons,
+      pitchersWithGap,
+      leagueShapes,
+      leagueOutcomes,
+    },
     { arsenals },
     locations,
   ] = await Promise.all([loadDataset(), loadSimulatorDataset(), loadLocations()])
@@ -114,6 +124,7 @@ export const FichaPage = async ({
         rows={seasonTimeline(seasonsByPitcher.get(pitcherId) ?? [], own)}
         pitchersWithGap={pitchersWithGap}
       />
+      <OutcomesTable entries={seasonsByPitcher.get(pitcherId) ?? []} league={leagueOutcomes} />
       <PitcherReading card={card} />
     </PageShell>
   )

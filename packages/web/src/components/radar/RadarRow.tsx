@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { MetricValue } from '@/components/metric/MetricValue'
 import { InconclusiveValue } from '@/components/metric/InconclusiveValue'
+import { RateValue } from '@/components/metric/RateValue'
 import { RoleChip } from '@/components/chip/RoleChip'
 import { TrapFlag } from '@/components/chip/TrapFlag'
 import { dominantPitch } from '@/domain/arsenal'
@@ -9,8 +10,11 @@ import { formatNumber, formatSigned } from '@/domain/format'
 import { fichaHref } from '@/domain/pitcher'
 import type { PitcherSeason } from '@/domain/types'
 
-const cell = 'px-3 py-2 text-right border-b border-(--color-border-hairline)'
-const cellLeft = `${cell} text-left`
+// Base sin alineacion: con `text-right` en la base, un `text-left` agregado
+// pierde segun el orden de Tailwind, no segun el orden de las clases.
+const base = 'px-3 py-2 border-b border-(--color-border-hairline)'
+const cell = `${base} text-right`
+const cellLeft = `${base} text-left`
 
 export const RadarRow = ({
   card,
@@ -54,6 +58,12 @@ export const RadarRow = ({
         ) : (
           <MetricValue metric={card.altitudeTax} digits={2} />
         )}
+      </td>
+      <td className={cell}>
+        <RateValue metric={card.outcomes.kMinusBbPct} compact />
+      </td>
+      <td className={cell}>
+        <RateValue metric={card.outcomes.whiffPerSwing} compact />
       </td>
       <td className={cellLeft}>
         <RoleChip role={card.role} />

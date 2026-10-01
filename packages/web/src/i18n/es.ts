@@ -21,6 +21,7 @@ export const es = {
   } satisfies Record<Role, string>,
   unknownRole: 'Sin rol',
   insufficientSample: 'muestra insuficiente',
+  insufficientSampleShort: 'muestra insuf.',
   inconclusive: 'no concluyente',
   inconclusiveShort: 'no concl.',
   brand: { top: 'SUPER', bottom: 'ESTELA' },
@@ -75,6 +76,8 @@ export const es = {
     'Nivel del mar',
     '\u0394',
     'Impuesto c/9 ent.',
+    'K\u2212BB%',
+    'Whiff%',
     'Rol',
     'Pitch principal',
     'Uso',
@@ -181,6 +184,20 @@ export const es = {
       mapLabel: (env: string, n: number): string =>
         `Ubicaci\u00f3n de ${String(n)} lanzamientos en ${env}, vista del c\u00e1tcher`,
       pendingLabel: (env: string): string => `Ubicaci\u00f3n en ${env}: pendiente`,
+    },
+    outcomes: {
+      title: 'Ponches, bases por bolas y swings abanicados',
+      subtitle:
+        'Lo que Diablos mira primero: en la altura hasta el contacto débil se vuelve hit, y abanicar es lo que aguanta.',
+      columns: ['Temporada', 'Entorno', 'Turnos', 'K%', 'BB%', 'K\u2212BB%', 'Whiff por swing'],
+      environment: { hh: 'Altitud extrema', sea: 'Nivel del mar' } satisfies Record<
+        Environment,
+        string
+      >,
+      league: (env: string, kbb: string, whiff: string): string =>
+        `Liga en ${env}: K\u2212BB% ${kbb}, whiff por swing ${whiff}.`,
+      rule: (pa: number, swings: number): string =>
+        `${String(pa)} turnos para K% y BB%, ${String(swings)} swings para el whiff. Banda al 95%. Es conteo, no modelo.`,
     },
     seasons: {
       title: 'Sus temporadas',

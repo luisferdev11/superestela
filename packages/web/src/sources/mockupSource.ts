@@ -2,11 +2,11 @@ import 'server-only'
 import { readFile } from 'node:fs/promises'
 import { evidencePath, mockupDataPath } from './paths'
 import { leagueShapesSchema, mockupDataSchema } from './schema'
-import { evidenceSchema } from './evidenceSchema'
-import { toDensityLevel, toPitcherSeason, toSeasonEntry } from './adapter'
+import { evidenceSchema, type EvidenceRaw } from './evidenceSchema'
+import { toDensityLevel, toOutcomes, toPitcherSeason, toSeasonEntry } from './adapter'
 import { orderByDensity, type DensityScale } from '@/domain/density'
 import type { LeagueShapes } from '@/domain/arsenalMap'
-import type { PitcherSeason, SeasonEntry } from '@/domain/types'
+import type { Environment, Outcomes, PitcherSeason, SeasonEntry } from '@/domain/types'
 
 /**
  * `server-only` no es decorativo: son 727 KB. Si un componente cliente llega a
@@ -24,6 +24,8 @@ export type Dataset = {
   readonly pitchersWithGap: number
   /** La forma promedio de la liga por tipo, a nivel del mar y en altitud extrema. */
   readonly leagueShapes: LeagueShapes
+  /** K%, BB%, K-BB% y whiff de la liga en cada entorno (`evidence.json → league_outcomes`). */
+  readonly leagueOutcomes: Readonly<Record<Environment, Outcomes>> | null
 }
 
 const toLeagueShapes = (raw: unknown, sea: string, extreme: string): LeagueShapes => {
@@ -37,6 +39,17 @@ const toLeagueShapes = (raw: unknown, sea: string, extreme: string): LeagueShape
       { sea: pick(profile.levels, sea), hh: pick(profile.levels, extreme) },
     ]),
   )
+}
+
+/** Lo de la liga en cada entorno, para leer las tasas de un lanzador contra algo. */
+const leagueOutcomesOf = (
+  raw: EvidenceRaw['league_outcomes'],
+  seaLabel: string,
+  extremeLabel: string,
+): Record<Environment, Outcomes> | null => {
+  const sea = raw[seaLabel]
+  const hh = raw[extremeLabel]
+  return sea === undefined || hh === undefined ? null : { sea: toOutcomes(sea), hh: toOutcomes(hh) }
 }
 
 export const loadDataset = async (): Promise<Dataset> => {
@@ -71,5 +84,6 @@ export const loadDataset = async (): Promise<Dataset> => {
     seasons: evidence.audit.seasons,
     pitchersWithGap: evidence.seasons.pitchers_with_a_gap,
     leagueShapes: toLeagueShapes(parsed.pitch_profiles, sea.label, extreme.label),
+    leagueOutcomes: leagueOutcomesOf(evidence.league_outcomes, sea.label, extreme.label),
   }
 }

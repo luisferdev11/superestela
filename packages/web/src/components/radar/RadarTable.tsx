@@ -16,6 +16,9 @@ import { rankBy } from '@/domain/ranking'
 import type { Environment, PitcherSeason } from '@/domain/types'
 import { es } from '@/i18n/es'
 
+/** Pitcher, Rol y Pitch principal: las columnas de texto, por su posicion en `es.columns`. */
+const LEFT_ALIGNED = new Set([0, 9, 10])
+
 /**
  * La unica isla de cliente de la pantalla, y lo mas abajo posible del arbol
  * (`CONVENTIONS.md` seccion 4, regla 5). La carga y el parseo del JSON se
@@ -85,7 +88,7 @@ export const RadarTable = ({
                   key={column}
                   scope="col"
                   className={`border-b border-(--color-border-strong) px-3 pb-2 text-[10px] font-bold tracking-wider whitespace-nowrap text-(--color-text-muted) uppercase ${
-                    index === 0 || index === 7 || index === 8 ? 'text-left' : 'text-right'
+                    LEFT_ALIGNED.has(index) ? 'text-left' : 'text-right'
                   }`}
                 >
                   {column}
