@@ -20,20 +20,17 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from collections.abc import Callable, Sequence
+from collections.abc import Sequence
 from pathlib import Path
 
 from report.matrix import Artifacts, BrokenClaimError, Claim, load_claims, traceability_page, verify
+from report.tables import TABLE_BUILDERS
 
 ROOT = Path(__file__).resolve().parent.parent
 OUTPUTS = ROOT / "analysis" / "outputs"
 TABLES = ROOT / "report" / "tables"
 
 SOURCES = ("evidence.json", "simulator_validation.json", "projections.json")
-
-# One function per table of the document, keyed by the file it writes. They
-# arrive in report/tables.py; the matrix does not need them to do its job.
-TABLE_BUILDERS: dict[str, Callable[[Artifacts], str]] = {}
 
 
 def load_artifacts(outputs: Path = OUTPUTS) -> Artifacts:
