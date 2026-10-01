@@ -7,6 +7,7 @@ import type { Verdict } from '@/domain/reading'
 import type { Target } from '@/domain/projection'
 import type { RosterGrouping } from '@/domain/roster'
 import type { Origin } from '@/domain/translator'
+import type { RadarSort } from '@/domain/ranking'
 
 /**
  * El unico archivo con espanol. `CONVENTIONS.md` seccion 2.1 y seccion 4 regla
@@ -68,6 +69,54 @@ export const es = {
       `Mostrando ${String(shown)} de ${String(total)} \u00b7 \u00faltima temporada jugada de cada uno \u00b7 banda al 95%`,
   },
   environment: { hh: 'Stuff+ altitud extrema', sea: 'Stuff+ nivel del mar' },
+  radarSort: {
+    hh: 'Stuff+ altitud extrema',
+    sea: 'Stuff+ nivel del mar',
+    kMinusBb: 'K\u2212BB%',
+    whiff: 'Whiff%',
+  } satisfies Record<RadarSort, string>,
+  columnHelp: [
+    'El lanzador, anonimizado. Lleva a su Ficha.',
+    'Su última temporada con muestra en los dos entornos. En ámbar si no es la más reciente.',
+    'Mano con la que lanza.',
+    'Calidad de su arsenal en altitud extrema, ponderada por uso, con su banda al 95%.',
+    'La misma medida a nivel del mar.',
+    'Cuánto cambia su Stuff+ al subir a la altitud extrema.',
+    'Carreras de más por 9 entradas en altitud extrema. «No concl.» si la banda cruza el cero.',
+    'Ponches menos bases por bolas, por cada 100 turnos, en la temporada.',
+    'Swings abanicados por cada 100 swings, en la temporada.',
+    'Abridor o relevista, por cómo entra a los juegos.',
+    'El pitch que más usa.',
+    'Qué tanto lo usa.',
+  ],
+  guide: {
+    title: 'Cómo leer esta tabla',
+    insufficient: { term: 'Muestra insuficiente' },
+    insufficientText: (pitches: number, pa: number): string =>
+      `Menos de ${String(pitches)} lanzamientos en un entorno, o de ${String(pa)} turnos para una tasa. No se muestra un número con una banda tan ancha que no diga nada.`,
+    items: [
+      {
+        term: 'Stuff+',
+        text: 'La calidad física de un pitch: velocidad, movimiento, spin y release. 100 es el pitch promedio de la liga; arriba de 100 es mejor. Hoy lo da un modelo base (v0), declarado como tal.',
+      },
+      {
+        term: 'La banda «±»',
+        text: 'Cuánto podría moverse el número con más lanzamientos. Si dos lanzadores se traslapan en su banda, no hay diferencia que defender.',
+      },
+      {
+        term: 'Altitud extrema',
+        text: 'Cinco parques: Puebla, Ciudad de México, Aguascalientes, Querétaro y León. El aire es más delgado y la pelota se mueve menos.',
+      },
+      {
+        term: 'Trampa de Altitud ▌',
+        text: 'Se ve fuerte a nivel del mar y pierde mucho en la altitud: el mercado lo paga por lo que no va a dar en casa.',
+      },
+      {
+        term: 'K\u2212BB% y Whiff%',
+        text: 'Lo que el cuerpo técnico mira primero: ponches menos bases por bolas, y swings abanicados. En la altura hasta el contacto débil se vuelve hit; abanicar es lo que aguanta.',
+      },
+    ],
+  },
   columns: [
     'Pitcher',
     'Temp.',
