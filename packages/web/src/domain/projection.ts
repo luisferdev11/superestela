@@ -51,7 +51,8 @@ export type Check = {
   readonly horizontalBreakInBand: boolean
 }
 
-const inBand = (measured: number, projected: Metric): boolean =>
+/** Si lo medido cae dentro de la banda al 95% de lo proyectado. */
+export const inBand = (measured: number, projected: Metric): boolean =>
   Math.abs(measured - projected.value) <= Z95 * projected.se
 
 /**

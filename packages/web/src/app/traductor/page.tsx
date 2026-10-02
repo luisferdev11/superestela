@@ -6,11 +6,12 @@ import { loadSimulatorDataset } from '@/sources/simulatorSource'
 import { es } from '@/i18n/es'
 
 /**
- * Los arsenales reales que se ofrecen como ejemplo, uno por historia de
- * `docs/09` seccion 5.2: la recta que colapsa, el slider que aguanta y la curva
- * de un abridor con seis pitches.
+ * El unico arsenal real del Traductor, como validacion: la recta que colapsa de
+ * `docs/09` seccion 5.2, y de los tres de esa seccion el que mas lanzo en
+ * altitud extrema (243 rectas, 63 sliders y 32 curvas en 2025), asi que lo
+ * medido ahi alcanza para juzgar lo proyectado.
  */
-const EXAMPLES = ['pitcher_00069/2025', 'pitcher_00566/2025', 'pitcher_00191/2025']
+const EXAMPLE = 'pitcher_00069/2025'
 
 /**
  * P3, el Traductor de Altitud (`docs/02` P3, `docs/10` T2): «este pitcher nunca
@@ -33,8 +34,7 @@ export default async function TraductorPage() {
         <p className="mt-0.5 text-[13px] text-(--color-text-muted)">{es.translator.subtitle}</p>
       </div>
       <Translator
-        arsenals={data.arsenals.filter((a) => EXAMPLES.includes(a.key))}
-        examples={EXAMPLES}
+        example={data.arsenals.find((a) => a.key === EXAMPLE) ?? null}
         densities={projections.densities}
         factors={projections.factors}
       />

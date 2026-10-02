@@ -105,6 +105,8 @@ ITEMS: list[Item] = [
     Item("Ingenieria", "API - GET scores", api_route("/scores")),
     Item("Ingenieria", "API - POST simulate", api_route("/simulate")),
     Item("Ingenieria", "API - POST translate", api_route("/translate")),
+    # The translator's main input: a tracking export of a pitcher outside our data (P3, 3c).
+    Item("Ingenieria", "API - POST arsenals/summarize", api_route("/arsenals/summarize")),
     # The holdout is theirs (Q&A, 30 sep): without a command, there is no delivery. ADR 0009.
     Item(
         "Ingenieria",

@@ -1,8 +1,11 @@
 import type { Metric } from './types'
+import { inBand } from './projection'
 import {
   CONTROLS,
+  MIN_PITCHES_FOR_BASELINE,
   baselinePitches,
   pickValues,
+  type ArsenalPitch,
   type Control,
   type Hand,
   type PitchType,
@@ -150,3 +153,80 @@ export const weightedMetric = (
     se: Math.hypot(...pairs.map((p) => p.w * p.v.se)) / total,
   }
 }
+
+/** Por que la API no pudo resumir un archivo (`packages/api/arsenal_file.py`). */
+export const FILE_PROBLEMS = [
+  'unreadable',
+  'empty',
+  'missing_columns',
+  'mixed_pitchers',
+  'mixed_hands',
+] as const
+export type FileProblem = (typeof FILE_PROBLEMS)[number]
+
+/** Un pitch de un archivo resumido por la API, con su uso de 0 a 1. */
+export type FilePitch = PitchValues & { readonly pitchType: PitchType; readonly usage: number }
+
+/**
+ * Lo que la API resumio de un archivo de TrackMan, como filas de la tabla: el
+ * uso en porcentaje, que es como se captura a mano, y cada valor a dos decimales. La API ya lo dejo del lado
+ * del brazo y en a lo mas seis tipos.
+ */
+export const fileRows = (pitches: readonly FilePitch[]): TranslatorRow[] =>
+  pitches.slice(0, MAX_ROWS).map((p) => ({
+    // Dos decimales, como `arsenals.json`: una mediana trae seis y no cabe en la celda.
+    ...(Object.fromEntries(CONTROLS.map((c) => [c, Math.round(100 * p[c]) / 100])) as Record<
+      Control,
+      number
+    >),
+    pitchType: p.pitchType,
+    usage: Math.round(1000 * p.usage) / 10,
+  }))
+
+/** La forma que la API proyecto en altitud extrema para un pitch. */
+export type ProjectedShape = { readonly ivb: Metric; readonly horizontalBreak: Metric }
+
+export type ValidationRow = {
+  readonly pitchType: PitchType
+  readonly projected: ProjectedShape
+  /** Lo medido en altitud extrema; `null` con menos de 30 lanzamientos, que es ruido. */
+  readonly measured: {
+    readonly ivb: number
+    readonly horizontalBreak: number
+    readonly n: number
+  } | null
+  readonly isWithinBand: boolean | null
+}
+
+/**
+ * El ejemplo como validacion: para un lanzador que si lanzo en altitud
+ * extrema, lo que el Traductor proyecta desde su arsenal a nivel del mar contra
+ * lo que se midio ahi. Dentro de la banda es en los dos ejes, con la misma
+ * regla de la Proyeccion (`domain/projection.ts`).
+ */
+export const validationRows = (
+  rows: readonly TranslatorRow[],
+  projected: readonly (ProjectedShape | undefined)[],
+  measuredHh: readonly ArsenalPitch[],
+): readonly ValidationRow[] =>
+  rows.flatMap((r, i) => {
+    const shape = projected[i]
+    if (shape === undefined) return []
+    const m = measuredHh.find((p) => p.pitchType === r.pitchType)
+    const measured =
+      m === undefined || m.n < MIN_PITCHES_FOR_BASELINE
+        ? null
+        : { ivb: m.ivb, horizontalBreak: m.horizontalBreak, n: m.n }
+    return [
+      {
+        pitchType: r.pitchType,
+        projected: shape,
+        measured,
+        isWithinBand:
+          measured === null
+            ? null
+            : inBand(measured.ivb, shape.ivb) &&
+              inBand(measured.horizontalBreak, shape.horizontalBreak),
+      },
+    ]
+  })
