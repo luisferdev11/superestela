@@ -1,6 +1,6 @@
 # SuperEstela — Plan hacia el 22 de octubre
 
-> Actualizado el **1 de octubre de 2026, noche**. **La entrega es el 22 de octubre** (confirmado; la
+> Actualizado el **1 de octubre de 2026, noche**, después de fusionar #80, #81 y #82 y de abrir el #83. **La entrega es el 22 de octubre** (confirmado; la
 > página oficial también lo dice). La §0.0 es lo que sigue; el resto de la §0 es el registro del 1 de
 > octubre, y de la §1 en adelante es el plan del 23 de septiembre.
 >
@@ -27,24 +27,30 @@ uv run python scripts/check_pendientes.py       # el estado, ahora mismo
 - **La web es demostrativa:** corre sobre el v0 y el puente. Los modelos buenos (Stuff+ final,
   Location+, Pitching+, la escala) **los entrega el equipo de datos**; producto no los construye
   (memoria `superestela-frontera-datos`). Las dudas de modelo, holdout y escala son de ellos.
-- **Ya no hay cadenas de PRs.** Los 20 PRs del 1 de octubre se consolidaron en tres:
+- **Ya no hay cadenas de PRs.** Los 20 PRs del 1 de octubre se consolidaron en tres, y **los tres están
+  en `main`** desde el 1 de octubre. Lo abierto ahora:
 
-  | PR | Qué | Revisa | Orden |
-  |---|---|---|---|
-  | **#80** | Scorer (`python -m models.score`), API con origen, K/BB/whiff en la evidencia, `report/` | Datos (Martín) | 1 |
-  | **#81** | Todas las pantallas nuevas y sus arreglos; contiene al #80 | Producto | 2 |
-  | **#82** | Estos documentos: Q&A, renombre, Decision Log, esqueleto del documento técnico, ficha ejecutiva | Cualquiera | Independiente |
+  | PR | Qué | Estado |
+  |---|---|---|
+  | #80 | Scorer (`python -m models.score`), API con origen, K/BB/whiff en la evidencia, `report/` | ✅ en `main` |
+  | #81 | Todas las pantallas nuevas y sus arreglos | ✅ en `main` |
+  | #82 | Q&A, renombre, Decision Log, esqueleto del documento técnico, ficha ejecutiva | ✅ en `main` |
+  | **#83** | El Traductor para lanzadores que no están en los datos (tarea 4) | En revisión |
+
+- **Cómo se trabaja desde aquí:** un PR por tarea de esta checklist, desde `main` y hacia `main`. La
+  documentación de la tarea va en el mismo PR, y la casilla se marca ahí mismo.
 
 - **Revisión de código del 1 de octubre:** hecha y corregida (abajo). Quedan dos decisiones abiertas.
 
 **Sin preguntar de nuevo:** el renombre híbrido («altitud extrema» en cifras y tablas, «Harp Helú» en
-narrativa), el comando del scorer es de producto y el modelo de datos (ADR 0009), y la escala la
-decide datos (los textos ya están listos para las dos, `es.scale`).
+narrativa), el comando del scorer es de producto y el modelo de datos (ADR 0009), la escala la
+decide datos (los textos ya están listos para las dos, `es.scale`), el «±» es la banda al 95% en todas
+las pantallas, y el Traductor es para quien no está en los datos (`docs/12` §2.1).
 
 **Checklist, en orden.** Cada tarea tiene su criterio de hecho.
 
-- [ ] **1 · Que entren #80, #81 y #82.** Producto solo revisa y responde comentarios; no se abre
-      ningún PR nuevo encima mientras tanto.
+- [x] **1 · Que entren #80, #81 y #82.** Hecho el 1 de octubre: los tres en `main`, y
+      `check_pendientes` marca P3, P7, `report/build.py` y «Scorer reproducible».
       ✔ `git ls-tree origin/main packages/models/score.py report/build.py packages/web/src/app/traductor/page.tsx docs/12-DECISION-LOG.md`
       lista los cuatro, y `uv run python scripts/check_pendientes.py` marca P3, P7, `report/build.py`
       y «Scorer reproducible».
@@ -61,8 +67,8 @@ decide datos (los textos ya están listos para las dos, `es.scale`).
 
       ✔ Las dos son tablas de `report/tables/`, generadas por `report/build.py`, con sus afirmaciones
       en `claims.toml`.
-- [ ] **4 · Reencuadrar el Traductor** (discutido el 1 de octubre). Hoy ofrece tres lanzadores del
-      dataset como ejemplo, y con ellos se empalma con la pestaña Proyección de la Ficha. Su caso real
+- [x] **4 · Reencuadrar el Traductor** (discutido el 1 de octubre). Ofrecía tres lanzadores del
+      dataset como ejemplo, y con ellos se empalmaba con la pestaña Proyección de la Ficha. Su caso real
       es el lanzador que **no** está en el dataset (agente libre, MLB, Japón), que es el entregable 3c:
       «¿cómo perfilar un prospecto o agente libre…?».
       - Entrada principal: **subir un CSV o export de TrackMan** con las columnas del dataset,
@@ -75,6 +81,11 @@ decide datos (los textos ya están listos para las dos, `es.scale`).
 
       ✔ Un CSV de prueba generado (nunca commiteado) llena la tabla, y su test pasa. El ejemplo
       muestra lo proyectado contra lo medido. El subtítulo dice para quién es.
+      **Hecho en el #83.** El archivo lo resume `POST /api/v1/arsenals/summarize` (en Python, por
+      `contracts/mapping.py`); el ejemplo es `pitcher_00069/2025`. Probado con su export real a nivel
+      del mar: la recta y la curva caen en la banda, el slider no (IVB 5.4 ± 1.2 proyectado, 2.7
+      medido), y eso es una pregunta para datos. Queda por decidir si los tipos con muy poca muestra
+      entran a la tabla.
 - [ ] **5 · Aplicar la convención del «±».** **Decidida el 1 de octubre: la banda al 95% en todas las
       pantallas** (`docs/12` §2.1). Hoy, en el Radar y la Ficha ya es la banda; en el Impuesto, el
       Simulador, el Traductor y la Proyección es un error estándar, y hay que pasarlos a la banda.
@@ -141,7 +152,7 @@ la API rechaza el origen en altitud media. El #79 corrige lo que encontró la re
 | 6 | `report/build.py` | #64 → #65 → #66 | ✅ en revisión. 22 de 28 afirmaciones con corrida |
 | 7 | Entregables de texto | #76 (`docs/12` Decision Log, `docs/13` esqueleto del documento, `docs/14` ficha ejecutiva) | 🟡 borradores; se terminan contra cifras congeladas |
 | 8 | README reproducible | #62 → #63 → #61 (`python -m models.score`, ADR 0009) | ✅ en revisión. Falta que alguien que no lo escribió lo corra |
-| 9 | P3 Traductor | #67 (API) y #68 → #71 (web) | ✅ en revisión. Recta de `pitcher_00069`: 15.6″ ± 0.9″ y 92.9 ± 4.1, igual que el Simulador |
+| 9 | P3 Traductor | #67 (API) y #68 → #71 (web), reencuadre en #83 | ✅ en `main` (#81). Recta de `pitcher_00069`: 15.6″ ± 0.9″ y 92.9 ± 4.1, igual que el Simulador |
 | — | Radar legible para no técnicos | #74 | ✅ en revisión |
 | — | Pasada de paridad contra el prototipo | #78 (arreglos), `docs/10` §6 (lo que queda) | ✅ en revisión |
 | 10 | `apiSource` y GET scores | — | ⬜ |
