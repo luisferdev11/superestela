@@ -13,9 +13,15 @@ from pathlib import Path
 from typing import Annotated, Literal
 
 from fastapi import Depends, FastAPI
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
+from api.arsenal_file import ArsenalFileError, summarize_arsenal
 from api.schemas import (
+    ArsenalFileProblem,
+    ArsenalFileRequest,
+    ArsenalFileResponse,
+    ArsenalPitchOut,
     SimulateRequest,
     SimulateResponse,
     TranslateRequest,
@@ -74,4 +80,30 @@ def translate_shape(req: TranslateRequest) -> TranslateResponse:
         break_scaling_factor=break_scaling_factor(
             req.origin_density_index, req.target_density_index
         ),
+    )
+
+
+@app.post(
+    "/api/v1/arsenals/summarize",
+    response_model=ArsenalFileResponse,
+    response_model_by_alias=True,
+    responses={422: {"model": ArsenalFileProblem}},
+)
+def summarize_arsenal_file(req: ArsenalFileRequest) -> ArsenalFileResponse | JSONResponse:
+    """Turn a tracking export into the translator's arsenal, one row per pitch type (P3)."""
+    try:
+        summary = summarize_arsenal(req.csv)
+    except ArsenalFileError as exc:
+        problem = ArsenalFileProblem(error=exc.code, columns=list(exc.columns))
+        return JSONResponse(status_code=422, content=problem.model_dump(by_alias=True))
+    return ArsenalFileResponse(
+        pitcher_hand=summary.pitcher_hand,
+        origin=summary.origin,
+        is_measured_at_extreme=summary.is_measured_at_extreme,
+        n_rows=summary.n_rows,
+        pitches=[ArsenalPitchOut(**vars(p)) for p in summary.pitches],
+        unsupported_rows=summary.unsupported_rows,
+        missing_feature_rows=summary.missing_feature_rows,
+        unsupported_types=list(summary.unsupported_types),
+        omitted_types=list(summary.omitted_types),
     )

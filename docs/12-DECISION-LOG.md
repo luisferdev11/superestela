@@ -123,6 +123,8 @@ auditable: qué se decidió, contra qué y con qué evidencia.
 | Mínimo para el whiff | 50 swings | La misma lógica que los turnos | `MIN_SWINGS_FOR_RATE` (#72) |
 | Lectura de la Ficha | Trampa: no al precio de nivel del mar · banda entera arriba de 100: fichar · lo demás: con reservas | Es provisional y se declara en pantalla | `domain/reading.ts` |
 | Delta grande | −10 puntos o menos se marca | Viene del prototipo | `domain/emphasis.ts → LARGE_DELTA` |
+| Para quién es el Traductor | Para el lanzador que no está en nuestros datos; entra por su export de TrackMan, y un solo lanzador real queda como validación | Con tres ejemplos del dataset repetía la Proyección de la Ficha; su caso es el entregable 3c. Decidido el 1 de octubre | `docs/10` T2, #83 |
+| Dónde se lee un export de TrackMan | En la API de Python, no en el navegador | Las columnas del proveedor solo se renombran en `contracts/mapping.py` (`CONVENTIONS.md` §2.1); leerlo en TypeScript duplicaría el mapeo | `packages/api/arsenal_file.py` |
 | El «±» en pantalla | Siempre la banda al 95%, nunca el error estándar; cada pantalla lo dice | Hasta el 1 de octubre el Radar, la Ficha y el Despliegue mostraban la banda y el Simulador, el Traductor y la Proyección el error estándar: el mismo signo valía la mitad en unas pantallas que en otras. Decidido el 1 de octubre | La guía del Radar; cada pantalla que muestre un «±» |
 | Densidad por juego | 50 lanzamientos o más | Con 50 el error de la media es una cuarta parte de la variación entre juegos | `models/batch.py`, ADR 0009 |
 

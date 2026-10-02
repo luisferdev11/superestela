@@ -32,7 +32,11 @@ const ARSENALS: PitcherArsenal[] = [
       { ...FOUR_SEAM, pitchType: 'Four-Seam', usage: 0.75, n: 292, whiffPerSwing: 0.27 },
       { ...SLIDER, pitchType: 'Slider', usage: 0.25, n: 62, whiffPerSwing: 0.4 },
     ],
-    hh: [],
+    // Lo medido en altitud extrema: la recta cae dentro de la banda, el slider no tiene muestra.
+    hh: [
+      { ...FOUR_SEAM, ivb: 15.9, pitchType: 'Four-Seam', usage: 0.8, n: 243, whiffPerSwing: 0.18 },
+      { ...SLIDER, pitchType: 'Slider', usage: 0.2, n: 12, whiffPerSwing: 0.3 },
+    ],
   },
 ]
 const m = (value: number, se: number) => ({ value, se })
@@ -58,18 +62,35 @@ const response = (sea: number, hh: number): SimulateResponse => ({
   movementPerKrpm: { value: 9.3, percentile: 69 },
 })
 
+const SUMMARY = {
+  pitcherHand: 'Left',
+  origin: 'medium',
+  isMeasuredAtExtreme: false,
+  nRows: 410,
+  pitches: [
+    { ...FOUR_SEAM, pitchType: 'Sinker', n: 240, usage: 0.6 },
+    { ...SLIDER, pitchType: 'Changeup', n: 160, usage: 0.4 },
+  ],
+  unsupportedRows: 10,
+  missingFeatureRows: 0,
+  unsupportedTypes: ['Splitter'],
+  omittedTypes: [],
+}
+
 type Sent = { pitch: Record<string, unknown>; originDensityIndex: number }
 const bodies = (): Sent[] =>
-  vi.mocked(fetch).mock.calls.map((call) => {
-    const body = call[1]?.body
-    return JSON.parse(typeof body === 'string' ? body : '{}') as Sent
-  })
+  vi
+    .mocked(fetch)
+    .mock.calls.filter((call) => call[0] === '/api/simulate')
+    .map((call) => {
+      const body = call[1]?.body
+      return JSON.parse(typeof body === 'string' ? body : '{}') as Sent
+    })
 
 const renderTranslator = () =>
   render(
     <Translator
-      arsenals={ARSENALS}
-      examples={['pitcher_00069/2025']}
+      example={ARSENALS[0] ?? null}
       densities={{ sea: 1, medium: 0.903, hh: 0.858 }}
       factors={{ medium: 0.8287, hh: 0.7543 }}
     />,
@@ -79,7 +100,10 @@ beforeEach(() => {
   vi.useFakeTimers()
   vi.stubGlobal(
     'fetch',
-    vi.fn((_url: string, init?: RequestInit) => {
+    vi.fn((url: string, init?: RequestInit) => {
+      if (url === '/api/arsenals/summarize') {
+        return Promise.resolve(new Response(JSON.stringify(SUMMARY), { status: 200 }))
+      }
       const sent = JSON.parse(typeof init?.body === 'string' ? init.body : '{}') as Sent
       const body = sent.pitch.pitchType === 'Slider' ? response(110, 106) : response(114, 94)
       return Promise.resolve(new Response(JSON.stringify(body), { status: 200 }))
@@ -111,7 +135,8 @@ describe('el Traductor', () => {
     await settle()
     // 0.75 × 94 + 0.25 × 106 = 97.0; la banda, independiente: hypot(3, 1) = 3.2.
     expect(screen.getByText('97.0 ± 3.2')).toBeInTheDocument()
-    expect(screen.getAllByText('15.6 ± 0.9')).toHaveLength(2)
+    // Dos en la traduccion y dos en la validacion, que pone lo proyectado junto a lo medido.
+    expect(screen.getAllByText('15.6 ± 0.9')).toHaveLength(4)
   })
 
   it('cambiar el origen vuelve a preguntar con la densidad de altitud media y avisa que extrapola', async () => {
@@ -168,5 +193,69 @@ describe('el Traductor', () => {
     await settle()
     expect(screen.getByText(es.sim.status.unreachable)).toBeInTheDocument()
     expect(screen.getByLabelText(`Slider · ${es.sim.controls.ivb}`)).toBeEnabled()
+  })
+
+  it('el ejemplo se presenta como validacion: lo proyectado contra lo medido en altitud extrema', async () => {
+    renderTranslator()
+    await settle()
+    expect(screen.getByText(es.translator.example.title, { selector: 'h2' })).toBeInTheDocument()
+    expect(screen.getByText('15.9')).toBeInTheDocument()
+    // 12 sliders medidos no alcanzan para juzgar.
+    expect(screen.getAllByText(es.translator.example.noSample).length).toBeGreaterThan(0)
+    expect(screen.getByRole('link', { name: es.translator.example.ficha })).toHaveAttribute(
+      'href',
+      '/pitchers/pitcher_00069/2025',
+    )
+  })
+
+  it('un export de TrackMan llena la tabla, la mano y el origen, y dice lo que quedo fuera', async () => {
+    renderTranslator()
+    await settle()
+    const file = new File(['csv'], 'agente.csv', { type: 'text/csv' })
+    await act(async () => {
+      fireEvent.change(screen.getByLabelText(es.translator.upload.label), {
+        target: { files: [file] },
+      })
+      await vi.advanceTimersByTimeAsync(0)
+    })
+    // Uno para leer el archivo y resumirlo, otro para el debounce de las preguntas.
+    await settle()
+    await settle()
+    expect(
+      screen.getByText(es.translator.upload.loaded('agente.csv', '400', '2')),
+    ).toBeInTheDocument()
+    expect(screen.getByText(es.translator.upload.unsupportedTypes('Splitter'))).toBeInTheDocument()
+    const last = bodies().slice(-2)
+    expect(last.map((b) => b.pitch.pitchType)).toEqual(['Sinker', 'Changeup'])
+    expect(
+      last.every((b) => b.pitch.pitcherHand === 'Left' && b.originDensityIndex === 0.903),
+    ).toBe(true)
+    // Ya no es el ejemplo: la validacion se va.
+    expect(
+      screen.queryByText(es.translator.example.title, { selector: 'h2' }),
+    ).not.toBeInTheDocument()
+  })
+
+  it('un archivo que la API rechaza dice por que, con las columnas que faltan', async () => {
+    vi.mocked(fetch).mockImplementation((url) =>
+      Promise.resolve(
+        url === '/api/arsenals/summarize'
+          ? new Response(JSON.stringify({ error: 'missing_columns', columns: ['spin_rate'] }), {
+              status: 422,
+            })
+          : new Response(JSON.stringify(response(114, 94)), { status: 200 }),
+      ),
+    )
+    renderTranslator()
+    await act(async () => {
+      fireEvent.change(screen.getByLabelText(es.translator.upload.label), {
+        target: { files: [new File(['x'], 'malo.csv')] },
+      })
+      await vi.advanceTimersByTimeAsync(0)
+    })
+    await settle()
+    expect(
+      screen.getByText(`${es.translator.upload.problems.missing_columns} spin_rate.`),
+    ).toBeInTheDocument()
   })
 })
