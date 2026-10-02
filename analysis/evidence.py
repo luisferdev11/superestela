@@ -22,6 +22,7 @@ Design notes
 
 import json
 import os
+import sys
 import warnings
 
 import numpy as np
@@ -30,9 +31,11 @@ from simulator_evidence import simulator_evidence
 from sklearn.ensemble import HistGradientBoostingRegressor
 from sklearn.model_selection import GroupKFold
 
+from contracts.mapping import normalize_columns
 from contracts.schemas import MIN_PLATE_APPEARANCES_FOR_RATE, MIN_SWINGS_FOR_RATE
 from core.rates import difference_band, rate_band
 from models.features.role import STARTER_FIRST_INNING_SHARE, classify_roles
+from models.scoring import load_scorer, stuff_plus_of, to_arm_side
 
 warnings.filterwarnings("ignore")
 
@@ -766,6 +769,60 @@ def stuff_plus_v0(df, seed=7):
     return d, metrics
 
 
+# The scales the web knows how to word (packages/web/src/sources/schema.ts).
+SCALE_KINDS = ("league", "per_environment")
+
+# The vendor columns a Scorer reads, renamed once by contracts.mapping.
+SCORER_COLUMNS = [
+    "AutoPitchType",
+    "PitcherThrows",
+    "RelSpeed",
+    "InducedVertBreak",
+    "HorzBreak",
+    "SpinRate",
+    "SpinAxis",
+    "Extension",
+    "RelHeight",
+    "RelSide",
+]
+
+
+def stuff_plus_from_scorer(d, model_path):
+    """Score the cards' pitches with any model that answers the scoring contract.
+
+    The rows are the ones stuff_plus_v0 kept, with the same per-game density
+    index, so swapping the model changes the scores and nothing else
+    (ADR 0010). A pitch the model cannot score (a type it was not trained on,
+    an undefined hand) gets NaN and leaves the cards.
+    """
+    scorer = load_scorer(model_path)
+    kind = getattr(scorer.scale, "kind", "league")
+    if kind not in SCALE_KINDS:
+        # The web parses mockup_data.json strictly: an unknown kind breaks every screen.
+        raise ValueError(f"{scorer.model_id}: scale.kind {kind!r} is not one of {SCALE_KINDS}")
+    ok = d.AutoPitchType.isin(scorer.pitch_types) & d.PitcherThrows.isin(["Right", "Left"])
+    frame = normalize_columns(d.loc[ok, SCORER_COLUMNS])
+    hb, side, axis = to_arm_side(
+        frame.pitcher_hand, frame.horizontal_break, frame.release_side, frame.spin_axis
+    )
+    frame = frame.assign(
+        horizontal_break=hb,
+        release_side=side,
+        spin_axis=axis,
+        density_index=d.loc[ok, "density_index"],
+    )
+    value = pd.Series(np.nan, index=d.index)
+    value[ok] = stuff_plus_of(scorer, frame)[0]
+    metrics = {
+        "model_id": scorer.model_id,
+        "scale": scorer.scale.description,
+        "scale_kind": kind,
+        "n_scored": int(value.notna().sum()),
+        "n_unscored": int(value.isna().sum()),
+    }
+    return value, metrics
+
+
 # --------------------------------------------------------------------------
 # 7. Mockup data: real pitcher rows for the prototype
 # --------------------------------------------------------------------------
@@ -873,14 +930,14 @@ def mockup(d, df_phys, roles=None, entries=None, pitches_per_inning=None):
     for pid, yr in ok:
         e = ext[(ext.pitcher_anon_id == pid) & (ext.year == yr)]
         s_ = sea[(sea.pitcher_anon_id == pid) & (sea.year == yr)]
-        sp_hh, sp_sea = float(e.stuff_plus_v0.mean()), float(s_.stuff_plus_v0.mean())
+        sp_hh, sp_sea = float(e.stuff_plus.mean()), float(s_.stuff_plus.mean())
         rv_hh, rv_sea = float(e.rv.mean()), float(s_.rv.mean())
         # REAL uncertainty: 95% CI half-width on the mean Stuff+ at altitude
-        se = float(e.stuff_plus_v0.std()) / np.sqrt(len(e))
+        se = float(e.stuff_plus.std()) / np.sqrt(len(e))
         ci = 1.96 * se
         # The sea-level score is rendered too, and the product does not show a
         # number without its band (CONVENTIONS.md section 8 rule 2).
-        ci_sea = 1.96 * float(s_.stuff_plus_v0.std()) / np.sqrt(len(s_))
+        ci_sea = 1.96 * float(s_.stuff_plus.std()) / np.sqrt(len(s_))
         # Altitude Tax: extra runs conceded per 100 pitches at altitude,
         # with a standard error from the two independent sample means.
         # Per NINE INNINGS, not per hundred pitches: nine innings is the unit
@@ -908,14 +965,14 @@ def mockup(d, df_phys, roles=None, entries=None, pitches_per_inning=None):
                     "hb_sea": round(float(gs.HorzBreak.mean()), 1) if len(gs) >= 15 else None,
                     "spin": int(g.SpinRate.mean()),
                     "extension": round(float(g.Extension.mean()), 1),
-                    "stuff_plus_hh": round(float(g.stuff_plus_v0.mean()), 1),
-                    "stuff_plus_sea": round(float(gs.stuff_plus_v0.mean()), 1)
+                    "stuff_plus_hh": round(float(g.stuff_plus.mean()), 1),
+                    "stuff_plus_sea": round(float(gs.stuff_plus.mean()), 1)
                     if len(gs) >= 15
                     else None,
                     # The pitcher's band, per pitch: the Ficha shows Stuff+ by
                     # pitch and no score goes out without it (section 8 rule 2).
-                    "stuff_plus_hh_ci95": round(_ci95(g.stuff_plus_v0), 1),
-                    "stuff_plus_sea_ci95": round(_ci95(gs.stuff_plus_v0), 1)
+                    "stuff_plus_hh_ci95": round(_ci95(g.stuff_plus), 1),
+                    "stuff_plus_sea_ci95": round(_ci95(gs.stuff_plus), 1)
                     if len(gs) >= 15
                     else None,
                     "whiff_per_swing": round(
@@ -1108,6 +1165,25 @@ def main():
 
     d, R["stuff_plus_v0"] = stuff_plus_v0(df)
     log(f"Stuff+ v0 baseline: OOF R2={R['stuff_plus_v0']['oof_r2']}")
+    # The cards' Stuff+. v0 unless --model names a Scorer in artifacts/: then
+    # that model scores the same rows, and every screen fed by mockup_data.json
+    # shows it (ADR 0010).
+    scale = {
+        "kind": "league",
+        "description": "stuff_plus_v0: 100 - 10 z over the whole league, both environments and all pitch types",
+    }
+    if "--model" in sys.argv:
+        value, R["stuff_plus_model"] = stuff_plus_from_scorer(
+            d, sys.argv[sys.argv.index("--model") + 1]
+        )
+        d = d.assign(stuff_plus=value).dropna(subset=["stuff_plus"])
+        scale = {
+            "kind": R["stuff_plus_model"]["scale_kind"],
+            "description": R["stuff_plus_model"]["scale"],
+        }
+        log(f"Cards scored by {R['stuff_plus_model']['model_id']}")
+    else:
+        d = d.assign(stuff_plus=d.stuff_plus_v0)
 
     # After stuff_plus_v0, so both denominators agree with the cards.
     R["seasons"] = season_coverage(df, scored=d)
@@ -1188,10 +1264,7 @@ def main():
                 # How 100 is defined for these scores. The web words the delta and the
                 # trap from this, so when the final model moves to 100 per environment
                 # (Q&A, 30 sep; docs/11 section 8.3) the screens follow without edits.
-                "scale": {
-                    "kind": "league",
-                    "description": "stuff_plus_v0: 100 - 10 z over the whole league, both environments and all pitch types",
-                },
+                "scale": scale,
                 "pitchers": cards,
                 "pitcher_seasons": history,
                 "pitch_profiles": R["pitch_profiles"],

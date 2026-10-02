@@ -63,6 +63,10 @@ class ScaleSpec:
     description: str
     mean_xrv: float
     sd_xrv: float
+    # Where 100 sits: "league" (the whole league, v0) or "per_environment" (100
+    # in each altitude category, as Diablos asked; docs/11). The web words the
+    # delta from it. Optional: a model pickled before the field reads "league".
+    kind: str = "league"
 
 
 @dataclass(frozen=True)

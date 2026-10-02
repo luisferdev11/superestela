@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from models.scoring import load_scorer, stuff_plus_of, to_arm_side, verdict_path
+from models.scoring import ScaleSpec, load_scorer, stuff_plus_of, to_arm_side, verdict_path
 from models.tests.toy_scorer import ToyScorer
 
 
@@ -91,3 +91,9 @@ def test_stuff_plus_of_matches_the_bridge_on_its_own_frame(model):
     expected, expected_se = model.stuff_plus(frame)
     assert value == pytest.approx(expected)
     assert se == pytest.approx(expected_se)
+
+
+def test_a_scale_says_league_unless_the_model_declares_otherwise():
+    assert ScaleSpec(description="v0", mean_xrv=0.0, sd_xrv=1.0).kind == "league"
+    per_env = ScaleSpec(description="by park", mean_xrv=0.0, sd_xrv=1.0, kind="per_environment")
+    assert per_env.kind == "per_environment"
