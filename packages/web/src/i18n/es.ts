@@ -549,6 +549,8 @@ export const es = {
     },
     provenance: (modelId: string, passed: number, total: number, usesArsenal: boolean): string =>
       `Stuff+ del modelo ${modelId} · pasó ${String(passed)} de ${String(total)} compuertas · ${usesArsenal ? 'usa' : 'no usa'} el arsenal.`,
+    provenanceUnpublished: (modelId: string): string =>
+      `Stuff+ del modelo ${modelId} · sus compuertas no están publicadas en analysis/outputs/simulator_validation.json.`,
   },
   translator: {
     title: 'Traductor de Altitud',

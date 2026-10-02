@@ -6,6 +6,7 @@ import { CONTROLS, PITCH_TYPES } from '@/domain/simulator'
 import type { DensityScale } from '@/domain/density'
 import type { MovementMaps } from '@/domain/movementMap'
 import type { SimulateResponse } from '@/sources/simulateResponse'
+import type { Validation } from '@/sources/simulatorSource'
 import { es } from '@/i18n/es'
 
 /**
@@ -87,16 +88,25 @@ const bodies = (): Sent[] =>
     return JSON.parse(typeof body === 'string' ? body : '{}') as Sent
   })
 
-const renderSimulator = () =>
+const renderSimulator = (validation: Validation | null = null) =>
   render(
     <Simulator
       distributions={DISTRIBUTIONS}
       maps={MAPS}
       arsenals={ARSENALS}
       scale={SCALE}
-      validation={null}
+      validation={validation}
     />,
   )
+
+const VALIDATION: Validation = {
+  modelId: '0.1.0+abcdef0',
+  usesArsenal: false,
+  stuffPlusShown: true,
+  passed: 10,
+  total: 12,
+  failed: ['F2', 'S7'],
+}
 
 beforeEach(() => {
   vi.useFakeTimers()
@@ -158,5 +168,21 @@ describe('el Simulador', () => {
     renderSimulator()
     await settle()
     expect(screen.getByText(es.sim.status.unreachable)).toBeInTheDocument()
+  })
+
+  it('la procedencia cuenta las compuertas del modelo que contesto', async () => {
+    renderSimulator(VALIDATION)
+    await settle()
+    expect(
+      screen.getByText(es.sim.provenance('0.1.0+abcdef0', 10, 12, false), { exact: false }),
+    ).toBeInTheDocument()
+  })
+
+  it('si contesto otro modelo, no le presta las compuertas del publicado', async () => {
+    renderSimulator({ ...VALIDATION, modelId: '0.1.0+0000000' })
+    await settle()
+    expect(
+      screen.getByText(es.sim.provenanceUnpublished('0.1.0+abcdef0'), { exact: false }),
+    ).toBeInTheDocument()
   })
 })
