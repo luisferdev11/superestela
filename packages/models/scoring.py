@@ -16,8 +16,10 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Protocol, runtime_checkable
 
+import joblib
 import numpy as np
 import numpy.typing as npt
+import pandas as pd
 
 from core.arsenal import ArsenalPitch
 
@@ -61,6 +63,10 @@ class ScaleSpec:
     description: str
     mean_xrv: float
     sd_xrv: float
+    # Where 100 sits: "league" (the whole league, v0) or "per_environment" (100
+    # in each altitude category, as Diablos asked; docs/11). The web words the
+    # delta from it. Optional: a model pickled before the field reads "league".
+    kind: str = "league"
 
 
 @dataclass(frozen=True)
@@ -150,3 +156,59 @@ def to_arm_side(
 def verdict_path(model_path: str) -> str:
     """Where analysis/simulator_gates.py leaves the gates' verdict for a model file."""
     return os.path.splitext(model_path)[0] + ".validation.json"
+
+
+def load_scorer(path: str) -> Scorer:
+    """Read a fitted model from ``artifacts/`` and check that it answers the contract.
+
+    This is the one loader every consumer uses -- the API, the gates, the
+    evidence that feeds the screens and ``models.score`` -- so a model that
+    loads here is a model the whole product can show. Any class works, as
+    long as it satisfies ``Scorer``.
+
+    Raises:
+        TypeError: If the file holds something that is not a ``Scorer``.
+    """
+    model = joblib.load(path)
+    if not isinstance(model, Scorer):
+        raise TypeError(f"{path} does not hold a models.scoring.Scorer")
+    return model
+
+
+# Pitches per call to the model: bounds the memory of the draws, not the result.
+CHUNK_SIZE = 50_000
+
+
+def stuff_plus_of(scorer: Scorer, frame: pd.DataFrame) -> tuple[FloatArray, FloatArray]:
+    """Stuff+ and its se for every row of a canonical frame, through the contract.
+
+    ``frame`` is already on the arm side, with the ``PitchInput`` columns and
+    ``density_index``. Like the API and ``models.score``, the Stuff+ is the mean
+    of the draws and the se their standard deviation, so a pitch is worth the
+    same in every screen.
+    """
+    value = np.full(len(frame), np.nan)
+    se = np.full(len(frame), np.nan)
+    for start in range(0, len(frame), CHUNK_SIZE):
+        part = frame.iloc[start : start + CHUNK_SIZE]
+        pitches = [
+            PitchInput(
+                pitch_type=str(r["pitch_type"]),
+                pitcher_hand=str(r["pitcher_hand"]),
+                release_speed=float(r["release_speed"]),
+                ivb=float(r["ivb"]),
+                horizontal_break=float(r["horizontal_break"]),
+                spin_rate=float(r["spin_rate"]),
+                spin_axis=float(r["spin_axis"]),
+                extension=float(r["extension"]),
+                release_height=float(r["release_height"]),
+                release_side=float(r["release_side"]),
+            )
+            for r in part.to_dict("records")
+        ]
+        draws = scorer.draws(pitches, part["density_index"].astype(float).tolist())
+        if draws.shape[0] < 2:
+            raise ValueError(f"{scorer.model_id} returned one draw: a score needs its spread")
+        value[start : start + len(part)] = draws.mean(axis=0)
+        se[start : start + len(part)] = draws.std(axis=0, ddof=1)
+    return value, se

@@ -40,9 +40,17 @@ Con el dataset en su lugar, genera la evidencia y el modelo del Simulador. Solo 
 de nuevo cuando cambie `analysis/`:
 
 ```bash
-uv run python analysis/evidence.py          # ~1 min: reescribe analysis/outputs/, que ya está en git
-uv run python analysis/simulator_gates.py   # ~1 min: entrena el modelo y corre sus compuertas
+uv run python scripts/regenerate.py         # evidencia, proyecciones, compuertas y tablas, en orden
 ```
+
+Son cuatro pasos, y cada uno lee lo que escribió el anterior: `analysis/evidence.py` reescribe
+`analysis/outputs/`, que ya está en git; `analysis/projection_evidence.py` escribe `projections.json`;
+`analysis/simulator_gates.py` entrena el puente y corre sus compuertas; `python -m report.build`
+regenera `report/tables/`. Sin cambios en `analysis/`, la salida queda idéntica.
+
+**Con el modelo del equipo de datos:** `scripts/regenerate.py --model artifacts/<suyo>.joblib` lo lleva
+a todas las pantallas y a las compuertas. La guía completa está en
+[`docs/11`](docs/11-LO-QUE-NECESITA-PRODUCTO.md).
 
 `simulator_gates.py` deja el modelo y su veredicto en `artifacts/`, que **no va a git** porque se
 deriva de datos licenciados. No modifica ningún archivo versionado. Si cambias el modelo o las
@@ -55,6 +63,7 @@ Dos terminales, desde la raíz del repo:
 
 ```bash
 # 1 · la API (FastAPI): el Simulador le pide el Stuff+
+#     con otro modelo: SUPERESTELA_MODEL=artifacts/<suyo>.joblib uv run uvicorn ...
 uv run uvicorn api.main:app --port 8000
 
 # 2 · la web (Next.js)

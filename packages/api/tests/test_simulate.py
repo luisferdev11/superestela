@@ -8,6 +8,7 @@ frame, so these tests run in CI without the dataset.
 import json
 from pathlib import Path
 
+import joblib
 import numpy as np
 import pandas as pd
 import pytest
@@ -15,7 +16,9 @@ from fastapi.testclient import TestClient
 
 from api.main import app, simulator_service
 from api.simulator import SimulatorService, load_service
+from models.scoring import verdict_path
 from models.stuff.v0_bridge import PITCH_TYPES, BridgeModel, fit_bridge
+from models.tests.toy_scorer import ToyScorer
 
 OUTPUTS = Path(__file__).resolve().parents[3] / "analysis" / "outputs"
 EVIDENCE = json.loads((OUTPUTS / "simulator.json").read_text())
@@ -286,3 +289,28 @@ def test_translate_rejects_a_non_physical_density():
         "/api/v1/translate", json={"shape": shape, "originDensityIndex": 0}
     )
     assert response.status_code == 422
+
+
+def test_the_api_serves_any_scorer_not_only_the_bridge(tmp_path):
+    # What the data team ships: another class in artifacts/, with its verdict beside it.
+    path = tmp_path / "toy.joblib"
+    joblib.dump(ToyScorer(), path)
+    Path(verdict_path(str(path))).write_text(
+        json.dumps({"model_id": ToyScorer.model_id, "stuff_plus_shown": True})
+    )
+    service = load_service(str(OUTPUTS), str(path))
+    app.dependency_overrides[simulator_service] = lambda: service
+    try:
+        body = TestClient(app).post("/api/v1/simulate", json={"pitch": FOUR_SEAM}).json()
+    finally:
+        app.dependency_overrides.clear()
+    assert body["modelId"] == ToyScorer.model_id and body["stuffPlusShown"]
+    # 91.7 mph at sea level: 100 + 1.7, with the toy's three draws one point apart.
+    assert body["sea"]["stuffPlus"]["value"] == pytest.approx(101.7)
+    assert body["sea"]["stuffPlus"]["se"] == pytest.approx(1.0)
+
+
+def test_a_scorer_without_its_verdict_is_not_shown(tmp_path):
+    path = tmp_path / "toy.joblib"
+    joblib.dump(ToyScorer(), path)
+    assert load_service(str(OUTPUTS), str(path)).reason == "model_not_gated"

@@ -24,6 +24,9 @@ uv run python scripts/check_pendientes.py       # el estado, ahora mismo
   calendario de cierre propuesto es congelar cifras el **19** y ensayar el **20**; falta que el equipo
   lo confirme.
 - **La demo puede ser local.** No hace falta desplegar.
+- **Datos se integra con [`docs/11`](11-LO-QUE-NECESITA-PRODUCTO.md).** Entregan un `Scorer` en
+  `artifacts/` y `scripts/regenerate.py --model` lo lleva a las ocho pantallas, la API, las compuertas
+  y el holdout (ADR 0010). Sin `--model`, los números de hoy.
 - **La web es demostrativa:** corre sobre el v0 y el puente. Los modelos buenos (Stuff+ final,
   Location+, Pitching+, la escala) **los entrega el equipo de datos**; producto no los construye
   (memoria `superestela-frontera-datos`). Las dudas de modelo, holdout y escala son de ellos.

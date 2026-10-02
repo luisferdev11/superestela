@@ -23,8 +23,7 @@ from core.density import DENSITY_INDEX_EXTREME, DENSITY_INDEX_SEA_LEVEL
 from core.spin import Bounds, Envelope, assess_plausibility, movement_per_krpm, percentile_rank
 from core.trajectory import approach
 from core.translate import PitchShape, break_scaling_factor, translate
-from models.scoring import PitchInput, Scorer, verdict_path
-from models.stuff.v0_bridge import BridgeModel
+from models.scoring import PitchInput, Scorer, load_scorer, verdict_path
 
 SEA, EXT = "No Altitude", "Extreme Altitude"
 Reason = Literal["model_unavailable", "model_not_gated", "gates_failed"]
@@ -316,7 +315,8 @@ def load_service(outputs_dir: str, model_path: str) -> SimulatorService:
     evidence, arsenals = read("simulator.json"), read("arsenals.json")
     if not os.path.exists(model_path):
         return SimulatorService(None, "model_unavailable", evidence, arsenals)
-    model = BridgeModel.load(model_path)
+    # Any model that answers the contract, not only the v0 bridge (ADR 0010).
+    model = load_scorer(model_path)
     try:
         with open(verdict_path(model_path)) as fh:
             verdict = dict(json.load(fh))

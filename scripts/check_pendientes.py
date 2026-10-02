@@ -114,6 +114,12 @@ ITEMS: list[Item] = [
         exists("packages", "models", "score.py"),
         note="el modelo final lo entrega datos por el mismo comando",
     ),
+    # One file, one command: the data team's model reaches every screen (ADR 0010).
+    Item(
+        "Ingenieria",
+        "Una sola entrada para el modelo (scripts/regenerate.py --model)",
+        exists("scripts/regenerate.py"),
+    ),
     Item(
         "Ingenieria",
         "La web lee de la API",
