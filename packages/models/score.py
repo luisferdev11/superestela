@@ -27,23 +27,14 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
-import joblib
 import pandas as pd
 
 from models.batch import MissingColumnsError, score_frame
-from models.scoring import Scorer, verdict_path
+from models.scoring import Scorer, load_scorer, verdict_path
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_MODEL = ROOT / "artifacts" / "stuff_plus_v0_bridge.joblib"
 DEFAULT_EVIDENCE = ROOT / "analysis" / "outputs" / "evidence.json"
-
-
-def load_scorer(path: Path) -> Scorer:
-    """Read a fitted model and check that it answers the scoring contract."""
-    model = joblib.load(path)
-    if not isinstance(model, Scorer):
-        raise TypeError(f"{path} does not hold a models.scoring.Scorer")
-    return model
 
 
 def read_verdict(model_path: Path, model: Scorer) -> dict[str, Any]:
@@ -84,7 +75,7 @@ def main(argv: list[str] | None = None) -> int:
             file=sys.stderr,
         )
         return 2
-    model = load_scorer(args.model)
+    model = load_scorer(str(args.model))
     verdict = read_verdict(args.model, model)
     evidence = json.loads(args.evidence.read_text())
     reference = float(evidence["scoring_reference"]["reference_game_drag_k"])
