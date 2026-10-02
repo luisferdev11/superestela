@@ -113,6 +113,7 @@ auditable: qué se decidió, contra qué y con qué evidencia.
 | [0007](adr/0007-contrato-del-scorer-y-escala.md) | 23 sep | El Stuff+ se pide por un contrato y se muestra solo si pasa compuertas | Esperar al modelo final; una fórmula a mano | Las compuertas S1–S4 (`report/tables/compuertas.md`) |
 | [0008](adr/0008-plantel-aproximado.md) | 28 sep | El plantel se aproxima por proporción de lanzamientos en altitud extrema | Inventar la lista; dejar P6 y P8 como mockup | Tres reglas probadas sobre 2026, en el ADR |
 | [0009](adr/0009-arnes-de-scoring.md) | 1 oct | El comando que puntúa un archivo es de producto; el modelo es de datos | Que cada modelo traiga su script | Reproduce el puente exactamente sobre el dataset |
+| [0010](adr/0010-una-sola-entrada-para-el-modelo.md) | 1 oct | El modelo de datos entra por un archivo y un comando, y llega a las ocho pantallas, la API, las compuertas y el holdout | Que cada consumidor cargue su modelo (había tres caminos) | Sin `--model` la salida no cambia un byte; con el puente por `--model`, la cadena completa corrió y S4 dio r = 0.981 |
 
 ### 2.1 Reglas de producto que no tienen ADR propio
 

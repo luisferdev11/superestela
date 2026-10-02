@@ -24,6 +24,9 @@ uv run python scripts/check_pendientes.py       # el estado, ahora mismo
   calendario de cierre propuesto es congelar cifras el **19** y ensayar el **20**; falta que el equipo
   lo confirme.
 - **La demo puede ser local.** No hace falta desplegar.
+- **Datos se integra con [`docs/11`](11-LO-QUE-NECESITA-PRODUCTO.md).** Entregan un `Scorer` en
+  `artifacts/` y `scripts/regenerate.py --model` lo lleva a las ocho pantallas, la API, las compuertas
+  y el holdout (ADR 0010). Sin `--model`, los números de hoy.
 - **La web es demostrativa:** corre sobre el v0 y el puente. Los modelos buenos (Stuff+ final,
   Location+, Pitching+, la escala) **los entrega el equipo de datos**; producto no los construye
   (memoria `superestela-frontera-datos`). Las dudas de modelo, holdout y escala son de ellos.
@@ -42,6 +45,13 @@ narrativa), el comando del scorer es de producto y el modelo de datos (ADR 0009)
 decide datos (los textos ya están listos para las dos, `es.scale`).
 
 **Checklist, en orden.** Cada tarea tiene su criterio de hecho.
+
+- [x] **0 · Dejar lista la integración de datos** (pedida el 1 de octubre, antes de una semana en que
+      producto avanza poco). Había tres caminos para el Stuff+ y solo uno pasaba por el contrato:
+      ahora es un archivo y un comando (ADR 0010), y `docs/11` es la guía paso a paso.
+      ✔ Sin `--model`, `evidence.py` regenera sin diff y las 12 compuertas del puente coinciden con el
+      registro publicado; con el puente pasado por `--model`, la cadena completa corre (S4 r = 0.981)
+      y la web acepta los números (fallan solo los 11 tests que fijan cifras del v0, `docs/11` §6.1).
 
 - [ ] **1 · Que entren #80, #81 y #82.** Producto solo revisa y responde comentarios; no se abre
       ningún PR nuevo encima mientras tanto.

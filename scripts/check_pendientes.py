@@ -105,6 +105,12 @@ ITEMS: list[Item] = [
     Item("Ingenieria", "API - GET scores", api_route("/scores")),
     Item("Ingenieria", "API - POST simulate", api_route("/simulate")),
     Item("Ingenieria", "API - POST translate", api_route("/translate")),
+    # One file, one command: the data team's model reaches every screen (ADR 0010).
+    Item(
+        "Ingenieria",
+        "Una sola entrada para el modelo (scripts/regenerate.py --model)",
+        exists("scripts/regenerate.py"),
+    ),
     # The holdout is theirs (Q&A, 30 sep): without a command, there is no delivery. ADR 0009.
     Item(
         "Ingenieria",

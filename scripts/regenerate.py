@@ -66,7 +66,7 @@ def main() -> None:
     api_model = str(args.model.resolve()) if args.model else "artifacts/stuff_plus_v0_bridge.joblib"
     print("\nDone. To see it:", flush=True)
     print(f"  SUPERESTELA_MODEL={api_model} \\")
-    print("    uv run uvicorn api.main:app --app-dir packages --port 8000")
+    print("    uv run uvicorn api.main:app --port 8000")
     print("  cd packages/web && pnpm build && pnpm start")
     print("Before a PR: uv run pytest; in packages/web, pnpm lint && pnpm typecheck && pnpm test.")
 
