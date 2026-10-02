@@ -2,6 +2,13 @@
 
     uv run python analysis/simulator_gates.py              # ~1 min
     uv run python analysis/simulator_gates.py --publish    # also updates the record
+    uv run python analysis/simulator_gates.py --model artifacts/<theirs>.joblib
+
+With ``--model`` nothing is fitted: the gates judge that file, any model that
+answers ``models.scoring.Scorer``, and write its verdict beside it, where the
+API looks for it (ADR 0010). S5 and S7 then read the model's own predictions
+on the dataset, which are out-of-fold only if the model was built that way;
+the bridge's are, from its bags.
 
 Writes the fitted model and its verdict side by side in artifacts/, which is
 never committed: stuff_plus_v0_bridge.joblib and
@@ -32,11 +39,12 @@ from core.density import DENSITY_INDEX_EXTREME, DENSITY_INDEX_SEA_LEVEL
 from core.spin import Bounds, Envelope, assess_plausibility
 from core.trajectory import approach
 from core.translate import BREAK_ERROR_IN, break_scaling_factor
-from models.stuff.v0_bridge import PITCH_TYPES, BridgeModel, fit_bridge
+from models.scoring import Scorer, load_scorer, stuff_plus_of, to_arm_side, verdict_path
+from models.stuff.v0_bridge import PITCH_TYPES, fit_bridge
 
 ARTIFACT = os.path.join(E.ROOT, "artifacts", "stuff_plus_v0_bridge.joblib")
 # The verdict for the model in artifacts/, read by the API. Never committed.
-VERDICT = os.path.splitext(ARTIFACT)[0] + ".validation.json"
+VERDICT = verdict_path(ARTIFACT)
 # The published record, committed; written only with --publish.
 VALIDATION = os.path.join(E.OUT, "simulator_validation.json")
 DISPLAY_GATES = ("S1", "S2", "S3", "S4")
@@ -61,19 +69,19 @@ def canonical(df):
     """Raw vendor columns to the bridge's canonical frame, horizontals on the arm side."""
     d = df[df.AutoPitchType.isin(PITCH_TYPES) & df.PitcherThrows.isin(["Right", "Left"])]
     d = d.dropna(subset=[*E.STUFF_FEATURES, "pitcher_anon_id"])
-    sign = np.where(d.PitcherThrows == "Right", 1.0, -1.0)
+    hb, side, axis = to_arm_side(d.PitcherThrows, d.HorzBreak, d.RelSide, d.SpinAxis)
     return pd.DataFrame(
         {
             "pitch_type": d.AutoPitchType.astype(str),
             "pitcher_hand": d.PitcherThrows.astype(str),
             "release_speed": d.RelSpeed,
             "spin_rate": d.SpinRate,
-            "spin_axis": np.where(sign > 0, d.SpinAxis, (360.0 - d.SpinAxis) % 360.0),
+            "spin_axis": axis,
             "ivb": d.InducedVertBreak,
-            "horizontal_break": d.HorzBreak * sign,
+            "horizontal_break": hb,
             "extension": d.Extension,
             "release_height": d.RelHeight,
-            "release_side": d.RelSide * sign,
+            "release_side": side,
             "density_index": d.density_index,
             "is_same_side": (d.PitcherThrows == d.BatterSide).astype(float),
             "pitcher_id": d.pitcher_anon_id.astype(str),
@@ -114,7 +122,17 @@ def pitcher_means(frame, keys, min_n):
         "release_side",
     ]
     g = frame.groupby(keys)
-    means = g[cols].mean().assign(n=g.size(), swings=g.is_swing.sum(), whiffs=g.is_whiff.sum())
+    means = (
+        g[cols]
+        .mean()
+        .assign(
+            # A model may read the hand; one pitcher throws with one, so the first is it.
+            pitcher_hand=g.pitcher_hand.first(),
+            n=g.size(),
+            swings=g.is_swing.sum(),
+            whiffs=g.is_whiff.sum(),
+        )
+    )
     return means[means.n >= min_n]
 
 
@@ -232,9 +250,9 @@ def physics_gates(frame, evidence, simulator):
 
 
 # ---------------------------------------------------------------- score
-def score_gates(model: BridgeModel, frame, oob):
+def score_gates(model: Scorer, frame, oob):
     rng = np.random.default_rng(SEED)
-    stuff = lambda f: model.stuff_plus(f)[0]  # noqa: E731
+    stuff = lambda f: stuff_plus_of(model, f)[0]  # noqa: E731
     ff = frame[(frame.pitch_type == "Four-Seam") & (frame.environment == E.SEA)]
     base = ff.sample(300, random_state=SEED)
     lift = stuff(base.assign(release_speed=base.release_speed + 1.0)) - stuff(base)
@@ -354,7 +372,7 @@ def radar_consistency(model, frame):
                     {**means.loc[idx].to_dict(), "pitch_type": a["pitch"], "density_index": rho}
                 )
                 radar.append(a[key])
-    sim = model.stuff_plus(pd.DataFrame(rows))[0]
+    sim = stuff_plus_of(model, pd.DataFrame(rows))[0]
     radar = np.array(radar)
     return {
         "n": len(radar),
@@ -369,13 +387,14 @@ def natural_experiment(model, frame, rng, min_n=50, min_swings=30):
     m = m[m.swings >= min_swings].unstack("environment").dropna(subset=[("n", E.EXT), ("n", E.SEA)])
     sea = m.xs(E.SEA, axis=1, level="environment").reset_index()
     k = break_scaling_factor(DENSITY_INDEX_SEA_LEVEL, DENSITY_INDEX_EXTREME)
-    at_sea = model.stuff_plus(sea.assign(density_index=1.0))[0]
-    high = model.stuff_plus(
+    at_sea = stuff_plus_of(model, sea.assign(density_index=1.0))[0]
+    high = stuff_plus_of(
+        model,
         sea.assign(
             ivb=sea.ivb * k,
             horizontal_break=sea.horizontal_break * k,
             density_index=DENSITY_INDEX_EXTREME,
-        )
+        ),
     )[0]
     simulated = high - at_sea
     whiff = (
@@ -410,13 +429,25 @@ def main():
         simulator = json.load(fh)
     E.log(f"Canonical frame: {len(frame):,} pitches")
 
-    sha = subprocess.run(
-        ["git", "rev-parse", "--short=7", "HEAD"], capture_output=True, text=True, check=True
-    ).stdout.strip()
-    E.log("Fitting the v0 bridge (20 bags by pitcher) ...")
-    model, oob = fit_bridge(frame, model_id=f"0.1.0+{sha}", n_bags=20, seed=SEED)
-    os.makedirs(os.path.dirname(ARTIFACT), exist_ok=True)
-    model.save(ARTIFACT)
+    given = sys.argv[sys.argv.index("--model") + 1] if "--model" in sys.argv else None
+    if given is not None:
+        model, verdict = load_scorer(given), verdict_path(given)
+        E.log(f"Judging {model.model_id} from {given}; nothing is fitted")
+        # The expected run value the model implies, inverted from its own scale.
+        value = stuff_plus_of(model, frame[frame.pitch_type.isin(model.pitch_types)])[0]
+        oob = np.full(len(frame), np.nan)
+        oob[frame.pitch_type.isin(model.pitch_types).to_numpy()] = (
+            model.scale.mean_xrv + (100.0 - value) / 10.0 * model.scale.sd_xrv
+        )
+    else:
+        sha = subprocess.run(
+            ["git", "rev-parse", "--short=7", "HEAD"], capture_output=True, text=True, check=True
+        ).stdout.strip()
+        E.log("Fitting the v0 bridge (20 bags by pitcher) ...")
+        model, oob = fit_bridge(frame, model_id=f"0.1.0+{sha}", n_bags=20, seed=SEED)
+        os.makedirs(os.path.dirname(ARTIFACT), exist_ok=True)
+        model.save(ARTIFACT)
+        verdict = VERDICT
 
     gates = physics_gates(frame, evidence, simulator) + score_gates(model, frame, oob)
     shown = all(g["passed"] for g in gates if g["id"] in DISPLAY_GATES)
@@ -432,7 +463,7 @@ def main():
         "stuff_plus_shown": shown,
         "gates": gates,
     }
-    targets = [VERDICT, VALIDATION] if "--publish" in sys.argv else [VERDICT]
+    targets = [verdict, VALIDATION] if "--publish" in sys.argv else [verdict]
     for path in targets:
         with open(path, "w") as fh:
             json.dump(record, fh, indent=2, ensure_ascii=False, allow_nan=False)

@@ -18,7 +18,7 @@ Un equipo que llega con un modelo bien validado y no sabe decir qué vale, pierd
 | Usuario                | Decisión que toma hoy a ciegas                            | Qué cambia con SuperEstela                                                      |
 | ---------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------ |
 | **Director deportivo** | Firma imports con reportes calibrados a nivel del mar     | Ve el valor proyectado en su propio estadio, y la bandera de Trampa      |
-| **Reclutador / scout** | Ordena candidatos por velocidad, spin y reportes externos | Ordena por Stuff+ HH; el spin deja de ser criterio                       |
+| **Reclutador / scout** | Ordena candidatos por velocidad, spin y reportes externos | Ordena por Stuff+ en altitud extrema; el spin deja de ser criterio                       |
 | **Pitching coach**     | Ajusta por intuición y video                              | Sabe qué lanzamiento del arsenal carga el déficit y cuánto rinde moverlo |
 | **Mánager**            | Alinea por rotación fija y matchup de bateo               | Alinea por Stuff+ del entorno: casa y gira dejan de ser el mismo tablero |
 
@@ -51,7 +51,7 @@ Sobre 286 lanzadores con al menos 150 lanzamientos en ambos entornos:
 | --- | -------------------------------------------------------------------- | ------------------------- | ---------------------------------------------------------------------- |
 | 1   | **Alinear mejor** — ordenar la rotación por Stuff+ del entorno       | **Cero**                  | Reasignación pura; `pitcher_00445` es último en casa y séptimo en gira |
 | 2   | **No firmar la trampa** — descartar perfiles que colapsan            | Cero (es un _no_)         | Hasta 31.7 carreras evitadas por firma                                 |
-| 3   | **Desarrollar** — mover uso y reformar arsenal                       | Bajo; ya se paga al coach | +3.5 Stuff+ HH en el caso trabajado                                    |
+| 3   | **Desarrollar** — mover uso y reformar arsenal                       | Bajo; ya se paga al coach | +3.5 Stuff+ en altitud extrema en el caso trabajado                                    |
 | 4   | **Comprar barato** — curvas, cutters, perfiles de ride bajo          | Negativo: son más baratos | Arbitraje de precio                                                    |
 | 5   | **No vender al infravalorado** — el que se ve mal en casa y es bueno | Cero                      | Evita destruir valor propio                                            |
 
@@ -69,7 +69,7 @@ Diablos puede comprar barato exactamente lo que aquí funciona y dejar de sobrep
 
 ### 2.4 Cómo se convierte a dinero
 
-La cadena es: `Stuff+ HH → carreras → victorias → [valor de una victoria para el club]`.
+La cadena es: `Stuff+ en altitud extrema → carreras → victorias → [valor de una victoria para el club]`.
 
 Los dos primeros eslabones están medidos. El tercero es estándar sabermétrico. **El cuarto lo pone el club**, porque depende de taquilla, patrocinio, derechos y valor de un título — datos que no están en el dataset y que no vamos a inventar.
 
@@ -81,7 +81,7 @@ La conversión funciona hacia atrás desde el **Impuesto de Altitud observado**,
 
 Consecuencia operativa, ya reflejada en el producto:
 
-- **Stuff+ HH** es la señal para decidir sobre un lanzador individual: sale de la forma física y es estable.
+- **Stuff+ en altitud extrema** es la señal para decidir sobre un lanzador individual: sale de la forma física y es estable.
 - **Impuesto de Altitud** es señal de cartera: sirve para razonar sobre el pool de candidatos, no para sentenciar a uno.
 
 Cerrar ese puente —modelar los componentes del outcome y agregarlos a xRV— es la tarea de mayor valor económico pendiente del equipo de datos. Ver `05-CIENCIA-BRIEF.md`.

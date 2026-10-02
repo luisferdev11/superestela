@@ -2,7 +2,11 @@ import type { ROLES } from './constants'
 
 export type Role = (typeof ROLES)[number]
 
-/** Los dos entornos que el producto compara. `hh` es Harp Helu, a 2,240 m. */
+/**
+ * Los dos entornos que el producto compara. `hh` es la categoria `Extreme Altitude`
+ * del dataset: cinco parques (Puebla, CDMX, Aguascalientes, Queretaro y Leon), no
+ * solo el Harp Helu. El identificador se queda por compatibilidad del contrato.
+ */
 export type Environment = 'hh' | 'sea'
 
 /**
@@ -26,9 +30,24 @@ export type ArsenalEntry = {
   readonly hbSea: number | null
   readonly spin: number | null
   readonly extension: number | null
-  readonly stuffPlusHh: number | null
-  readonly stuffPlusSea: number | null
+  /** Con su banda, como el del lanzador: la Ficha lo muestra por pitch. */
+  readonly stuffPlusHh: Metric | null
+  readonly stuffPlusSea: Metric | null
   readonly whiffPerSwing: number | null
+}
+
+/**
+ * Lo que Diablos lee primero (Q&A, 30 sep): ponches, bases por bolas y swings
+ * abanicados, en porcentaje y con su banda al 95%. Es descriptivo: se cuenta,
+ * no se modela. `null` es «muestra insuficiente».
+ */
+export type Outcomes = {
+  readonly plateAppearances: number
+  readonly swings: number
+  readonly kPct: Metric | null
+  readonly bbPct: Metric | null
+  readonly kMinusBbPct: Metric | null
+  readonly whiffPerSwing: Metric | null
 }
 
 /**
@@ -48,8 +67,15 @@ export type PitcherSeason = {
   readonly medianEntryInning: number | null
   /** `null` cuando el impuesto no es significativo: entonces es "no concluyente". */
   readonly altitudeTax: Metric | null
+  /**
+   * Lo medido, significativo o no. La Ficha dice «no concluyente» y ademas
+   * cuanto midio, para que se vea que la banda cruza el cero.
+   */
+  readonly altitudeTaxMeasured: Metric | null
   readonly meanIvbLossIn: number | null
   readonly altitudeTrap: boolean
+  /** La temporada completa: todos sus juegos, altitud media incluida. */
+  readonly outcomes: Outcomes
   readonly arsenal: readonly ArsenalEntry[]
 }
 
@@ -59,4 +85,6 @@ export type SeasonEntry = {
   readonly nPitchesHh: number
   readonly nPitchesSea: number
   readonly scored: boolean
+  readonly outcomesHh: Outcomes
+  readonly outcomesSea: Outcomes
 }

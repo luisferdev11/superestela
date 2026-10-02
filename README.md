@@ -40,9 +40,17 @@ Con el dataset en su lugar, genera la evidencia y el modelo del Simulador. Solo 
 de nuevo cuando cambie `analysis/`:
 
 ```bash
-uv run python analysis/evidence.py          # ~1 min: reescribe analysis/outputs/, que ya está en git
-uv run python analysis/simulator_gates.py   # ~1 min: entrena el modelo y corre sus compuertas
+uv run python scripts/regenerate.py         # evidencia, proyecciones, compuertas y tablas, en orden
 ```
+
+Son cuatro pasos, y cada uno lee lo que escribió el anterior: `analysis/evidence.py` reescribe
+`analysis/outputs/`, que ya está en git; `analysis/projection_evidence.py` escribe `projections.json`;
+`analysis/simulator_gates.py` entrena el puente y corre sus compuertas; `python -m report.build`
+regenera `report/tables/`. Sin cambios en `analysis/`, la salida queda idéntica.
+
+**Con el modelo del equipo de datos:** `scripts/regenerate.py --model artifacts/<suyo>.joblib` lo lleva
+a todas las pantallas y a las compuertas. La guía completa está en
+[`docs/11`](docs/11-LO-QUE-NECESITA-PRODUCTO.md).
 
 `simulator_gates.py` deja el modelo y su veredicto en `artifacts/`, que **no va a git** porque se
 deriva de datos licenciados. No modifica ningún archivo versionado. Si cambias el modelo o las
@@ -55,6 +63,7 @@ Dos terminales, desde la raíz del repo:
 
 ```bash
 # 1 · la API (FastAPI): el Simulador le pide el Stuff+
+#     con otro modelo: SUPERESTELA_MODEL=artifacts/<suyo>.joblib uv run uvicorn ...
 uv run uvicorn api.main:app --port 8000
 
 # 2 · la web (Next.js)
@@ -80,6 +89,40 @@ corrido los dos comandos de arriba. `docker compose down` los apaga.
 | Un commit rechazado por `ruff` o `mypy` «not found» | Faltan las herramientas de desarrollo | `uv sync --all-extras` |
 | Un commit rechazado por commitlint | El asunto debe ir en inglés y todo en minúsculas | `feat(web): add the translator screen` |
 | `next dev` modifica `packages/web/AGENTS.md` | Next lo reescribe solo al arrancar | Ya está commiteado; no hay que hacer nada |
+
+## Correr el modelo con sus datos
+
+Para puntuar un archivo de lanzamientos que no está en el dataset, por ejemplo la postemporada:
+
+```bash
+uv run python -m models.score pitches.csv scores.csv
+```
+
+- **Entrada:** un CSV o parquet con las columnas del dataset y sus nombres de origen
+  ([`docs/reference/stuff_plus_data_dictionary.csv`](docs/reference/stuff_plus_data_dictionary.csv)).
+  - Obligatorias: `AutoPitchType`, `PitcherThrows`, `RelSpeed`, `SpinRate`, `SpinAxis`,
+    `InducedVertBreak`, `HorzBreak`, `Extension`, `RelHeight`, `RelSide`.
+  - Para medir la densidad del aire por juego, como en el entrenamiento: `vx0`, `vy0`, `vz0`, `ax0`,
+    `ay0`, `az0` y `game_anon_id`, **con todos los lanzamientos de cada juego**. Sin ellas, o en un
+    juego con menos de 50 lanzamientos, se usa la
+    densidad medida de su `altitude_category`.
+- **Salida:** una fila por cada fila de entrada, con `pitch_id`, `stuff_plus`, `stuff_plus_se`,
+  `status`, `density_index`, `density_source` y `model_id`.
+  - Una fila sin score lo deja vacío y dice por qué en `status`. Nunca sale un número sin su banda.
+- **Procedencia:** junto a la salida queda `scores.csv.meta.json` con el modelo que contestó, si pasó
+  las compuertas, los hashes del modelo y de la entrada, y el conteo por `status`.
+
+**El comando y el modelo son piezas distintas** ([ADR 0009](docs/adr/0009-arnes-de-scoring.md)):
+
+| | Qué es | De quién | Cuándo cambia |
+|---|---|---|---|
+| `python -m models.score` | El comando: lee, renombra, mide la densidad, pregunta y escribe | Producto | Casi nunca |
+| `artifacts/*.joblib` | El modelo: cualquier objeto que cumpla `models.scoring.Scorer` | Datos | Con cada modelo |
+
+Por defecto contesta el **puente v0** (`artifacts/stuff_plus_v0_bridge.joblib`, que entrena
+`analysis/simulator_gates.py`). **No es el modelo final**: su modelo base, el v0, tiene R² 0.003 (`evidence.json → stuff_plus_v0`), y está ahí para que el
+comando exista antes que el modelo (ADR 0007). El modelo final entra con `--model`, sin tocar el
+comando, y el `model_id` de cada fila dice siempre cuál contestó.
 
 ## Comandos del día a día
 
@@ -119,7 +162,7 @@ Diez pantallas de aplicación y trece láminas de deck, con datos reales de `ana
 |---|---|
 | `packages/core/` | Física y método. Funciones puras, sin datos del reto. **Es la frontera de IP** (`docs/04` §5.1) y una prueba la vigila |
 | `packages/contracts/` | Los esquemas ejecutables entre datos y producto. **Empieza por aquí** |
-| `packages/models/` | Entrenamiento. Toca el dataset |
+| `packages/models/` | El contrato del Stuff+ (`scoring.py`), el puente v0 y el comando que puntúa un archivo (`score.py`, ADR 0009) |
 | `packages/api/` | FastAPI: sirve scores y el simulador |
 | `packages/web/` | Next.js. El Radar (P1) y el Simulador (P4) están completos — [su README](packages/web/README.md) tiene lo que cuesta redescubrir |
 | `analysis/evidence.py` | El baseline v0. Reproduce cada cifra citada en los documentos |
@@ -163,7 +206,7 @@ Quién revisa qué lo dice [`.github/CODEOWNERS`](.github/CODEOWNERS): `models/`
 Sincronización lunes, miércoles y viernes. Los contratos con el equipo de
 datos y su cadencia están en [`docs/07`](docs/07-INGENIERIA-Y-EQUIPO.md) §1.
 
-El calendario hacia la entrega del **15 de octubre**, y la lista viva de
+El calendario hacia la entrega del **22 de octubre**, y la lista viva de
 pendientes con su criterio de hecho, están en
 [`docs/08`](docs/08-PLAN-DE-ARRANQUE.md). Lo que una máquina puede verificar lo
 verifica `scripts/check_pendientes.py`.

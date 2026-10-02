@@ -24,6 +24,7 @@ import {
   type PitchValues,
   type PitcherArsenal,
   type SimMode,
+  type SimulatorStart,
 } from '@/domain/simulator'
 import type { DensityScale } from '@/domain/density'
 import type { MovementMaps } from '@/domain/movementMap'
@@ -44,6 +45,24 @@ const chip = (active: boolean): string =>
     : 'cursor-pointer border-0 bg-(--color-surface-card) px-3 py-1.5 text-xs text-(--color-text)'
 
 /**
+ * Que modelo contesto y cuantas compuertas paso. El modelo es el de la
+ * respuesta de la API, que es quien de verdad puntuo; el conteo sale del
+ * registro publicado solo si ese registro juzgo al mismo modelo. Si no, se dice
+ * que sus compuertas no estan publicadas, en vez de prestarle las de otro.
+ */
+const provenance = (answeredBy: string | null, validation: Validation | null): string | null => {
+  if (validation !== null && (answeredBy === null || answeredBy === validation.modelId)) {
+    return es.sim.provenance(
+      validation.modelId,
+      validation.passed,
+      validation.total,
+      validation.usesArsenal,
+    )
+  }
+  return answeredBy === null ? null : es.sim.provenanceUnpublished(answeredBy)
+}
+
+/**
  * La isla interactiva de la P4. Aqui no se calcula ningun score: la pantalla
  * arma la peticion, la API contesta y esto dibuja (`CONVENTIONS.md` seccion 4,
  * regla 6). Lo unico que decide es de donde se parte: el pitch real del
@@ -55,12 +74,15 @@ export const Simulator = ({
   arsenals,
   scale,
   validation,
+  start = null,
 }: {
   readonly distributions: Distributions
   readonly maps: MovementMaps
   readonly arsenals: readonly PitcherArsenal[]
   readonly scale: DensityScale
   readonly validation: Validation | null
+  /** De donde parte si se llega desde la Ficha; `null` es el lanzador por defecto. */
+  readonly start?: SimulatorStart | null
 }) => {
   const byKey = useMemo(() => new Map(arsenals.map((a) => [a.key, a])), [arsenals])
   const first = arsenals.find((a) => a.pitcherId === DEFAULT_PITCHER) ?? arsenals[0] ?? null
@@ -73,12 +95,20 @@ export const Simulator = ({
       : leagueMedian(distributions, sel.pitchType)
   }
 
-  const initial: Selection = {
-    mode: first === null ? 'lab' : 'pitcher',
-    pitcherKey: first?.key ?? '',
-    pitchType: baselinePitches(first?.sea ?? [])[0]?.pitchType ?? 'Four-Seam',
-    labHand: 'Right',
-  }
+  const initial: Selection =
+    start === null
+      ? {
+          mode: first === null ? 'lab' : 'pitcher',
+          pitcherKey: first?.key ?? '',
+          pitchType: baselinePitches(first?.sea ?? [])[0]?.pitchType ?? 'Four-Seam',
+          labHand: 'Right',
+        }
+      : {
+          mode: 'pitcher',
+          pitcherKey: start.pitcherKey,
+          pitchType: start.pitchType,
+          labHand: 'Right',
+        }
   const [selection, setSelection] = useState<Selection>(initial)
   const [values, setValues] = useState<PitchValues>(() => baselineOf(initial))
 
@@ -273,15 +303,7 @@ export const Simulator = ({
             </>
           )}
           <p className="text-[11px] text-(--color-text-muted)">
-            {validation === null
-              ? null
-              : es.sim.provenance(
-                  validation.modelId,
-                  validation.passed,
-                  validation.total,
-                  validation.usesArsenal,
-                )}{' '}
-            {es.sim.noRuns}
+            {provenance(result?.modelId ?? null, validation)} {es.sim.noRuns}
           </p>
         </div>
       </div>

@@ -4,7 +4,7 @@ import { evidencePath, mockupDataPath } from '@/sources/paths'
 import { mockupDataSchema } from '@/sources/schema'
 import { toPitcherSeason, toSeasonEntry } from '@/sources/adapter'
 import { selectRadarCohort, summarize } from './cohort'
-import { rankBy, rankCorrelation, scoreIn } from './ranking'
+import { rankBy, rankCorrelation, scoreIn, sortRadar } from './ranking'
 
 /**
  * `README`, regla 2: ningun numero sin su corrida.
@@ -89,5 +89,17 @@ describe('el contraste entre entornos es el producto', () => {
       const scores = ranked.map((card) => scoreIn(card, environment))
       expect(scores).toEqual([...scores].sort((a, b) => b - a))
     }
+  })
+})
+
+describe('ordenar por las tasas que lee Diablos', () => {
+  it('K-BB% de mayor a menor, y la muestra insuficiente al final', async () => {
+    const { cards } = await load()
+    const sorted = sortRadar(cards, 'kMinusBb')
+    const values = sorted.map((c) => c.outcomes.kMinusBbPct?.value ?? null)
+    const firstNull = values.indexOf(null)
+    const known = (firstNull === -1 ? values : values.slice(0, firstNull)) as number[]
+    expect(known.every((v, i) => i === 0 || (known[i - 1] ?? v) >= v)).toBe(true)
+    if (firstNull !== -1) expect(values.slice(firstNull).every((v) => v === null)).toBe(true)
   })
 })

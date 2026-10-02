@@ -5,7 +5,7 @@ import { es } from '@/i18n/es'
 
 /**
  * La fisica visible (`docs/00` seccion 6, principio 3): que le hace el aire a
- * esta forma, eje por eje, y por que. El break de Harp Helu lleva su banda
+ * esta forma, eje por eje, y por que. El break de altitud extrema lleva su banda
  * medida; la velocidad de salida y el spin no se tocan, y se dice.
  */
 export const AltitudePhysics = ({

@@ -1,14 +1,21 @@
+import Link from 'next/link'
 import { MetricValue } from '@/components/metric/MetricValue'
 import { InconclusiveValue } from '@/components/metric/InconclusiveValue'
+import { RateValue } from '@/components/metric/RateValue'
 import { RoleChip } from '@/components/chip/RoleChip'
 import { TrapFlag } from '@/components/chip/TrapFlag'
 import { dominantPitch } from '@/domain/arsenal'
 import { hasLargeDelta, isStaleSeason } from '@/domain/emphasis'
 import { formatNumber, formatSigned } from '@/domain/format'
+import { fichaHref } from '@/domain/pitcher'
 import type { PitcherSeason } from '@/domain/types'
+import { es } from '@/i18n/es'
 
-const cell = 'px-3 py-2 text-right border-b border-(--color-border-hairline)'
-const cellLeft = `${cell} text-left`
+// Base sin alineacion: con `text-right` en la base, un `text-left` agregado
+// pierde segun el orden de Tailwind, no segun el orden de las clases.
+const base = 'px-3 py-2 border-b border-(--color-border-hairline)'
+const cell = `${base} text-right`
+const cellLeft = `${base} text-left`
 
 export const RadarRow = ({
   card,
@@ -23,17 +30,22 @@ export const RadarRow = ({
   return (
     <tr className={card.altitudeTrap ? 'bg-(--color-diablos-wash)' : undefined}>
       <td className={cellLeft}>
-        <span
-          className={`border-b border-(--color-border-underline) ${card.altitudeTrap ? 'font-semibold' : ''}`}
+        <Link
+          href={fichaHref(card.pitcherId, card.season)}
+          className={`border-b border-(--color-border-underline) text-inherit no-underline ${card.altitudeTrap ? 'font-semibold' : ''}`}
         >
           {card.pitcherId}
-        </span>{' '}
+        </Link>{' '}
         <TrapFlag trap={card.altitudeTrap} />
       </td>
       <td className={`${cell} ${stale ? 'text-(--color-semantic-stale)' : 'text-(--color-text)'}`}>
         {card.season}
       </td>
-      <td className={cell}>{card.throws}</td>
+      <td className={cell}>
+        <span title={es.handLong[card.throws] ?? card.throws}>
+          {es.handShort[card.throws] ?? card.throws}
+        </span>
+      </td>
       <td className={cell}>
         <MetricValue metric={card.stuffPlusHh} />
       </td>
@@ -51,6 +63,12 @@ export const RadarRow = ({
         ) : (
           <MetricValue metric={card.altitudeTax} digits={2} />
         )}
+      </td>
+      <td className={cell}>
+        <RateValue metric={card.outcomes.kMinusBbPct} compact />
+      </td>
+      <td className={cell}>
+        <RateValue metric={card.outcomes.whiffPerSwing} compact />
       </td>
       <td className={cellLeft}>
         <RoleChip role={card.role} />

@@ -9,6 +9,7 @@ translates, and the rest of the screen still works.
 from __future__ import annotations
 
 import json
+import math
 import os
 from dataclasses import dataclass, replace
 from typing import Any, Literal, cast
@@ -22,8 +23,7 @@ from core.density import DENSITY_INDEX_EXTREME, DENSITY_INDEX_SEA_LEVEL
 from core.spin import Bounds, Envelope, assess_plausibility, movement_per_krpm, percentile_rank
 from core.trajectory import approach
 from core.translate import PitchShape, break_scaling_factor, translate
-from models.scoring import PitchInput, Scorer
-from models.stuff.v0_bridge import BridgeModel
+from models.scoring import PitchInput, Scorer, load_scorer, verdict_path
 
 SEA, EXT = "No Altitude", "Extreme Altitude"
 Reason = Literal["model_unavailable", "model_not_gated", "gates_failed"]
@@ -47,13 +47,28 @@ class SimulatorService:
     arsenals: dict[str, Any]  # arsenals.json
 
     def simulate(self, req: s.SimulateRequest) -> s.SimulateResponse:
-        """Simulate one pitch at sea level and at Harp Helu."""
+        """Simulate one pitch at sea level and at extreme altitude.
+
+        A pitch measured elsewhere (``origin_density_index`` below 1) is first
+        brought to sea level by the same density law. Each projected shape
+        carries the law's band scaled by how far it travels (``_trip_share``):
+        zero where it was measured, the full measured band for the trip from
+        sea level to extreme altitude. One law applied over a shorter trip, not
+        two independent errors added.
+        """
+        origin = req.origin_density_index
+        req = _to_sea_level(req)
         p = req.pitch
         factor = break_scaling_factor(DENSITY_INDEX_SEA_LEVEL, DENSITY_INDEX_EXTREME)
         moved = translate(_shape(p), DENSITY_INDEX_SEA_LEVEL, DENSITY_INDEX_EXTREME, p.pitch_type)
         high = p.model_copy(
             update={"ivb": moved.shape.ivb, "horizontal_break": moved.shape.horizontal_break}
         )
+        to_sea = _trip_share(origin, DENSITY_INDEX_SEA_LEVEL)
+        to_high = _trip_share(origin, DENSITY_INDEX_EXTREME)
+        sea_se = (moved.ivb_se * to_sea, moved.horizontal_break_se * to_sea)
+        high_ivb_se = moved.ivb_se * to_high
+        high_hb_se = moved.horizontal_break_se * to_high
 
         fastball, sea_diff, high_diff = self._differentials(req, factor)
         stuff_sea, stuff_high, delta = self._score(p, high)
@@ -62,6 +77,7 @@ class SimulatorService:
         percentiles = self.evidence["plausibility"][p.pitch_type]["movement_per_krpm_percentiles"]
 
         return s.SimulateResponse(
+            origin_density_index=req.origin_density_index,
             model_id=self.scorer.model_id if self.scorer else None,
             uses_arsenal=bool(self.scorer and self.scorer.uses_arsenal),
             stuff_plus_shown=self.reason is None,
@@ -72,8 +88,8 @@ class SimulatorService:
                 DENSITY_INDEX_SEA_LEVEL,
                 p,
                 s.Shape(
-                    ivb=s.Metric(value=p.ivb, se=0.0),
-                    horizontal_break=s.Metric(value=p.horizontal_break, se=0.0),
+                    ivb=s.Metric(value=p.ivb, se=sea_se[0]),
+                    horizontal_break=s.Metric(value=p.horizontal_break, se=sea_se[1]),
                 ),
                 stuff_sea,
                 sea_diff,
@@ -85,10 +101,8 @@ class SimulatorService:
                 DENSITY_INDEX_EXTREME,
                 high,
                 s.Shape(
-                    ivb=s.Metric(value=moved.shape.ivb, se=moved.ivb_se),
-                    horizontal_break=s.Metric(
-                        value=moved.shape.horizontal_break, se=moved.horizontal_break_se
-                    ),
+                    ivb=s.Metric(value=moved.shape.ivb, se=high_ivb_se),
+                    horizontal_break=s.Metric(value=moved.shape.horizontal_break, se=high_hb_se),
                 ),
                 stuff_high,
                 high_diff,
@@ -226,6 +240,38 @@ class SimulatorService:
         ]
 
 
+def _trip_share(origin: float, target: float) -> float:
+    """How much of the measured trip (sea level to extreme altitude) a translation covers.
+
+    The law's band (``core.translate.BREAK_ERROR_IN``) was measured on that one
+    trip. A shorter one, in log-density, carries a proportional share of it:
+    zero when the shape stays where it was measured. Beyond that trip it is an
+    extrapolation, and the share grows past 1.
+    """
+    return abs(math.log(target / origin)) / abs(math.log(DENSITY_INDEX_EXTREME))
+
+
+def _to_sea_level(req: s.SimulateRequest) -> s.SimulateRequest:
+    """Bring a pitch and its arsenal measured elsewhere to sea level, by the density law."""
+    origin = req.origin_density_index
+    if origin == DENSITY_INDEX_SEA_LEVEL:
+        return req
+    factor = break_scaling_factor(origin, DENSITY_INDEX_SEA_LEVEL)
+    pitch = req.pitch.model_copy(
+        update={
+            "ivb": req.pitch.ivb * factor,
+            "horizontal_break": req.pitch.horizontal_break * factor,
+        }
+    )
+    arsenal = [
+        a.model_copy(
+            update={"ivb": a.ivb * factor, "horizontal_break": a.horizontal_break * factor}
+        )
+        for a in req.arsenal or []
+    ] or req.arsenal
+    return req.model_copy(update={"pitch": pitch, "arsenal": arsenal})
+
+
 def _shape(p: s.PitchIn) -> PitchShape:
     return PitchShape(
         release_speed=p.release_speed,
@@ -254,11 +300,6 @@ def _diff(d: Differentials) -> s.Differentials:
     )
 
 
-def verdict_path(model_path: str) -> str:
-    """Where analysis/simulator_gates.py leaves the verdict for this model file."""
-    return os.path.splitext(model_path)[0] + ".validation.json"
-
-
 def load_service(outputs_dir: str, model_path: str) -> SimulatorService:
     """Read the evidence, the arsenals, the model and the verdict next to it, once.
 
@@ -274,7 +315,8 @@ def load_service(outputs_dir: str, model_path: str) -> SimulatorService:
     evidence, arsenals = read("simulator.json"), read("arsenals.json")
     if not os.path.exists(model_path):
         return SimulatorService(None, "model_unavailable", evidence, arsenals)
-    model = BridgeModel.load(model_path)
+    # Any model that answers the contract, not only the v0 bridge (ADR 0010).
+    model = load_scorer(model_path)
     try:
         with open(verdict_path(model_path)) as fh:
             verdict = dict(json.load(fh))

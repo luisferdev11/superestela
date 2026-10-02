@@ -97,7 +97,7 @@ la pelota». Lo presenta como si coincidieran, y no coinciden.
 - La prueba es D4 de `docs/05`: correlacionar el índice por juego con temperatura y presión externas.
 
 **Qué cambia para el Simulador:**
-- Nada en el tramo mar → Harp Helú: `translate()` está calibrada para reproducir exactamente la razón
+- Nada en el tramo mar → altitud extrema: `translate()` está calibrada para reproducir exactamente la razón
   Magnus medida (§3.2).
 - Sí cambia la **extrapolación** a otras densidades, que usa el índice como abscisa. Medium Altitude la
   respalda (ley 0.829 contra 0.813 medido), pero es un solo punto intermedio.
@@ -343,6 +343,24 @@ $$
   «modelo en validación».
 - **El score es el mismo del Radar.** Un pitch no puede valer distinto en dos pantallas (compuerta S4).
 - Detalle del contrato: [ADR 0007](adr/0007-contrato-del-scorer-y-escala.md).
+- **Origen distinto del nivel del mar** (1 oct, para el Traductor, P3). `POST /simulate` acepta
+  `originDensityIndex`, que por defecto es 1.0. Un pitch medido en altitud media (0.903) se lleva
+  primero al nivel del mar con la misma ley de §3.2, y desde ahí se simula como siempre.
+  - Cada forma proyectada lleva la banda de la ley **escalada por lo que viaja**, en log-densidad:
+    cero donde se midió y la banda completa para el viaje medido, de nivel del mar a altitud extrema.
+    Desde altitud media, la forma a nivel del mar lleva unos dos tercios de la banda y la de altitud
+    extrema un tercio. Es la misma ley aplicada a un viaje más corto, no dos errores independientes;
+    que el error crezca así es un supuesto (🟡), porque solo se midió un viaje.
+  - El origen acepta el rango medido del índice (`contracts.schemas`, 0.70 a 1.05); fuera de él, 422.
+  - El arsenal que acompaña al pitch se traslada con el mismo factor, para que los diferenciales
+    contra la recta se midan en el mismo aire.
+- **Un export de TrackMan como arsenal** (1 oct, #83, para el Traductor). `POST
+  /api/v1/arsenals/summarize` recibe `{ "csv": "<texto>" }` (hasta 10 MB) con las columnas del
+  proveedor y devuelve una fila por tipo de pitch, del lado del brazo, lista para `/simulate`: mediana
+  de cada control, media circular del eje de giro, `n` y uso. También devuelve la mano, el origen si el
+  archivo trae una sola `altitude_category`, y cuántas filas no se usaron y por qué. Un archivo
+  ilegible, vacío, sin columnas obligatorias, o con dos manos o dos lanzadores contesta 422 con
+  `{ "error", "columns" }`. No puntúa nada: el score sigue saliendo de `/simulate`.
 
 ---
 
@@ -422,7 +440,7 @@ Son los datos de las historias de P1. **El cronometraje de los 10 segundos queda
 
 | Historia | Lo que contesta el Simulador |
 |---|---|
-| 1 · recta de `pitcher_00069` | 113.7 ± 6.6 → 92.9 ± 4.1, Δ −20.8 ± 6.3 (−13.5 por la forma, −7.3 por el entorno). En el mapa cae en una zona de 28% de whiff a nivel del mar y de 20% en Harp Helú (media del tipo: 21%). **Con +2 mph, en Harp Helú sube de 92.9 a 100.0**: es la pregunta «¿qué le arreglo?» contestada con un número y su banda |
+| 1 · recta de `pitcher_00069` | 113.7 ± 6.6 → 92.9 ± 4.1, Δ −20.8 ± 6.3 (−13.5 por la forma, −7.3 por el entorno). En el mapa cae en una zona de 28% de whiff a nivel del mar y de 20% en altitud extrema (media del tipo: 21%). **Con +2 mph, en altitud extrema sube de 92.9 a 100.0**: es la pregunta «¿qué le arreglo?» contestada con un número y su banda |
 | 2 · `pitcher_00566` | Su slider aguanta: 121.3 → 113.4 (Δ −8.0 ± 4.3). Su recta cae más: 106.1 → 93.8 (Δ −12.4 ± 4.6). Es el mecanismo de por qué sobrevive |
 | 3 · changeup de `pitcher_00816` | Contra su recta, la separación de IVB pasa de −16.3″ a **−12.3″** en altura; la de velocidad se queda en −9.9 mph. Pierde engaño por forma, no por velocidad: H2 visto desde el arsenal |
 
@@ -478,9 +496,10 @@ Esta tabla se actualiza con cada PR de la cadena. §5 se cierra con los números
 
 ## 7. Alcance y fronteras
 
-- **«Harp Helú» es el bucket `Extreme Altitude`.** El dataset no trae id de estadio y ese bucket agrupa
-  604 juegos de varios parques (`docs/01` §6). La pantalla dice «Harp Helú» porque es la pregunta del
-  club; el documento técnico dice qué mide.
+- **«Altitud extrema» es el bucket `Extreme Altitude`: cinco parques** (Puebla, CDMX, Aguascalientes,
+  Querétaro y León, según el Q&A del 30 de septiembre), 604 juegos. El dataset no trae id de estadio.
+  Hasta el 1 de octubre la pantalla decía «Harp Helú»; desde el #60 dice «altitud extrema» en cifras y
+  etiquetas, y «Harp Helú» queda solo en la narrativa (`reference/categorias-altitud.md`).
 - **Densidad media por entorno.** El índice varía juego a juego (sd 0.032 en Extreme). El Simulador usa
   la media; un selector de clima es trabajo posterior.
 - **Stuff+ es calidad física, no resultado.** No incluye ubicación, conteo ni bateador; esos son

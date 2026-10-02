@@ -7,10 +7,16 @@ import { z } from 'zod'
  * exigir que el resto no cambie seria pedirle al equipo de datos que no agregue
  * metricas.
  */
+import { outcomesSchema } from './schema'
+
 export const evidenceSchema = z.object({
+  league_outcomes: z.record(z.string(), outcomesSchema),
   audit: z.object({
     n_pitches: z.number().int().positive(),
     seasons: z.array(z.number().int()),
+  }),
+  seasons: z.object({
+    pitchers_with_a_gap: z.number().int().nonnegative(),
   }),
 })
 

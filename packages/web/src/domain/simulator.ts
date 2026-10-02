@@ -118,6 +118,8 @@ export type PitcherArsenal = {
   readonly hand: Hand
   /** Nivel del mar: la forma que el Simulador toma como entrada. */
   readonly sea: readonly ArsenalPitch[]
+  /** Altitud extrema, medido: el Simulador no lo usa; la Ficha lo dibuja junto al del mar. */
+  readonly hh: readonly ArsenalPitch[]
 }
 
 /**
@@ -184,3 +186,42 @@ export const buildRequest = (
 /** Cuanto se movio cada perilla respecto a la linea base. Cero: el pitch real. */
 export const changedControls = (values: PitchValues, baseline: PitchValues): Control[] =>
   CONTROLS.filter((c) => Math.abs(values[c] - baseline[c]) > STEP[c] / 2)
+
+/**
+ * El Simulador abierto desde la Ficha: con que lanzador y que pitch parte.
+ * Viaja en la URL para que el enlace se pueda compartir; se valida contra los
+ * arsenales, y una URL que no corresponde a nada abre el Simulador como siempre.
+ */
+export type SimulatorStart = { readonly pitcherKey: string; readonly pitchType: PitchType }
+
+export const simulatorHref = (pitcherId: string, season: number, pitchType: string): string =>
+  `/simulador?${new URLSearchParams({ pitcher: `${pitcherId}/${String(season)}`, pitch: pitchType }).toString()}`
+
+const isPitchType = (value: string): value is PitchType =>
+  (PITCH_TYPES as readonly string[]).includes(value)
+
+export const parseSimulatorStart = (
+  params: { readonly get: (name: string) => string | null },
+  arsenals: readonly PitcherArsenal[],
+): SimulatorStart | null => {
+  const pitcherKey = params.get('pitcher')
+  const pitchType = params.get('pitch')
+  if (pitcherKey === null || pitchType === null || !isPitchType(pitchType)) return null
+  const arsenal = arsenals.find((a) => a.key === pitcherKey)
+  if (arsenal === undefined) return null
+  return baselinePitches(arsenal.sea).some((p) => p.pitchType === pitchType)
+    ? { pitcherKey, pitchType }
+    : null
+}
+
+/** Si ese pitch se puede abrir en el Simulador: tiene muestra a nivel del mar para partir. */
+export const canSimulate = (
+  arsenals: readonly PitcherArsenal[],
+  pitcherId: string,
+  season: number,
+  pitchType: string,
+): boolean =>
+  parseSimulatorStart(
+    new URLSearchParams({ pitcher: `${pitcherId}/${String(season)}`, pitch: pitchType }),
+    arsenals,
+  ) !== null

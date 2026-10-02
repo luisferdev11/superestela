@@ -78,7 +78,7 @@ Renaming happens **once**, at the raw→curated boundary, in `packages/contracts
 | `PitchUID` | `pitch_id` | — |
 | — | `density_index` | Índice de Densidad |
 | — | `stuff_plus` | Stuff+ |
-| — | `stuff_plus_hh` | Stuff+ HH |
+| — | `stuff_plus_hh` | Stuff+ altitud extrema (`hh`: el bucket `Extreme Altitude`, cinco parques) |
 | — | `altitude_tax` | Impuesto de Altitud |
 | — | `altitude_seal` | Sello de Altitud |
 | — | `altitude_trap` | Trampa de Altitud |
@@ -253,16 +253,45 @@ test(core): add property tests for magnus scaling
 Types: `feat` `fix` `docs` `test` `refactor` `perf` `chore` `ci`.
 Scopes: `core` `models` `contracts` `api` `web` `report` `ci`.
 
+The scope is optional. A change to `docs/` alone, or one that spans several areas, goes without it
+(`docs: record the q&a`); a change to `analysis/` goes under `report`. The whole summary is lowercase,
+names included.
+
 Enforced by `commitlint` in pre-commit. It also generates the changelog for free.
 
 ### 6.3 Pull requests
 
-- **Under 400 changed lines.** Bigger than that and the review is theater.
+- **One PR per task** of the checklist in `docs/08` §0.0, from `main` and into `main`. The task's
+  documentation goes in the same PR, and so does ticking its box: when the PR lands, the docs are
+  already true.
+- **Aim for under 400 changed lines.** Bigger than that and the review is theater. When a task cannot
+  fit, the PR says so in its first line and is **reviewable commit by commit**: each commit stands on
+  its own, passes the checks, and its message says what to look at.
 - Title follows the commit convention.
-- Body says **what changed and why**, and links the issue.
+- Body says **what changed and why**, how it was verified, and what is left to decide.
 - **If it touches model code, the PR body carries the metrics table** that CI generated.
 - **CI green is required to merge.** If it can be bypassed, it is not CI.
-- Every PR gets a review. Not for control — it is how four people stay in the same codebase.
+- **Every PR gets a review from someone other than its author.** Not for control — it is how four
+  people stay in the same codebase. `CODEOWNERS` says who must look; anyone else may approve.
+
+**When one PR needs another.** Stacking a PR on another's branch failed three times (#22–#31,
+#37–#39, #52–#54): a PR merged into a `feat/` branch lands nothing on `main`, and GitHub still marks it
+MERGED. So a PR **never** points at another branch:
+
+- Prefer waiting: start the next task from `main` once the previous one lands.
+- If it cannot wait, the second PR **contains** the first (branch it from the first's branch), points
+  at `main`, opens as a **draft**, and says which PR to review first. Mark it ready once the first is
+  in `main`; its diff then shows only its own change.
+- `.github/workflows/pr-base.yml` turns any PR whose base is not `main` red, with the reason.
+
+**Merging and cleaning up.**
+
+- Merge with a **merge commit**, so each PR's commits stay reviewable in the history.
+- **Delete the branch after the merge.** With every PR pointing at `main`, no other PR depends on it.
+  Before deleting a branch by hand, `git log --no-merges origin/main..<branch>` must be empty (or
+  `git cherry origin/main <branch>` shows no `+`, for a rebased copy).
+- Whether something reached `main` is checked with `git ls-tree origin/main <path>`, not with the
+  PR's MERGED label.
 
 ---
 
@@ -317,6 +346,7 @@ These exist because of what this product is. They are not generic hygiene.
 | Data contracts | `pandera` · CI (`contracts.yml`) |
 | Accessibility | `axe-core` in Playwright · CI |
 | Tests pass | `pytest` + `vitest` · CI, required to merge |
+| A PR lands on `main`, not on another branch | drafts for chained PRs · `pr-base.yml` flags it, cannot block it |
 
 Everything above installs with one command: `pre-commit install`. That is the whole onboarding for conventions — which is the point.
 

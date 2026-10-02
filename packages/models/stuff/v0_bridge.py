@@ -74,6 +74,9 @@ class BridgeModel:
     same_side_share: dict[str, float]
     bags: list[HistGradientBoostingRegressor] = field(repr=False)
     uses_arsenal: bool = False
+    # A class-level default, so a model pickled before this field existed
+    # still answers with the types it was trained on.
+    pitch_types: tuple[str, ...] = PITCH_TYPES
 
     def bag_xrv(self, frame: pd.DataFrame) -> FloatArray:
         """Expected run value per bag and pitch, averaged over the batter's side.

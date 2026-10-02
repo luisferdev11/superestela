@@ -5,7 +5,7 @@
  */
 export type NavItem = {
   readonly id: 'radar' | 'roster' | 'deployment' | 'simulator' | 'translator'
-  readonly href: '/radar' | '/simulador' | null
+  readonly href: '/radar' | '/simulador' | '/traductor' | '/plantel' | '/despliegue' | null
 }
 
 export type NavGroup = {
@@ -18,15 +18,23 @@ export const NAV_GROUPS: readonly NavGroup[] = [
   {
     id: 'roster',
     items: [
-      { id: 'roster', href: null },
-      { id: 'deployment', href: null },
+      { id: 'roster', href: '/plantel' },
+      { id: 'deployment', href: '/despliegue' },
     ],
   },
   {
     id: 'lab',
     items: [
       { id: 'simulator', href: '/simulador' },
-      { id: 'translator', href: null },
+      { id: 'translator', href: '/traductor' },
     ],
   },
 ]
+
+/**
+ * Las pestanas de la Ficha. Proyeccion y Plan son sus propias pantallas
+ * (`docs/10` T4 y T6): se listan, pero no son enlaces hasta que existan.
+ */
+export type FichaTab = 'summary' | 'arsenal' | 'projection' | 'plan'
+
+export const FICHA_TABS: readonly FichaTab[] = ['summary', 'arsenal', 'projection', 'plan']

@@ -22,6 +22,7 @@ Design notes
 
 import json
 import os
+import sys
 import warnings
 
 import numpy as np
@@ -30,7 +31,11 @@ from simulator_evidence import simulator_evidence
 from sklearn.ensemble import HistGradientBoostingRegressor
 from sklearn.model_selection import GroupKFold
 
+from contracts.mapping import normalize_columns
+from contracts.schemas import MIN_PLATE_APPEARANCES_FOR_RATE, MIN_SWINGS_FOR_RATE
+from core.rates import difference_band, rate_band
 from models.features.role import STARTER_FIRST_INNING_SHARE, classify_roles
+from models.scoring import load_scorer, stuff_plus_of, to_arm_side
 
 warnings.filterwarnings("ignore")
 
@@ -44,6 +49,26 @@ GRAVITY = 32.174  # ft/s^2
 # Product rule, mirrored from contracts.schemas.MIN_PITCHES_FOR_SCORE: below
 # this in EITHER environment there is no comparison to show.
 MIN_PITCHES = 100
+# Product rules from contracts.schemas, imported so they cannot drift: below
+# these a rate is "muestra insuficiente".
+MIN_PLATE_APPEARANCES = MIN_PLATE_APPEARANCES_FOR_RATE
+MIN_SWINGS = MIN_SWINGS_FOR_RATE
+
+# The dataset has no plate-appearance id. A plate appearance ends on the pitch
+# whose result closes it; a fieldable foul only when it made an out (73 of 1,917).
+PA_ENDING = {
+    "Out",
+    "Strikeout",
+    "Walk",
+    "HitByPitch",
+    "Single",
+    "Double",
+    "Triple",
+    "HomeRun",
+    "FieldersChoice",
+    "Sacrifice",
+    "Error",
+}
 MAIN_PITCHES = ["Four-Seam", "Sinker", "Slider", "Changeup", "Curveball", "Cutter"]
 SEA, MED, EXT = "No Altitude", "Medium Altitude", "Extreme Altitude"
 
@@ -110,6 +135,7 @@ def load():
         "az0",
         "PitchCall",
         "play_result",
+        "KorBB",
         "hit_type",
         "ExitSpeed",
         "Angle",
@@ -283,6 +309,19 @@ def density_table(df):
         out[lvl]["per_game_sd"] = round(float(s.std()), 4)
         out[lvl]["per_game_n"] = len(s)
     return out
+
+
+def scoring_reference(df):
+    """What scoring a new file needs to measure its air the way training did. ADR 0009.
+
+    The sea-level drag coefficient every density index is a ratio to, so a new
+    file's per-game drag divided by it means what the training data's does; and
+    how noisy one pitch's reading is around its game's mean, which sets how many
+    pitches a game needs before its density index can be trusted.
+    """
+    sea_k = float(df.loc[df.altitude_category == SEA, "game_drag_k"].mean())
+    within = (df.drag_k - df.game_drag_k) / sea_k
+    return {"reference_game_drag_k": sea_k, "within_game_pitch_sd": round(float(within.std()), 4)}
 
 
 # --------------------------------------------------------------------------
@@ -730,9 +769,135 @@ def stuff_plus_v0(df, seed=7):
     return d, metrics
 
 
+# The scales the web knows how to word (packages/web/src/sources/schema.ts).
+SCALE_KINDS = ("league", "per_environment")
+
+# The vendor columns a Scorer reads, renamed once by contracts.mapping.
+SCORER_COLUMNS = [
+    "AutoPitchType",
+    "PitcherThrows",
+    "RelSpeed",
+    "InducedVertBreak",
+    "HorzBreak",
+    "SpinRate",
+    "SpinAxis",
+    "Extension",
+    "RelHeight",
+    "RelSide",
+]
+
+
+def stuff_plus_from_scorer(d, model_path):
+    """Score the cards' pitches with any model that answers the scoring contract.
+
+    The rows are the ones stuff_plus_v0 kept, with the same per-game density
+    index, so swapping the model changes the scores and nothing else
+    (ADR 0010). A pitch the model cannot score (a type it was not trained on,
+    an undefined hand) gets NaN and leaves the cards.
+    """
+    scorer = load_scorer(model_path)
+    kind = getattr(scorer.scale, "kind", "league")
+    if kind not in SCALE_KINDS:
+        # The web parses mockup_data.json strictly: an unknown kind breaks every screen.
+        raise ValueError(f"{scorer.model_id}: scale.kind {kind!r} is not one of {SCALE_KINDS}")
+    ok = d.AutoPitchType.isin(scorer.pitch_types) & d.PitcherThrows.isin(["Right", "Left"])
+    frame = normalize_columns(d.loc[ok, SCORER_COLUMNS])
+    hb, side, axis = to_arm_side(
+        frame.pitcher_hand, frame.horizontal_break, frame.release_side, frame.spin_axis
+    )
+    frame = frame.assign(
+        horizontal_break=hb,
+        release_side=side,
+        spin_axis=axis,
+        density_index=d.loc[ok, "density_index"],
+    )
+    value = pd.Series(np.nan, index=d.index)
+    value[ok] = stuff_plus_of(scorer, frame)[0]
+    metrics = {
+        "model_id": scorer.model_id,
+        "scale": scorer.scale.description,
+        "scale_kind": kind,
+        "n_scored": int(value.notna().sum()),
+        "n_unscored": int(value.isna().sum()),
+    }
+    return value, metrics
+
+
 # --------------------------------------------------------------------------
 # 7. Mockup data: real pitcher rows for the prototype
 # --------------------------------------------------------------------------
+def _ci95(scores):
+    """95% half-width on a mean Stuff+: 1.96 standard errors of the pitches' scores."""
+    return 1.96 * float(scores.std()) / np.sqrt(len(scores))
+
+
+def outcome_counts(df, keys):
+    """Plate appearances, strikeouts, walks, swings and whiffs, grouped by ``keys``.
+
+    Counted on every pitch type, not only the six the model scores: 2.4% of
+    strikeouts end on a pitch the model leaves out, and they are still the
+    pitcher's strikeouts. Walks exclude hit-by-pitch, as BB% does. The frame is
+    the physics one, so the ~6,000 pitches without a trajectory (287
+    strikeouts among them) are not counted.
+    """
+    ends = df.play_result.isin(PA_ENDING) | (
+        (df.play_result == "FoulBallFieldable") & (df.OutsOnPlay > 0)
+    )
+    frame = df.assign(
+        pa=ends.astype(int),
+        k=(df.KorBB == "Strikeout").astype(int),
+        bb=(df.KorBB == "Walk").astype(int),
+        swings=df.is_swing.astype(int),
+        whiffs=df.is_whiff.astype(int),
+    )
+    return frame.groupby(keys)[["pa", "k", "bb", "swings", "whiffs"]].sum()
+
+
+def outcome_rates(row):
+    """K%, BB%, K-BB% and whiff per swing, in percent, each with its 95% half-width.
+
+    The bands are Agresti-Coull (core.rates): a plain binomial band collapses to
+    zero at a rate of 0, and "BB% 0.0 +- 0.0" claims a certainty nobody has.
+    Below the product minimum a rate is None, never a number with a band
+    nobody could read.
+    """
+    pa, k, bb = int(row["pa"]), int(row["k"]), int(row["bb"])
+    swings, whiffs = int(row["swings"]), int(row["whiffs"])
+    out = {"pa": pa, "swings": swings}
+    if pa >= MIN_PLATE_APPEARANCES:
+        (pk, hk), (pb, hb) = rate_band(k, pa), rate_band(bb, pa)
+        dk, hd = difference_band(k, bb, pa)
+        out.update(
+            k_pct=round(100 * pk, 1),
+            k_pct_ci95=round(100 * hk, 1),
+            bb_pct=round(100 * pb, 1),
+            bb_pct_ci95=round(100 * hb, 1),
+            k_minus_bb_pct=round(100 * dk, 1),
+            k_minus_bb_pct_ci95=round(100 * hd, 1),
+        )
+    else:
+        out.update(
+            k_pct=None,
+            k_pct_ci95=None,
+            bb_pct=None,
+            bb_pct_ci95=None,
+            k_minus_bb_pct=None,
+            k_minus_bb_pct_ci95=None,
+        )
+    if swings >= MIN_SWINGS:
+        pw, hw = rate_band(whiffs, swings)
+        out.update(whiff_per_swing=round(100 * pw, 1), whiff_per_swing_ci95=round(100 * hw, 1))
+    else:
+        out.update(whiff_per_swing=None, whiff_per_swing_ci95=None)
+    return out
+
+
+def league_outcomes(df):
+    """The league's K%, BB%, K-BB% and whiff per swing in each environment."""
+    counts = outcome_counts(df, ["altitude_category"])
+    return {env: outcome_rates(counts.loc[env]) for env in (SEA, MED, EXT) if env in counts.index}
+
+
 def mockup(d, df_phys, roles=None, entries=None, pitches_per_inning=None):
     """Pitcher-level cards with Stuff+ HH, sea-level Stuff+ and Altitude Tax.
 
@@ -751,18 +916,28 @@ def mockup(d, df_phys, roles=None, entries=None, pitches_per_inning=None):
     # MIN_PITCHES_FOR_SCORE, the rule the contract already declared and this
     # script was quietly ignoring by using 150.
     ok = sorted(set(n_ext[n_ext >= MIN_PITCHES].index) & set(n_sea[n_sea >= MIN_PITCHES].index))
+    # Diablos reads whiff, strikeouts and K-BB (Q&A, 30 sep): for the whole
+    # season on the card (every environment, medium altitude included); per
+    # environment in the season history.
+    pooled = outcome_counts(df_phys, ["pitcher_anon_id", "year"])
+    by_env = outcome_counts(df_phys, ["pitcher_anon_id", "year", "altitude_category"])
+    empty = pd.Series({"pa": 0, "k": 0, "bb": 0, "swings": 0, "whiffs": 0})
+
+    def rates_at(key, table):
+        return outcome_rates(table.loc[key] if key in table.index else empty)
+
     cards = []
     for pid, yr in ok:
         e = ext[(ext.pitcher_anon_id == pid) & (ext.year == yr)]
         s_ = sea[(sea.pitcher_anon_id == pid) & (sea.year == yr)]
-        sp_hh, sp_sea = float(e.stuff_plus_v0.mean()), float(s_.stuff_plus_v0.mean())
+        sp_hh, sp_sea = float(e.stuff_plus.mean()), float(s_.stuff_plus.mean())
         rv_hh, rv_sea = float(e.rv.mean()), float(s_.rv.mean())
         # REAL uncertainty: 95% CI half-width on the mean Stuff+ at altitude
-        se = float(e.stuff_plus_v0.std()) / np.sqrt(len(e))
+        se = float(e.stuff_plus.std()) / np.sqrt(len(e))
         ci = 1.96 * se
         # The sea-level score is rendered too, and the product does not show a
         # number without its band (CONVENTIONS.md section 8 rule 2).
-        ci_sea = 1.96 * float(s_.stuff_plus_v0.std()) / np.sqrt(len(s_))
+        ci_sea = 1.96 * float(s_.stuff_plus.std()) / np.sqrt(len(s_))
         # Altitude Tax: extra runs conceded per 100 pitches at altitude,
         # with a standard error from the two independent sample means.
         # Per NINE INNINGS, not per hundred pitches: nine innings is the unit
@@ -790,8 +965,14 @@ def mockup(d, df_phys, roles=None, entries=None, pitches_per_inning=None):
                     "hb_sea": round(float(gs.HorzBreak.mean()), 1) if len(gs) >= 15 else None,
                     "spin": int(g.SpinRate.mean()),
                     "extension": round(float(g.Extension.mean()), 1),
-                    "stuff_plus_hh": round(float(g.stuff_plus_v0.mean()), 1),
-                    "stuff_plus_sea": round(float(gs.stuff_plus_v0.mean()), 1)
+                    "stuff_plus_hh": round(float(g.stuff_plus.mean()), 1),
+                    "stuff_plus_sea": round(float(gs.stuff_plus.mean()), 1)
+                    if len(gs) >= 15
+                    else None,
+                    # The pitcher's band, per pitch: the Ficha shows Stuff+ by
+                    # pitch and no score goes out without it (section 8 rule 2).
+                    "stuff_plus_hh_ci95": round(_ci95(g.stuff_plus), 1),
+                    "stuff_plus_sea_ci95": round(_ci95(gs.stuff_plus), 1)
                     if len(gs) >= 15
                     else None,
                     "whiff_per_swing": round(
@@ -823,6 +1004,7 @@ def mockup(d, df_phys, roles=None, entries=None, pitches_per_inning=None):
                 "altitude_tax_se": round(se_tax, 2),
                 "altitude_tax_significant": bool(abs(tax) > 1.96 * se_tax),
                 "mean_ivb_loss_in": round(float(loss), 2) if retained else None,
+                "outcomes": rates_at((pid, yr), pooled),
                 "arsenal": sorted(arsenal, key=lambda a: -a["usage_pct"]),
             }
         )
@@ -856,6 +1038,8 @@ def mockup(d, df_phys, roles=None, entries=None, pitches_per_inning=None):
                 "n_pitches_hh": int(row.get(EXT, 0)),
                 "n_pitches_sea": int(row.get(SEA, 0)),
                 "scored": (pid, int(yr)) in scored_keys,
+                "outcomes_hh": rates_at((pid, yr, EXT), by_env),
+                "outcomes_sea": rates_at((pid, yr, SEA), by_env),
             }
         )
     for pid in history:
@@ -947,6 +1131,7 @@ def main():
     )
     df = add_physics(df)
     R["density"] = density_table(df)
+    R["scoring_reference"] = scoring_reference(df)
     log(
         f"Density index: Extreme={R['density'][EXT]['density_ratio']} "
         f"Magnus={R['density'][EXT]['magnus_ratio']}"
@@ -980,6 +1165,25 @@ def main():
 
     d, R["stuff_plus_v0"] = stuff_plus_v0(df)
     log(f"Stuff+ v0 baseline: OOF R2={R['stuff_plus_v0']['oof_r2']}")
+    # The cards' Stuff+. v0 unless --model names a Scorer in artifacts/: then
+    # that model scores the same rows, and every screen fed by mockup_data.json
+    # shows it (ADR 0010).
+    scale = {
+        "kind": "league",
+        "description": "stuff_plus_v0: 100 - 10 z over the whole league, both environments and all pitch types",
+    }
+    if "--model" in sys.argv:
+        value, R["stuff_plus_model"] = stuff_plus_from_scorer(
+            d, sys.argv[sys.argv.index("--model") + 1]
+        )
+        d = d.assign(stuff_plus=value).dropna(subset=["stuff_plus"])
+        scale = {
+            "kind": R["stuff_plus_model"]["scale_kind"],
+            "description": R["stuff_plus_model"]["scale"],
+        }
+        log(f"Cards scored by {R['stuff_plus_model']['model_id']}")
+    else:
+        d = d.assign(stuff_plus=d.stuff_plus_v0)
 
     # After stuff_plus_v0, so both denominators agree with the cards.
     R["seasons"] = season_coverage(df, scored=d)
@@ -1015,6 +1219,10 @@ def main():
     }
     log(f"Roles: {R['roles']['distribution']}")
 
+    R["league_outcomes"] = league_outcomes(df)
+    log(
+        f"League K-BB%: sea {R['league_outcomes'][SEA]['k_minus_bb_pct']}, extreme {R['league_outcomes'][EXT]['k_minus_bb_pct']}"
+    )
     ppi = R["run_environment"][EXT]["pitches_per_inning"]
     cards, history, R["cohort"] = mockup(
         d, df, roles=roles, entries=entries, pitches_per_inning=ppi
@@ -1053,6 +1261,10 @@ def main():
     with open(os.path.join(OUT, "mockup_data.json"), "w") as f:
         json.dump(
             {
+                # How 100 is defined for these scores. The web words the delta and the
+                # trap from this, so when the final model moves to 100 per environment
+                # (Q&A, 30 sep; docs/11 section 8.3) the screens follow without edits.
+                "scale": scale,
                 "pitchers": cards,
                 "pitcher_seasons": history,
                 "pitch_profiles": R["pitch_profiles"],

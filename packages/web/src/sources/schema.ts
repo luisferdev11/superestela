@@ -31,7 +31,27 @@ export const arsenalEntrySchema = z
     extension: z.number().nullable(),
     stuff_plus_hh: z.number().nullable(),
     stuff_plus_sea: z.number().nullable(),
+    stuff_plus_hh_ci95: band.nullable(),
+    stuff_plus_sea_ci95: band.nullable(),
     whiff_per_swing: z.number().nullable(),
+  })
+  .strict()
+
+const percent = z.number().min(-100).max(100)
+
+/** K%, BB%, K-BB% y whiff por swing, en porcentaje y con su banda al 95%. `null` debajo del minimo. */
+export const outcomesSchema = z
+  .object({
+    pa: z.number().int().nonnegative(),
+    swings: z.number().int().nonnegative(),
+    k_pct: percent.nullable(),
+    k_pct_ci95: band.nullable(),
+    bb_pct: percent.nullable(),
+    bb_pct_ci95: band.nullable(),
+    k_minus_bb_pct: percent.nullable(),
+    k_minus_bb_pct_ci95: band.nullable(),
+    whiff_per_swing: percent.nullable(),
+    whiff_per_swing_ci95: band.nullable(),
   })
   .strict()
 
@@ -53,6 +73,7 @@ export const pitcherCardSchema = z
     altitude_tax_se: z.number().positive().nullable(),
     altitude_tax_significant: z.boolean(),
     mean_ivb_loss_in: z.number().nullable(),
+    outcomes: outcomesSchema,
     arsenal: z.array(arsenalEntrySchema),
     altitude_trap: z.boolean(),
   })
@@ -64,6 +85,8 @@ export const seasonEntrySchema = z
     n_pitches_hh: z.number().int().nonnegative(),
     n_pitches_sea: z.number().int().nonnegative(),
     scored: z.boolean(),
+    outcomes_hh: outcomesSchema,
+    outcomes_sea: outcomesSchema,
   })
   .strict()
 
@@ -78,8 +101,13 @@ export const densityLevelSchema = z
   })
   .strict()
 
+export const scaleSchema = z
+  .object({ kind: z.enum(['league', 'per_environment']), description: z.string() })
+  .strict()
+
 export const mockupDataSchema = z
   .object({
+    scale: scaleSchema,
     pitchers: z.array(pitcherCardSchema),
     pitcher_seasons: z.record(z.string(), z.array(seasonEntrySchema)),
     pitch_profiles: z.record(z.string(), z.unknown()),
@@ -89,3 +117,15 @@ export const mockupDataSchema = z
 
 export type PitcherCardRaw = z.infer<typeof pitcherCardSchema>
 export type MockupData = z.infer<typeof mockupDataSchema>
+
+/**
+ * La forma promedio de la liga por tipo y entorno, de `pitch_profiles`. En
+ * `mockupDataSchema` ese campo es `unknown` porque trae muchas mas metricas;
+ * aqui se leen solo las dos que dibuja el mapa de la Ficha, sin exigir el resto.
+ */
+export const leagueShapesSchema = z.record(
+  z.string(),
+  z.object({
+    levels: z.record(z.string(), z.object({ ivb: z.number(), abs_hb: z.number() })),
+  }),
+)
