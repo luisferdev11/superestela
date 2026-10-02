@@ -1,6 +1,8 @@
-# SuperEstela — Plan hacia el 15 de octubre
+# SuperEstela — Plan hacia el 22 de octubre
 
-> Actualizado el **23 de septiembre de 2026**. Quedan **22 días**.
+> Actualizado el **1 de octubre de 2026, noche**. **La entrega es el 22 de octubre** (confirmado; la
+> página oficial también lo dice). La §0.0 es lo que sigue; el resto de la §0 es el registro del 1 de
+> octubre, y de la §1 en adelante es el plan del 23 de septiembre.
 >
 > Este documento es la lista viva de pendientes. Cada uno lleva su **criterio de
 > hecho**, y los que una máquina puede verificar los verifica
@@ -9,6 +11,197 @@
 ```bash
 uv run python scripts/check_pendientes.py       # el estado, ahora mismo
 ```
+
+---
+
+## 0. Dónde estamos al 1 de octubre, y la checklist
+
+### 0.0 Para la siguiente sesión: léelo primero
+
+**Contexto en cinco líneas:**
+
+- **Fechas:** entrega el **22 de octubre** (confirmado), finalistas el 2 de noviembre, final el 11. El
+  calendario de cierre propuesto es congelar cifras el **19** y ensayar el **20**; falta que el equipo
+  lo confirme.
+- **La demo puede ser local.** No hace falta desplegar.
+- **La web es demostrativa:** corre sobre el v0 y el puente. Los modelos buenos (Stuff+ final,
+  Location+, Pitching+, la escala) **los entrega el equipo de datos**; producto no los construye
+  (memoria `superestela-frontera-datos`). Las dudas de modelo, holdout y escala son de ellos.
+- **Ya no hay cadenas de PRs.** Los 20 PRs del 1 de octubre se consolidaron en tres:
+
+  | PR | Qué | Revisa | Orden |
+  |---|---|---|---|
+  | **#80** | Scorer (`python -m models.score`), API con origen, K/BB/whiff en la evidencia, `report/` | Datos (Martín) | 1 |
+  | **#81** | Todas las pantallas nuevas y sus arreglos; contiene al #80 | Producto | 2 |
+  | **#82** | Estos documentos: Q&A, renombre, Decision Log, esqueleto del documento técnico, ficha ejecutiva | Cualquiera | Independiente |
+
+- **Revisión de código del 1 de octubre:** hecha y corregida (abajo). Quedan dos decisiones abiertas.
+
+**Sin preguntar de nuevo:** el renombre híbrido («altitud extrema» en cifras y tablas, «Harp Helú» en
+narrativa), el comando del scorer es de producto y el modelo de datos (ADR 0009), y la escala la
+decide datos (los textos ya están listos para las dos, `es.scale`).
+
+**Checklist, en orden.** Cada tarea tiene su criterio de hecho.
+
+- [ ] **1 · Que entren #80, #81 y #82.** Producto solo revisa y responde comentarios; no se abre
+      ningún PR nuevo encima mientras tanto.
+      ✔ `git ls-tree origin/main packages/models/score.py report/build.py packages/web/src/app/traductor/page.tsx docs/12-DECISION-LOG.md`
+      lista los cuatro, y `uv run python scripts/check_pendientes.py` marca P3, P7, `report/build.py`
+      y «Scorer reproducible».
+- [ ] **2 · Correo a ISAC y Diablos con lo que no sabemos.** El borrador está en la memoria del
+      proyecto (`superestela-qa-diablos`): la escala con el ejemplo de `docs/11` §8.3 y el ajuste
+      «por temporada», y el formato del holdout (columnas y quién corre el scorer). La fecha y la demo
+      local ya están resueltas.
+      ✔ El correo se envió, y las respuestas quedan en `docs/10` §5.
+- [ ] **3 · Las dos preguntas literales del reto que no tienen tabla** (texto en `docs/13`):
+      - «¿qué arsenal produce el Stuff+ más alto en Harp Helú?» (entregable 1): una tabla de
+        combinaciones de arsenal contra el Stuff+ en altitud extrema, desde `mockup_data.json`;
+      - «cuantificando el riesgo adicional de contacto duro y jonrón» (entregable 3): el Δ de hard-hit
+        y HR/BIP por tipo, desde `evidence.json → pitch_profiles`.
+
+      ✔ Las dos son tablas de `report/tables/`, generadas por `report/build.py`, con sus afirmaciones
+      en `claims.toml`.
+- [ ] **4 · Reencuadrar el Traductor** (discutido el 1 de octubre). Hoy ofrece tres lanzadores del
+      dataset como ejemplo, y con ellos se empalma con la pestaña Proyección de la Ficha. Su caso real
+      es el lanzador que **no** está en el dataset (agente libre, MLB, Japón), que es el entregable 3c:
+      «¿cómo perfilar un prospecto o agente libre…?».
+      - Entrada principal: **subir un CSV o export de TrackMan** con las columnas del dataset,
+        agregado por `AutoPitchType`. Se reutiliza el mapeo de `models/batch.py`.
+      - **Un solo ejemplo**, presentado como validación: lo que proyecta para un lanzador real contra
+        lo que se midió en altitud extrema.
+      - Un enlace «¿ya juega en la LMB? → su Ficha».
+      - Subtítulo nuevo: «Para lanzadores que no están en nuestros datos».
+      - **No hacer:** búsqueda sobre todo el dataset, ni fusionarlo con la Proyección.
+
+      ✔ Un CSV de prueba generado (nunca commiteado) llena la tabla, y su test pasa. El ejemplo
+      muestra lo proyectado contra lo medido. El subtítulo dice para quién es.
+- [ ] **5 · Aplicar la convención del «±».** **Decidida el 1 de octubre: la banda al 95% en todas las
+      pantallas** (`docs/12` §2.1). Hoy, en el Radar y la Ficha ya es la banda; en el Impuesto, el
+      Simulador, el Traductor y la Proyección es un error estándar, y hay que pasarlos a la banda.
+      ✔ Ninguna pantalla muestra un error estándar como «±», y la guía del Radar dice la convención.
+- [ ] **6 · Cifras de los documentos sin corrida** (tabla abajo, en «Revisión de código»): se
+      calculan en `evidence.py` o se quitan de los documentos.
+      ✔ `grep` de cada una en `docs/` solo devuelve citas con su artefacto.
+- [ ] **7 · Arreglos chicos de paridad** (`docs/10` §6): separadores del Plantel, nota dinámica del
+      Despliegue, «Cuándo sirve» de la Proyección, enlace al Plan desde la pestaña Arsenal.
+      ✔ Cada uno con su captura headless.
+- [ ] **8 · Paquete para el jurado**, después del congelamiento:
+      - documento técnico contra cifras congeladas (`docs/13`);
+      - ficha ejecutiva de tres lanzadores (`docs/14`);
+      - README «con sus datos en 3 comandos»;
+      - un video de 3–4 minutos para no técnicos;
+      - prototipo y deck al día (memoria `superestela-prototipo`).
+
+      ✔ Todo existe, y un tercero lo sigue de punta a punta.
+- [ ] **9 · Ensayo el 20 de octubre**, las tres historias de `docs/09` §5.2, con la app local.
+
+**Para no gastar contexto:**
+
+- Lee esta sección y la tabla de PRs. No releas el resto de `docs/` salvo que la tarea lo pida.
+- Las trampas del código están en la memoria (`superestela-siguiente`, `superestela-repositorio`).
+- Un PR por tarea, que apunte a `main`. Si pasa de 400 líneas, se dice en el cuerpo y se revisa por
+  commit.
+
+
+### Lo que se hizo del 28 de septiembre al 1 de octubre
+
+| Qué | Dónde |
+|---|---|
+| **P2 Ficha** (resumen, arsenal con banda por pitch, mapa de movimiento, temporadas con hueco, «Lectura del sistema», pestaña Arsenal con contrato de ubicación) | `main`, #36–#47 |
+| **P5 Plan de Desarrollo** (déficit por pitch, tres frases, reparto de uso que solo se propone si ayuda) | `main`, #49–#51 |
+| **P6 Despliegue y P8 Plantel**, sobre el plantel aproximado del ADR 0008 | `main`, #52–#54 llevados por #56 |
+| **P7 Proyección**: datos y dominio (`analysis/projection_evidence.py`, aplica `core.translate`) | `main`, #57 |
+| P7 Proyección: la pantalla | **#58, listo para revisión** |
+| Copy de prohibición de apuestas en el rail; check `pr-base.yml`; `docs/11` (lo que producto necesita de datos) | `main`, #34, #41, #35, #48 |
+| Q&A con Diablos y sus consecuencias | `docs/10` §5, `docs/11` §8, `docs/reference/categorias-altitud.md` |
+
+**Pantallas:** 7 de 8 construidas; la P3 Traductor quedó construida después, en #67–#71. **Datos:** Martín entrena modelos por
+componente en MLflow, pero en `main` todavía no hay nada en `packages/models/targets`, `train.py` ni
+`evaluate.py`. La puerta de A3 es hoy.
+
+### Avance del 1 de octubre (segunda sesión): todo en PRs, nada en `main` todavía
+
+> **Registro histórico.** Los PRs de esta sección (#58–#79) se cerraron y se consolidaron en #80, #81 y
+> #82 (§0.0). Los números quedan para rastrear la historia de cada commit.
+
+Los PRs de la web van **en cadena**: cada uno apunta a `main` y contiene al anterior. Se revisan en
+este orden: #58 → #60 → #68 → #69 → #70 → #71 → #73 → #74 → #75 → #78 → #79. Salen de `main`: #62 →
+#63 → #61 (scorer), #64 → #65 → #66 (`report/`), #67 (API), #72 (tasas) y #76 (borradores).
+**Dos dependencias:** el #73 contiene al #72, y **el #67 tiene que entrar antes que el #71**; sin él,
+la API rechaza el origen en altitud media. El #79 corrige lo que encontró la revisión de código
+(abajo, «Revisión de código»).
+
+| # | Tarea | PRs | Estado |
+|---|---|---|---|
+| 1 | Renombre híbrido | #60 (web) y este PR (docs) | ✅ en revisión |
+| 2 | Aviso del plantel | #60 (texto) y este PR (ADR 0008) | ✅ en revisión |
+| 3 | Fusionar el #58 | — | ⏳ falta una aprobación |
+| 4 | Textos listos para la escala por entorno | #75 | ✅ en revisión. Cambian solos cuando la evidencia declare `per_environment` |
+| 5 | Whiff, K y K−BB | #72 (datos y contrato), #73 (Radar y Ficha) | ✅ en revisión |
+| 6 | `report/build.py` | #64 → #65 → #66 | ✅ en revisión. 22 de 28 afirmaciones con corrida |
+| 7 | Entregables de texto | #76 (`docs/12` Decision Log, `docs/13` esqueleto del documento, `docs/14` ficha ejecutiva) | 🟡 borradores; se terminan contra cifras congeladas |
+| 8 | README reproducible | #62 → #63 → #61 (`python -m models.score`, ADR 0009) | ✅ en revisión. Falta que alguien que no lo escribió lo corra |
+| 9 | P3 Traductor | #67 (API) y #68 → #71 (web) | ✅ en revisión. Recta de `pitcher_00069`: 15.6″ ± 0.9″ y 92.9 ± 4.1, igual que el Simulador |
+| — | Radar legible para no técnicos | #74 | ✅ en revisión |
+| — | Pasada de paridad contra el prototipo | #78 (arreglos), `docs/10` §6 (lo que queda) | ✅ en revisión |
+| 10 | `apiSource` y GET scores | — | ⬜ |
+| 11 | Prototipo y deck | — | ⬜ después del congelamiento |
+| 12 | Ensayo | — | ⬜ 13 de octubre |
+
+### Revisión de código del 1 de octubre
+
+Una revisión de todo lo de la sesión (Python, `report/`, la web y los documentos) encontró, y se
+corrigió en las mismas ramas:
+
+| Dónde | Qué estaba mal | PR |
+|---|---|---|
+| `models.score` | La densidad de un juego se promediaba sobre filas distintas a las del entrenamiento: el mismo pitch cambiaba hasta 4 puntos según qué más trajera el archivo | #63 |
+| API, origen | La banda brincaba en el default y no era cero donde se midió el pitch; un origen de 0.05 se aceptaba | #67 |
+| Tasas | Un BB% de 0 salía con banda ± 0.0 | #72 |
+| `report/` | Un `\|` en una celda rompía la tabla; la precisión de una afirmación salía del `repr` de un float; «0.858» se llamaba densidad, cuando es un índice de arrastre | #64–#66 |
+| Traductor | Sin el #67 todas las preguntas daban 422; un uso vacío ponía el arsenal en cero; respuestas viejas bajo filas nuevas; el rojo de las celdas no se veía | #79 |
+
+**Cifras de los documentos sin corrida detrás.** No se pueden usar en el documento técnico hasta que un
+artefacto las calcule, o se quitan:
+
+| Cifra | Dónde aparece | Qué hacer |
+|---|---|---|
+| r = −0.08 (Stuff+ contra el impuesto observado) | `docs/02`, `04`, `05`, `09` | Lo mide A3; mientras tanto, no citarla |
+| +0.531 (\|IVB\| contra Stuff+ perdido) | `docs/01` §8.5, `docs/13` | Calcularla en `evidence.py` o quitarla |
+| 8.6 puntos menos en casa | `docs/00` | La media de las tarjetas hoy es otra: citar el artefacto, no el número |
+| 40 de 286 | `docs/04` | La cohorte es de 370 tarjetas: regenerar desde `evidence.json → cohort` |
+| 0.674 | un comentario de `evidence.py` | Llevarla a `evidence.json` si se va a citar |
+
+**Para el equipo de datos** (`docs/11` §8.1): el comando que Diablos va a correr ya existe. Lo que les
+toca es el modelo que contesta por él (ADR 0009).
+
+### Checklist de producto, en orden
+
+| # | Tarea | Hecho cuando |
+|---|---|---|
+| 1 | **Renombre híbrido.** «Altitud extrema» en cifras, columnas y tablas; «Harp Helú» solo en la narrativa. Una nota única lista los cinco parques. Son ~24 textos en `packages/web/src/i18n/es.ts` («Stuff+ HH», «Harp Helú»), más `docs/00`, `02`, `09` y `10`, más el deck | `grep "Harp Hel" packages/web/src/i18n/es.ts` solo devuelve textos de narrativa, y los tests pasan |
+| 2 | **Aviso del plantel:** ADR 0008 y `components/deploy/RosterNotice.tsx` dicen que la aproximación mezcla lanzadores de cinco parques, y que P6 y P8 son demostrativas | El texto y el ADR lo dicen |
+| 3 | **Fusionar el #58** (pantalla de P7) | `check_pendientes` marca P7 ✅ en `main` |
+| 4 | **Textos listos para la escala por entorno** (`docs/11` §8.3): el Δ como «cambio de lugar» en vez de «pierde X puntos», en el Radar, la Ficha, el Plan y la Trampa | Se aplica cuando datos confirme la escala; ningún texto asume la escala vieja |
+| 5 | **Whiff más visible:** whiff por swing, ponches y ponches menos bases por bolas por lanzador-temporada, calculados en `analysis/evidence.py` (descriptivo), en el Radar y la Ficha | La columna sale del artefacto y tiene su test |
+| 6 | **`report/build.py`**: las tablas del documento técnico, generadas desde la evidencia | Antes del 12; `check_pendientes` ✅ |
+| 7 | **Entregables de texto:** documento técnico, ficha ejecutiva, Perfil Físico Ideal, Decision Log y **«qué haríamos con más tiempo»** (Emilio dijo que cuenta) | Existen en `docs/` o `report/` |
+| 8 | **Reproducibilidad para el jurado:** README con «cómo correr esto con sus datos» | Un tercero lo sigue de punta a punta |
+| 9 | **P3 Traductor** (baja prioridad: la física es complemento, según el Q&A) | `check_pendientes` ✅ |
+| 10 | **La web lee de la API** (`sources/apiSource.ts`) y `GET /api/v1/pitchers/{id}/scores` | `check_pendientes` ✅ |
+| 11 | **Prototipo y deck:** cifras nuevas (0.638, 40 posiciones, 8 de 10), cinco parques, renombre | El artifact dice «maqueta» donde no cuadre |
+| 12 | **Ensayo cronometrado** de las tres historias (`docs/09` §5.2), pensado para una audiencia no técnica | El 13 de octubre, ≤ 10 s por pregunta |
+
+**Fuera de producto, pero bloqueante:**
+- El scorer reproducible y el modelo final, del equipo de datos (`docs/11` §8.1–8.2).
+- **Correo a Diablos:** confirmar la escala con el ejemplo de `docs/11` §8.3, y preguntar si la demo
+  puede ser local.
+
+**Cómo se trabaja:**
+- **PRs:** el de arriba apunta a `main` y contiene al de abajo, nunca sobre la rama del anterior
+  (`CONVENTIONS.md` §6.3).
+- **Verificación:** lo fusionado se comprueba con `git ls-tree origin/main <ruta>`, no con la etiqueta
+  MERGED.
 
 ---
 
@@ -184,9 +377,10 @@ El prototipo tiene el HTML, los tokens y las cifras de las ocho:
 - [ ] **Entregable 2 del reto, «Perfil Físico Ideal».** Aparece **una sola vez
       en todo el repositorio**, en el mapeo de `docs/00` §9. **Decidido:** se
       cubre como **sección del documento técnico más lámina del deck**, no como
-      pantalla — sale de las features que sobreviven la altitud (corr |IVB| vs
-      pérdida = **+0.531**, `docs/01` §8.5), que es un hallazgo y no una
-      herramienta. Falta escribirlo.
+      pantalla — sale de las features que sobreviven la altitud, que es un
+      hallazgo y no una herramienta. **El +0.531 de `docs/01` §8.5 no lo calcula
+      ningún artefacto:** está pendiente en `report/claims.toml`. Borrador en
+      `docs/13` (#76).
 - [ ] **Decision Log auditable.** `docs/00` §9 lo lista dentro del 25% de
       Aplicabilidad real. No existe ni en código ni en plan.
 - [ ] **Copy de cumplimiento en la app.** `docs/03` §9: la prohibición de
@@ -200,7 +394,7 @@ El prototipo tiene el HTML, los tokens y las cifras de las ocho:
 - [ ] Decidir quién presenta los 10 minutos y quién responde la parte técnica.
 - [x] ~~Subir las revisiones requeridas de `main` a 1~~ — hecho el 21 de
       septiembre ([ADR 0006](adr/0006-gobierno-con-el-equipo-dentro.md)).
-- [x] ~~Confirmar la fecha de entrega con ISAC~~ — 15 de octubre.
+- [x] ~~Confirmar la fecha de entrega con ISAC~~ — 22 de octubre (era el 15 hasta el 1 de octubre).
 
 ---
 

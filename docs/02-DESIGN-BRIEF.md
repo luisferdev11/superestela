@@ -56,14 +56,14 @@ Tabla densa y ordenable, 296 lanzadores reales en su última temporada jugada.
 | Pitcher | `pitcher_00069` | IDs anonimizados por diseño del reto |
 | **Temporada** | 2025 | **Su última temporada jugada.** 95 candidatos tienen 2024, 134 el 2025, 67 el 2026 — no es un pie de página |
 | Mano | Right / Left | |
-| **Stuff+ HH** | 92.0 ± 0.7 | El número principal. Siempre con su banda |
+| **Stuff+ alt. extrema** | 92.0 ± 0.7 | El número principal. Siempre con su banda |
 | Stuff+ nivel del mar | 111.1 | La referencia engañosa |
 | **Δ** | −19.1 | Codificado en la escala de altitud |
 | **Impuesto de Altitud** | +5.93 ± 2.18 | Carreras por 9 entradas. **Solo 35 de los 296 candidatos del Radar son significativos; los otros 261 dicen *no concluyente*, no un número.** Sobre las 370 tarjetas, 40 |
 | **Rol** | `Abridor` | Dos valores, abridor o relevista. Inferido de la entrada de ingreso, y **por temporada** (`docs/adr/0004`) |
 | **Trampa** | 🚩 | 58 de 370 temporadas |
 
-Rangos reales de la cohorte: Stuff+ HH **87.9 – 109.5** · Impuesto **−10.62 a +14.40** carreras/9 entradas sobre las 370 tarjetas.
+Rangos reales de la cohorte: Stuff+ alt. extrema **87.9 – 109.5** · Impuesto **−10.62 a +14.40** carreras/9 entradas sobre las 370 tarjetas.
 
 > Ninguna de estas cifras se escribe en la interfaz. La pantalla las deriva de `analysis/outputs/mockup_data.json` al renderizar y un test las compara contra `evidence.json`, que es la corrida que las respalda. Están aquí para leer el diseño, no para copiarlas al código.
 
@@ -79,7 +79,7 @@ La barra de contexto lleva un **selector de temporada** con las que el lanzador 
 
 Caso real, `pitcher_00069` en su única temporada con score, **2025**:
 
-- Stuff+ HH **93.3 ± 0.7** · nivel del mar **110.5 ± 0.8** · Δ **−17.2**
+- Stuff+ alt. extrema **93.3 ± 0.7** · nivel del mar **110.5 ± 0.8** · Δ **−17.2**
 - Impuesto de Altitud **no concluyente** — mide +4.55 ± 2.70 carreras por 9 entradas, y con la muestra de una sola temporada la banda cruza el cero. **La pantalla muestra el estado, no el número:** es la regla funcionando
 - Rol **Abridor** · 🚩 **Trampa de Altitud** · 341 pitches en altitud, 434 a nivel del mar
 - Pérdida media de IVB: **4.43"**
@@ -102,11 +102,11 @@ Elementos: mapa de movimiento con ambos entornos superpuestos, tarjeta por pitch
 
 **Pregunta:** *Este pitcher nunca ha lanzado aquí. ¿Cuánto vale en el Harp Helú?*
 
-Flujo: entra el arsenal medido en cualquier estadio (captura manual o carga de archivo) → sale la forma proyectada y el Stuff+ HH, con banda de confianza.
+Flujo: entra el arsenal medido en cualquier estadio (captura manual o carga de archivo) → sale la forma proyectada y el Stuff+ alt. extrema, con banda de confianza.
 
 El estado final debe mostrar tres cosas juntas:
 1. **Forma proyectada** — IVB y |HB| esperados en CDMX, por pitch.
-2. **Stuff+ HH proyectado** con banda.
+2. **Stuff+ alt. extrema proyectado** con banda.
 3. **Por qué** — el Índice de Densidad aplicado y el factor Magnus (≈0.75), visible. La física es el argumento de confianza, y debe verse.
 
 Precisión a comunicar honestamente, en pitchers nunca vistos: **±0.85" a ±1.45"** con el modelo empírico, **±0.90" a ±1.85"** con la física pura sobre el break con signo, que es la banda que `translate.py` pone en pantalla ([`docs/09`](09-SIMULADOR.md) §3.2). Se cita la que la pantalla muestra.
@@ -128,10 +128,10 @@ Lo que el reto pide, literal: ingresar las características físicas de un pitch
 - Tipo de pitch y mano. Cada slider marca el valor real del lanzador y la banda p5–p95 de la liga.
 
 **Salida, lado a lado, siempre:**
-1. Stuff+ a nivel del mar y en Harp Helú, **cada uno con banda**, y el Δ partido en *forma* (cuánto pierde por moverse menos) y *entorno*. Si el modelo no pasó sus compuertas, el Stuff+ dice «modelo en validación» y el resto de la pantalla sigue.
+1. Stuff+ a nivel del mar y en altitud extrema, **cada uno con banda**, y el Δ partido en *forma* (cuánto pierde por moverse menos) y *entorno*. Si el modelo no pasó sus compuertas, el Stuff+ dice «modelo en validación» y el resto de la pantalla sigue.
 2. La forma en cada entorno con su banda, el VAA y la velocidad al plato.
 3. Los diferenciales contra la recta del lanzador **en los dos entornos**: en altura se encogen, y ahí se ve qué pitch pierde engaño.
-4. El mapa de efectividad en dos paneles, mar | Harp Helú: rejilla de whiff observado por zona de forma, los pitches más y menos efectivos, el arsenal del lanzador y el pitch simulado con su flecha.
+4. El mapa de efectividad en dos paneles, mar | altitud extrema: rejilla de whiff observado por zona de forma, los pitches más y menos efectivos, el arsenal del lanzador y el pitch simulado con su flecha.
 5. La procedencia: barra de Índice de Densidad, qué modelo contesta y si usa arsenal.
 
 **No imprime carreras.** El puente Stuff+ → carreras no existe (r = −0.08); las carreras viven en el Impuesto de Altitud, que es otra medición.
@@ -148,7 +148,7 @@ Lo que el reto pide, literal: ingresar las características físicas de un pitch
 
 > *Qué se degrada* — cuál lanzamiento pierde más y cuántas pulgadas.
 > *Qué aguanta* — cuál conserva su forma y por qué físicamente.
-> *Qué cambia* — qué reparto de uso lo compensa, en puntos de Stuff+ HH.
+> *Qué cambia* — qué reparto de uso lo compensa, en puntos de Stuff+ alt. extrema.
 
 **Sin carreras.** Esta plantilla pedía también carreras por 9 entradas, pero el puente Stuff+ → carreras no existe (r = −0.08, `docs/05`). La P5 imprime solo Stuff+, con su banda, y dice por qué. Cuando A3 cierre el puente, las carreras vuelven aquí. Si el pitch que aguanta rinde menos en altura que el que se degrada, pasarle uso empeora el arsenal: la pantalla lo dice en lugar de proponerlo (47 de 349 tarjetas con plan).
 
@@ -207,7 +207,7 @@ Reemplaza un elemento de navegación que estaba en el rail en gris, sin pantalla
 | Componente | Requisito |
 |---|---|
 | **KPI con banda** | Un número nunca aparece solo. Siempre `valor ± banda`. Es principio de producto, no adorno |
-| **Toggle de entorno** | Harp Helú ⟷ nivel del mar. Mismo control, mismo lugar, en toda la app |
+| **Toggle de entorno** | Altitud extrema ⟷ nivel del mar. Mismo control, mismo lugar, en toda la app |
 | **Mapa de movimiento** | El gráfico insignia. Ambos entornos, codificación constante |
 | **Chip de Rol** | `Abridor` / `Relevista`. Dos, porque dos es lo que el dato separa (`docs/adr/0004`) |
 | **Selector de temporada** | Donde un lanzador tiene varias. Mismo control, mismo lugar. Un lanzador con hueco muestra el hueco |
@@ -242,7 +242,7 @@ Trece láminas. El orden importa: primero el hallazgo, luego la física que lo e
 
 Un pitcher, una decisión. Lo que el director deportivo se lleva de la sala.
 
-Contenido: identidad · rol · Stuff+ HH con banda · Impuesto de Altitud en carreras por 9 entradas · mapa de movimiento sea/altitud · tabla de arsenal · **una recomendación explícita** (`Fichar` / `Fichar con reservas` / `No fichar`) con su justificación en dos líneas.
+Contenido: identidad · rol · Stuff+ alt. extrema con banda · Impuesto de Altitud en carreras por 9 entradas · mapa de movimiento sea/altitud · tabla de arsenal · **una recomendación explícita** (`Fichar` / `Fichar con reservas` / `No fichar`) con su justificación en dos líneas.
 
 ---
 

@@ -119,7 +119,7 @@ decide una **regla provisional de producto**, declarada en pantalla
 (`packages/web/src/domain/reading.ts`):
 
 - Trampa de Altitud → no al precio de nivel del mar.
-- Banda completa del Stuff+ HH por encima de 100 → fichar.
+- Banda completa del Stuff+ en altitud extrema por encima de 100 → fichar.
 - Lo demás → con reservas.
 
 La regla se apoya en v0. Para que el veredicto deje de ser provisional hace falta que A3 muestre que
@@ -152,12 +152,13 @@ Para que se vea por qué importa cada una:
 
 | Pantalla | Qué muestra de su trabajo | Estado |
 |---|---|---|
-| P1 Radar | Stuff+ HH y nivel del mar por lanzador-temporada, Impuesto de Altitud | En `main`, sobre v0 |
+| P1 Radar | Stuff+ en altitud extrema y nivel del mar por lanzador-temporada, Impuesto de Altitud | En `main`, sobre v0 |
 | P4 Simulador | Stuff+ de un pitch que nadie lanzó, en los dos entornos, con Δ | En `main`, sobre el puente |
-| P3 Traductor | Stuff+ HH proyectado de un lanzador de fuera | En construcción, sobre v0 |
+| P3 Traductor | Stuff+ en altitud extrema proyectado de un lanzador de fuera | En PRs (#67–#71), sobre el puente |
 | P2 Ficha | Stuff+ por pitch y arsenal; ubicación (§3.1); SHAP cuando llegue A1 | Construida sobre v0; la ubicación y el veredicto esperan (§3.1) |
-| P5 Plan | Stuff+ ponderado por uso, antes y después | En construcción, sobre v0 |
-| P6–P8 | Stuff+ por entorno y rol | En construcción; el plantel depende del Q&A |
+| P5 Plan | Stuff+ ponderado por uso, antes y después | En `main`, sobre v0 |
+| P6 y P8 | Stuff+ por entorno y rol | En `main`; demostrativas, con el plantel aproximado (ADR 0008) |
+| P7 Proyección | Forma proyectada por pitch | Datos en `main` (#57), pantalla en #58 |
 | Documento técnico | Las tablas de A1–A3 y C1–C3 | Se congela el 12 oct |
 
 Ninguna pantalla imprime carreras: el puente Stuff+ → carreras no existe mientras A3 no lo muestre.
@@ -172,7 +173,7 @@ Ninguna pantalla imprime carreras: el puente Stuff+ → carreras no existe mient
 | **1 oct** | **Puerta A3.** Si no hay un xRV que correlacione con el run value observado, se recorta alcance de producto, no de validación (`docs/08` §2) |
 | 12 oct | Congelamiento: ningún número cambia después |
 | 13 oct | Ensayo de los 10 minutos |
-| 15 oct | Entrega |
+| 22 oct | Entrega (era el 15) |
 
 La escala es un cambio MAJOR del modelo y obliga a reescalar el Radar. Si cambia, tiene que ser
 antes del 12.
@@ -185,3 +186,74 @@ Las pantallas que faltan (`docs/10`), sobre v0, más lo que no es pantalla: `rep
 ficha ejecutiva, el Decision Log y el deck. Si una pantalla necesita un número que todavía no existe,
 se les pregunta antes de calcularlo; nunca se inventa. Si ustedes necesitan algo de producto (un
 endpoint, un cambio al contrato, una tabla del reporte), se pide en un issue y se hace.
+
+---
+
+## 8. Después del Q&A (30 de septiembre) · lo que cambió para ustedes
+
+Las respuestas completas están en [`docs/10` §5](10-PANTALLAS-RESTANTES.md). Para datos, en orden:
+
+### 8.1 Prioridad 1 · un scorer que ellos puedan correr
+
+**Diablos va a evaluar todos los modelos contra su propio holdout: la postemporada 2026.** Lo que mide
+es que el modelo generalice. Sin algo que corra sobre sus datos, no hay entrega.
+
+- **Qué es:** un comando que recibe un archivo con las mismas columnas del dataset y devuelve Stuff+
+  por lanzamiento, con su banda.
+- **Contrato:** `packages/models/scoring.py` (`Scorer`), el mismo que ya llena el puente v0.
+- **Hecho cuando:** el README documenta el comando, y alguien que no lo escribió lo corre sobre un
+  CSV de prueba y obtiene un archivo con `stuff_plus` y `stuff_plus_se` por fila.
+- **Actualización del 1 de octubre: el comando ya existe** y lo construyó producto: `python -m
+  models.score` (#61–#63, [ADR 0009](adr/0009-arnes-de-scoring.md)). Hoy contesta el puente v0.
+  **Lo que les toca es el modelo, no el comando:** un objeto que cumpla `Scorer`, guardado con
+  `joblib` en `artifacts/`, que pase las compuertas. Entra con `--model` y el `model_id` de cada fila
+  dice cuál contestó. Si su modelo usa el arsenal, hay que extender `Scorer.draws`, y eso se acuerda
+  entre los dos equipos.
+
+### 8.2 El target · el enfoque que decidió Martín
+
+En la altura, una bola en juego cuesta más: 7.55 carreras por 9 entradas contra 4.84 a nivel del mar
+(`evidence.json` → `run_environment`). Por eso Diablos prioriza el whiff y el ponche. El enfoque
+decidido es que el modelo lo aprenda de los datos, sin un peso puesto a mano:
+
+1. Modelos por componente (A1): P(swing), P(whiff | swing), P(strike cantado), P(en juego) y la
+   calidad del contacto, con el índice de densidad como feature.
+2. **El valor de cada evento, estimado por categoría de altitud** (A2). Como evitar una bola en juego
+   vale más en la altura, el whiff gana peso solo.
+3. xRV = Σ P(evento) × valor del evento en ese entorno.
+4. **Validación:** en altitud extrema, el Stuff+ debe correlacionar más con el whiff que a nivel del
+   mar. Si pasa, la idea quedó demostrada en vez de supuesta.
+
+**Hallazgo de Martín:** el modelo entrenado sin separar por tipo de pitch aprende mejor que los
+modelos por tipo (MLflow, `p_chase`). Es lo esperado: más datos y estructura compartida. La sugerencia
+de producto es un solo modelo con `pitch_type` como feature, y la normalización por tipo en la escala
+(§8.3), no en el entrenamiento. La decisión es suya.
+
+### 8.3 La escala · 100 por entorno
+
+Emilio: «ese sería por estadio […] el mismo picheo puede valer 120 a nivel del mar, pero 150 en la
+altura». O sea, **100 es el promedio de cada entorno**, y probablemente de cada tipo de pitch.
+
+- Hoy el v0 normaliza sobre toda la liga, y el ADR 0007 proponía normalizar a nivel del mar con la
+  altitud como Δ. **Ninguna de las dos es lo que pidió.**
+- Es un cambio MAJOR (`CONVENTIONS.md` §5.3): reescala el Radar y cambia el significado del Δ y de la
+  Trampa. **Tiene que decidirse antes del 12.**
+- **Confirmar por correo** con este ejemplo: «¿100 es el promedio de los lanzamientos del mismo tipo
+  en la misma categoría de altitud, de modo que un slider promedio en altitud extrema vale 100 aunque
+  rompa menos que uno promedio a nivel del mar?»
+- Al decidirla, actualicen el punto 4 del ADR 0007.
+
+### 8.4 Location+ y Pitching+ · después del scorer
+
+Se evalúa sobre todo Stuff+; los otros dos son un plus, y Emilio dijo que «salen y nacen de Stuff+».
+Van **después** de 8.1. La pestaña Arsenal de la Ficha ya espera la ubicación por `locations.json`
+(§3.1). Si no alcanza el tiempo, van en la sección **«qué haríamos con más tiempo»**, que también
+cuenta.
+
+### 8.5 Reglas que quedaron claras
+
+- **Fuentes externas:** solo públicas, reproducibles, y documentando para qué se usaron.
+- **Datos faltantes:** son normales en las métricas de batazo. La política de exclusión o imputación
+  va escrita en el documento técnico, porque también se evalúa.
+- **«Altitud extrema» son cinco parques** (Puebla, CDMX, Aguascalientes, Querétaro y León), no el
+  Harp Helú. Ver [`reference/categorias-altitud.md`](reference/categorias-altitud.md).

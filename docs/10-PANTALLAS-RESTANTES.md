@@ -10,6 +10,12 @@
 > **Nota del 28 de septiembre:** las pantallas se construyen sobre los artefactos de v0, como dice
 > §0. Lo que producto no hace es otro modelo ni otro puente: eso es del equipo de datos. Lo que se
 > necesita de ellos, y por qué, está en [`docs/11`](11-LO-QUE-NECESITA-PRODUCTO.md).
+>
+> **Estado al 1 de octubre.** En `main`: P1 Radar, P2 Ficha y su pestaña Arsenal (#36–#48), P4
+> Simulador, P5 Plan (#49–#51), P6 Despliegue y P8 Plantel (#56). La P7 Proyección tiene sus datos en
+> `main` (#57) y su pantalla en el #58, listo para revisión. La P3 Traductor, que bajó de prioridad tras
+> el Q&A (§5), quedó construida después, en #67–#71. Lo que sigue, con criterio de hecho, está en la checklist de
+> [`docs/08`](08-PLAN-DE-ARRANQUE.md).
 
 ---
 
@@ -31,7 +37,7 @@ reales de v0:
 
 | Archivo | Qué trae | Lo genera |
 |---|---|---|
-| `analysis/outputs/mockup_data.json` | 370 tarjetas lanzador-temporada: Stuff+ HH y a nivel del mar, Impuesto, rol, Trampa, arsenal resumido | `analysis/evidence.py` |
+| `analysis/outputs/mockup_data.json` | 370 tarjetas lanzador-temporada: Stuff+ en altitud extrema y a nivel del mar, Impuesto, rol, Trampa, arsenal resumido | `analysis/evidence.py` |
 | `analysis/outputs/evidence.json` | Densidad, within-pitcher, perfiles por tipo, traductor, hipótesis | `analysis/evidence.py` |
 | `analysis/outputs/simulator.json` | Rangos por tipo, mapa de efectividad, envolvente de plausibilidad, bandas de traducción | `analysis/simulator_evidence.py` |
 | `analysis/outputs/arsenals.json` | Arsenal completo por lanzador-temporada y entorno: release, eje y HB con signo | `analysis/simulator_evidence.py` |
@@ -102,7 +108,7 @@ Si se trabaja en un worktree, necesita su propio `uv sync --all-extras` y un enl
 |---|---|---|
 | 3 | 24 sep – 1 oct | Fusionar el #32 · **P3 Traductor** · **P2 Ficha** |
 | 4 | 2 – 8 oct | **P5 Plan** · P6/P7/P8 · la web lee de la API · `report/build.py` |
-| 5 | 9 – 15 oct | Congelamiento el **12** · ensayo el **13** · entrega el **15** |
+| 5 | 9 – 22 oct | Entrega el **22** (era el 15). Congelamiento y ensayo propuestos: **19** y **20** |
 
 El orden sigue lo que el reto exige por nombre: la P3 cubre el entregable 3 y es el diferenciador;
 la P2, el entregable 1; la P5, el entregable 3. P6, P7 y P8 degradan a mockup de alta fidelidad si
@@ -112,7 +118,7 @@ falta tiempo (`docs/00` §10).
 
 ## 2. Tareas
 
-### T1 · Fusionar el #32 · **bloquea a las demás**
+### T1 · Fusionar el #32 · ✅ hecho
 
 **Qué:** el PR de integración #32 (`chore/simulador-a-main` → `main`) lleva a `main` toda la P4, la
 guía de arranque del README y el veredicto del modelo junto al modelo. Necesita una aprobación de
@@ -125,7 +131,7 @@ Es la última rama vieja.
 
 ---
 
-### T2 · P3 · Traductor de Altitud · **la siguiente pantalla**
+### T2 · P3 · Traductor de Altitud · construida (#67–#71), en revisión
 
 **Pregunta:** *Este pitcher nunca ha lanzado aquí. ¿Cuánto vale en el Harp Helú?* (`docs/02` P3)
 
@@ -141,7 +147,7 @@ componentes visuales ya existen por la P4.
   (`evidence.json → density`).
 - **Salida, las tres cosas juntas que pide `docs/02`:**
   1. la forma proyectada en CDMX por pitch, IVB y HB **con banda**;
-  2. el **Stuff+ HH proyectado con banda** por pitch y del arsenal ponderado por uso;
+  2. el **Stuff+ en altitud extrema proyectado con banda** por pitch y del arsenal ponderado por uso;
   3. **por qué**: el factor Magnus (0.754) y el Índice de Densidad aplicados, visibles, con una frase
      de física.
 - El **mapa de movimiento** con el arsenal completo, antes y después. Reutiliza `MovementMap`.
@@ -170,7 +176,7 @@ componentes visuales ya existen por la P4.
 **Criterios de aceptación:**
 - [ ] `packages/web/src/app/traductor/page.tsx` existe y `check_pendientes` marca P3 ✅.
 - [ ] Con «cargar ejemplo» sobre `pitcher_00069` (2025), la recta proyecta **15.6″ ± 0.9″** de IVB y
-      el Stuff+ HH coincide con el del Simulador para el mismo pitch (**92.9 ± 4.1**). Mismo pitch,
+      el Stuff+ en altitud extrema coincide con el del Simulador para el mismo pitch (**92.9 ± 4.1**). Mismo pitch,
       mismo número en toda la app.
 - [ ] Cada número de salida lleva banda; ninguno sale solo.
 - [ ] El factor Magnus y el Índice de Densidad que se muestran salen de `evidence.json`, no del JSX.
@@ -185,7 +191,7 @@ componentes visuales ya existen por la P4.
 
 ---
 
-### T3 · P2 · Ficha de Pitcher
+### T3 · P2 · Ficha de Pitcher · ✅ en `main`
 
 **Pregunta:** *¿Qué tengo enfrente y qué le pasa en la altura?* (`docs/02` P2)
 
@@ -198,7 +204,7 @@ pitcher y arsenal»). Hoy el Radar no tiene a dónde llevar.
   `node_modules/next/dist/docs/` antes de escribirla (`packages/web/AGENTS.md`).
 - **Selector de temporada** con todas las que tenga, y una tabla compacta de sus temporadas con rol.
   El hueco se ve: si tiene 2024 y 2026, no hay promedio (ADR 0005).
-- **Encabezado:** Stuff+ HH ± banda, nivel del mar ± banda, Δ, Impuesto de Altitud (o «no
+- **Encabezado:** Stuff+ en altitud extrema ± banda, nivel del mar ± banda, Δ, Impuesto de Altitud (o «no
   concluyente»), rol, bandera de Trampa, muestra por entorno, pérdida media de IVB.
 - **Arsenal por pitch:** uso, velocidad, IVB y HB en los dos entornos, spin, Stuff+ en los dos
   entornos, whiff.
@@ -218,7 +224,7 @@ release). Todo existe; no hace falta correr nada nuevo.
 
 **Criterios de aceptación:**
 - [ ] `packages/web/src/app/pitchers/[pitcherId]/page.tsx` existe y `check_pendientes` marca P2 ✅.
-- [ ] `/pitchers/pitcher_00069` muestra, para 2025: Stuff+ HH **93.3 ± 0.7**, nivel del mar
+- [ ] `/pitchers/pitcher_00069` muestra, para 2025: Stuff+ en altitud extrema **93.3 ± 0.7**, nivel del mar
       **110.5 ± 0.8**, Δ −17.2, Impuesto **no concluyente**, rol Abridor y Trampa. Las cifras salen
       de `mockup_data.json` y un test lo aserta.
 - [ ] Un lanzador con hueco entre temporadas muestra el hueco, no un promedio. Tiene su test, con
@@ -231,7 +237,7 @@ release). Todo existe; no hace falta correr nada nuevo.
 
 ---
 
-### T4 · P5 · Plan de Desarrollo
+### T4 · P5 · Plan de Desarrollo · ✅ en `main`
 
 **Pregunta:** *¿Qué le arreglo a este pitcher?* (`docs/02` P5)
 
@@ -243,9 +249,9 @@ quien se sienta en la entrevista de 10 minutos.
 - **No son tarjetas: son dos o tres frases con plantilla fija** (`docs/02` P5):
   - *Qué se degrada*: cuál pitch pierde más y cuántas pulgadas.
   - *Qué aguanta*: cuál conserva su forma, y por qué físicamente.
-  - *Qué cambia*: qué reparto de uso lo compensa, en puntos de Stuff+ HH ponderado.
+  - *Qué cambia*: qué reparto de uso lo compensa, en puntos de Stuff+ en altitud extrema ponderado.
 - Cada frase se arma en `domain/` desde datos; ningún texto con cifras escrito a mano.
-- El **cambio de uso** se calcula como el Stuff+ HH ponderado del arsenal con los usos actuales contra
+- El **cambio de uso** se calcula como el Stuff+ en altitud extrema ponderado del arsenal con los usos actuales contra
   los propuestos. Es aritmética sobre las cifras por pitch que ya existen; no hace falta un modelo nuevo.
 - Enlace a «probar el cambio en el Simulador».
 
@@ -264,14 +270,14 @@ de referencia es `pitcher_00566` (aguanta con el slider) contra `pitcher_00069` 
       salen de las cifras reales (20.7″ → 15.0″), no del JSX.
 - [ ] La propuesta de uso nunca da usos que no sumen 100% ni usa un pitch que el lanzador no tiene.
       Test de propiedad.
-- [ ] El Stuff+ HH ponderado antes y después lleva banda (propagada desde las bandas por pitch; basta
+- [ ] El Stuff+ en altitud extrema ponderado antes y después lleva banda (propagada desde las bandas por pitch; basta
       documentar el supuesto) y el mecanismo físico va en una frase.
 - [ ] Ninguna frase imprime carreras.
 - [ ] Captura headless revisada contra `Plan.dc.html`.
 
 ---
 
-### T5 · P6 · Tablero de Despliegue · **tiene una pregunta abierta**
+### T5 · P6 · Tablero de Despliegue · ✅ en `main` (#56), demostrativa
 
 **Pregunta:** *¿Quiénes son los mejores para el estadio donde se juega?* (`docs/02` P6)
 
@@ -299,7 +305,7 @@ de una corrida y se asertan en tests; la decisión sobre el roster está escrita
 
 ---
 
-### T6 · P7 · Proyección
+### T6 · P7 · Proyección · datos en `main` (#57), pantalla en #58
 
 **Pregunta:** *¿Cómo se vería este lanzador en el estadio de la próxima serie?* (`docs/02` P7)
 
@@ -320,7 +326,7 @@ sus pitches (test sobre `pitcher_00069`); la extrapolación a altitud media se d
 
 ---
 
-### T7 · P8 · Plantel · **misma pregunta abierta que T5**
+### T7 · P8 · Plantel · ✅ en `main` (#56), demostrativa
 
 **Qué entra:** los lanzadores con su Stuff+ por temporada y su rol. Es la contraparte del Radar y la
 puerta a la Ficha.
@@ -345,13 +351,10 @@ plantel» (T5) está aplicada y declarada. Si se elige mockup, que sea explícit
 
 ---
 
-### Preguntas abiertas que se llevan al Q&A con Diablos (30 de septiembre, 17:00)
+### Preguntas que se llevaron al Q&A con Diablos (30 de septiembre, 17:00)
 
-El documento de preguntas vive fuera del repo, en Claude Docs:
-https://claude.ai/code/artifact/1cdb16ee-211f-42ee-9ddb-eb4f3148f966. Cinco partes de este plan
-dependen de sus respuestas: el plantel de P6/P8 (T5 y T7), la escala y el target del modelo final, qué
-significa «Stuff+ HH» (estadios por categoría), si hay que desplegar, y qué se entrega el 15. **Después
-del Q&A, pasar las respuestas aquí y ajustar las tareas afectadas.**
+Las preguntas vivían en Claude Docs
+(https://claude.ai/code/artifact/1cdb16ee-211f-42ee-9ddb-eb4f3148f966). Las respuestas están en §5.
 
 ## 4. Lo que queda del Simulador (P4)
 
@@ -365,3 +368,62 @@ No bloquea las pantallas nuevas, pero hay que cerrarlo antes del 13 de octubre:
 
 La explicación completa del Simulador, para el equipo, está en
 https://claude.ai/artifact/Fgr192a2cnf5gKK3HvXFuL (es privada: hay que compartirla desde su menú).
+
+---
+
+## 5. Respuestas del Q&A con Diablos (30 de septiembre)
+
+Respondió Emilio, analista de Diablos. La transcripción está fuera del repo; esto es lo que cambia el
+plan, citado donde importa.
+
+| Tema | Lo que dijo | Qué cambia |
+|---|---|---|
+| **Categorías de altitud** | No Altitude 0–700 m; Medium 800–1,600 m (Oaxaca); **Extreme: Puebla, CDMX, Aguascalientes, Querétaro y León** | «Stuff+ en altitud extrema» es el promedio de **cinco parques**, no el Harp Helú. Nombre híbrido decidido el 1 oct: «altitud extrema» en cifras y tablas, «Harp Helú» solo en narrativa. Detalle en [`reference/categorias-altitud.md`](reference/categorias-altitud.md) |
+| **Escala de 100** | «Ese sería **por estadio** […] el mismo picheo puede valer 120 a nivel del mar, pero 150 en la altura, o viceversa» | 100 es el promedio **de cada entorno**, probablemente por tipo de pitch. El v0 normaliza sobre toda la liga y el ADR 0007 proponía normalizar a nivel del mar: los dos difieren de esto. Decide datos antes del 12, **y se confirma por correo** con un ejemplo. Cambia el significado del Δ y de la Trampa: de «cuánto pierde» a «cuánto cambia su lugar» |
+| **Evaluación** | Holdout propio: **la postemporada 2026**. No imponen definición de run value: cómo definimos la calidad del picheo también se evalúa | Hace falta un **scorer reproducible** que corra sobre sus datos (`docs/11` §8) |
+| **Location+ y Pitching+** | «Vamos a evaluar sobre todo Stuff+»; los otros dos «salen y nacen de Stuff+», son un *nice to have*. Cuenta incluir **qué harían con más tiempo** | Se incluyen después del scorer. Si no alcanza, van en esa sección |
+| **Qué mira Diablos** | Swings abanicados y ponches, porque en la altura hasta el contacto débil se vuelve hit; y ponches contra bases por bolas, como comando | El target pesa el whiff por entorno, desde los datos (`docs/11` §8). En producto: whiff, K y K−BB más visibles |
+| **¿Solo Diablos?** | No: evaluar a todos. Ellos saben quién es cada ID anonimizado y buscan lanzadores que rindan en la altura | **El Radar es la pantalla central.** El plantel de Diablos **no se va a obtener**: P6 y P8 quedan demostrativas (ADR 0008) |
+| **Simulación física** | Interesante como complemento, «pero no sería el entregable principal» | **La P3 Traductor baja de prioridad.** El Simulador (P4) y la Proyección (P7) ya cubren la física |
+| **Fuentes externas** | Se valen si son públicas y reproducibles, explicando para qué se usaron | Clima o altitud por parque se pueden usar, documentados |
+| **Datos faltantes** | Normales en las métricas de batazo; quitaron los parques con radar mal calibrado; hay temporadas incompletas | Política de exclusión o imputación escrita en el documento técnico |
+| **Uso** | Pretemporada (¿llega con menos movimiento o velocidad?), juntas semanales con los pitchers, quizá en vivo | La Ficha y su tabla de temporadas son la vista de pretemporada |
+| **Entrega y presentación** | Por correo; detalles después. Valoran claridad para una audiencia no técnica, interactividad («super plus») y reproducibilidad. Revisa Octavio Hernández | Ensayar para no técnicos; README reproducible |
+
+**Lo que no se respondió:** si la demo puede ser local o debe estar en internet. Se pregunta por
+correo, junto con la confirmación de la escala.
+
+---
+
+## 6. Pasada de paridad contra el prototipo (1 de octubre)
+
+Revisé cada pantalla construida contra su `.dc.html`, con capturas a 1440 y a 1280 px. Lo que estaba
+roto y no requería decidir nada se arregló en el #78: la mano en inglés, las referencias internas en
+el texto para el coach, cifras partidas en dos renglones y un par de rótulos. **Lo que queda**, en
+orden de valor para la demo:
+
+### Requiere una decisión
+
+1. **El «±» no significa lo mismo en todas las pantallas.** En el Radar, la Ficha y el Despliegue es
+   la banda al 95%. En el Simulador, el Traductor y la Proyección es un error estándar, y la
+   Proyección lo dice. En el Plan, «93.3 ± 0.7» (la tarjeta) convive con «93.3 ± 0.4» (el arsenal
+   ponderado). **Decidido el 1 de octubre:** una sola convención, la banda al 95%, y que cada pantalla
+   lo diga (`docs/12` §2.1). Falta aplicarlo en el código.
+2. **La Ficha Técnica del prototipo** («de dónde vienen los −23.0 del four-seam»: cuánto se debe al
+   IVB, al HB, a la velocidad y al spin) no existe. Para cada feature hace falta una atribución del
+   modelo (SHAP, A1), así que es **trabajo de datos**; el Simulador ya separa forma de entorno.
+3. **El orden de la Ficha a 1280 px:** el mapa ocupa la primera pantalla y la tabla del arsenal queda
+   abajo. El prototipo los pone lado a lado.
+
+### Arreglos chicos (menos de 30 líneas cada uno)
+
+- **Plantel:** «Agrupar por rol» no muestra dónde terminan los abridores. Falta una fila separadora.
+- **Despliegue:** la nota dinámica del prototipo («pitcher_X es último en casa y N° de gira»), que
+  convierte la columna Cambio en una historia.
+- **Pestaña Arsenal de la Ficha:** sin datos de ubicación solo repite la tabla. Agregar el enlace
+  «Palanca para el coach» al Plan, y achicar los mapas vacíos mientras llega Location+.
+- **Proyección:** el recuadro «Cuándo sirve» del prototipo, y explicar por qué un pitch queda «fuera»
+  de la banda (break chico, error relativo grande).
+- **Ficha:** la temporada sin score como chip gris con su motivo, en la barra de contexto.
+- **Simulador:** la banda gris de cada slider (p5–p95 de la liga) no tiene leyenda, y el panel
+  «Contra su recta» queda casi vacío cuando el pitch es la recta misma.

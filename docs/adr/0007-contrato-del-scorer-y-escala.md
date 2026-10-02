@@ -52,6 +52,11 @@ class Scorer(Protocol):
 - **Aplican igual a A3.** Son también su criterio de aceptación en `model-eval.yml`.
 
 **4. Propuesta de escala para A3 (decide el equipo de datos).**
+
+> **Superada por el Q&A (30 de septiembre), pendiente de confirmar.** Diablos pidió 100 **por
+> entorno**, no a nivel del mar con la altitud como Δ. La pregunta de confirmación, con un ejemplo, está
+> en `docs/11` §8.3. Lo decide datos antes del 12. La app ya está lista para las dos escalas: la
+> evidencia declara la suya en `mockup_data.json → scale` y los textos del Δ la siguen (#75).
 - El reto: «un número por encima de 100 **siempre** significa mejor que promedio, independientemente del
   pitch type», con 100 = «promedio LMB ajustado por temporada y estadio».
 - Hoy v0 normaliza sobre toda la liga, ambos entornos y todos los tipos. Un slider promedio no es 100, y
