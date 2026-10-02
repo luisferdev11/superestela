@@ -1,19 +1,23 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { ArsenalEditor } from './ArsenalEditor'
 import { ChipGroup } from './ChipGroup'
+import { FileUpload } from './FileUpload'
 import { TranslationTable } from './TranslationTable'
 import { useTranslation } from './useTranslation'
+import { ValidationExample } from './ValidationExample'
 import { ArsenalMap } from '@/components/pitcher/ArsenalMap'
 import { HANDS, type Hand, type PitcherArsenal } from '@/domain/simulator'
 import {
   ORIGINS,
   exampleRows,
+  fileRows,
   isExtrapolation,
   isReady,
   normalizedUsage,
   translatorRequests,
+  validationRows,
   weightedMetric,
   type Origin,
   type TranslatorRow,
@@ -21,6 +25,7 @@ import {
 import type { MapPitch } from '@/domain/arsenalMap'
 import type { Metric } from '@/domain/types'
 import { formatMetric, formatNumber, formatSignedMetric } from '@/domain/format'
+import type { ArsenalSummary } from '@/sources/arsenalSummary'
 import { es } from '@/i18n/es'
 
 export type Densities = { readonly sea: number; readonly medium: number; readonly hh: number }
@@ -51,25 +56,22 @@ const show = (metric: Metric | null, signed = false): string =>
  * La isla de la P3 (`Traductor.dc.html`). Aqui no se calcula ningun score: la
  * pantalla arma una pregunta por pitch, la API contesta cada una igual que en
  * el Simulador, y esto pondera y dibuja.
+ *
+ * Es para el lanzador que no esta en nuestros datos (entregable 3c): la entrada
+ * principal es su export de TrackMan. El unico arsenal real es un ejemplo de
+ * validacion, que se compara contra lo que se midio en altitud extrema.
  */
 export const Translator = ({
-  arsenals,
-  examples,
+  example,
   densities,
   factors,
 }: {
-  readonly arsenals: readonly PitcherArsenal[]
-  /** Los arsenales reales que se ofrecen como ejemplo, por llave. */
-  readonly examples: readonly string[]
+  /** Un lanzador que si lanzo en altitud extrema: el ejemplo con el que se valida. */
+  readonly example: PitcherArsenal | null
   readonly densities: Densities
   readonly factors: Factors
 }) => {
-  const byKey = useMemo(() => new Map(arsenals.map((a) => [a.key, a])), [arsenals])
-  const offered = examples.flatMap((k) => {
-    const a = byKey.get(k)
-    return a === undefined ? [] : [a]
-  })
-  const first = offered[0] ?? null
+  const first = example
 
   const [source, setSource] = useState<PitcherArsenal | null>(first)
   const [edited, setEdited] = useState(false)
@@ -87,6 +89,14 @@ export const Translator = ({
     setRows(asPercent(exampleRows(arsenal)))
     setHand(arsenal.hand)
     setOrigin('sea')
+    setLoads((n) => n + 1)
+  }
+  const loadFile = (summary: ArsenalSummary): void => {
+    setSource(null)
+    setEdited(true)
+    setRows(fileRows(summary.pitches))
+    setHand(summary.pitcherHand)
+    setOrigin(summary.origin ?? 'sea')
     setLoads((n) => n + 1)
   }
   const edit = (next: TranslatorRow[], remount = false): void => {
@@ -112,6 +122,16 @@ export const Translator = ({
         ? translation.last.results
         : null
   const isStale = translation.status === 'loading' && current !== null
+  // El ejemplo valida solo mientras es su arsenal del mar, sin tocar.
+  const isExample = !edited && source !== null
+  const validation =
+    isExample && current !== null
+      ? validationRows(
+          rows,
+          current.map((r) => r.harpHelu.shape),
+          source.hh,
+        )
+      : null
 
   const shares = normalizedUsage(rows)
   const shown = current?.every((r) => r.stuffPlusShown) ?? false
@@ -146,18 +166,24 @@ export const Translator = ({
 
   return (
     <div className="flex flex-col gap-4">
+      <FileUpload onLoad={loadFile} />
+
       <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-        <ChipGroup
-          label={es.translator.examples}
-          options={offered.map((a) => ({
-            key: a.key,
-            label: es.translator.example(a.pitcherId, a.season),
-            isActive: !edited && source?.key === a.key,
-            onPick: () => {
-              load(a)
-            },
-          }))}
-        />
+        {example === null ? null : (
+          <ChipGroup
+            label={es.translator.example.title}
+            options={[
+              {
+                key: example.key,
+                label: es.translator.example.load,
+                isActive: isExample,
+                onPick: () => {
+                  load(example)
+                },
+              },
+            ]}
+          />
+        )}
         <ChipGroup
           label={es.translator.origin}
           options={ORIGINS.map((o) => ({
@@ -220,6 +246,13 @@ export const Translator = ({
             results={current}
             simulatorFrom={edited ? null : source}
           />
+          {validation === null || source === null ? null : (
+            <ValidationExample
+              pitcherId={source.pitcherId}
+              season={source.season}
+              rows={validation}
+            />
+          )}
           <div className="max-w-[560px]">
             <ArsenalMap
               pitches={mapPitches}

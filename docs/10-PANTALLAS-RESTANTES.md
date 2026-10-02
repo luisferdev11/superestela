@@ -131,9 +131,25 @@ Es la última rama vieja.
 
 ---
 
-### T2 · P3 · Traductor de Altitud · construida (#67–#71), en revisión
+### T2 · P3 · Traductor de Altitud · ✅ en `main` (#81), reencuadrada en el #83
 
 **Pregunta:** *Este pitcher nunca ha lanzado aquí. ¿Cuánto vale en el Harp Helú?* (`docs/02` P3)
+
+> **Reencuadre del 1 de octubre (#83, tarea 4 de `docs/08` §0.0).** Con tres lanzadores del dataset
+> como ejemplo, la pantalla repetía la pestaña Proyección de la Ficha. Ahora es para **quien no está en
+> nuestros datos** (entregable 3c):
+>
+> - **Entrada principal: el export de TrackMan** del lanzador, un renglón por lanzamiento. Lo resume
+>   `POST /api/v1/arsenals/summarize` (`packages/api/arsenal_file.py`): mediana de cada control por
+>   tipo de pitch, media circular del eje, uso, todo del lado del brazo. La mano y el origen
+>   (`altitude_category`, si viene) se preseleccionan. Los tipos sin modelo y las filas incompletas se
+>   cuentan en pantalla; un archivo con dos manos o dos lanzadores se rechaza con su motivo. La captura
+>   a mano sigue.
+> - **Un solo ejemplo, como validación:** `pitcher_00069/2025`, el que más lanzó en altitud extrema de
+>   los tres de `docs/09` §5.2. Su arsenal del mar entra como si fuera de fuera, y lo proyectado se pone
+>   junto a lo medido, juzgado con la banda al 95% y la regla de la Proyección (30 lanzamientos o más).
+>   Debajo, «¿Ya juega en la LMB? → su Ficha».
+> - Lo que sigue abajo es el plan original de T2; donde choca con este recuadro, gana el recuadro.
 
 **Por qué primero:** es el diferenciador del producto (`docs/00` §3) y cubre el entregable 3 («cómo
 perfilar un prospecto o agente libre»). Además es la más barata: la física, el endpoint y los
@@ -156,7 +172,7 @@ componentes visuales ya existen por la P4.
 - Un enlace «abrir este pitch en el Simulador».
 
 **Qué no entra:**
-- Carga de archivo CSV: es opcional, solo si sobra tiempo; la captura manual cubre el caso.
+- ~~Carga de archivo CSV: es opcional~~. Desde el #83 es la entrada principal (recuadro de arriba).
 - Ligas de origen distintas de las que medimos: Japón y MLB se extrapolan con la ley de densidad
   (`docs/09` §3.2), y la pantalla debe decir que es extrapolación.
 - **Carreras**: el puente Stuff+ → carreras no existe (r = −0.08). No se imprimen.

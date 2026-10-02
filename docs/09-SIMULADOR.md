@@ -354,6 +354,13 @@ $$
   - El origen acepta el rango medido del índice (`contracts.schemas`, 0.70 a 1.05); fuera de él, 422.
   - El arsenal que acompaña al pitch se traslada con el mismo factor, para que los diferenciales
     contra la recta se midan en el mismo aire.
+- **Un export de TrackMan como arsenal** (1 oct, #83, para el Traductor). `POST
+  /api/v1/arsenals/summarize` recibe `{ "csv": "<texto>" }` (hasta 10 MB) con las columnas del
+  proveedor y devuelve una fila por tipo de pitch, del lado del brazo, lista para `/simulate`: mediana
+  de cada control, media circular del eje de giro, `n` y uso. También devuelve la mano, el origen si el
+  archivo trae una sola `altitude_category`, y cuántas filas no se usaron y por qué. Un archivo
+  ilegible, vacío, sin columnas obligatorias, o con dos manos o dos lanzadores contesta 422 con
+  `{ "error", "columns" }`. No puntúa nada: el score sigue saliendo de `/simulate`.
 
 ---
 
