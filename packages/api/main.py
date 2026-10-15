@@ -127,21 +127,40 @@ def extreme_pitches_per_inning() -> float:
     return float(evidence["run_environment"]["Extreme Altitude"]["pitches_per_inning"])
 
 
-@lru_cache(maxsize=1)
-def tax_validation() -> TaxValidation | None:
-    """The projected tax against the measured one, if analysis/projected_tax_check.py ran."""
-    outputs = os.environ.get("SUPERESTELA_OUTPUTS", str(REPO / "analysis" / "outputs"))
-    try:
-        with open(os.path.join(outputs, "projected_tax_check.json")) as fh:
-            cards = json.load(fh)["all_cards"]
-    except FileNotFoundError:
+def tax_validation(
+    service: Annotated[SimulatorService, Depends(simulator_service)],
+) -> TaxValidation | None:
+    """The projected tax's check, only if it checked the very model being served.
+
+    It is looked for beside the model first (analysis/projected_tax_check.py
+    writes it there), then in the published record. A check of another model
+    is not quoted: the screen would credit this model with someone else's r.
+    """
+    if service.scorer is None:
         return None
-    return TaxValidation(
-        n=cards["n"],
-        pearson_r=cards["pearson_r"],
-        mean_projected=cards["mean_projected"],
-        mean_measured=cards["mean_measured"],
+    model = os.environ.get(
+        "SUPERESTELA_MODEL", str(REPO / "artifacts" / "stuff_plus_v0_bridge.joblib")
     )
+    outputs = os.environ.get("SUPERESTELA_OUTPUTS", str(REPO / "analysis" / "outputs"))
+    for path in (
+        os.path.splitext(model)[0] + ".tax_check.json",
+        os.path.join(outputs, "projected_tax_check.json"),
+    ):
+        try:
+            with open(path) as fh:
+                record = json.load(fh)
+        except FileNotFoundError:
+            continue
+        if record.get("model_id") != service.scorer.model_id:
+            continue
+        cards = record["all_cards"]
+        return TaxValidation(
+            n=cards["n"],
+            pearson_r=cards["pearson_r"],
+            mean_projected=cards["mean_projected"],
+            mean_measured=cards["mean_measured"],
+        )
+    return None
 
 
 @app.post(

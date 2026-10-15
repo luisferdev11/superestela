@@ -63,7 +63,10 @@ def main() -> None:
     if not args.no_gates:
         publish = ["--publish"] if args.publish else []
         run("gates", [*python, "simulator_gates.py", *model, *publish], ANALYSIS)
-    run("tax check", [*python, "projected_tax_check.py"], ANALYSIS)
+    if not args.no_gates:
+        # After the gates: without --model they refit the bridge this checks.
+        publish = ["--publish"] if args.publish else []
+        run("tax check", [*python, "projected_tax_check.py", *model, *publish], ANALYSIS)
     run("report", [*python, "-m", "report.build"], ROOT)
 
     api_model = str(args.model.resolve()) if args.model else "artifacts/stuff_plus_v0_bridge.joblib"

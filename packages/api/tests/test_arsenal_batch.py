@@ -6,6 +6,7 @@ Stuff+ = 100 + (mph - 90) - 10 * (1 - density), with three draws one point apart
 """
 
 import io
+import json
 
 import numpy as np
 import pandas as pd
@@ -148,3 +149,23 @@ def test_endpoint_hides_scores_when_the_model_is_not_shown():
         app.dependency_overrides.clear()
     assert body["stuffPlusShown"] is False and body["stuffPlusReason"] == "gates_failed"
     assert body["pitchers"][0]["stuffPlusSea"] is None
+
+
+def test_the_tax_check_is_quoted_only_for_the_model_being_served(tmp_path, monkeypatch):
+    model = tmp_path / "toy.joblib"
+    monkeypatch.setenv("SUPERESTELA_MODEL", str(model))
+    monkeypatch.setenv("SUPERESTELA_OUTPUTS", str(tmp_path))
+    record = {
+        "model_id": ToyScorer.model_id,
+        "all_cards": {"n": 370, "pearson_r": 0.14, "mean_projected": 1.9, "mean_measured": 1.5},
+    }
+    service = SimulatorService(ToyScorer(), None, {}, {})
+    (tmp_path / "toy.tax_check.json").write_text(json.dumps(record))
+    check = tax_validation(service)
+    assert check is not None and check.n == 370
+    # A check of another fit is not quoted, even if it sits in the published record.
+    (tmp_path / "toy.tax_check.json").write_text(json.dumps({**record, "model_id": "0.0.0+other"}))
+    (tmp_path / "projected_tax_check.json").write_text(
+        json.dumps({**record, "model_id": "0.0.0+other"})
+    )
+    assert tax_validation(service) is None
