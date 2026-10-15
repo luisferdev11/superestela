@@ -1,5 +1,6 @@
 import { PageShell } from '@/components/chrome/PageShell'
 import { Translator } from '@/components/translator/Translator'
+import { TranslatorModes } from '@/components/translator/TranslatorModes'
 import { loadDataset } from '@/sources/mockupSource'
 import { loadProjections } from '@/sources/projectionSource'
 import { loadSimulatorDataset } from '@/sources/simulatorSource'
@@ -33,10 +34,14 @@ export default async function TraductorPage() {
         <h1 className="text-[26px] font-bold tracking-tight">{es.translator.title}</h1>
         <p className="mt-0.5 text-[13px] text-(--color-text-muted)">{es.translator.subtitle}</p>
       </div>
-      <Translator
-        example={data.arsenals.find((a) => a.key === EXAMPLE) ?? null}
-        densities={projections.densities}
-        factors={projections.factors}
+      <TranslatorModes
+        single={
+          <Translator
+            example={data.arsenals.find((a) => a.key === EXAMPLE) ?? null}
+            densities={projections.densities}
+            factors={projections.factors}
+          />
+        }
       />
     </PageShell>
   )

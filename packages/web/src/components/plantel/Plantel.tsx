@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { TrapFlag } from '@/components/chip/TrapFlag'
+import { TrapFlag, TrapLegend } from '@/components/chip/TrapFlag'
 import { MetricValue } from '@/components/metric/MetricValue'
 import { hasLargeDelta } from '@/domain/emphasis'
 import { dominantPitch } from '@/domain/arsenal'
@@ -64,6 +64,9 @@ export const Plantel = ({
         </div>
       </div>
       <section className="border border-(--color-border) bg-(--color-surface-card) p-5">
+        <div className="mb-3">
+          <TrapLegend />
+        </div>
         <table className="w-full border-collapse text-[13px]">
           <thead>
             <tr className="text-[10px] tracking-widest text-(--color-text-muted) uppercase">

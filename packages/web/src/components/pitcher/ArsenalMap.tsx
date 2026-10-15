@@ -1,9 +1,12 @@
 import { mapHalfSpan, type MapPitch, type Shape } from '@/domain/arsenalMap'
 import { formatNumber } from '@/domain/format'
+import { MovementMapHelp } from '@/components/map/MovementMapHelp'
 import { es } from '@/i18n/es'
 
 const SIZE = 360
-const M = { left: 40, right: 16, top: 16, bottom: 40 }
+// La letra en unidades del lienzo: el mapa se dibuja a ~400 px, casi 1 a 1.
+const FONT = 14
+const M = { left: 46, right: 16, top: 16, bottom: 2 * FONT + 18 }
 const WIDTH = SIZE + M.left + M.right
 const HEIGHT = SIZE + M.top + M.bottom
 const STEP_IN = 6
@@ -23,8 +26,16 @@ const PitchLabel = ({
 }) => {
   const at = pitch.hh ?? pitch.sea
   if (at === null) return null
+  // Cerca del borde del brazo, la etiqueta va a la izquierda del punto: si no, se corta.
+  const isNearRight = x(at.hb) > M.left + SIZE * 0.6
   return (
-    <text x={x(at.hb) + 10} y={y(at.ivb) + 16} fontSize="11" fill="var(--color-text)">
+    <text
+      x={x(at.hb) + (isNearRight ? -10 : 10)}
+      y={y(at.ivb) + 18}
+      textAnchor={isNearRight ? 'end' : 'start'}
+      fontSize={FONT}
+      fill="var(--color-text)"
+    >
       <tspan fontWeight="600">{pitch.pitchType}</tspan>
       <tspan dx="4" fill="var(--color-text-muted)">
         {es.ficha.map.usage(pitch.usage)}
@@ -59,7 +70,10 @@ export const ArsenalMap = ({
   return (
     <figure className="m-0 flex flex-col gap-2 border border-(--color-border) bg-(--color-surface-card) p-5">
       <figcaption className="flex flex-wrap items-baseline justify-between gap-3">
-        <span className="text-[15px] font-bold">{es.ficha.map.title}</span>
+        <span className="flex w-full items-start justify-between gap-3">
+          <span className="text-[15px] font-bold">{es.ficha.map.title}</span>
+          <MovementMapHelp />
+        </span>
         <span className="flex gap-4 text-[11px] text-(--color-text-muted)">
           <span>
             <span aria-hidden="true" className="text-(--color-altitude-sea)">
@@ -122,18 +136,18 @@ export const ArsenalMap = ({
             />
             <text
               x={x(t)}
-              y={M.top + SIZE + 14}
+              y={M.top + SIZE + FONT + 4}
               textAnchor="middle"
-              fontSize="10"
+              fontSize={FONT}
               fill="var(--color-text-muted)"
             >
               {t}
             </text>
             <text
               x={M.left - 6}
-              y={y(t) + 3}
+              y={y(t) + FONT / 3}
               textAnchor="end"
-              fontSize="10"
+              fontSize={FONT}
               fill="var(--color-text-muted)"
             >
               {t}
@@ -142,29 +156,34 @@ export const ArsenalMap = ({
         ))}
         <text
           x={M.left + SIZE}
-          y={M.top + SIZE + 30}
+          y={M.top + SIZE + 2 * FONT + 10}
           textAnchor="end"
-          fontSize="10"
+          fontSize={FONT}
           fill="var(--color-text-muted)"
         >
           {es.ficha.map.arm}
         </text>
-        <text x={M.left} y={M.top + SIZE + 30} fontSize="10" fill="var(--color-text-muted)">
+        <text
+          x={M.left}
+          y={M.top + SIZE + 2 * FONT + 10}
+          fontSize={FONT}
+          fill="var(--color-text-muted)"
+        >
           {es.ficha.map.glove}
         </text>
         <text
           x={M.left + SIZE / 2}
-          y={M.top + SIZE + 30}
+          y={M.top + SIZE + 2 * FONT + 10}
           textAnchor="middle"
-          fontSize="10"
+          fontSize={FONT}
           fill="var(--color-text-muted)"
         >
           {es.ficha.map.axisX}
         </text>
-        <text x={M.left + 4} y={M.top + 10} fontSize="10" fill="var(--color-text-muted)">
+        <text x={M.left + 4} y={M.top + 10} fontSize={FONT} fill="var(--color-text-muted)">
           {`${es.ficha.map.axisY} · ${es.ficha.map.up}`}
         </text>
-        <text x={M.left + 4} y={M.top + SIZE - 4} fontSize="10" fill="var(--color-text-muted)">
+        <text x={M.left + 4} y={M.top + SIZE - 4} fontSize={FONT} fill="var(--color-text-muted)">
           {es.ficha.map.down}
         </text>
 

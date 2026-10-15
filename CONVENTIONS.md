@@ -81,7 +81,7 @@ Renaming happens **once**, at the raw→curated boundary, in `packages/contracts
 | — | `stuff_plus_hh` | Stuff+ altitud extrema (`hh`: el bucket `Extreme Altitude`, cinco parques) |
 | — | `altitude_tax` | Impuesto de Altitud |
 | — | `altitude_seal` | Sello de Altitud |
-| — | `altitude_trap` | Trampa de Altitud |
+| — | `altitude_trap` | Sufre en la altura (antes «Trampa de Altitud», cambiado el 14 oct) |
 
 **`ivb` stays `ivb`**, not `induced_vertical_break`. It is the term of art; expanding it helps nobody and makes every line longer. Same for `xrv`.
 

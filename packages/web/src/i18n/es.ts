@@ -7,7 +7,6 @@ import type { Verdict } from '@/domain/reading'
 import type { Target } from '@/domain/projection'
 import type { RosterGrouping } from '@/domain/roster'
 import type { FileProblem, Origin } from '@/domain/translator'
-import type { RadarSort } from '@/domain/ranking'
 import type { ScaleKind } from '@/domain/scale'
 
 /**
@@ -28,6 +27,7 @@ export const es = {
   handLong: { Right: 'Diestro', Left: 'Zurdo' } as Record<string, string | undefined>,
   inconclusive: 'no concluyente',
   inconclusiveShort: 'no concl.',
+  noSampleShort: 'sin muestra',
   brand: { top: 'SUPER', bottom: 'ESTELA' },
   nav: {
     groups: { signings: 'Fichajes', roster: 'Roster', lab: 'Laboratorio' },
@@ -57,13 +57,13 @@ export const es = {
     `Stuff+ v0 baseline \u00b7 ${pitches.toLocaleString('es-MX')} lanzamientos \u00b7 ${String(seasons)} temporadas`,
   filter: 'Filtrar',
   all: 'Todos',
-  trapsOnly: 'Solo Trampas',
+  trapsOnly: 'Solo los que sufren en la altura',
   noMatches: 'Ning\u00fan candidato cumple estos filtros.',
   throws: { Right: 'Diestros', Left: 'Zurdos' } as Record<string, string | undefined>,
   rolePlural: { starter: 'Abridores', reliever: 'Relevistas' } satisfies Record<Role, string>,
   sortBy: 'Ordenar por',
   legend: {
-    trap: 'Trampa de Altitud \u2014 se ve fuerte a nivel del mar y su Stuff+ cae mucho en altitud extrema.',
+    trap: 'Sufre en la altura \u2014 se ve fuerte a nivel del mar y su Stuff+ cae mucho en altitud extrema.',
     inconclusive: (significant: number, total: number): string =>
       `\u2014 el Impuesto no alcanza significancia: solo ${String(significant)} de ${String(total)} la alcanzan.`,
     stale:
@@ -110,12 +110,30 @@ export const es = {
       readonly stuffPlus: string
     }
   >,
-  radarSort: {
-    hh: 'Stuff+ altitud extrema',
-    sea: 'Stuff+ nivel del mar',
-    kMinusBb: 'K\u2212BB%',
-    whiff: 'Whiff%',
-  } satisfies Record<RadarSort, string>,
+  filterBar: {
+    pitch: 'Tipo de pitch',
+    throws: 'Mano',
+    role: 'Rol',
+    season: 'Temporada',
+    all: 'Todos',
+    pitchOption: (pitch: string, count: number): string => `${pitch} (${String(count)})`,
+    search: 'Buscar lanzador',
+    searchPlaceholder: 'pitcher_00069',
+    clear: 'Limpiar filtros',
+    results: (shown: number, total: number): string =>
+      `${String(shown)} de ${String(total)} lanzadores`,
+    pitchNote: (pitch: string): string =>
+      `Todos los que tiran ${pitch} con al menos 25 en altitud extrema, ordenados por el Stuff+ de su ${pitch}. Las columnas de Stuff+, \u0394 y uso son las de ese pitch.`,
+  },
+  sortHint: 'Haz clic en el nombre de una columna para ordenar; otro clic invierte el orden.',
+  taxExplainer:
+    'Impuesto de Altitud: cu\u00e1ntas carreras de m\u00e1s permite por cada 9 entradas en altitud extrema, contra nivel del mar, medido en sus propios lanzamientos. Solo se muestra cuando la diferencia es concluyente; si no, dice \u00abno concl.\u00bb.',
+  pitchColumns: {
+    hh: (pitch: string): string => `${pitch} alt. extrema`,
+    sea: (pitch: string): string => `${pitch} n. del mar`,
+    pitch: 'Pitch',
+    usage: 'Uso',
+  },
   columnHelp: [
     'El lanzador, anonimizado. Lleva a su Ficha.',
     'Su última temporada con muestra en los dos entornos. En ámbar si no es la más reciente.',
@@ -145,7 +163,11 @@ export const es = {
         text: 'Cinco parques: Puebla, Ciudad de México, Aguascalientes, Querétaro y León. El aire es más delgado y la pelota se mueve menos.',
       },
       {
-        term: 'Trampa de Altitud ▌',
+        term: 'Impuesto de Altitud',
+        text: 'Las carreras de más que permite por cada 9 entradas cuando lanza en altitud extrema, contra lo que permite a nivel del mar. Sale de sus propios lanzamientos en los dos entornos, no del modelo. Si la diferencia no es concluyente al 95%, se dice así en vez de dar un número.',
+      },
+      {
+        term: 'Sufre en la altura ▌',
         text: 'Se ve fuerte a nivel del mar y pierde mucho en la altitud: el mercado lo paga por lo que no va a dar en casa.',
       },
       {
@@ -173,12 +195,14 @@ export const es = {
     'Candidatos en su \u00faltima temporada jugada, ordenados por su valor en altitud extrema, la de la casa de Diablos.',
   evaluated: 'Evaluados',
   conclusiveTax: 'Impuesto concluyente',
-  traps: 'Trampas de Altitud',
+  traps: 'Sufren en la altura',
   outOf: (total: number): string => `de ${String(total)}`,
-  trap: 'Trampa de Altitud',
+  trap: 'Sufre en la altura',
   trapDescription: 'Se ve fuerte a nivel del mar y su Stuff+ cae mucho en altitud extrema.',
   ficha: {
     breadcrumb: 'Fichajes',
+    season: 'Temporada',
+    onlySeason: 'Única temporada con muestra en los dos entornos.',
     tabs: {
       summary: 'Resumen',
       arsenal: 'Arsenal',
@@ -196,6 +220,10 @@ export const es = {
       tax: 'Impuesto de Altitud',
       taxMeasured: (measured: string): string =>
         `mide ${measured} c/9 ent.; la banda cruza el cero`,
+      runs: 'Carreras permitidas c/9 ent.',
+      runsIn: { hh: 'alt. extrema', sea: 'nivel del mar' } satisfies Record<Environment, string>,
+      runsNote: (minInnings: number): string =>
+        `RA/9 con banda al 95%, mínimo ${String(minInnings)} entradas. No es ERA: el dataset no marca carreras limpias.`,
       loss: 'Pierde',
       lossUnit: 'de IVB promedio en su arsenal.',
       rank: (sea: number, hh: number, of: number): string =>
@@ -241,8 +269,8 @@ export const es = {
         notAtSeaLevelPrice: 'No fichar al precio que marcan sus n\u00fameros de nivel del mar.',
       } satisfies Record<Verdict, string>,
       lever: (best: string, bestDelta: string, worst: string, worstDelta: string): string =>
-        `Si ya estuviera en el roster, la palanca es el ${best}: es lo que mejor aguanta la altitud (${bestDelta} contra ${worstDelta} del ${worst}).`,
-      rule: 'Regla provisional de producto: Trampa de Altitud, no al precio de nivel del mar; banda completa del Stuff+ en altitud extrema arriba de 100, fichar; lo dem\u00e1s, con reservas. El veredicto final lo respalda el modelo del equipo de datos.',
+        `Si lo fichas, ap\u00f3yate en su ${best}: es el pitch que menos pierde en la altura (${bestDelta} puntos de Stuff+), contra ${worstDelta} de su ${worst}. En casa, ese pitch es el que conviene usar m\u00e1s.`,
+      rule: 'Regla provisional de producto: si sufre en la altura, no al precio de nivel del mar; banda completa del Stuff+ en altitud extrema arriba de 100, fichar; lo dem\u00e1s, con reservas. El veredicto final lo respalda el modelo del equipo de datos.',
     },
     location: {
       title: (id: string): string => `Arsenal \u00b7 ${id}`,
@@ -342,6 +370,14 @@ export const es = {
     title: 'Proyecci\u00f3n',
     subtitle:
       'C\u00f3mo se ver\u00eda su arsenal en el entorno de la próxima serie, a partir de lo medido a nivel del mar.',
+    purpose: {
+      title: 'Para qué sirve',
+      items: [
+        '¿La física de la altura predice bien a este lanzador? Toma lo que mide a nivel del mar y lo traslada a la altitud con la misma ley que usan el Simulador y el Traductor.',
+        'Si lo que de verdad midió en la altura cae «en banda», la ley funciona para él, y el Traductor es confiable para lanzadores parecidos que nunca han pitcheado aquí.',
+        'Antes de una serie en altura, dice cuánto movimiento va a perder cada pitch y cuál conserva más.',
+      ],
+    },
     target: 'Entorno destino',
     targets: {
       hh: (rho: string): string => `Altitud extrema · ρ ${rho}`,
@@ -358,15 +394,15 @@ export const es = {
     columns: [
       'Pitch',
       'Uso (mar)',
-      'IVB mar',
+      'IVB a nivel del mar',
       'IVB proyectado',
-      'HB mar',
-      'HB proyectado',
-      'Medido IVB \u00b7 HB',
-      'En banda',
+      'Break horiz. a nivel del mar',
+      'Break horiz. proyectado',
+      'Medido en altura (IVB \u00b7 HB)',
+      '\u00bfAcert\u00f3?',
     ],
-    inBand: 'en banda',
-    outOfBand: 'fuera',
+    inBand: 's\u00ed, en banda',
+    outOfBand: 'no, fuera',
     noSample: 'sin muestra',
     note: 'Pulgadas; HB del lado del brazo. El \u00b1 es un error est\u00e1ndar: el error medido de la ley por tipo de pitch, el mismo que muestra el Simulador. \u00abEn banda\u00bb compara lo medido contra la banda al 95%, \u00b11.96 errores, en los dos ejes.',
     none: 'Sin muestra a nivel del mar para proyectar esta temporada.',
@@ -531,6 +567,50 @@ export const es = {
         `${env}: la liga casi no lanza esta forma; no hay muestra en la zona.`,
       label: (pitchType: string, env: string, ivb: string, hb: string): string =>
         `Mapa de movimiento de ${pitchType} en ${env}. El pitch simulado cae en IVB ${ivb} y break horizontal ${hb} pulgadas.`,
+      showExtremes: 'Mostrar los pitches más y menos efectivos de la liga',
+      help: {
+        open: '¿Cómo leer este mapa?',
+        eyebrow: 'Antes de la física',
+        title: 'Cómo leer un mapa de movimiento',
+        close: 'Cerrar',
+        intro:
+          'Todos los mapas de la app hablan el mismo idioma. Imagina que estás parado detrás del lanzador, mirando hacia el plato: esa es la «vista del lanzador», y es la que usamos siempre.',
+        behind: {
+          title: 'Detrás de un lanzador diestro',
+          leftBatter: 'bateador zurdo',
+          rightBatter: 'bateador diestro',
+          glove: '◂ guante',
+          arm: 'brazo ▸',
+          throwingArm: 'brazo de lanzar',
+          gloveHand: 'guante',
+          rises: 'sube',
+        },
+        plane: {
+          title: 'El plano de movimiento',
+          rises: 'sube (IVB +)',
+          drops: 'cae (IVB −)',
+          glove: '◂ guante',
+          arm: 'brazo ▸',
+        },
+        items: [
+          {
+            term: 'Brazo, guante y sube.',
+            text: '«Brazo» es el lado del brazo con el que lanza; «guante», el contrario. Para un diestro, el lado del brazo es donde se para el bateador diestro: por eso su recta «se le mete» a ese bateador. Un zurdo se refleja, para que los dos se lean igual.',
+          },
+          {
+            term: 'Cada punto es una forma.',
+            text: 'Cuánto se mueve de lado (break horizontal, HB) y cuánto sube o cae (IVB), en pulgadas, contra lo que haría sin spin. Arriba a la derecha vive la recta; abajo a la izquierda, la curva.',
+          },
+          {
+            term: 'Del mar a la altura.',
+            text: 'Donde hay dos puntos unidos por una línea, uno es la forma a nivel del mar y el otro en altitud extrema. El aire delgado encoge el movimiento: la forma se acerca al centro.',
+          },
+          {
+            term: 'El fondo de color',
+            text: 'En el Simulador, es el whiff por swing que la liga logra con cada forma: azul, más que la media; naranja, menos. Los puntos negros y huecos son el 10% de pitches más y menos efectivos.',
+          },
+        ],
+      },
     },
     arsenal: {
       title: (fastball: string): string => `Contra su recta · ${fastball}`,
@@ -542,6 +622,7 @@ export const es = {
         'En la altura los diferenciales de movimiento se encogen y los de velocidad no: el engaño por forma se pierde, el de velocidad sobrevive.',
     },
     comparables: {
+      toggle: 'Ver pitchers reales con una forma parecida',
       title: 'Los pitches reales más parecidos',
       row: (id: string, season: number, n: number): string =>
         `${id} · ${String(season)} · ${String(n)} pitches`,
@@ -555,7 +636,53 @@ export const es = {
   translator: {
     title: 'Traductor de Altitud',
     subtitle:
-      'Para lanzadores que no están en nuestros datos: un agente libre, alguien de MLB o de Japón. Entra su arsenal, medido donde se haya medido; sale cómo se movería en altitud extrema y cuánto valdría.',
+      'Para lanzadores de otras ligas, que no están en nuestros datos: un agente libre, alguien de MLB o de Japón. Entra su arsenal, medido donde se haya medido; sale cómo se movería en altitud extrema y cuánto valdría.',
+    modes: {
+      label: 'Qué traducir',
+      single: 'Un lanzador',
+      many: 'Varios lanzadores',
+    },
+    many: {
+      upload: 'Subir un archivo con varios lanzadores',
+      hint: 'Un CSV en el formato del dataset: un renglón por lanzamiento, con pitcher_anon_id, las columnas de TrackMan y, si vienen, is_swing e is_whiff para el whiff. El equipo de datos convierte otros exports a este formato.',
+      reading: 'Puntuando a cada lanzador…',
+      summary: (pitchers: number, rows: string): string =>
+        `${String(pitchers)} lanzadores puntuados de ${rows} lanzamientos.`,
+      left: (few: number, min: number, unsupported: string, missing: string): string =>
+        `Fuera de la tabla: ${String(few)} lanzadores con menos de ${String(min)} lanzamientos, ${unsupported} lanzamientos de tipos sin modelo y ${missing} con datos incompletos.`,
+      noSwings: 'El archivo no trae is_swing ni is_whiff: no hay whiff que medir.',
+      hidden:
+        'El modelo no está publicado para mostrarse: sin Stuff+ ni Impuesto proyectado, solo conteos y whiff.',
+      search: 'Buscar lanzador',
+      hand: 'Mano',
+      all: 'Todas',
+      columns: [
+        'Pitcher',
+        'Mano',
+        'Lanzamientos',
+        'Stuff+ nivel del mar',
+        'Stuff+ alt. extrema',
+        '\u0394',
+        'Whiff (su liga)',
+        'Impuesto proyectado c/9 ent.',
+      ],
+      columnHelp: [
+        'El lanzador, como viene en el archivo.',
+        'Mano con la que lanza.',
+        'Lanzamientos suyos que se pudieron puntuar.',
+        'Su Stuff+ llevado al nivel del mar, con la banda al 95%.',
+        'El mismo arsenal trasladado a altitud extrema con la ley de densidad, con la banda al 95%.',
+        'Cuánto cambia su Stuff+ al subir a la altitud extrema.',
+        'Swings abanicados por cada 100 swings, medidos en su liga, no en la altura. Banda al 95%.',
+        'Carreras de más por 9 entradas que el modelo proyecta en altitud extrema. Proyectado, no medido.',
+      ],
+      taxNote: (n: number, r: string, projected: string, measured: string): string =>
+        `Impuesto proyectado: lo que el modelo espera que pierda en carreras por 9 entradas al subir, no lo que se midió. Revisado contra los ${String(n)} lanzadores del Radar que sí lanzaron en los dos entornos: en promedio coincide (${projected} contra ${measured} carreras c/9 ent.), pero lanzador por lanzador ordena poco (r = ${r}). Úsalo como referencia de liga, no para elegir entre dos lanzadores.`,
+      taxNoteUnchecked:
+        'Impuesto proyectado: lo que el modelo espera que pierda en carreras por 9 entradas al subir, no lo que se midió. Todavía no se ha revisado contra el medido.',
+      band: 'Banda al 95% en Stuff+, \u0394 e Impuesto; el whiff lleva la suya.',
+      empty: 'Ning\u00fan lanzador del archivo cumple estos filtros.',
+    },
     upload: {
       label: 'Subir su export de TrackMan',
       hint: 'Un CSV con un renglón por lanzamiento y las columnas de TrackMan: AutoPitchType, PitcherThrows, RelSpeed, InducedVertBreak, HorzBreak, SpinRate, SpinAxis, Extension, RelHeight y RelSide. Si trae altitude_category, de ahí sale dónde se midió.',
@@ -576,6 +703,8 @@ export const es = {
         missing_columns: 'Faltan columnas de TrackMan:',
         mixed_pitchers: 'El archivo mezcla lanzadores: sube uno por lanzador.',
         mixed_hands: 'La mano del lanzador (PitcherThrows) debe ser una sola, Right o Left.',
+        too_many_pitchers:
+          'El archivo trae demasiados lanzadores para una pantalla: div\u00eddelo en partes de hasta 400.',
         tooLarge: 'El archivo pasa de 10 MB: sube una temporada de un lanzador.',
         unreachable: 'No se pudo contactar a la API para leer el archivo.',
       } satisfies Record<FileProblem | 'tooLarge' | 'unreachable', string>,

@@ -1,6 +1,5 @@
 import { loadDataset } from '@/sources/mockupSource'
 import { selectRadarCohort, summarize } from '@/domain/cohort'
-import { dominantPitchTypes } from '@/domain/arsenal'
 import { NavRail } from '@/components/chrome/NavRail'
 import { RadarTable } from '@/components/radar/RadarTable'
 import { es } from '@/i18n/es'
@@ -33,7 +32,6 @@ export default async function RadarPage() {
           cards={cohort}
           latestSeason={Math.max(...seasons)}
           cohortSummary={summary}
-          pitches={dominantPitchTypes(cohort)}
           scale={scale}
         />
       </main>
