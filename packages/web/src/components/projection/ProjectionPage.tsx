@@ -63,6 +63,14 @@ export const ProjectionPage = async ({
         </div>
         <PitcherSelect options={options} current={projectionHref(pitcherId, card.season)} />
       </div>
+      <section className="flex flex-col gap-1.5 border-l-[3px] border-(--color-altitude-extreme) bg-(--color-surface-card) px-4 py-3 text-[13px]">
+        <h3 className="m-0 text-[13px] font-bold">{es.projection.purpose.title}</h3>
+        <ul className="m-0 flex flex-col gap-1 pl-5">
+          {es.projection.purpose.items.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </section>
       {projection === undefined ? (
         <p className="border border-(--color-border) bg-(--color-surface-card) p-5 text-[13px]">
           {es.projection.none}

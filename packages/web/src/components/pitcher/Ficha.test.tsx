@@ -7,6 +7,7 @@ import { PitcherReading } from './PitcherReading'
 import { SeasonTable } from './SeasonTable'
 import { cardsOf, fichaHref, pickSeason, seasonTimeline } from '@/domain/pitcher'
 import { mockupDataPath } from '@/sources/paths'
+import { loadPitcherRuns } from '@/sources/runsSource'
 import { mockupDataSchema } from '@/sources/schema'
 import { toPitcherSeason, toSeasonEntry } from '@/sources/adapter'
 import { es } from '@/i18n/es'
@@ -47,6 +48,35 @@ describe('la Ficha de pitcher_00069', () => {
     expect(screen.getByLabelText('93.3 ± 0.7')).toBeInTheDocument()
     expect(screen.getByLabelText('110.5 ± 0.8')).toBeInTheDocument()
     expect(screen.getByText(es.ficha.kpi.taxMeasured('+4.55 ± 2.70'))).toBeInTheDocument()
+  })
+})
+
+describe('las carreras permitidas de pitcher_00069 (RA/9, no ERA)', () => {
+  it('muestra el RA/9 en los dos entornos con su banda, y dice por que no es ERA', async () => {
+    const { card } = await load('pitcher_00069')
+    const runs = await loadPitcherRuns()
+    expect(runs).not.toBeNull()
+    render(
+      <PitcherKpis
+        card={card}
+        rank={{ sea: 1, hh: 1, of: 1 }}
+        runs={{
+          minInnings: runs?.minInnings ?? 10,
+          pitcher: runs?.byKey.get(`pitcher_00069/${String(card.season)}`) ?? null,
+        }}
+      />,
+    )
+    expect(screen.getByText(es.ficha.kpi.runs)).toBeInTheDocument()
+    expect(screen.getByText(es.ficha.kpi.runsNote(10))).toBeInTheDocument()
+    // analysis/outputs/pitcher_runs.json: 7.13 en altura, 3.20 a nivel del mar.
+    expect(screen.getByLabelText('7.13 ± 3.87')).toBeInTheDocument()
+    expect(screen.getByLabelText('3.20 ± 2.20')).toBeInTheDocument()
+  })
+
+  it('sin el artefacto, la Ficha no muestra el recuadro', async () => {
+    const { card } = await load('pitcher_00069')
+    render(<PitcherKpis card={card} rank={{ sea: 1, hh: 1, of: 1 }} runs={null} />)
+    expect(screen.queryByText(es.ficha.kpi.runs)).toBeNull()
   })
 })
 

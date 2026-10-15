@@ -9,7 +9,8 @@ The order matters, because each step reads what the one before wrote:
 1. ``analysis/evidence.py`` -> evidence.json, simulator.json, arsenals.json and
    mockup_data.json. With ``--model``, that model scores the cards that the
    Radar, the Ficha, the Plan, the Despliegue and the Plantel show.
-2. ``analysis/projection_evidence.py`` -> projections.json (reads arsenals.json).
+2. ``analysis/projection_evidence.py`` -> projections.json (reads arsenals.json),
+   and ``analysis/pitcher_runs.py`` -> pitcher_runs.json (RA/9 for the Ficha).
 3. ``analysis/simulator_gates.py`` -> the verdict next to the model, which the
    API reads to decide whether the Simulator and the Translator show Stuff+.
    Without ``--model`` it refits the v0 bridge; skip it with ``--no-gates``.
@@ -58,6 +59,7 @@ def main() -> None:
     python = [sys.executable]
     run("evidence", [*python, "evidence.py", *model], ANALYSIS)
     run("projections", [*python, "projection_evidence.py"], ANALYSIS)
+    run("runs", [*python, "pitcher_runs.py"], ANALYSIS)
     if not args.no_gates:
         publish = ["--publish"] if args.publish else []
         run("gates", [*python, "simulator_gates.py", *model, *publish], ANALYSIS)

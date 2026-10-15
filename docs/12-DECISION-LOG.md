@@ -120,6 +120,7 @@ auditable: qué se decidió, contra qué y con qué evidencia.
 | Regla | Valor | Por qué | Dónde vive |
 |---|---|---|---|
 | Mínimo para tener Stuff+ | 100 lanzamientos en cada entorno | Debajo, la banda no distingue a nadie | `contracts/schemas.py → MIN_PITCHES_FOR_SCORE` |
+| ERA en la Ficha | Se muestra RA/9 (todas las carreras entre entradas), rotulado como tal, con banda Poisson al 95%; mínimo 10 entradas por entorno | El dataset trae `RunsScored` y `OutsOnPlay` (ponches incluidos) pero no marca carreras limpias ni corredores heredados: una ERA sería inventada. Decidido el 14 de octubre | `core/runs.py`, `analysis/pitcher_runs.py` |
 | Mínimo para K%, BB% y K−BB% | 50 turnos | Con 50, un K% de 20 todavía carga ±11 puntos | `MIN_PLATE_APPEARANCES_FOR_RATE` (#72) |
 | Mínimo para el whiff | 50 swings | La misma lógica que los turnos | `MIN_SWINGS_FOR_RATE` (#72) |
 | Lectura de la Ficha | Trampa: no al precio de nivel del mar · banda entera arriba de 100: fichar · lo demás: con reservas | Es provisional y se declara en pantalla | `domain/reading.ts` |

@@ -196,6 +196,10 @@ export const es = {
       tax: 'Impuesto de Altitud',
       taxMeasured: (measured: string): string =>
         `mide ${measured} c/9 ent.; la banda cruza el cero`,
+      runs: 'Carreras permitidas c/9 ent.',
+      runsIn: { hh: 'alt. extrema', sea: 'nivel del mar' } satisfies Record<Environment, string>,
+      runsNote: (minInnings: number): string =>
+        `RA/9: todas las carreras entre entradas, banda al 95%. No es ERA: el dataset no marca qué carreras son limpias. Con menos de ${String(minInnings)} entradas no se muestra.`,
       loss: 'Pierde',
       lossUnit: 'de IVB promedio en su arsenal.',
       rank: (sea: number, hh: number, of: number): string =>
@@ -241,8 +245,8 @@ export const es = {
         notAtSeaLevelPrice: 'No fichar al precio que marcan sus n\u00fameros de nivel del mar.',
       } satisfies Record<Verdict, string>,
       lever: (best: string, bestDelta: string, worst: string, worstDelta: string): string =>
-        `Si ya estuviera en el roster, la palanca es el ${best}: es lo que mejor aguanta la altitud (${bestDelta} contra ${worstDelta} del ${worst}).`,
-      rule: 'Regla provisional de producto: Trampa de Altitud, no al precio de nivel del mar; banda completa del Stuff+ en altitud extrema arriba de 100, fichar; lo dem\u00e1s, con reservas. El veredicto final lo respalda el modelo del equipo de datos.',
+        `Si lo fichas, ap\u00f3yate en su ${best}: es el pitch que menos pierde en la altura (${bestDelta} puntos de Stuff+), contra ${worstDelta} de su ${worst}. En casa, ese pitch es el que conviene usar m\u00e1s.`,
+      rule: 'Regla provisional de producto: si sufre en la altura, no al precio de nivel del mar; banda completa del Stuff+ en altitud extrema arriba de 100, fichar; lo dem\u00e1s, con reservas. El veredicto final lo respalda el modelo del equipo de datos.',
     },
     location: {
       title: (id: string): string => `Arsenal \u00b7 ${id}`,
@@ -342,6 +346,14 @@ export const es = {
     title: 'Proyecci\u00f3n',
     subtitle:
       'C\u00f3mo se ver\u00eda su arsenal en el entorno de la próxima serie, a partir de lo medido a nivel del mar.',
+    purpose: {
+      title: 'Para qué sirve',
+      items: [
+        '¿La física de la altura predice bien a este lanzador? Toma lo que mide a nivel del mar y lo traslada a la altitud con la misma ley que usan el Simulador y el Traductor.',
+        'Si lo que de verdad midió en la altura cae «en banda», la ley funciona para él, y el Traductor es confiable para lanzadores parecidos que nunca han pitcheado aquí.',
+        'Antes de una serie en altura, dice cuánto movimiento va a perder cada pitch y cuál conserva más.',
+      ],
+    },
     target: 'Entorno destino',
     targets: {
       hh: (rho: string): string => `Altitud extrema · ρ ${rho}`,
@@ -358,15 +370,15 @@ export const es = {
     columns: [
       'Pitch',
       'Uso (mar)',
-      'IVB mar',
+      'IVB a nivel del mar',
       'IVB proyectado',
-      'HB mar',
-      'HB proyectado',
-      'Medido IVB \u00b7 HB',
-      'En banda',
+      'Break horiz. a nivel del mar',
+      'Break horiz. proyectado',
+      'Medido en altura (IVB \u00b7 HB)',
+      '\u00bfAcert\u00f3?',
     ],
-    inBand: 'en banda',
-    outOfBand: 'fuera',
+    inBand: 's\u00ed, en banda',
+    outOfBand: 'no, fuera',
     noSample: 'sin muestra',
     note: 'Pulgadas; HB del lado del brazo. El \u00b1 es un error est\u00e1ndar: el error medido de la ley por tipo de pitch, el mismo que muestra el Simulador. \u00abEn banda\u00bb compara lo medido contra la banda al 95%, \u00b11.96 errores, en los dos ejes.',
     none: 'Sin muestra a nivel del mar para proyectar esta temporada.',

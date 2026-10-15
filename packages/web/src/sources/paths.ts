@@ -37,3 +37,6 @@ export const locationsPath = (): string => path.join(dataDir(), 'locations.json'
 
 /** La proyeccion de P7: el arsenal a nivel del mar movido con `core.translate` (`analysis/projection_evidence.py`). */
 export const projectionsPath = (): string => path.join(dataDir(), 'projections.json')
+
+/** RA/9 por lanzador-temporada y entorno, para la Ficha (`analysis/pitcher_runs.py`). No es ERA. */
+export const pitcherRunsPath = (): string => path.join(dataDir(), 'pitcher_runs.json')

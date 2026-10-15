@@ -166,6 +166,10 @@ el Traductor además preguntan a la API en vivo.
 | **C1–C3** · ablaciones | Corridas de MLflow y `report/claims.toml` | Las tablas las genera `report.build` |
 | **Lectura de la Ficha** | `packages/web/src/domain/reading.ts`, `verdictOf` | Ver §5.5 |
 
+**RA/9 de la Ficha** (14 oct): `analysis/pitcher_runs.py` escribe `analysis/outputs/pitcher_runs.json`
+(carreras permitidas por 9 entradas, por lanzador-temporada y entorno). Es medido, no sale del modelo, y
+`scripts/regenerate.py` lo corre. Si datos consigue carreras limpias, se reemplaza por ERA ahí mismo.
+
 ### 5.1 A2 · los pesos
 
 `RUN_VALUE` (`analysis/evidence.py`) son pesos sabermétricos clásicos puestos a mano. De ahí salen:

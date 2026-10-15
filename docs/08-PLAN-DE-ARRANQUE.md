@@ -62,6 +62,12 @@ las pantallas, y el Traductor es para quien no está en los datos (`docs/12` §2
       «por temporada», y el formato del holdout (columnas y quién corre el scorer). La fecha y la demo
       local ya están resueltas.
       ✔ El correo se envió, y las respuestas quedan en `docs/10` §5.
+- [x] **14 oct · Ficha: RA/9, mapa al costado, Proyección explicada** (ajustes del equipo del 14 de
+      octubre). La ERA no se puede calcular (el dataset no marca carreras limpias), así que la Ficha
+      muestra **RA/9** por entorno con su banda, desde `analysis/pitcher_runs.py`; el mapa del arsenal
+      va al lado de la tabla; la Proyección dice para qué sirve; la «palanca» de la lectura se
+      reescribió. La pestaña Arsenal se queda: Location+ llega por `locations.json`.
+      ✔ `core/tests/test_runs.py`, `Ficha.test.tsx`; captura a 1440×900.
 - [ ] **3 · Las dos preguntas literales del reto que no tienen tabla** (texto en `docs/13`):
       - «¿qué arsenal produce el Stuff+ más alto en Harp Helú?» (entregable 1): una tabla de
         combinaciones de arsenal contra el Stuff+ en altitud extrema, desde `mockup_data.json`;
