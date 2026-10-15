@@ -57,7 +57,9 @@ describe('el Traductor con varios lanzadores', () => {
   it('un archivo da una fila por lanzador, del mejor en altitud al peor', async () => {
     render(<ManyPitchers />)
     await upload()
-    expect(screen.getByText(es.translator.many.summary(3, '900'))).toBeInTheDocument()
+    expect(
+      screen.getByText(es.translator.many.summary(3, (900).toLocaleString('es-MX'))),
+    ).toBeInTheDocument()
     expect(document.querySelectorAll('tbody tr')).toHaveLength(3)
     expect(firstRowId()).toBe('liga_b')
   })

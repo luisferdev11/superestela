@@ -46,7 +46,11 @@ const SORT_KEYS: readonly (ManySortKey | null)[] = [
 
 const control =
   'h-8 border border-(--color-border-strong) bg-(--color-surface-card) px-2 text-[13px] text-(--color-text)'
-const cell = 'px-2 py-2 border-b border-(--color-border-hairline) text-right tabular-nums'
+// Base sin alineacion: con `text-right` en la base, un `text-left` agregado
+// pierde segun el orden de Tailwind, no segun el orden de las clases.
+const base = 'px-2 py-2 border-b border-(--color-border-hairline) tabular-nums'
+const cell = `${base} text-right`
+const cellLeft = `${base} text-left`
 
 const ask = async (csv: string): Promise<State> => {
   const response = await fetch('/api/arsenals/score', {
@@ -121,7 +125,7 @@ export const ManyPitchers = () => {
           ) : null}
           {scores === null ? null : (
             <>
-              <p>{copy.summary(scores.pitchers.length, formatNumber(scores.nRows, 0))}</p>
+              <p>{copy.summary(scores.pitchers.length, scores.nRows.toLocaleString('es-MX'))}</p>
               <p className="text-(--color-text-muted)">
                 {copy.left(
                   scores.fewPitches,
@@ -242,7 +246,7 @@ export const ManyPitchers = () => {
               <tbody>
                 {rows.map((p) => (
                   <tr key={p.pitcherId}>
-                    <td className={`${cell} text-left font-semibold`}>{p.pitcherId}</td>
+                    <td className={`${cellLeft} font-semibold`}>{p.pitcherId}</td>
                     <td className={cell}>{es.handShort[p.pitcherHand] ?? p.pitcherHand}</td>
                     <td className={cell}>{formatNumber(p.n, 0)}</td>
                     <td className={cell}>
