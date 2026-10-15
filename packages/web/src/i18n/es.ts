@@ -613,7 +613,53 @@ export const es = {
   translator: {
     title: 'Traductor de Altitud',
     subtitle:
-      'Para lanzadores que no están en nuestros datos: un agente libre, alguien de MLB o de Japón. Entra su arsenal, medido donde se haya medido; sale cómo se movería en altitud extrema y cuánto valdría.',
+      'Para lanzadores de otras ligas, que no están en nuestros datos: un agente libre, alguien de MLB o de Japón. Entra su arsenal, medido donde se haya medido; sale cómo se movería en altitud extrema y cuánto valdría.',
+    modes: {
+      label: 'Qué traducir',
+      single: 'Un lanzador',
+      many: 'Varios lanzadores',
+    },
+    many: {
+      upload: 'Subir un archivo con varios lanzadores',
+      hint: 'Un CSV en el formato del dataset: un renglón por lanzamiento, con pitcher_anon_id, las columnas de TrackMan y, si vienen, is_swing e is_whiff para el whiff. El equipo de datos convierte otros exports a este formato.',
+      reading: 'Puntuando a cada lanzador…',
+      summary: (pitchers: number, rows: string): string =>
+        `${String(pitchers)} lanzadores puntuados de ${rows} lanzamientos.`,
+      left: (few: number, min: number, unsupported: string, missing: string): string =>
+        `Fuera de la tabla: ${String(few)} lanzadores con menos de ${String(min)} lanzamientos, ${unsupported} lanzamientos de tipos sin modelo y ${missing} con datos incompletos.`,
+      noSwings: 'El archivo no trae is_swing ni is_whiff: no hay whiff que medir.',
+      hidden:
+        'El modelo no está publicado para mostrarse: sin Stuff+ ni Impuesto proyectado, solo conteos y whiff.',
+      search: 'Buscar lanzador',
+      hand: 'Mano',
+      all: 'Todas',
+      columns: [
+        'Pitcher',
+        'Mano',
+        'Lanzamientos',
+        'Stuff+ nivel del mar',
+        'Stuff+ alt. extrema',
+        '\u0394',
+        'Whiff (su liga)',
+        'Impuesto proyectado c/9 ent.',
+      ],
+      columnHelp: [
+        'El lanzador, como viene en el archivo.',
+        'Mano con la que lanza.',
+        'Lanzamientos suyos que se pudieron puntuar.',
+        'Su Stuff+ llevado al nivel del mar, con la banda al 95%.',
+        'El mismo arsenal trasladado a altitud extrema con la ley de densidad, con la banda al 95%.',
+        'Cuánto cambia su Stuff+ al subir a la altitud extrema.',
+        'Swings abanicados por cada 100 swings, medidos en su liga, no en la altura. Banda al 95%.',
+        'Carreras de más por 9 entradas que el modelo proyecta en altitud extrema. Proyectado, no medido.',
+      ],
+      taxNote: (n: number, r: string, projected: string, measured: string): string =>
+        `Impuesto proyectado: lo que el modelo espera que pierda en carreras por 9 entradas al subir, no lo que se midió. Revisado contra los ${String(n)} lanzadores del Radar que sí lanzaron en los dos entornos: en promedio coincide (${projected} contra ${measured} carreras c/9 ent.), pero lanzador por lanzador ordena poco (r = ${r}). Úsalo como referencia de liga, no para elegir entre dos lanzadores.`,
+      taxNoteUnchecked:
+        'Impuesto proyectado: lo que el modelo espera que pierda en carreras por 9 entradas al subir, no lo que se midió. Todavía no se ha revisado contra el medido.',
+      band: 'Banda al 95% en Stuff+, \u0394 e Impuesto; el whiff lleva la suya.',
+      empty: 'Ning\u00fan lanzador del archivo cumple estos filtros.',
+    },
     upload: {
       label: 'Subir su export de TrackMan',
       hint: 'Un CSV con un renglón por lanzamiento y las columnas de TrackMan: AutoPitchType, PitcherThrows, RelSpeed, InducedVertBreak, HorzBreak, SpinRate, SpinAxis, Extension, RelHeight y RelSide. Si trae altitude_category, de ahí sale dónde se midió.',
@@ -634,6 +680,8 @@ export const es = {
         missing_columns: 'Faltan columnas de TrackMan:',
         mixed_pitchers: 'El archivo mezcla lanzadores: sube uno por lanzador.',
         mixed_hands: 'La mano del lanzador (PitcherThrows) debe ser una sola, Right o Left.',
+        too_many_pitchers:
+          'El archivo trae demasiados lanzadores para una pantalla: div\u00eddelo en partes de hasta 400.',
         tooLarge: 'El archivo pasa de 10 MB: sube una temporada de un lanzador.',
         unreachable: 'No se pudo contactar a la API para leer el archivo.',
       } satisfies Record<FileProblem | 'tooLarge' | 'unreachable', string>,

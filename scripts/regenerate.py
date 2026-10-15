@@ -14,7 +14,9 @@ The order matters, because each step reads what the one before wrote:
 3. ``analysis/simulator_gates.py`` -> the verdict next to the model, which the
    API reads to decide whether the Simulator and the Translator show Stuff+.
    Without ``--model`` it refits the v0 bridge; skip it with ``--no-gates``.
-4. ``python -m report.build`` -> report/tables, checked against claims.toml.
+4. ``analysis/projected_tax_check.py`` -> how the translator's projected tax
+   compares with the measured one; the screen quotes it.
+5. ``python -m report.build`` -> report/tables, checked against claims.toml.
 
 ``--publish`` also writes analysis/outputs/simulator_validation.json, the
 committed record the web's provenance line cites. Publish when the model or
@@ -63,6 +65,10 @@ def main() -> None:
     if not args.no_gates:
         publish = ["--publish"] if args.publish else []
         run("gates", [*python, "simulator_gates.py", *model, *publish], ANALYSIS)
+    if not args.no_gates:
+        # After the gates: without --model they refit the bridge this checks.
+        publish = ["--publish"] if args.publish else []
+        run("tax check", [*python, "projected_tax_check.py", *model, *publish], ANALYSIS)
     run("report", [*python, "-m", "report.build"], ROOT)
 
     api_model = str(args.model.resolve()) if args.model else "artifacts/stuff_plus_v0_bridge.joblib"

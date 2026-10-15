@@ -193,6 +193,12 @@ altura»), probablemente también por tipo de pitch. El v0 normaliza sobre toda 
   mismo tipo en la misma categoría de altitud, de modo que un slider promedio en altitud extrema vale
   100 aunque rompa menos que uno promedio a nivel del mar?» (tarea 2 de `docs/08` §0.0).
 
+**Traductor de varios lanzadores** (14 oct): `POST /api/v1/arsenals/score` puntúa cada lanzador de un
+archivo en el formato del dataset con su `Scorer` (draws conjuntos en los dos aires). Muestra un
+**Impuesto proyectado** que invierte `scale.sd_xrv`; si A2/A3 dan una forma mejor de pasar Stuff+ a
+carreras, se cambia en `api/arsenal_batch.py`. Su revisión contra el medido está en
+`analysis/projected_tax_check.py`, que corre `scripts/regenerate.py`.
+
 ### 5.3 A3 · carreras
 
 Ninguna pantalla imprime carreras desde el Stuff+: el puente no existe mientras A3 no lo muestre. Los

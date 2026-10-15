@@ -89,6 +89,13 @@ las pantallas, y el Traductor es para quien no está en los datos (`docs/12` §2
 
       ✔ Las dos son tablas de `report/tables/`, generadas por `report/build.py`, con sus afirmaciones
       en `claims.toml`.
+- [x] **14 oct · Traductor para varios lanzadores** (ajustes del equipo del 14 de octubre). Dos
+      modos: «Un lanzador» (lo de la tarea 4) y «Varios lanzadores»: un archivo de otra liga en el
+      formato del dataset da una fila por lanzador con Stuff+ a nivel del mar y en altitud extrema, Δ,
+      whiff de su liga e **Impuesto proyectado**, ordenable por columna. `POST /api/v1/arsenals/score`.
+      El Impuesto proyectado se revisó contra el medido en las 370 tarjetas del Radar
+      (`analysis/projected_tax_check.py`): coincide en promedio y ordena poco, y la pantalla lo dice.
+      ✔ `test_arsenal_batch.py`, `ManyPitchers.test.tsx`; prueba de punta a punta con un CSV generado.
 - [x] **4 · Reencuadrar el Traductor** (discutido el 1 de octubre). Ofrecía tres lanzadores del
       dataset como ejemplo, y con ellos se empalmaba con la pestaña Proyección de la Ficha. Su caso real
       es el lanzador que **no** está en el dataset (agente libre, MLB, Japón), que es el entregable 3c:
