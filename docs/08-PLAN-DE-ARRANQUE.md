@@ -38,7 +38,8 @@ uv run python scripts/check_pendientes.py       # el estado, ahora mismo
   | #80 | Scorer (`python -m models.score`), API con origen, K/BB/whiff en la evidencia, `report/` | ✅ en `main` |
   | #81 | Todas las pantallas nuevas y sus arreglos | ✅ en `main` |
   | #82 | Q&A, renombre, Decision Log, esqueleto del documento técnico, ficha ejecutiva | ✅ en `main` |
-  | **#83** | El Traductor para lanzadores que no están en los datos (tarea 4) | En revisión |
+  | #83–#85 | El Traductor (tarea 4), las convenciones de PRs y la integración de datos (ADR 0010) | ✅ en `main` |
+  | **Ajustes de UX (14–15 oct)** | Radar, Simulador, Ficha y Traductor de varios lanzadores, más la segunda ronda del 15 de octubre (mapas legibles con su ayuda, selector de temporada, leyenda de «sufre en la altura»). Reúne #86–#89, que se cerraron | En revisión; un solo PR, revisable por commit |
 
 - **Cómo se trabaja desde aquí:** un PR por tarea de esta checklist, desde `main` y hacia `main`. La
   documentación de la tarea va en el mismo PR, y la casilla se marca ahí mismo.
@@ -52,16 +53,39 @@ las pantallas, y el Traductor es para quien no está en los datos (`docs/12` §2
 
 **Checklist, en orden.** Cada tarea tiene su criterio de hecho.
 
+- [x] **15 oct · Segunda ronda de ajustes.** Los mapas de movimiento se leen (letra en unidades del
+      lienzo para el tamaño al que se dibujan) y todos tienen «¿Cómo leer este mapa?» con dos diagramas
+      dibujados; la Ficha tiene selector de temporada en todas sus pestañas (solo las del lanzador);
+      la marca roja se explica arriba de cada tabla que la usa.
+      ✔ `Ficha.test.tsx` (selector), `Simulator.test.tsx` (ayuda); capturas a 1440×900.
+- [x] **14 oct · Radar: tabla clásica** (ajustes del equipo del 14 de octubre). La «Trampa de
+      Altitud» se llama «Sufre en la altura»; el Impuesto se explica en pantalla; la tabla se ordena
+      con un clic en el encabezado (otro clic invierte); los filtros son menús desplegables con
+      buscador y «Limpiar»; el tipo de pitch deja a todos los que lo tiran y muestra el Stuff+ de ese
+      pitch.
+      ✔ `RadarTable.test.tsx` y los tests de `filters` y `ranking`; captura a 1440×900.
 - [x] **1 · Que entren #80, #81 y #82.** Hecho el 1 de octubre: los tres en `main`, y
       `check_pendientes` marca P3, P7, `report/build.py` y «Scorer reproducible».
       ✔ `git ls-tree origin/main packages/models/score.py report/build.py packages/web/src/app/traductor/page.tsx docs/12-DECISION-LOG.md`
       lista los cuatro, y `uv run python scripts/check_pendientes.py` marca P3, P7, `report/build.py`
       y «Scorer reproducible».
+- [x] **14 oct · Simulador en una pantalla** (ajustes del equipo del 14 de octubre). El mapa va
+      al lado de «Qué le hace la altura a esta forma» y los dos caben sin scroll a 1440×900; los
+      pitches más y menos efectivos de la liga solo aparecen con un lanzador real, con una casilla
+      para ocultarlos; los pitches parecidos pasan a un plegable cerrado en el laboratorio; el mapa
+      tiene una ayuda con diagrama del lado del guante y del brazo.
+      ✔ `Simulator.test.tsx` (casilla, laboratorio, plegable, ayuda); captura a 1440×900.
 - [ ] **2 · Correo a ISAC y Diablos con lo que no sabemos.** El borrador está en la memoria del
       proyecto (`superestela-qa-diablos`): la escala con el ejemplo de `docs/11` §8.3 y el ajuste
       «por temporada», y el formato del holdout (columnas y quién corre el scorer). La fecha y la demo
       local ya están resueltas.
       ✔ El correo se envió, y las respuestas quedan en `docs/10` §5.
+- [x] **14 oct · Ficha: RA/9, mapa al costado, Proyección explicada** (ajustes del equipo del 14 de
+      octubre). La ERA no se puede calcular (el dataset no marca carreras limpias), así que la Ficha
+      muestra **RA/9** por entorno con su banda, desde `analysis/pitcher_runs.py`; el mapa del arsenal
+      va al lado de la tabla; la Proyección dice para qué sirve; la «palanca» de la lectura se
+      reescribió. La pestaña Arsenal se queda: Location+ llega por `locations.json`.
+      ✔ `core/tests/test_runs.py`, `Ficha.test.tsx`; captura a 1440×900.
 - [ ] **3 · Las dos preguntas literales del reto que no tienen tabla** (texto en `docs/13`):
       - «¿qué arsenal produce el Stuff+ más alto en Harp Helú?» (entregable 1): una tabla de
         combinaciones de arsenal contra el Stuff+ en altitud extrema, desde `mockup_data.json`;
@@ -70,6 +94,13 @@ las pantallas, y el Traductor es para quien no está en los datos (`docs/12` §2
 
       ✔ Las dos son tablas de `report/tables/`, generadas por `report/build.py`, con sus afirmaciones
       en `claims.toml`.
+- [x] **14 oct · Traductor para varios lanzadores** (ajustes del equipo del 14 de octubre). Dos
+      modos: «Un lanzador» (lo de la tarea 4) y «Varios lanzadores»: un archivo de otra liga en el
+      formato del dataset da una fila por lanzador con Stuff+ a nivel del mar y en altitud extrema, Δ,
+      whiff de su liga e **Impuesto proyectado**, ordenable por columna. `POST /api/v1/arsenals/score`.
+      El Impuesto proyectado se revisó contra el medido en las 370 tarjetas del Radar
+      (`analysis/projected_tax_check.py`): coincide en promedio y ordena poco, y la pantalla lo dice.
+      ✔ `test_arsenal_batch.py`, `ManyPitchers.test.tsx`; prueba de punta a punta con un CSV generado.
 - [x] **4 · Reencuadrar el Traductor** (discutido el 1 de octubre). Ofrecía tres lanzadores del
       dataset como ejemplo, y con ellos se empalmaba con la pestaña Proyección de la Ficha. Su caso real
       es el lanzador que **no** está en el dataset (agente libre, MLB, Japón), que es el entregable 3c:
@@ -108,6 +139,10 @@ las pantallas, y el Traductor es para quien no está en los datos (`docs/12` §2
 
       ✔ Todo existe, y un tercero lo sigue de punta a punta.
 - [ ] **9 · Ensayo el 20 de octubre**, las tres historias de `docs/09` §5.2, con la app local.
+      Antes del ensayo, con el modelo que se presenta: `scripts/regenerate.py --model <el suyo> --publish`.
+      Si no, el Simulador dice «sus compuertas no están publicadas» y el Traductor no cita la revisión
+      del Impuesto proyectado.
+      ✔ La línea de procedencia del Simulador cuenta compuertas, y el Traductor cita su revisión.
 
 **Para no gastar contexto:**
 

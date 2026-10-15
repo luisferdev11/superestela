@@ -149,6 +149,10 @@ Es la última rama vieja.
 >   los tres de `docs/09` §5.2. Su arsenal del mar entra como si fuera de fuera, y lo proyectado se pone
 >   junto a lo medido, juzgado con la banda al 95% y la regla de la Proyección (30 lanzamientos o más).
 >   Debajo, «¿Ya juega en la LMB? → su Ficha».
+> - **Varios lanzadores (14 de octubre):** un segundo modo convive con el de un lanzador. Un archivo de
+>   otra liga, en el formato del dataset, da una fila por lanzador: Stuff+ a nivel del mar y en
+>   altitud extrema, Δ, whiff medido en su liga e Impuesto proyectado (`docs/12` §2.1), ordenable con
+>   un clic en el encabezado. Sin pitch principal ni filtro por tipo.
 > - Lo que sigue abajo es el plan original de T2; donde choca con este recuadro, gana el recuadro.
 
 **Por qué primero:** es el diferenciador del producto (`docs/00` §3) y cubre el entregable 3 («cómo

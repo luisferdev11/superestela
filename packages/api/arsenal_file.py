@@ -40,7 +40,9 @@ ORIGIN_BY_ENVIRONMENT: dict[str, Origin] = {
 }
 EXTREME = "Extreme Altitude"
 
-ProblemCode = Literal["unreadable", "empty", "missing_columns", "mixed_pitchers", "mixed_hands"]
+ProblemCode = Literal[
+    "unreadable", "empty", "missing_columns", "mixed_pitchers", "mixed_hands", "too_many_pitchers"
+]
 
 
 class ArsenalFileError(ValueError):

@@ -24,7 +24,7 @@ type Upload =
     }
 
 /** `FileReader` y no `File.text()`: funciona igual en cualquier navegador y en jsdom. */
-const readText = (file: File): Promise<string> =>
+export const readText = (file: File): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader()
     reader.onload = () => {

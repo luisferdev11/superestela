@@ -25,6 +25,7 @@ import {
 } from '@/domain/pitcher'
 import { canSimulate, simulatorHref } from '@/domain/simulator'
 import { loadLocations } from '@/sources/locationSource'
+import { loadPitcherRuns } from '@/sources/runsSource'
 import { loadDataset } from '@/sources/mockupSource'
 import { loadSimulatorDataset } from '@/sources/simulatorSource'
 import { es } from '@/i18n/es'
@@ -57,7 +58,8 @@ export const FichaPage = async ({
     },
     { arsenals },
     locations,
-  ] = await Promise.all([loadDataset(), loadSimulatorDataset(), loadLocations()])
+    runsAllowed,
+  ] = await Promise.all([loadDataset(), loadSimulatorDataset(), loadLocations(), loadPitcherRuns()])
   const own = cardsOf(cards, pitcherId)
   const card = pickSeason(own, season)
   if (card === null) notFound()
@@ -115,11 +117,25 @@ export const FichaPage = async ({
   return (
     <PageShell density={density} nPitches={nPitches} seasons={seasons} current="/radar">
       {header}
-      <PitcherKpis card={card} rank={{ sea: rankSea.rank, hh: rankHh.rank, of: rankSea.of }} />
-      {measured === undefined ? null : (
-        <ArsenalMap pitches={arsenalMapPitches(measured, leagueShapes)} />
-      )}
-      <ArsenalTable card={card} simulatorHrefs={simulatorHrefs} />
+      <PitcherKpis
+        card={card}
+        rank={{ sea: rankSea.rank, hh: rankHh.rank, of: rankSea.of }}
+        runs={
+          runsAllowed === null
+            ? null
+            : {
+                minInnings: runsAllowed.minInnings,
+                pitcher: runsAllowed.byKey.get(`${pitcherId}/${String(card.season)}`) ?? null,
+              }
+        }
+      />
+      {/* La tabla del arsenal y su mapa lado a lado: el mapa ocupaba media pantalla (14 oct). */}
+      <div className="grid grid-cols-1 items-start gap-4 xl:grid-cols-[minmax(0,1fr)_360px]">
+        <ArsenalTable card={card} simulatorHrefs={simulatorHrefs} />
+        {measured === undefined ? null : (
+          <ArsenalMap pitches={arsenalMapPitches(measured, leagueShapes)} />
+        )}
+      </div>
       <PitcherPhysics scale={density} />
       <SeasonTable
         rows={seasonTimeline(seasonsByPitcher.get(pitcherId) ?? [], own)}

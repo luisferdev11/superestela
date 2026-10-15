@@ -138,7 +138,7 @@ class Scorer(Protocol):
 
 | Pantalla | Lo que viene de su modelo | Lo que no cambia con él |
 |---|---|---|
-| **P1 Radar** | Stuff+ en altitud extrema y a nivel del mar, el Δ, la Trampa (p70/p30 sobre el Stuff+) y la cohorte | K−BB% y whiff (medidos), el rol (regla) |
+| **P1 Radar** | Stuff+ en altitud extrema y a nivel del mar, el Δ, «Sufre en la altura» (p70/p30 sobre el Stuff+) y la cohorte | K−BB% y whiff (medidos), el rol (regla) |
 | **P2 Ficha** | Stuff+ por lanzador y por pitch, su rango en la temporada, y la lectura «Fichar / con reservas / no fichar» | Forma, física, tasas y temporadas (medidas) |
 | **P5 Plan** | Stuff+ ponderado por uso, antes y después de mover el uso | — |
 | **P6 Despliegue y P8 Plantel** | Stuff+ por entorno y el cambio de orden entre casa y gira | El plantel aproximado (ADR 0008) |
@@ -166,6 +166,10 @@ el Traductor además preguntan a la API en vivo.
 | **C1–C3** · ablaciones | Corridas de MLflow y `report/claims.toml` | Las tablas las genera `report.build` |
 | **Lectura de la Ficha** | `packages/web/src/domain/reading.ts`, `verdictOf` | Ver §5.5 |
 
+**RA/9 de la Ficha** (14 oct): `analysis/pitcher_runs.py` escribe `analysis/outputs/pitcher_runs.json`
+(carreras permitidas por 9 entradas, por lanzador-temporada y entorno). Es medido, no sale del modelo, y
+`scripts/regenerate.py` lo corre. Si datos consigue carreras limpias, se reemplaza por ERA ahí mismo.
+
 ### 5.1 A2 · los pesos
 
 `RUN_VALUE` (`analysis/evidence.py`) son pesos sabermétricos clásicos puestos a mano. De ahí salen:
@@ -182,12 +186,18 @@ por entorno, o el Impuesto se calcula con su xRV. Lo que convenga, se acuerda en
 Diablos pidió 100 **por entorno** («el mismo picheo puede valer 120 a nivel del mar, pero 150 en la
 altura»), probablemente también por tipo de pitch. El v0 normaliza sobre toda la liga.
 
-- Es un cambio MAJOR (`CONVENTIONS.md` §5.3): cambia el significado del Δ y de la Trampa.
+- Es un cambio MAJOR (`CONVENTIONS.md` §5.3): cambia el significado del Δ y de «Sufre en la altura».
 - El contrato ya lo soporta: `ScaleSpec(kind="per_environment", description=...)`, y la web ajusta sus
   textos (`es.scale`). Al decidirla, actualicen el punto 4 del ADR 0007.
 - Falta la confirmación por correo, con este ejemplo: «¿100 es el promedio de los lanzamientos del
   mismo tipo en la misma categoría de altitud, de modo que un slider promedio en altitud extrema vale
   100 aunque rompa menos que uno promedio a nivel del mar?» (tarea 2 de `docs/08` §0.0).
+
+**Traductor de varios lanzadores** (14 oct): `POST /api/v1/arsenals/score` puntúa cada lanzador de un
+archivo en el formato del dataset con su `Scorer` (draws conjuntos en los dos aires). Muestra un
+**Impuesto proyectado** que invierte `scale.sd_xrv`; si A2/A3 dan una forma mejor de pasar Stuff+ a
+carreras, se cambia en `api/arsenal_batch.py`. Su revisión contra el medido está en
+`analysis/projected_tax_check.py`, que corre `scripts/regenerate.py`.
 
 ### 5.3 A3 · carreras
 
@@ -234,7 +244,7 @@ lanzador en cada entorno.
 «Fichar», «Fichar con reservas» o «No fichar al precio de nivel del mar» salen de una **regla
 provisional de producto**, que se declara en pantalla:
 
-- Trampa de Altitud → no al precio de nivel del mar.
+- Sufre en la altura → no al precio de nivel del mar.
 - La banda entera del Stuff+ en altitud extrema por encima de 100 → fichar.
 - Lo demás → con reservas.
 
