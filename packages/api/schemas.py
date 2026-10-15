@@ -237,5 +237,67 @@ class ArsenalFileResponse(Wire):
 class ArsenalFileProblem(Wire):
     """Why a file could not be summarized, for the screen to word it in Spanish."""
 
-    error: Literal["unreadable", "empty", "missing_columns", "mixed_pitchers", "mixed_hands"]
+    error: Literal[
+        "unreadable",
+        "empty",
+        "missing_columns",
+        "mixed_pitchers",
+        "mixed_hands",
+        "too_many_pitchers",
+    ]
     columns: list[str]
+
+
+class ArsenalScoresRequest(Wire):
+    """A tracking file with many pitchers, in the dataset's format."""
+
+    csv: str = Field(min_length=1, max_length=MAX_ARSENAL_FILE_CHARS)
+    # Where rows without an altitude_category were measured. Sea level by default.
+    origin_density_index: float = Field(default=1.0, ge=DENSITY_INDEX_MIN, le=DENSITY_INDEX_MAX)
+
+
+class Rate(Wire):
+    """A measured rate and its 95% half-width."""
+
+    value: float
+    ci95: float
+
+
+class PitcherScoreOut(Wire):
+    """One pitcher of the file: both Stuff+, the delta, the projected tax and whiff."""
+
+    pitcher_id: str
+    pitcher_hand: Hand
+    n: int
+    stuff_plus_sea: Metric | None
+    stuff_plus_hh: Metric | None
+    altitude_delta: Metric | None
+    projected_tax: Metric | None
+    whiff_per_swing: Rate | None
+    swings: int
+
+
+class TaxValidation(Wire):
+    """How the projected tax compared with the measured one on the Radar's cards."""
+
+    n: int
+    pearson_r: float
+    mean_projected: float
+    mean_measured: float
+
+
+class ArsenalScoresResponse(Wire):
+    """Every pitcher with enough pitches, the model that scored them, and what was left out."""
+
+    model_id: str | None
+    stuff_plus_shown: bool
+    stuff_plus_reason: Literal["model_unavailable", "model_not_gated", "gates_failed"] | None
+    n_rows: int
+    pitchers: list[PitcherScoreOut]
+    few_pitches: int
+    min_pitches: int
+    unsupported_rows: int
+    missing_feature_rows: int
+    has_swings: bool
+    # analysis/projected_tax_check.py, when it has run: the screen quotes it.
+    tax_validation: TaxValidation | None
