@@ -31,7 +31,7 @@
 | Campo | Fuente | Nota |
 |---|---|---|
 | Identidad, temporada, mano, rol | Tarjeta de `mockup_data.json` | El rol, por ADR 0004 |
-| **Recomendación** | `domain/reading.ts → verdictOf` | Trampa: «no fichar al precio de nivel del mar»; banda entera arriba de 100: «fichar»; lo demás: «con reservas». **La regla se imprime en la letra chica**, porque es provisional y de producto |
+| **Recomendación** | `domain/reading.ts → verdictOf` | Sufre en la altura: «no fichar al precio de nivel del mar»; banda entera arriba de 100: «fichar»; lo demás: «con reservas». **La regla se imprime en la letra chica**, porque es provisional y de producto |
 | Por qué, en dos líneas | La «Lectura del sistema» de la Ficha | La frase depende de la escala (`es.scale`, #75) |
 | Stuff+ en los dos entornos | Tarjeta, con su banda al 95% | Ninguna cifra sin banda |
 | Impuesto de Altitud | Tarjeta; «no concluyente» si no es significativo | En carreras por 9 entradas (ADR 0003) |

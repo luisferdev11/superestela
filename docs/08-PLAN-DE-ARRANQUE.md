@@ -38,7 +38,8 @@ uv run python scripts/check_pendientes.py       # el estado, ahora mismo
   | #80 | Scorer (`python -m models.score`), API con origen, K/BB/whiff en la evidencia, `report/` | ✅ en `main` |
   | #81 | Todas las pantallas nuevas y sus arreglos | ✅ en `main` |
   | #82 | Q&A, renombre, Decision Log, esqueleto del documento técnico, ficha ejecutiva | ✅ en `main` |
-  | **#83** | El Traductor para lanzadores que no están en los datos (tarea 4) | En revisión |
+  | #83–#85 | El Traductor (tarea 4), las convenciones de PRs y la integración de datos (ADR 0010) | ✅ en `main` |
+  | **#86–#89** | Ajustes del 14 de octubre: Radar, Simulador, Ficha y Traductor de varios lanzadores | En revisión; fusionar en ese orden (#88 tiene un conflicto de una línea en `es.ts` con #86) |
 
 - **Cómo se trabaja desde aquí:** un PR por tarea de esta checklist, desde `main` y hacia `main`. La
   documentación de la tarea va en el mismo PR, y la casilla se marca ahí mismo.
@@ -114,6 +115,10 @@ las pantallas, y el Traductor es para quien no está en los datos (`docs/12` §2
 
       ✔ Todo existe, y un tercero lo sigue de punta a punta.
 - [ ] **9 · Ensayo el 20 de octubre**, las tres historias de `docs/09` §5.2, con la app local.
+      Antes del ensayo, con el modelo que se presenta: `scripts/regenerate.py --model <el suyo> --publish`.
+      Si no, el Simulador dice «sus compuertas no están publicadas» y el Traductor no cita la revisión
+      del Impuesto proyectado.
+      ✔ La línea de procedencia del Simulador cuenta compuertas, y el Traductor cita su revisión.
 
 **Para no gastar contexto:**
 

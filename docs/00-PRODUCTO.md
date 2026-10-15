@@ -25,7 +25,7 @@ Correlación entre el ride (IVB) de un fastball a nivel del mar y cuánto pierde
 
 Y es un juego con *superestrella*: la superestrella es el lanzador que el mercado persigue y que peor sobrevive aquí. Una letra de diferencia cambia la tesis — **no persigues a la estrella, lees la estela.**
 
-Forma corta: **Estela**. Las métricas firmadas no dependen del nombre: Stuff+ en altitud extrema (`stuff_plus_hh` en el código), Impuesto de Altitud, Índice de Densidad y Trampa de Altitud se mantienen.
+Forma corta: **Estela**. Las métricas firmadas no dependen del nombre: Stuff+ en altitud extrema (`stuff_plus_hh` en el código), Impuesto de Altitud, Índice de Densidad y «Sufre en la altura» (antes Trampa de Altitud) se mantienen.
 
 ---
 
@@ -75,7 +75,7 @@ Son activos de marca tanto como métricas. Aparecen con nombre propio en app, de
 | **Stuff+ en altitud extrema** | Stuff+ en las condiciones de la altitud extrema: el promedio de **cinco parques** (Puebla, CDMX, Aguascalientes, Querétaro y León), no solo el Harp Helú ([`reference/categorias-altitud.md`](reference/categorias-altitud.md)). En el v0, 100 = pitch promedio de la LMB, los dos entornos juntos. | Pitching coach |
 | **Impuesto de Altitud** | Carreras adicionales concedidas **por cada 9 entradas** al mover a este pitcher a CDMX. Con error estándar; donde no alcanza significancia se muestra *no concluyente*, nunca un número. | Director deportivo |
 | **Índice de Densidad** | Densidad del aire **medida** desde la trayectoria de la bola, juego a juego. Sea level = 1.000. | Credibilidad científica |
-| **Trampa de Altitud** | Bandera roja: se ve fuerte a nivel del mar, colapsa en CDMX. **58 de 370 temporadas** de la cohorte. | Director deportivo |
+| **Sufre en la altura** (antes «Trampa de Altitud») | Bandera roja: se ve fuerte a nivel del mar, colapsa en CDMX. **58 de 370 temporadas** de la cohorte. | Director deportivo |
 
 > **Por qué el Impuesto va en carreras por 9 entradas.** Nueve entradas es la unidad que el béisbol ya lee; *por 100 lanzamientos* no se la sabe nadie. La conversión usa los 18.63 lanzamientos por entrada medidos en altitud, no un número redondo.
 >

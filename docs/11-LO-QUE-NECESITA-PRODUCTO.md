@@ -138,7 +138,7 @@ class Scorer(Protocol):
 
 | Pantalla | Lo que viene de su modelo | Lo que no cambia con él |
 |---|---|---|
-| **P1 Radar** | Stuff+ en altitud extrema y a nivel del mar, el Δ, la Trampa (p70/p30 sobre el Stuff+) y la cohorte | K−BB% y whiff (medidos), el rol (regla) |
+| **P1 Radar** | Stuff+ en altitud extrema y a nivel del mar, el Δ, «Sufre en la altura» (p70/p30 sobre el Stuff+) y la cohorte | K−BB% y whiff (medidos), el rol (regla) |
 | **P2 Ficha** | Stuff+ por lanzador y por pitch, su rango en la temporada, y la lectura «Fichar / con reservas / no fichar» | Forma, física, tasas y temporadas (medidas) |
 | **P5 Plan** | Stuff+ ponderado por uso, antes y después de mover el uso | — |
 | **P6 Despliegue y P8 Plantel** | Stuff+ por entorno y el cambio de orden entre casa y gira | El plantel aproximado (ADR 0008) |
@@ -182,7 +182,7 @@ por entorno, o el Impuesto se calcula con su xRV. Lo que convenga, se acuerda en
 Diablos pidió 100 **por entorno** («el mismo picheo puede valer 120 a nivel del mar, pero 150 en la
 altura»), probablemente también por tipo de pitch. El v0 normaliza sobre toda la liga.
 
-- Es un cambio MAJOR (`CONVENTIONS.md` §5.3): cambia el significado del Δ y de la Trampa.
+- Es un cambio MAJOR (`CONVENTIONS.md` §5.3): cambia el significado del Δ y de «Sufre en la altura».
 - El contrato ya lo soporta: `ScaleSpec(kind="per_environment", description=...)`, y la web ajusta sus
   textos (`es.scale`). Al decidirla, actualicen el punto 4 del ADR 0007.
 - Falta la confirmación por correo, con este ejemplo: «¿100 es el promedio de los lanzamientos del
@@ -234,7 +234,7 @@ lanzador en cada entorno.
 «Fichar», «Fichar con reservas» o «No fichar al precio de nivel del mar» salen de una **regla
 provisional de producto**, que se declara en pantalla:
 
-- Trampa de Altitud → no al precio de nivel del mar.
+- Sufre en la altura → no al precio de nivel del mar.
 - La banda entera del Stuff+ en altitud extrema por encima de 100 → fichar.
 - Lo demás → con reservas.
 
