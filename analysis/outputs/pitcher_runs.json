@@ -1,0 +1,10782 @@
+{
+ "min_innings": 10.0,
+ "note": "RA/9: all runs over innings. Not ERA: the dataset does not mark earned runs.",
+ "pitchers": {
+  "pitcher_00002/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00002/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 2.76,
+    "ra9_ci95": 2.65,
+    "innings": 16.3,
+    "runs": 5
+   }
+  },
+  "pitcher_00003/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00004/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00005/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00006/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00008/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00009/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00010/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00011/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00011/2025": {
+   "sea": {
+    "ra9": 3.31,
+    "ra9_ci95": 2.86,
+    "innings": 16.3,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_00011/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00013/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00014/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00015/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00016/2025": {
+   "sea": {
+    "ra9": 1.45,
+    "ra9_ci95": 1.89,
+    "innings": 18.7,
+    "runs": 3
+   },
+   "hh": null
+  },
+  "pitcher_00016/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00017/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00017/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00018/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00019/2024": {
+   "sea": {
+    "ra9": 3.48,
+    "ra9_ci95": 3.82,
+    "innings": 10.3,
+    "runs": 4
+   },
+   "hh": {
+    "ra9": 2.25,
+    "ra9_ci95": 2.16,
+    "innings": 20.0,
+    "runs": 5
+   }
+  },
+  "pitcher_00019/2025": {
+   "sea": {
+    "ra9": 6.3,
+    "ra9_ci95": 3.42,
+    "innings": 20.0,
+    "runs": 14
+   },
+   "hh": {
+    "ra9": 5.01,
+    "ra9_ci95": 1.79,
+    "innings": 55.7,
+    "runs": 31
+   }
+  },
+  "pitcher_00019/2026": {
+   "sea": {
+    "ra9": 1.54,
+    "ra9_ci95": 2.62,
+    "innings": 11.7,
+    "runs": 2
+   },
+   "hh": {
+    "ra9": 7.53,
+    "ra9_ci95": 3.08,
+    "innings": 28.7,
+    "runs": 24
+   }
+  },
+  "pitcher_00020/2024": {
+   "sea": {
+    "ra9": 3.82,
+    "ra9_ci95": 1.41,
+    "innings": 68.3,
+    "runs": 29
+   },
+   "hh": null
+  },
+  "pitcher_00020/2025": {
+   "sea": {
+    "ra9": 7.65,
+    "ra9_ci95": 3.74,
+    "innings": 20.0,
+    "runs": 17
+   },
+   "hh": null
+  },
+  "pitcher_00020/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00021/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00023/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00024/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00026/2024": {
+   "sea": {
+    "ra9": 2.7,
+    "ra9_ci95": 1.86,
+    "innings": 30.0,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00026/2025": {
+   "sea": {
+    "ra9": 5.09,
+    "ra9_ci95": 2.87,
+    "innings": 23.0,
+    "runs": 13
+   },
+   "hh": {
+    "ra9": 6.66,
+    "ra9_ci95": 3.07,
+    "innings": 25.7,
+    "runs": 19
+   }
+  },
+  "pitcher_00026/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00027/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00028/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00029/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00030/2026": {
+   "sea": {
+    "ra9": 3.68,
+    "ra9_ci95": 3.18,
+    "innings": 14.7,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_00031/2026": {
+   "sea": {
+    "ra9": 5.54,
+    "ra9_ci95": 2.31,
+    "innings": 37.3,
+    "runs": 23
+   },
+   "hh": null
+  },
+  "pitcher_00032/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00033/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00034/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00035/2026": {
+   "sea": {
+    "ra9": 1.63,
+    "ra9_ci95": 1.56,
+    "innings": 27.7,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00036/2026": {
+   "sea": {
+    "ra9": 2.17,
+    "ra9_ci95": 1.49,
+    "innings": 37.3,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00037/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00037/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00037/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00038/2026": {
+   "sea": {
+    "ra9": 6.55,
+    "ra9_ci95": 4.81,
+    "innings": 11.0,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_00039/2026": {
+   "sea": {
+    "ra9": 9.0,
+    "ra9_ci95": 5.85,
+    "innings": 10.0,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00040/2024": {
+   "sea": {
+    "ra9": 4.58,
+    "ra9_ci95": 2.18,
+    "innings": 35.3,
+    "runs": 18
+   },
+   "hh": null
+  },
+  "pitcher_00041/2025": {
+   "sea": {
+    "ra9": 9.0,
+    "ra9_ci95": 5.85,
+    "innings": 10.0,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00042/2025": {
+   "sea": {
+    "ra9": 4.0,
+    "ra9_ci95": 2.94,
+    "innings": 18.0,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_00043/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00044/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00045/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00046/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00047/2025": {
+   "sea": {
+    "ra9": 5.6,
+    "ra9_ci95": 3.46,
+    "innings": 17.7,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_00047/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00048/2024": {
+   "sea": {
+    "ra9": 5.75,
+    "ra9_ci95": 2.25,
+    "innings": 40.7,
+    "runs": 26
+   },
+   "hh": {
+    "ra9": 5.4,
+    "ra9_ci95": 4.28,
+    "innings": 11.7,
+    "runs": 7
+   }
+  },
+  "pitcher_00049/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00049/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00050/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00051/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00052/2024": {
+   "sea": {
+    "ra9": 5.22,
+    "ra9_ci95": 2.55,
+    "innings": 29.3,
+    "runs": 17
+   },
+   "hh": null
+  },
+  "pitcher_00052/2025": {
+   "sea": {
+    "ra9": 2.3,
+    "ra9_ci95": 2.52,
+    "innings": 15.7,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00053/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 7.58,
+    "ra9_ci95": 3.83,
+    "innings": 19.0,
+    "runs": 16
+   }
+  },
+  "pitcher_00053/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00054/2024": {
+   "sea": {
+    "ra9": 2.7,
+    "ra9_ci95": 1.67,
+    "innings": 36.7,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_00054/2025": {
+   "sea": {
+    "ra9": 4.3,
+    "ra9_ci95": 3.4,
+    "innings": 14.7,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00055/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00055/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00056/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00056/2025": {
+   "sea": {
+    "ra9": 7.42,
+    "ra9_ci95": 4.58,
+    "innings": 13.3,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_00057/2024": {
+   "sea": {
+    "ra9": 3.86,
+    "ra9_ci95": 3.05,
+    "innings": 16.3,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00058/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00058/2026": {
+   "sea": {
+    "ra9": 3.86,
+    "ra9_ci95": 3.33,
+    "innings": 14.0,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_00059/2024": {
+   "sea": {
+    "ra9": 2.92,
+    "ra9_ci95": 2.15,
+    "innings": 24.7,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_00059/2025": {
+   "sea": {
+    "ra9": 3.2,
+    "ra9_ci95": 2.2,
+    "innings": 25.3,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00059/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00061/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00062/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00063/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00064/2026": {
+   "sea": {
+    "ra9": 2.53,
+    "ra9_ci95": 3.31,
+    "innings": 10.7,
+    "runs": 3
+   },
+   "hh": null
+  },
+  "pitcher_00065/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00067/2024": {
+   "sea": {
+    "ra9": 5.84,
+    "ra9_ci95": 4.29,
+    "innings": 12.3,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_00067/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00068/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00069/2025": {
+   "sea": {
+    "ra9": 3.2,
+    "ra9_ci95": 2.2,
+    "innings": 25.3,
+    "runs": 9
+   },
+   "hh": {
+    "ra9": 7.13,
+    "ra9_ci95": 3.87,
+    "innings": 17.7,
+    "runs": 14
+   }
+  },
+  "pitcher_00069/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00070/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00071/2024": {
+   "sea": {
+    "ra9": 3.86,
+    "ra9_ci95": 3.33,
+    "innings": 14.0,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_00071/2025": {
+   "sea": {
+    "ra9": 6.3,
+    "ra9_ci95": 4.99,
+    "innings": 10.0,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00072/2024": {
+   "sea": {
+    "ra9": 6.3,
+    "ra9_ci95": 4.99,
+    "innings": 10.0,
+    "runs": 7
+   },
+   "hh": {
+    "ra9": 4.63,
+    "ra9_ci95": 1.72,
+    "innings": 56.3,
+    "runs": 29
+   }
+  },
+  "pitcher_00074/2025": {
+   "sea": {
+    "ra9": 7.07,
+    "ra9_ci95": 4.36,
+    "innings": 14.0,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_00074/2026": {
+   "sea": {
+    "ra9": 1.84,
+    "ra9_ci95": 2.41,
+    "innings": 14.7,
+    "runs": 3
+   },
+   "hh": null
+  },
+  "pitcher_00075/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00076/2024": {
+   "sea": {
+    "ra9": 5.23,
+    "ra9_ci95": 4.52,
+    "innings": 10.3,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_00076/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00077/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00078/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 3.0,
+    "ra9_ci95": 3.29,
+    "innings": 12.0,
+    "runs": 4
+   }
+  },
+  "pitcher_00078/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00079/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00079/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00080/2026": {
+   "sea": {
+    "ra9": 10.66,
+    "ra9_ci95": 5.57,
+    "innings": 12.7,
+    "runs": 15
+   },
+   "hh": null
+  },
+  "pitcher_00081/2025": {
+   "sea": {
+    "ra9": 3.74,
+    "ra9_ci95": 2.57,
+    "innings": 21.7,
+    "runs": 9
+   },
+   "hh": {
+    "ra9": 0.0,
+    "ra9_ci95": 1.39,
+    "innings": 12.7,
+    "runs": 0
+   }
+  },
+  "pitcher_00082/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00083/2025": {
+   "sea": {
+    "ra9": 0.69,
+    "ra9_ci95": 1.92,
+    "innings": 13.0,
+    "runs": 1
+   },
+   "hh": {
+    "ra9": 6.43,
+    "ra9_ci95": 4.18,
+    "innings": 14.0,
+    "runs": 10
+   }
+  },
+  "pitcher_00085/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00086/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00087/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 6.11,
+    "ra9_ci95": 3.6,
+    "innings": 17.7,
+    "runs": 12
+   }
+  },
+  "pitcher_00088/2024": {
+   "sea": {
+    "ra9": 3.5,
+    "ra9_ci95": 2.77,
+    "innings": 18.0,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00088/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 4.5,
+    "ra9_ci95": 4.32,
+    "innings": 10.0,
+    "runs": 5
+   }
+  },
+  "pitcher_00089/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00089/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00090/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00091/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 0.77,
+    "ra9_ci95": 2.14,
+    "innings": 11.7,
+    "runs": 1
+   }
+  },
+  "pitcher_00092/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00093/2026": {
+   "sea": {
+    "ra9": 4.29,
+    "ra9_ci95": 2.79,
+    "innings": 21.0,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00094/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00094/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00095/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00096/2024": {
+   "sea": {
+    "ra9": 0.9,
+    "ra9_ci95": 2.49,
+    "innings": 10.0,
+    "runs": 1
+   },
+   "hh": {
+    "ra9": 4.6,
+    "ra9_ci95": 2.41,
+    "innings": 29.3,
+    "runs": 15
+   }
+  },
+  "pitcher_00096/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 5.14,
+    "ra9_ci95": 3.03,
+    "innings": 21.0,
+    "runs": 12
+   }
+  },
+  "pitcher_00096/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 7.63,
+    "ra9_ci95": 4.3,
+    "innings": 15.3,
+    "runs": 13
+   }
+  },
+  "pitcher_00097/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00098/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00099/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00099/2026": {
+   "sea": {
+    "ra9": 0.0,
+    "ra9_ci95": 1.26,
+    "innings": 14.0,
+    "runs": 0
+   },
+   "hh": null
+  },
+  "pitcher_00100/2024": {
+   "sea": {
+    "ra9": 7.2,
+    "ra9_ci95": 4.24,
+    "innings": 15.0,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_00100/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00101/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00101/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00103/2024": {
+   "sea": {
+    "ra9": 5.2,
+    "ra9_ci95": 2.63,
+    "innings": 27.7,
+    "runs": 16
+   },
+   "hh": {
+    "ra9": 5.59,
+    "ra9_ci95": 2.65,
+    "innings": 29.0,
+    "runs": 18
+   }
+  },
+  "pitcher_00103/2025": {
+   "sea": {
+    "ra9": 4.35,
+    "ra9_ci95": 4.18,
+    "innings": 10.3,
+    "runs": 5
+   },
+   "hh": {
+    "ra9": 4.08,
+    "ra9_ci95": 1.94,
+    "innings": 39.7,
+    "runs": 18
+   }
+  },
+  "pitcher_00103/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 4.97,
+    "ra9_ci95": 2.7,
+    "innings": 25.3,
+    "runs": 14
+   }
+  },
+  "pitcher_00104/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00105/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00106/2025": {
+   "sea": {
+    "ra9": 7.58,
+    "ra9_ci95": 3.83,
+    "innings": 19.0,
+    "runs": 16
+   },
+   "hh": {
+    "ra9": 6.75,
+    "ra9_ci95": 2.7,
+    "innings": 33.3,
+    "runs": 25
+   }
+  },
+  "pitcher_00106/2026": {
+   "sea": {
+    "ra9": 8.68,
+    "ra9_ci95": 4.12,
+    "innings": 18.7,
+    "runs": 18
+   },
+   "hh": {
+    "ra9": 4.63,
+    "ra9_ci95": 4.0,
+    "innings": 11.7,
+    "runs": 6
+   }
+  },
+  "pitcher_00107/2026": {
+   "sea": {
+    "ra9": 1.5,
+    "ra9_ci95": 2.55,
+    "innings": 12.0,
+    "runs": 2
+   },
+   "hh": null
+  },
+  "pitcher_00108/2025": {
+   "sea": {
+    "ra9": 3.21,
+    "ra9_ci95": 3.09,
+    "innings": 14.0,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00108/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00109/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00109/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00110/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00112/2026": {
+   "sea": {
+    "ra9": 5.56,
+    "ra9_ci95": 4.4,
+    "innings": 11.3,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00113/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00114/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 8.71,
+    "ra9_ci95": 3.91,
+    "innings": 20.7,
+    "runs": 20
+   }
+  },
+  "pitcher_00115/2024": {
+   "sea": {
+    "ra9": 4.22,
+    "ra9_ci95": 4.05,
+    "innings": 10.7,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00115/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00115/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00116/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00118/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00119/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 1.8,
+    "ra9_ci95": 3.06,
+    "innings": 10.0,
+    "runs": 2
+   }
+  },
+  "pitcher_00119/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00120/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00121/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00122/2024": {
+   "sea": {
+    "ra9": 2.08,
+    "ra9_ci95": 2.71,
+    "innings": 13.0,
+    "runs": 3
+   },
+   "hh": {
+    "ra9": 6.86,
+    "ra9_ci95": 3.59,
+    "innings": 19.7,
+    "runs": 15
+   }
+  },
+  "pitcher_00123/2024": {
+   "sea": {
+    "ra9": 3.86,
+    "ra9_ci95": 3.7,
+    "innings": 11.7,
+    "runs": 5
+   },
+   "hh": {
+    "ra9": 5.52,
+    "ra9_ci95": 2.62,
+    "innings": 29.3,
+    "runs": 18
+   }
+  },
+  "pitcher_00124/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00125/2024": {
+   "sea": {
+    "ra9": 1.69,
+    "ra9_ci95": 2.86,
+    "innings": 10.7,
+    "runs": 2
+   },
+   "hh": {
+    "ra9": 5.95,
+    "ra9_ci95": 2.33,
+    "innings": 39.3,
+    "runs": 26
+   }
+  },
+  "pitcher_00125/2026": {
+   "sea": {
+    "ra9": 4.38,
+    "ra9_ci95": 3.78,
+    "innings": 12.3,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_00126/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00127/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00127/2025": {
+   "sea": {
+    "ra9": 7.04,
+    "ra9_ci95": 4.15,
+    "innings": 15.3,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_00127/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00128/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 9.16,
+    "ra9_ci95": 4.23,
+    "innings": 18.7,
+    "runs": 19
+   }
+  },
+  "pitcher_00129/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00129/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00130/2025": {
+   "sea": {
+    "ra9": 4.88,
+    "ra9_ci95": 2.75,
+    "innings": 24.0,
+    "runs": 13
+   },
+   "hh": {
+    "ra9": 6.05,
+    "ra9_ci95": 3.41,
+    "innings": 19.3,
+    "runs": 13
+   }
+  },
+  "pitcher_00130/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00132/2025": {
+   "sea": {
+    "ra9": 5.67,
+    "ra9_ci95": 2.27,
+    "innings": 39.7,
+    "runs": 25
+   },
+   "hh": null
+  },
+  "pitcher_00133/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00134/2026": {
+   "sea": {
+    "ra9": 9.53,
+    "ra9_ci95": 5.61,
+    "innings": 11.3,
+    "runs": 12
+   },
+   "hh": {
+    "ra9": 3.04,
+    "ra9_ci95": 2.24,
+    "innings": 23.7,
+    "runs": 8
+   }
+  },
+  "pitcher_00135/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00135/2025": {
+   "sea": {
+    "ra9": 11.68,
+    "ra9_ci95": 5.9,
+    "innings": 12.3,
+    "runs": 16
+   },
+   "hh": null
+  },
+  "pitcher_00135/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00136/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00137/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00138/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 2.7,
+    "ra9_ci95": 1.98,
+    "innings": 26.7,
+    "runs": 8
+   }
+  },
+  "pitcher_00139/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 8.25,
+    "ra9_ci95": 3.52,
+    "innings": 24.0,
+    "runs": 22
+   }
+  },
+  "pitcher_00139/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 5.11,
+    "ra9_ci95": 4.05,
+    "innings": 12.3,
+    "runs": 7
+   }
+  },
+  "pitcher_00141/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00141/2025": {
+   "sea": {
+    "ra9": 3.09,
+    "ra9_ci95": 3.38,
+    "innings": 11.7,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00141/2026": {
+   "sea": {
+    "ra9": 5.89,
+    "ra9_ci95": 3.47,
+    "innings": 18.3,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_00143/2024": {
+   "sea": {
+    "ra9": 0.82,
+    "ra9_ci95": 2.27,
+    "innings": 11.0,
+    "runs": 1
+   },
+   "hh": null
+  },
+  "pitcher_00144/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 6.0,
+    "ra9_ci95": 3.25,
+    "innings": 21.0,
+    "runs": 14
+   }
+  },
+  "pitcher_00144/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 6.86,
+    "ra9_ci95": 3.46,
+    "innings": 21.0,
+    "runs": 16
+   }
+  },
+  "pitcher_00144/2026": {
+   "sea": {
+    "ra9": 3.86,
+    "ra9_ci95": 2.83,
+    "innings": 18.7,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_00145/2025": {
+   "sea": {
+    "ra9": 7.98,
+    "ra9_ci95": 4.5,
+    "innings": 14.7,
+    "runs": 13
+   },
+   "hh": {
+    "ra9": 7.24,
+    "ra9_ci95": 4.47,
+    "innings": 13.7,
+    "runs": 11
+   }
+  },
+  "pitcher_00146/2024": {
+   "sea": {
+    "ra9": 2.92,
+    "ra9_ci95": 3.2,
+    "innings": 12.3,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00146/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00148/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00150/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00150/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00151/2025": {
+   "sea": {
+    "ra9": 11.77,
+    "ra9_ci95": 5.76,
+    "innings": 13.0,
+    "runs": 17
+   },
+   "hh": null
+  },
+  "pitcher_00151/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00152/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00153/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00154/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00156/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00157/2024": {
+   "sea": {
+    "ra9": 4.86,
+    "ra9_ci95": 3.35,
+    "innings": 16.7,
+    "runs": 9
+   },
+   "hh": {
+    "ra9": 9.49,
+    "ra9_ci95": 5.35,
+    "innings": 12.3,
+    "runs": 13
+   }
+  },
+  "pitcher_00157/2025": {
+   "sea": {
+    "ra9": 12.66,
+    "ra9_ci95": 6.61,
+    "innings": 10.7,
+    "runs": 15
+   },
+   "hh": null
+  },
+  "pitcher_00157/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00158/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00159/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00160/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00160/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00160/2026": {
+   "sea": {
+    "ra9": 8.1,
+    "ra9_ci95": 4.77,
+    "innings": 13.3,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_00161/2025": {
+   "sea": {
+    "ra9": 4.5,
+    "ra9_ci95": 4.32,
+    "innings": 10.0,
+    "runs": 5
+   },
+   "hh": {
+    "ra9": 6.43,
+    "ra9_ci95": 4.18,
+    "innings": 14.0,
+    "runs": 10
+   }
+  },
+  "pitcher_00161/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00162/2025": {
+   "sea": {
+    "ra9": 6.43,
+    "ra9_ci95": 4.18,
+    "innings": 14.0,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00163/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 5.94,
+    "ra9_ci95": 3.67,
+    "innings": 16.7,
+    "runs": 11
+   }
+  },
+  "pitcher_00163/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00164/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00164/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00164/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00165/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00165/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00166/2024": {
+   "sea": {
+    "ra9": 4.15,
+    "ra9_ci95": 1.87,
+    "innings": 43.3,
+    "runs": 20
+   },
+   "hh": {
+    "ra9": 6.63,
+    "ra9_ci95": 3.6,
+    "innings": 19.0,
+    "runs": 14
+   }
+  },
+  "pitcher_00166/2025": {
+   "sea": {
+    "ra9": 7.36,
+    "ra9_ci95": 3.22,
+    "innings": 25.7,
+    "runs": 21
+   },
+   "hh": null
+  },
+  "pitcher_00167/2026": {
+   "sea": {
+    "ra9": 2.95,
+    "ra9_ci95": 2.55,
+    "innings": 18.3,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_00168/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 8.59,
+    "ra9_ci95": 4.66,
+    "innings": 14.7,
+    "runs": 14
+   }
+  },
+  "pitcher_00169/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 4.61,
+    "ra9_ci95": 3.65,
+    "innings": 13.7,
+    "runs": 7
+   }
+  },
+  "pitcher_00169/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00170/2024": {
+   "sea": {
+    "ra9": 5.91,
+    "ra9_ci95": 4.68,
+    "innings": 10.7,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00170/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00170/2026": {
+   "sea": {
+    "ra9": 8.25,
+    "ra9_ci95": 5.09,
+    "innings": 12.0,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_00171/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00172/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 1.38,
+    "ra9_ci95": 2.35,
+    "innings": 13.0,
+    "runs": 2
+   }
+  },
+  "pitcher_00173/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00174/2024": {
+   "sea": {
+    "ra9": 3.0,
+    "ra9_ci95": 2.07,
+    "innings": 27.0,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00174/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00175/2025": {
+   "sea": {
+    "ra9": 7.79,
+    "ra9_ci95": 2.83,
+    "innings": 34.7,
+    "runs": 30
+   },
+   "hh": null
+  },
+  "pitcher_00175/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00176/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00176/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00177/2024": {
+   "sea": {
+    "ra9": 9.49,
+    "ra9_ci95": 5.35,
+    "innings": 12.3,
+    "runs": 13
+   },
+   "hh": null
+  },
+  "pitcher_00178/2024": {
+   "sea": {
+    "ra9": 6.65,
+    "ra9_ci95": 3.25,
+    "innings": 23.0,
+    "runs": 17
+   },
+   "hh": null
+  },
+  "pitcher_00178/2025": {
+   "sea": {
+    "ra9": 4.6,
+    "ra9_ci95": 1.97,
+    "innings": 43.0,
+    "runs": 22
+   },
+   "hh": {
+    "ra9": 12.71,
+    "ra9_ci95": 6.42,
+    "innings": 11.3,
+    "runs": 16
+   }
+  },
+  "pitcher_00178/2026": {
+   "sea": {
+    "ra9": 0.47,
+    "ra9_ci95": 1.31,
+    "innings": 19.0,
+    "runs": 1
+   },
+   "hh": null
+  },
+  "pitcher_00179/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00180/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 11.35,
+    "ra9_ci95": 4.2,
+    "innings": 23.0,
+    "runs": 29
+   }
+  },
+  "pitcher_00180/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 9.26,
+    "ra9_ci95": 5.45,
+    "innings": 11.7,
+    "runs": 12
+   }
+  },
+  "pitcher_00182/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00182/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 7.2,
+    "ra9_ci95": 5.29,
+    "innings": 10.0,
+    "runs": 8
+   }
+  },
+  "pitcher_00183/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00184/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00185/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00185/2025": {
+   "sea": {
+    "ra9": 5.94,
+    "ra9_ci95": 3.67,
+    "innings": 16.7,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_00186/2024": {
+   "sea": {
+    "ra9": 3.18,
+    "ra9_ci95": 1.36,
+    "innings": 62.3,
+    "runs": 22
+   },
+   "hh": null
+  },
+  "pitcher_00186/2025": {
+   "sea": {
+    "ra9": 4.1,
+    "ra9_ci95": 1.89,
+    "innings": 41.7,
+    "runs": 19
+   },
+   "hh": {
+    "ra9": 8.47,
+    "ra9_ci95": 4.28,
+    "innings": 17.0,
+    "runs": 16
+   }
+  },
+  "pitcher_00186/2026": {
+   "sea": {
+    "ra9": 5.05,
+    "ra9_ci95": 2.27,
+    "innings": 35.7,
+    "runs": 20
+   },
+   "hh": null
+  },
+  "pitcher_00187/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00187/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00188/2025": {
+   "sea": {
+    "ra9": 3.38,
+    "ra9_ci95": 3.24,
+    "innings": 13.3,
+    "runs": 5
+   },
+   "hh": {
+    "ra9": 15.68,
+    "ra9_ci95": 7.44,
+    "innings": 10.3,
+    "runs": 18
+   }
+  },
+  "pitcher_00189/2026": {
+   "sea": {
+    "ra9": 5.27,
+    "ra9_ci95": 3.87,
+    "innings": 13.7,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_00190/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 7.89,
+    "ra9_ci95": 3.64,
+    "innings": 21.7,
+    "runs": 19
+   }
+  },
+  "pitcher_00190/2026": {
+   "sea": {
+    "ra9": 1.42,
+    "ra9_ci95": 2.41,
+    "innings": 12.7,
+    "runs": 2
+   },
+   "hh": null
+  },
+  "pitcher_00191/2024": {
+   "sea": {
+    "ra9": 2.64,
+    "ra9_ci95": 1.43,
+    "innings": 47.7,
+    "runs": 14
+   },
+   "hh": {
+    "ra9": 8.1,
+    "ra9_ci95": 5.58,
+    "innings": 10.0,
+    "runs": 9
+   }
+  },
+  "pitcher_00191/2025": {
+   "sea": {
+    "ra9": 3.45,
+    "ra9_ci95": 1.69,
+    "innings": 44.3,
+    "runs": 17
+   },
+   "hh": null
+  },
+  "pitcher_00191/2026": {
+   "sea": {
+    "ra9": 6.35,
+    "ra9_ci95": 3.21,
+    "innings": 22.7,
+    "runs": 16
+   },
+   "hh": null
+  },
+  "pitcher_00193/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00193/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 6.92,
+    "ra9_ci95": 3.11,
+    "innings": 26.0,
+    "runs": 20
+   }
+  },
+  "pitcher_00193/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 6.57,
+    "ra9_ci95": 4.52,
+    "innings": 12.3,
+    "runs": 9
+   }
+  },
+  "pitcher_00194/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 7.5,
+    "ra9_ci95": 4.88,
+    "innings": 12.0,
+    "runs": 10
+   }
+  },
+  "pitcher_00195/2025": {
+   "sea": {
+    "ra9": 9.24,
+    "ra9_ci95": 5.21,
+    "innings": 12.7,
+    "runs": 13
+   },
+   "hh": null
+  },
+  "pitcher_00196/2025": {
+   "sea": {
+    "ra9": 8.1,
+    "ra9_ci95": 3.84,
+    "innings": 20.0,
+    "runs": 18
+   },
+   "hh": null
+  },
+  "pitcher_00197/2024": {
+   "sea": {
+    "ra9": 5.06,
+    "ra9_ci95": 4.38,
+    "innings": 10.7,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_00198/2024": {
+   "sea": {
+    "ra9": 1.26,
+    "ra9_ci95": 2.13,
+    "innings": 14.3,
+    "runs": 2
+   },
+   "hh": {
+    "ra9": 4.18,
+    "ra9_ci95": 2.18,
+    "innings": 32.3,
+    "runs": 15
+   }
+  },
+  "pitcher_00198/2025": {
+   "sea": {
+    "ra9": 1.62,
+    "ra9_ci95": 2.12,
+    "innings": 16.7,
+    "runs": 3
+   },
+   "hh": {
+    "ra9": 4.65,
+    "ra9_ci95": 2.35,
+    "innings": 31.0,
+    "runs": 16
+   }
+  },
+  "pitcher_00198/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 5.4,
+    "ra9_ci95": 3.51,
+    "innings": 16.7,
+    "runs": 10
+   }
+  },
+  "pitcher_00199/2026": {
+   "sea": {
+    "ra9": 4.15,
+    "ra9_ci95": 2.25,
+    "innings": 30.3,
+    "runs": 14
+   },
+   "hh": null
+  },
+  "pitcher_00200/2024": {
+   "sea": {
+    "ra9": 5.93,
+    "ra9_ci95": 2.81,
+    "innings": 27.3,
+    "runs": 18
+   },
+   "hh": {
+    "ra9": 10.8,
+    "ra9_ci95": 5.13,
+    "innings": 15.0,
+    "runs": 18
+   }
+  },
+  "pitcher_00201/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00202/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00203/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00204/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00204/2025": {
+   "sea": {
+    "ra9": 3.97,
+    "ra9_ci95": 2.58,
+    "innings": 22.7,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00205/2024": {
+   "sea": {
+    "ra9": 9.58,
+    "ra9_ci95": 5.91,
+    "innings": 10.3,
+    "runs": 11
+   },
+   "hh": {
+    "ra9": 4.78,
+    "ra9_ci95": 2.34,
+    "innings": 32.0,
+    "runs": 17
+   }
+  },
+  "pitcher_00205/2025": {
+   "sea": {
+    "ra9": 7.2,
+    "ra9_ci95": 5.29,
+    "innings": 10.0,
+    "runs": 8
+   },
+   "hh": {
+    "ra9": 9.22,
+    "ra9_ci95": 5.0,
+    "innings": 13.7,
+    "runs": 14
+   }
+  },
+  "pitcher_00205/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00206/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00207/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00208/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 9.2,
+    "ra9_ci95": 4.81,
+    "innings": 14.7,
+    "runs": 15
+   }
+  },
+  "pitcher_00209/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 7.64,
+    "ra9_ci95": 3.99,
+    "innings": 17.7,
+    "runs": 15
+   }
+  },
+  "pitcher_00210/2024": {
+   "sea": {
+    "ra9": 8.1,
+    "ra9_ci95": 5.58,
+    "innings": 10.0,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00211/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00212/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00213/2026": {
+   "sea": {
+    "ra9": 2.6,
+    "ra9_ci95": 2.49,
+    "innings": 17.3,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00214/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00215/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00215/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 4.35,
+    "ra9_ci95": 4.18,
+    "innings": 10.3,
+    "runs": 5
+   }
+  },
+  "pitcher_00217/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 7.45,
+    "ra9_ci95": 3.76,
+    "innings": 19.3,
+    "runs": 16
+   }
+  },
+  "pitcher_00217/2025": {
+   "sea": {
+    "ra9": 6.46,
+    "ra9_ci95": 3.99,
+    "innings": 15.3,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_00217/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00218/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00219/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00219/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00220/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00221/2026": {
+   "sea": {
+    "ra9": 4.2,
+    "ra9_ci95": 2.28,
+    "innings": 30.0,
+    "runs": 14
+   },
+   "hh": null
+  },
+  "pitcher_00222/2025": {
+   "sea": {
+    "ra9": 2.49,
+    "ra9_ci95": 1.97,
+    "innings": 25.3,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00224/2025": {
+   "sea": {
+    "ra9": 3.86,
+    "ra9_ci95": 2.83,
+    "innings": 18.7,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_00225/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00226/2024": {
+   "sea": {
+    "ra9": 9.2,
+    "ra9_ci95": 4.81,
+    "innings": 14.7,
+    "runs": 15
+   },
+   "hh": null
+  },
+  "pitcher_00226/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00227/2025": {
+   "sea": {
+    "ra9": 4.34,
+    "ra9_ci95": 1.81,
+    "innings": 47.7,
+    "runs": 23
+   },
+   "hh": {
+    "ra9": 3.0,
+    "ra9_ci95": 2.88,
+    "innings": 15.0,
+    "runs": 5
+   }
+  },
+  "pitcher_00227/2026": {
+   "sea": {
+    "ra9": 2.08,
+    "ra9_ci95": 1.8,
+    "innings": 26.0,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_00229/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00230/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00232/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00233/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00233/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00233/2026": {
+   "sea": {
+    "ra9": 4.35,
+    "ra9_ci95": 4.18,
+    "innings": 10.3,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00234/2026": {
+   "sea": {
+    "ra9": 2.37,
+    "ra9_ci95": 2.27,
+    "innings": 19.0,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00235/2025": {
+   "sea": {
+    "ra9": 1.29,
+    "ra9_ci95": 1.23,
+    "innings": 35.0,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00235/2026": {
+   "sea": {
+    "ra9": 1.02,
+    "ra9_ci95": 1.73,
+    "innings": 17.7,
+    "runs": 2
+   },
+   "hh": null
+  },
+  "pitcher_00236/2024": {
+   "sea": {
+    "ra9": 3.31,
+    "ra9_ci95": 2.86,
+    "innings": 16.3,
+    "runs": 6
+   },
+   "hh": {
+    "ra9": 5.28,
+    "ra9_ci95": 2.51,
+    "innings": 30.7,
+    "runs": 18
+   }
+  },
+  "pitcher_00236/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 8.89,
+    "ra9_ci95": 3.41,
+    "innings": 27.3,
+    "runs": 27
+   }
+  },
+  "pitcher_00236/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 8.65,
+    "ra9_ci95": 3.0,
+    "innings": 34.3,
+    "runs": 33
+   }
+  },
+  "pitcher_00238/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00239/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 6.97,
+    "ra9_ci95": 5.12,
+    "innings": 10.3,
+    "runs": 8
+   }
+  },
+  "pitcher_00240/2026": {
+   "sea": {
+    "ra9": 2.35,
+    "ra9_ci95": 1.73,
+    "innings": 30.7,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_00241/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00241/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00242/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00243/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00243/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00244/2024": {
+   "sea": {
+    "ra9": 5.92,
+    "ra9_ci95": 2.99,
+    "innings": 24.3,
+    "runs": 16
+   },
+   "hh": {
+    "ra9": 5.56,
+    "ra9_ci95": 4.4,
+    "innings": 11.3,
+    "runs": 7
+   }
+  },
+  "pitcher_00244/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00245/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00246/2024": {
+   "sea": {
+    "ra9": 3.51,
+    "ra9_ci95": 2.28,
+    "innings": 25.7,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00246/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00247/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 7.11,
+    "ra9_ci95": 4.62,
+    "innings": 12.7,
+    "runs": 10
+   }
+  },
+  "pitcher_00248/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00248/2025": {
+   "sea": {
+    "ra9": 7.11,
+    "ra9_ci95": 4.62,
+    "innings": 12.7,
+    "runs": 10
+   },
+   "hh": {
+    "ra9": 10.45,
+    "ra9_ci95": 6.15,
+    "innings": 10.3,
+    "runs": 12
+   }
+  },
+  "pitcher_00250/2025": {
+   "sea": {
+    "ra9": 4.05,
+    "ra9_ci95": 2.39,
+    "innings": 26.7,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_00250/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 6.1,
+    "ra9_ci95": 4.83,
+    "innings": 10.3,
+    "runs": 7
+   }
+  },
+  "pitcher_00251/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00252/2024": {
+   "sea": {
+    "ra9": 2.95,
+    "ra9_ci95": 2.55,
+    "innings": 18.3,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_00252/2025": {
+   "sea": {
+    "ra9": 4.8,
+    "ra9_ci95": 1.96,
+    "innings": 45.0,
+    "runs": 24
+   },
+   "hh": null
+  },
+  "pitcher_00253/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00254/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 8.49,
+    "ra9_ci95": 5.24,
+    "innings": 11.7,
+    "runs": 11
+   }
+  },
+  "pitcher_00255/2024": {
+   "sea": {
+    "ra9": 9.22,
+    "ra9_ci95": 5.0,
+    "innings": 13.7,
+    "runs": 14
+   },
+   "hh": null
+  },
+  "pitcher_00255/2025": {
+   "sea": {
+    "ra9": 1.93,
+    "ra9_ci95": 1.67,
+    "innings": 28.0,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_00255/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00256/2025": {
+   "sea": {
+    "ra9": 2.04,
+    "ra9_ci95": 2.23,
+    "innings": 17.7,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00256/2026": {
+   "sea": {
+    "ra9": 2.3,
+    "ra9_ci95": 2.52,
+    "innings": 15.7,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00257/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00258/2025": {
+   "sea": {
+    "ra9": 4.91,
+    "ra9_ci95": 4.24,
+    "innings": 11.0,
+    "runs": 6
+   },
+   "hh": {
+    "ra9": 7.71,
+    "ra9_ci95": 3.9,
+    "innings": 18.7,
+    "runs": 16
+   }
+  },
+  "pitcher_00258/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 4.5,
+    "ra9_ci95": 4.32,
+    "innings": 10.0,
+    "runs": 5
+   }
+  },
+  "pitcher_00259/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00260/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00260/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 9.47,
+    "ra9_ci95": 3.64,
+    "innings": 25.7,
+    "runs": 27
+   }
+  },
+  "pitcher_00260/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 2.08,
+    "ra9_ci95": 2.71,
+    "innings": 13.0,
+    "runs": 3
+   }
+  },
+  "pitcher_00261/2025": {
+   "sea": {
+    "ra9": 7.84,
+    "ra9_ci95": 5.4,
+    "innings": 10.3,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00261/2026": {
+   "sea": {
+    "ra9": 3.09,
+    "ra9_ci95": 3.38,
+    "innings": 11.7,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00262/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00262/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00262/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00263/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00264/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00265/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00266/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00267/2024": {
+   "sea": {
+    "ra9": 2.67,
+    "ra9_ci95": 1.96,
+    "innings": 27.0,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_00268/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00269/2024": {
+   "sea": {
+    "ra9": 6.63,
+    "ra9_ci95": 3.6,
+    "innings": 19.0,
+    "runs": 14
+   },
+   "hh": null
+  },
+  "pitcher_00269/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 12.54,
+    "ra9_ci95": 4.91,
+    "innings": 18.7,
+    "runs": 26
+   }
+  },
+  "pitcher_00269/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00270/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00271/2025": {
+   "sea": {
+    "ra9": 3.18,
+    "ra9_ci95": 2.75,
+    "innings": 17.0,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_00273/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00274/2024": {
+   "sea": {
+    "ra9": 3.1,
+    "ra9_ci95": 2.45,
+    "innings": 20.3,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00274/2025": {
+   "sea": {
+    "ra9": 5.24,
+    "ra9_ci95": 2.96,
+    "innings": 22.3,
+    "runs": 13
+   },
+   "hh": null
+  },
+  "pitcher_00274/2026": {
+   "sea": {
+    "ra9": 4.72,
+    "ra9_ci95": 3.74,
+    "innings": 13.3,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00276/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00277/2024": {
+   "sea": {
+    "ra9": 4.12,
+    "ra9_ci95": 2.84,
+    "innings": 19.7,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00277/2025": {
+   "sea": {
+    "ra9": 4.61,
+    "ra9_ci95": 3.65,
+    "innings": 13.7,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00277/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00278/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00279/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00279/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00280/2024": {
+   "sea": {
+    "ra9": 1.69,
+    "ra9_ci95": 2.2,
+    "innings": 16.0,
+    "runs": 3
+   },
+   "hh": null
+  },
+  "pitcher_00280/2025": {
+   "sea": {
+    "ra9": 5.56,
+    "ra9_ci95": 4.4,
+    "innings": 11.3,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00280/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00281/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 11.7,
+    "ra9_ci95": 6.6,
+    "innings": 10.0,
+    "runs": 13
+   }
+  },
+  "pitcher_00282/2025": {
+   "sea": {
+    "ra9": 5.79,
+    "ra9_ci95": 3.02,
+    "innings": 23.3,
+    "runs": 15
+   },
+   "hh": null
+  },
+  "pitcher_00282/2026": {
+   "sea": {
+    "ra9": 5.02,
+    "ra9_ci95": 3.69,
+    "innings": 14.3,
+    "runs": 8
+   },
+   "hh": {
+    "ra9": 8.78,
+    "ra9_ci95": 4.95,
+    "innings": 13.3,
+    "runs": 13
+   }
+  },
+  "pitcher_00285/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00285/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00286/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00286/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00287/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00288/2024": {
+   "sea": {
+    "ra9": 4.58,
+    "ra9_ci95": 2.11,
+    "innings": 37.3,
+    "runs": 19
+   },
+   "hh": null
+  },
+  "pitcher_00288/2025": {
+   "sea": {
+    "ra9": 1.8,
+    "ra9_ci95": 2.35,
+    "innings": 15.0,
+    "runs": 3
+   },
+   "hh": null
+  },
+  "pitcher_00288/2026": {
+   "sea": {
+    "ra9": 9.53,
+    "ra9_ci95": 5.61,
+    "innings": 11.3,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_00289/2025": {
+   "sea": {
+    "ra9": 3.8,
+    "ra9_ci95": 1.38,
+    "innings": 71.0,
+    "runs": 30
+   },
+   "hh": null
+  },
+  "pitcher_00289/2026": {
+   "sea": {
+    "ra9": 2.53,
+    "ra9_ci95": 1.49,
+    "innings": 42.7,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_00290/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00292/2024": {
+   "sea": {
+    "ra9": 3.57,
+    "ra9_ci95": 1.49,
+    "innings": 58.0,
+    "runs": 23
+   },
+   "hh": {
+    "ra9": 5.4,
+    "ra9_ci95": 3.05,
+    "innings": 21.7,
+    "runs": 13
+   }
+  },
+  "pitcher_00292/2025": {
+   "sea": {
+    "ra9": 6.59,
+    "ra9_ci95": 2.89,
+    "innings": 28.7,
+    "runs": 21
+   },
+   "hh": {
+    "ra9": 12.74,
+    "ra9_ci95": 5.09,
+    "innings": 17.7,
+    "runs": 25
+   }
+  },
+  "pitcher_00292/2026": {
+   "sea": {
+    "ra9": 2.96,
+    "ra9_ci95": 2.17,
+    "innings": 24.3,
+    "runs": 8
+   },
+   "hh": {
+    "ra9": 4.4,
+    "ra9_ci95": 2.3,
+    "innings": 30.7,
+    "runs": 15
+   }
+  },
+  "pitcher_00293/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00294/2024": {
+   "sea": {
+    "ra9": 1.82,
+    "ra9_ci95": 1.44,
+    "innings": 34.7,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00294/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00295/2025": {
+   "sea": {
+    "ra9": 6.38,
+    "ra9_ci95": 3.6,
+    "innings": 18.3,
+    "runs": 13
+   },
+   "hh": null
+  },
+  "pitcher_00297/2024": {
+   "sea": {
+    "ra9": 3.55,
+    "ra9_ci95": 3.41,
+    "innings": 12.7,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00298/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00298/2026": {
+   "sea": {
+    "ra9": 3.48,
+    "ra9_ci95": 3.82,
+    "innings": 10.3,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00299/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00299/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 2.45,
+    "ra9_ci95": 3.21,
+    "innings": 11.0,
+    "runs": 3
+   }
+  },
+  "pitcher_00300/2026": {
+   "sea": {
+    "ra9": 5.65,
+    "ra9_ci95": 3.89,
+    "innings": 14.3,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00301/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00301/2025": {
+   "sea": {
+    "ra9": 5.28,
+    "ra9_ci95": 3.64,
+    "innings": 15.3,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00301/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00302/2025": {
+   "sea": {
+    "ra9": 6.23,
+    "ra9_ci95": 3.26,
+    "innings": 21.7,
+    "runs": 15
+   },
+   "hh": null
+  },
+  "pitcher_00302/2026": {
+   "sea": {
+    "ra9": 4.81,
+    "ra9_ci95": 2.71,
+    "innings": 24.3,
+    "runs": 13
+   },
+   "hh": null
+  },
+  "pitcher_00303/2024": {
+   "sea": {
+    "ra9": 4.35,
+    "ra9_ci95": 2.01,
+    "innings": 39.3,
+    "runs": 19
+   },
+   "hh": {
+    "ra9": 7.82,
+    "ra9_ci95": 4.82,
+    "innings": 12.7,
+    "runs": 11
+   }
+  },
+  "pitcher_00303/2025": {
+   "sea": {
+    "ra9": 4.25,
+    "ra9_ci95": 1.6,
+    "innings": 59.3,
+    "runs": 28
+   },
+   "hh": {
+    "ra9": 3.77,
+    "ra9_ci95": 3.26,
+    "innings": 14.3,
+    "runs": 6
+   }
+  },
+  "pitcher_00303/2026": {
+   "sea": {
+    "ra9": 4.61,
+    "ra9_ci95": 3.65,
+    "innings": 13.7,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00304/2024": {
+   "sea": {
+    "ra9": 4.82,
+    "ra9_ci95": 3.13,
+    "innings": 18.7,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00304/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00305/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00306/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00309/2024": {
+   "sea": {
+    "ra9": 2.93,
+    "ra9_ci95": 2.82,
+    "innings": 15.3,
+    "runs": 5
+   },
+   "hh": {
+    "ra9": 4.8,
+    "ra9_ci95": 3.53,
+    "innings": 15.0,
+    "runs": 8
+   }
+  },
+  "pitcher_00309/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00309/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00311/2025": {
+   "sea": {
+    "ra9": 4.22,
+    "ra9_ci95": 4.05,
+    "innings": 10.7,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00311/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00312/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00314/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00315/2025": {
+   "sea": {
+    "ra9": 2.51,
+    "ra9_ci95": 2.75,
+    "innings": 14.3,
+    "runs": 4
+   },
+   "hh": {
+    "ra9": 3.21,
+    "ra9_ci95": 2.09,
+    "innings": 28.0,
+    "runs": 10
+   }
+  },
+  "pitcher_00315/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 10.12,
+    "ra9_ci95": 5.96,
+    "innings": 10.7,
+    "runs": 12
+   }
+  },
+  "pitcher_00316/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 19.85,
+    "ra9_ci95": 7.94,
+    "innings": 11.3,
+    "runs": 25
+   }
+  },
+  "pitcher_00316/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00316/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00317/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00317/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00318/2025": {
+   "sea": {
+    "ra9": 4.11,
+    "ra9_ci95": 3.25,
+    "innings": 15.3,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00319/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 5.28,
+    "ra9_ci95": 2.51,
+    "innings": 30.7,
+    "runs": 18
+   }
+  },
+  "pitcher_00319/2025": {
+   "sea": {
+    "ra9": 0.0,
+    "ra9_ci95": 1.32,
+    "innings": 13.3,
+    "runs": 0
+   },
+   "hh": {
+    "ra9": 9.0,
+    "ra9_ci95": 4.4,
+    "innings": 17.0,
+    "runs": 17
+   }
+  },
+  "pitcher_00319/2026": {
+   "sea": {
+    "ra9": 2.93,
+    "ra9_ci95": 2.82,
+    "innings": 15.3,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00320/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00322/2024": {
+   "sea": {
+    "ra9": 6.55,
+    "ra9_ci95": 4.81,
+    "innings": 11.0,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_00323/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00324/2024": {
+   "sea": {
+    "ra9": 2.66,
+    "ra9_ci95": 2.3,
+    "innings": 20.3,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_00324/2025": {
+   "sea": {
+    "ra9": 6.59,
+    "ra9_ci95": 4.28,
+    "innings": 13.7,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00325/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00325/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00326/2024": {
+   "sea": {
+    "ra9": 3.67,
+    "ra9_ci95": 1.8,
+    "innings": 41.7,
+    "runs": 17
+   },
+   "hh": null
+  },
+  "pitcher_00326/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00326/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 8.87,
+    "ra9_ci95": 3.79,
+    "innings": 22.3,
+    "runs": 22
+   }
+  },
+  "pitcher_00327/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 4.41,
+    "ra9_ci95": 2.23,
+    "innings": 32.7,
+    "runs": 16
+   }
+  },
+  "pitcher_00328/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00329/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00330/2024": {
+   "sea": {
+    "ra9": 5.09,
+    "ra9_ci95": 2.29,
+    "innings": 35.3,
+    "runs": 20
+   },
+   "hh": null
+  },
+  "pitcher_00331/2024": {
+   "sea": {
+    "ra9": 3.86,
+    "ra9_ci95": 3.33,
+    "innings": 14.0,
+    "runs": 6
+   },
+   "hh": {
+    "ra9": 4.3,
+    "ra9_ci95": 2.33,
+    "innings": 29.3,
+    "runs": 14
+   }
+  },
+  "pitcher_00331/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 7.66,
+    "ra9_ci95": 3.53,
+    "innings": 22.3,
+    "runs": 19
+   }
+  },
+  "pitcher_00332/2025": {
+   "sea": {
+    "ra9": 3.26,
+    "ra9_ci95": 2.01,
+    "innings": 30.3,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_00333/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00333/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00334/2024": {
+   "sea": {
+    "ra9": 3.86,
+    "ra9_ci95": 3.33,
+    "innings": 14.0,
+    "runs": 6
+   },
+   "hh": {
+    "ra9": 8.05,
+    "ra9_ci95": 3.94,
+    "innings": 19.0,
+    "runs": 17
+   }
+  },
+  "pitcher_00334/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00336/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00337/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00338/2024": {
+   "sea": {
+    "ra9": 3.68,
+    "ra9_ci95": 3.18,
+    "innings": 14.7,
+    "runs": 6
+   },
+   "hh": {
+    "ra9": 3.94,
+    "ra9_ci95": 1.77,
+    "innings": 45.7,
+    "runs": 20
+   }
+  },
+  "pitcher_00338/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 8.42,
+    "ra9_ci95": 3.44,
+    "innings": 25.7,
+    "runs": 24
+   }
+  },
+  "pitcher_00338/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 8.15,
+    "ra9_ci95": 4.12,
+    "innings": 17.7,
+    "runs": 16
+   }
+  },
+  "pitcher_00339/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00340/2024": {
+   "sea": {
+    "ra9": 6.97,
+    "ra9_ci95": 1.99,
+    "innings": 62.0,
+    "runs": 48
+   },
+   "hh": {
+    "ra9": 2.45,
+    "ra9_ci95": 3.21,
+    "innings": 11.0,
+    "runs": 3
+   }
+  },
+  "pitcher_00341/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00342/2024": {
+   "sea": {
+    "ra9": 5.4,
+    "ra9_ci95": 4.67,
+    "innings": 10.0,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_00342/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 7.2,
+    "ra9_ci95": 5.29,
+    "innings": 10.0,
+    "runs": 8
+   }
+  },
+  "pitcher_00343/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00343/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 7.5,
+    "ra9_ci95": 3.37,
+    "innings": 24.0,
+    "runs": 20
+   }
+  },
+  "pitcher_00343/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00344/2024": {
+   "sea": {
+    "ra9": 9.58,
+    "ra9_ci95": 5.91,
+    "innings": 10.3,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_00344/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00345/2024": {
+   "sea": {
+    "ra9": 2.62,
+    "ra9_ci95": 2.08,
+    "innings": 24.0,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00345/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 3.38,
+    "ra9_ci95": 2.32,
+    "innings": 24.0,
+    "runs": 9
+   }
+  },
+  "pitcher_00346/2026": {
+   "sea": {
+    "ra9": 3.38,
+    "ra9_ci95": 2.67,
+    "innings": 18.7,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00347/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00348/2024": {
+   "sea": {
+    "ra9": 4.05,
+    "ra9_ci95": 1.92,
+    "innings": 40.0,
+    "runs": 18
+   },
+   "hh": null
+  },
+  "pitcher_00349/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00351/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00352/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 4.09,
+    "ra9_ci95": 3.93,
+    "innings": 11.0,
+    "runs": 5
+   }
+  },
+  "pitcher_00355/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00355/2026": {
+   "sea": {
+    "ra9": 4.08,
+    "ra9_ci95": 3.0,
+    "innings": 17.7,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_00356/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00357/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00358/2024": {
+   "sea": {
+    "ra9": 6.39,
+    "ra9_ci95": 4.4,
+    "innings": 12.7,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00359/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 8.27,
+    "ra9_ci95": 3.82,
+    "innings": 20.7,
+    "runs": 19
+   }
+  },
+  "pitcher_00359/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00360/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00361/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 9.72,
+    "ra9_ci95": 4.61,
+    "innings": 16.7,
+    "runs": 18
+   }
+  },
+  "pitcher_00361/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 5.53,
+    "ra9_ci95": 2.71,
+    "innings": 27.7,
+    "runs": 17
+   }
+  },
+  "pitcher_00362/2025": {
+   "sea": {
+    "ra9": 5.09,
+    "ra9_ci95": 3.31,
+    "innings": 17.7,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00362/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00363/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00364/2025": {
+   "sea": {
+    "ra9": 1.46,
+    "ra9_ci95": 2.48,
+    "innings": 12.3,
+    "runs": 2
+   },
+   "hh": {
+    "ra9": 15.52,
+    "ra9_ci95": 6.48,
+    "innings": 13.3,
+    "runs": 23
+   }
+  },
+  "pitcher_00365/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00366/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00367/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00368/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00368/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00369/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00370/2024": {
+   "sea": {
+    "ra9": 2.93,
+    "ra9_ci95": 2.82,
+    "innings": 15.3,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00370/2025": {
+   "sea": {
+    "ra9": 5.6,
+    "ra9_ci95": 3.46,
+    "innings": 17.7,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_00370/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00373/2024": {
+   "sea": {
+    "ra9": 2.57,
+    "ra9_ci95": 1.67,
+    "innings": 35.0,
+    "runs": 10
+   },
+   "hh": {
+    "ra9": 4.11,
+    "ra9_ci95": 3.25,
+    "innings": 15.3,
+    "runs": 7
+   }
+  },
+  "pitcher_00373/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 8.78,
+    "ra9_ci95": 4.95,
+    "innings": 13.3,
+    "runs": 13
+   }
+  },
+  "pitcher_00374/2024": {
+   "sea": {
+    "ra9": 2.87,
+    "ra9_ci95": 2.76,
+    "innings": 15.7,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00374/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00375/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00376/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00377/2025": {
+   "sea": {
+    "ra9": 5.84,
+    "ra9_ci95": 4.29,
+    "innings": 12.3,
+    "runs": 8
+   },
+   "hh": {
+    "ra9": 5.36,
+    "ra9_ci95": 2.14,
+    "innings": 42.0,
+    "runs": 25
+   }
+  },
+  "pitcher_00378/2026": {
+   "sea": {
+    "ra9": 6.1,
+    "ra9_ci95": 4.83,
+    "innings": 10.3,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00379/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 9.9,
+    "ra9_ci95": 6.11,
+    "innings": 10.0,
+    "runs": 11
+   }
+  },
+  "pitcher_00379/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00380/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00380/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00380/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00381/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00382/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00383/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00384/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00386/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00386/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00387/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00388/2025": {
+   "sea": {
+    "ra9": 4.5,
+    "ra9_ci95": 2.65,
+    "innings": 24.0,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_00389/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00389/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00389/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00390/2025": {
+   "sea": {
+    "ra9": 1.08,
+    "ra9_ci95": 1.41,
+    "innings": 25.0,
+    "runs": 3
+   },
+   "hh": null
+  },
+  "pitcher_00391/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00391/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00392/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00393/2025": {
+   "sea": {
+    "ra9": 3.77,
+    "ra9_ci95": 3.26,
+    "innings": 14.3,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_00394/2026": {
+   "sea": {
+    "ra9": 4.5,
+    "ra9_ci95": 4.32,
+    "innings": 10.0,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00395/2025": {
+   "sea": {
+    "ra9": 3.48,
+    "ra9_ci95": 3.82,
+    "innings": 10.3,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00395/2026": {
+   "sea": {
+    "ra9": 6.23,
+    "ra9_ci95": 4.29,
+    "innings": 13.0,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00396/2024": {
+   "sea": {
+    "ra9": 0.69,
+    "ra9_ci95": 1.92,
+    "innings": 13.0,
+    "runs": 1
+   },
+   "hh": null
+  },
+  "pitcher_00396/2025": {
+   "sea": {
+    "ra9": 3.77,
+    "ra9_ci95": 1.51,
+    "innings": 59.7,
+    "runs": 25
+   },
+   "hh": {
+    "ra9": 6.39,
+    "ra9_ci95": 4.4,
+    "innings": 12.7,
+    "runs": 9
+   }
+  },
+  "pitcher_00396/2026": {
+   "sea": {
+    "ra9": 2.83,
+    "ra9_ci95": 1.48,
+    "innings": 47.7,
+    "runs": 15
+   },
+   "hh": null
+  },
+  "pitcher_00397/2024": {
+   "sea": {
+    "ra9": 6.14,
+    "ra9_ci95": 3.99,
+    "innings": 14.7,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00398/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00398/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00398/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00399/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00400/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00401/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00401/2025": {
+   "sea": {
+    "ra9": 6.88,
+    "ra9_ci95": 2.7,
+    "innings": 34.0,
+    "runs": 26
+   },
+   "hh": {
+    "ra9": 6.14,
+    "ra9_ci95": 3.99,
+    "innings": 14.7,
+    "runs": 10
+   }
+  },
+  "pitcher_00401/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 5.21,
+    "ra9_ci95": 3.22,
+    "innings": 19.0,
+    "runs": 11
+   }
+  },
+  "pitcher_00402/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00403/2024": {
+   "sea": {
+    "ra9": 4.09,
+    "ra9_ci95": 2.66,
+    "innings": 22.0,
+    "runs": 10
+   },
+   "hh": {
+    "ra9": 4.46,
+    "ra9_ci95": 2.12,
+    "innings": 36.3,
+    "runs": 18
+   }
+  },
+  "pitcher_00403/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 9.74,
+    "ra9_ci95": 4.16,
+    "innings": 20.3,
+    "runs": 22
+   }
+  },
+  "pitcher_00404/2024": {
+   "sea": {
+    "ra9": 4.13,
+    "ra9_ci95": 1.39,
+    "innings": 76.3,
+    "runs": 35
+   },
+   "hh": null
+  },
+  "pitcher_00404/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 7.07,
+    "ra9_ci95": 4.36,
+    "innings": 14.0,
+    "runs": 11
+   }
+  },
+  "pitcher_00405/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00407/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00408/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00409/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00410/2024": {
+   "sea": {
+    "ra9": 7.71,
+    "ra9_ci95": 5.01,
+    "innings": 11.7,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00410/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00410/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00411/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00412/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00412/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00413/2025": {
+   "sea": {
+    "ra9": 4.84,
+    "ra9_ci95": 2.85,
+    "innings": 22.3,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_00413/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00415/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00416/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00416/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00416/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00417/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00418/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 5.03,
+    "ra9_ci95": 3.11,
+    "innings": 19.7,
+    "runs": 11
+   }
+  },
+  "pitcher_00419/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00420/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00420/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00422/2025": {
+   "sea": {
+    "ra9": 5.55,
+    "ra9_ci95": 2.9,
+    "innings": 24.3,
+    "runs": 15
+   },
+   "hh": null
+  },
+  "pitcher_00422/2026": {
+   "sea": {
+    "ra9": 4.03,
+    "ra9_ci95": 2.62,
+    "innings": 22.3,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00423/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00424/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00425/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00426/2024": {
+   "sea": {
+    "ra9": 5.32,
+    "ra9_ci95": 2.89,
+    "innings": 23.7,
+    "runs": 14
+   },
+   "hh": {
+    "ra9": 8.31,
+    "ra9_ci95": 4.89,
+    "innings": 13.0,
+    "runs": 12
+   }
+  },
+  "pitcher_00426/2025": {
+   "sea": {
+    "ra9": 6.32,
+    "ra9_ci95": 3.9,
+    "innings": 15.7,
+    "runs": 11
+   },
+   "hh": {
+    "ra9": 10.29,
+    "ra9_ci95": 5.2,
+    "innings": 14.0,
+    "runs": 16
+   }
+  },
+  "pitcher_00427/2025": {
+   "sea": {
+    "ra9": 7.4,
+    "ra9_ci95": 3.62,
+    "innings": 20.7,
+    "runs": 17
+   },
+   "hh": null
+  },
+  "pitcher_00428/2025": {
+   "sea": {
+    "ra9": 7.12,
+    "ra9_ci95": 3.29,
+    "innings": 24.0,
+    "runs": 19
+   },
+   "hh": null
+  },
+  "pitcher_00429/2024": {
+   "sea": {
+    "ra9": 2.19,
+    "ra9_ci95": 2.86,
+    "innings": 12.3,
+    "runs": 3
+   },
+   "hh": null
+  },
+  "pitcher_00429/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00429/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00430/2024": {
+   "sea": {
+    "ra9": 1.33,
+    "ra9_ci95": 1.74,
+    "innings": 20.3,
+    "runs": 3
+   },
+   "hh": {
+    "ra9": 10.8,
+    "ra9_ci95": 4.85,
+    "innings": 16.7,
+    "runs": 20
+   }
+  },
+  "pitcher_00430/2025": {
+   "sea": {
+    "ra9": 6.14,
+    "ra9_ci95": 3.99,
+    "innings": 14.7,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00431/2024": {
+   "sea": {
+    "ra9": 2.54,
+    "ra9_ci95": 1.87,
+    "innings": 28.3,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_00431/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00432/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00433/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00434/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00436/2024": {
+   "sea": {
+    "ra9": 5.4,
+    "ra9_ci95": 2.49,
+    "innings": 31.7,
+    "runs": 19
+   },
+   "hh": {
+    "ra9": 8.71,
+    "ra9_ci95": 3.91,
+    "innings": 20.7,
+    "runs": 20
+   }
+  },
+  "pitcher_00437/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00438/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00439/2024": {
+   "sea": {
+    "ra9": 6.3,
+    "ra9_ci95": 4.99,
+    "innings": 10.0,
+    "runs": 7
+   },
+   "hh": {
+    "ra9": 10.32,
+    "ra9_ci95": 5.82,
+    "innings": 11.3,
+    "runs": 13
+   }
+  },
+  "pitcher_00440/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 4.32,
+    "ra9_ci95": 3.18,
+    "innings": 16.7,
+    "runs": 8
+   }
+  },
+  "pitcher_00440/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00441/2025": {
+   "sea": {
+    "ra9": 4.5,
+    "ra9_ci95": 3.89,
+    "innings": 12.0,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_00441/2026": {
+   "sea": {
+    "ra9": 4.61,
+    "ra9_ci95": 3.65,
+    "innings": 13.7,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00442/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00442/2025": {
+   "sea": {
+    "ra9": 7.9,
+    "ra9_ci95": 4.65,
+    "innings": 13.7,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_00442/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00443/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00444/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00445/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 11.65,
+    "ra9_ci95": 4.98,
+    "innings": 17.0,
+    "runs": 22
+   }
+  },
+  "pitcher_00445/2025": {
+   "sea": {
+    "ra9": 4.5,
+    "ra9_ci95": 4.32,
+    "innings": 10.0,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00445/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00446/2024": {
+   "sea": {
+    "ra9": 3.62,
+    "ra9_ci95": 1.55,
+    "innings": 54.7,
+    "runs": 22
+   },
+   "hh": null
+  },
+  "pitcher_00446/2025": {
+   "sea": {
+    "ra9": 7.16,
+    "ra9_ci95": 3.06,
+    "innings": 27.7,
+    "runs": 22
+   },
+   "hh": {
+    "ra9": 9.33,
+    "ra9_ci95": 4.3,
+    "innings": 18.3,
+    "runs": 19
+   }
+  },
+  "pitcher_00447/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00448/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 12.64,
+    "ra9_ci95": 5.4,
+    "innings": 15.7,
+    "runs": 22
+   }
+  },
+  "pitcher_00449/2024": {
+   "sea": {
+    "ra9": 4.91,
+    "ra9_ci95": 2.89,
+    "innings": 22.0,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_00449/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00449/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00450/2025": {
+   "sea": {
+    "ra9": 5.49,
+    "ra9_ci95": 3.23,
+    "innings": 19.7,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_00450/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00451/2024": {
+   "sea": {
+    "ra9": 3.48,
+    "ra9_ci95": 2.56,
+    "innings": 20.7,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_00451/2025": {
+   "sea": {
+    "ra9": 2.33,
+    "ra9_ci95": 1.85,
+    "innings": 27.0,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00451/2026": {
+   "sea": {
+    "ra9": 5.93,
+    "ra9_ci95": 4.08,
+    "innings": 13.7,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00452/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00454/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00455/2024": {
+   "sea": {
+    "ra9": 8.03,
+    "ra9_ci95": 4.95,
+    "innings": 12.3,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_00456/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00457/2024": {
+   "sea": {
+    "ra9": 3.27,
+    "ra9_ci95": 3.59,
+    "innings": 11.0,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00457/2025": {
+   "sea": {
+    "ra9": 4.85,
+    "ra9_ci95": 2.63,
+    "innings": 26.0,
+    "runs": 14
+   },
+   "hh": null
+  },
+  "pitcher_00457/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00458/2024": {
+   "sea": {
+    "ra9": 8.1,
+    "ra9_ci95": 5.58,
+    "innings": 10.0,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00459/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00460/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00461/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00461/2025": {
+   "sea": {
+    "ra9": 4.68,
+    "ra9_ci95": 1.47,
+    "innings": 77.0,
+    "runs": 40
+   },
+   "hh": {
+    "ra9": 9.0,
+    "ra9_ci95": 4.55,
+    "innings": 16.0,
+    "runs": 16
+   }
+  },
+  "pitcher_00461/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00462/2025": {
+   "sea": {
+    "ra9": 6.28,
+    "ra9_ci95": 4.08,
+    "innings": 14.3,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00463/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00464/2024": {
+   "sea": {
+    "ra9": 3.68,
+    "ra9_ci95": 1.44,
+    "innings": 63.7,
+    "runs": 26
+   },
+   "hh": {
+    "ra9": 4.97,
+    "ra9_ci95": 3.94,
+    "innings": 12.7,
+    "runs": 7
+   }
+  },
+  "pitcher_00464/2025": {
+   "sea": {
+    "ra9": 3.24,
+    "ra9_ci95": 2.8,
+    "innings": 16.7,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_00464/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 5.4,
+    "ra9_ci95": 2.93,
+    "innings": 23.3,
+    "runs": 14
+   }
+  },
+  "pitcher_00465/2024": {
+   "sea": {
+    "ra9": 4.78,
+    "ra9_ci95": 2.59,
+    "innings": 26.3,
+    "runs": 14
+   },
+   "hh": null
+  },
+  "pitcher_00465/2025": {
+   "sea": {
+    "ra9": 3.54,
+    "ra9_ci95": 2.6,
+    "innings": 20.3,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_00465/2026": {
+   "sea": {
+    "ra9": 2.7,
+    "ra9_ci95": 2.59,
+    "innings": 16.7,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00466/2025": {
+   "sea": {
+    "ra9": 4.55,
+    "ra9_ci95": 2.3,
+    "innings": 31.7,
+    "runs": 16
+   },
+   "hh": null
+  },
+  "pitcher_00466/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00467/2024": {
+   "sea": {
+    "ra9": 4.6,
+    "ra9_ci95": 3.38,
+    "innings": 15.7,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_00467/2025": {
+   "sea": {
+    "ra9": 5.5,
+    "ra9_ci95": 3.39,
+    "innings": 18.0,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_00468/2025": {
+   "sea": {
+    "ra9": 4.15,
+    "ra9_ci95": 1.97,
+    "innings": 39.0,
+    "runs": 18
+   },
+   "hh": {
+    "ra9": 3.57,
+    "ra9_ci95": 2.82,
+    "innings": 17.7,
+    "runs": 7
+   }
+  },
+  "pitcher_00469/2026": {
+   "sea": {
+    "ra9": 1.62,
+    "ra9_ci95": 2.12,
+    "innings": 16.7,
+    "runs": 3
+   },
+   "hh": null
+  },
+  "pitcher_00470/2024": {
+   "sea": {
+    "ra9": 7.99,
+    "ra9_ci95": 3.5,
+    "innings": 23.7,
+    "runs": 21
+   },
+   "hh": {
+    "ra9": 6.15,
+    "ra9_ci95": 2.57,
+    "innings": 33.7,
+    "runs": 23
+   }
+  },
+  "pitcher_00471/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00472/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00473/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00474/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 11.7,
+    "ra9_ci95": 6.6,
+    "innings": 10.0,
+    "runs": 13
+   }
+  },
+  "pitcher_00475/2024": {
+   "sea": {
+    "ra9": 6.11,
+    "ra9_ci95": 2.82,
+    "innings": 28.0,
+    "runs": 19
+   },
+   "hh": null
+  },
+  "pitcher_00477/2024": {
+   "sea": {
+    "ra9": 10.95,
+    "ra9_ci95": 5.72,
+    "innings": 12.3,
+    "runs": 15
+   },
+   "hh": null
+  },
+  "pitcher_00477/2025": {
+   "sea": {
+    "ra9": 3.9,
+    "ra9_ci95": 2.3,
+    "innings": 27.7,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_00477/2026": {
+   "sea": {
+    "ra9": 6.88,
+    "ra9_ci95": 3.88,
+    "innings": 17.0,
+    "runs": 13
+   },
+   "hh": null
+  },
+  "pitcher_00478/2024": {
+   "sea": {
+    "ra9": 4.5,
+    "ra9_ci95": 2.27,
+    "innings": 32.0,
+    "runs": 16
+   },
+   "hh": null
+  },
+  "pitcher_00478/2025": {
+   "sea": {
+    "ra9": 9.58,
+    "ra9_ci95": 5.91,
+    "innings": 10.3,
+    "runs": 11
+   },
+   "hh": {
+    "ra9": 10.61,
+    "ra9_ci95": 4.53,
+    "innings": 18.7,
+    "runs": 22
+   }
+  },
+  "pitcher_00478/2026": {
+   "sea": {
+    "ra9": 4.82,
+    "ra9_ci95": 3.13,
+    "innings": 18.7,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00480/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00481/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00482/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 4.97,
+    "ra9_ci95": 3.94,
+    "innings": 12.7,
+    "runs": 7
+   }
+  },
+  "pitcher_00483/2024": {
+   "sea": {
+    "ra9": 3.1,
+    "ra9_ci95": 2.45,
+    "innings": 20.3,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00483/2025": {
+   "sea": {
+    "ra9": 5.59,
+    "ra9_ci95": 3.29,
+    "innings": 19.3,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_00484/2025": {
+   "sea": {
+    "ra9": 2.63,
+    "ra9_ci95": 2.89,
+    "innings": 13.7,
+    "runs": 4
+   },
+   "hh": {
+    "ra9": 6.75,
+    "ra9_ci95": 4.96,
+    "innings": 10.7,
+    "runs": 8
+   }
+  },
+  "pitcher_00484/2026": {
+   "sea": {
+    "ra9": 2.81,
+    "ra9_ci95": 2.7,
+    "innings": 16.0,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00485/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00486/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00489/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 8.44,
+    "ra9_ci95": 5.48,
+    "innings": 10.7,
+    "runs": 10
+   }
+  },
+  "pitcher_00490/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00493/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00494/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00495/2025": {
+   "sea": {
+    "ra9": 9.26,
+    "ra9_ci95": 5.45,
+    "innings": 11.7,
+    "runs": 12
+   },
+   "hh": {
+    "ra9": 8.6,
+    "ra9_ci95": 2.85,
+    "innings": 37.7,
+    "runs": 36
+   }
+  },
+  "pitcher_00497/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00498/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00499/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00500/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00500/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 9.0,
+    "ra9_ci95": 5.56,
+    "innings": 11.0,
+    "runs": 11
+   }
+  },
+  "pitcher_00500/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00501/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00502/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00503/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00503/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00503/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 10.32,
+    "ra9_ci95": 5.82,
+    "innings": 11.3,
+    "runs": 13
+   }
+  },
+  "pitcher_00504/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00507/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00507/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00507/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00508/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 1.69,
+    "ra9_ci95": 2.86,
+    "innings": 10.7,
+    "runs": 2
+   }
+  },
+  "pitcher_00508/2025": {
+   "sea": {
+    "ra9": 4.91,
+    "ra9_ci95": 3.61,
+    "innings": 14.7,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_00509/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00509/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00510/2025": {
+   "sea": {
+    "ra9": 7.47,
+    "ra9_ci95": 4.21,
+    "innings": 15.7,
+    "runs": 13
+   },
+   "hh": null
+  },
+  "pitcher_00510/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00511/2024": {
+   "sea": {
+    "ra9": 6.6,
+    "ra9_ci95": 4.07,
+    "innings": 15.0,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_00511/2025": {
+   "sea": {
+    "ra9": 6.23,
+    "ra9_ci95": 3.26,
+    "innings": 21.7,
+    "runs": 15
+   },
+   "hh": null
+  },
+  "pitcher_00511/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00512/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00513/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00514/2024": {
+   "sea": {
+    "ra9": 5.79,
+    "ra9_ci95": 2.75,
+    "innings": 28.0,
+    "runs": 18
+   },
+   "hh": null
+  },
+  "pitcher_00514/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00515/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00516/2024": {
+   "sea": {
+    "ra9": 7.62,
+    "ra9_ci95": 3.11,
+    "innings": 28.3,
+    "runs": 24
+   },
+   "hh": null
+  },
+  "pitcher_00516/2025": {
+   "sea": {
+    "ra9": 5.57,
+    "ra9_ci95": 3.14,
+    "innings": 21.0,
+    "runs": 13
+   },
+   "hh": {
+    "ra9": 7.07,
+    "ra9_ci95": 4.36,
+    "innings": 14.0,
+    "runs": 11
+   }
+  },
+  "pitcher_00516/2026": {
+   "sea": {
+    "ra9": 5.65,
+    "ra9_ci95": 3.89,
+    "innings": 14.3,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00517/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00517/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00518/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00519/2024": {
+   "sea": {
+    "ra9": 3.43,
+    "ra9_ci95": 2.52,
+    "innings": 21.0,
+    "runs": 8
+   },
+   "hh": {
+    "ra9": 3.41,
+    "ra9_ci95": 2.11,
+    "innings": 29.0,
+    "runs": 11
+   }
+  },
+  "pitcher_00519/2025": {
+   "sea": {
+    "ra9": 6.75,
+    "ra9_ci95": 3.81,
+    "innings": 17.3,
+    "runs": 13
+   },
+   "hh": {
+    "ra9": 6.05,
+    "ra9_ci95": 3.41,
+    "innings": 19.3,
+    "runs": 13
+   }
+  },
+  "pitcher_00519/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00520/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00522/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 12.31,
+    "ra9_ci95": 4.4,
+    "innings": 22.7,
+    "runs": 31
+   }
+  },
+  "pitcher_00523/2024": {
+   "sea": {
+    "ra9": 6.19,
+    "ra9_ci95": 2.64,
+    "innings": 32.0,
+    "runs": 22
+   },
+   "hh": null
+  },
+  "pitcher_00523/2025": {
+   "sea": {
+    "ra9": 6.98,
+    "ra9_ci95": 2.91,
+    "innings": 29.7,
+    "runs": 23
+   },
+   "hh": null
+  },
+  "pitcher_00523/2026": {
+   "sea": {
+    "ra9": 5.57,
+    "ra9_ci95": 3.14,
+    "innings": 21.0,
+    "runs": 13
+   },
+   "hh": null
+  },
+  "pitcher_00524/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00525/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00526/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00526/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00528/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00528/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00529/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00529/2025": {
+   "sea": {
+    "ra9": 10.23,
+    "ra9_ci95": 4.09,
+    "innings": 22.0,
+    "runs": 25
+   },
+   "hh": null
+  },
+  "pitcher_00529/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00530/2025": {
+   "sea": {
+    "ra9": 4.08,
+    "ra9_ci95": 2.06,
+    "innings": 35.3,
+    "runs": 16
+   },
+   "hh": null
+  },
+  "pitcher_00531/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00532/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00533/2024": {
+   "sea": {
+    "ra9": 3.35,
+    "ra9_ci95": 1.81,
+    "innings": 37.7,
+    "runs": 14
+   },
+   "hh": null
+  },
+  "pitcher_00533/2025": {
+   "sea": {
+    "ra9": 4.66,
+    "ra9_ci95": 1.39,
+    "innings": 85.0,
+    "runs": 44
+   },
+   "hh": null
+  },
+  "pitcher_00533/2026": {
+   "sea": {
+    "ra9": 1.65,
+    "ra9_ci95": 1.58,
+    "innings": 27.3,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00534/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 7.67,
+    "ra9_ci95": 3.2,
+    "innings": 27.0,
+    "runs": 23
+   }
+  },
+  "pitcher_00535/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00536/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00536/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00537/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00538/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00539/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00539/2025": {
+   "sea": {
+    "ra9": 7.39,
+    "ra9_ci95": 3.09,
+    "innings": 28.0,
+    "runs": 23
+   },
+   "hh": null
+  },
+  "pitcher_00539/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00541/2024": {
+   "sea": {
+    "ra9": 4.62,
+    "ra9_ci95": 2.07,
+    "innings": 39.0,
+    "runs": 20
+   },
+   "hh": null
+  },
+  "pitcher_00541/2025": {
+   "sea": {
+    "ra9": 6.29,
+    "ra9_ci95": 2.03,
+    "innings": 54.3,
+    "runs": 38
+   },
+   "hh": null
+  },
+  "pitcher_00541/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00542/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 5.23,
+    "ra9_ci95": 4.52,
+    "innings": 10.3,
+    "runs": 6
+   }
+  },
+  "pitcher_00542/2026": {
+   "sea": {
+    "ra9": 4.5,
+    "ra9_ci95": 3.56,
+    "innings": 14.0,
+    "runs": 7
+   },
+   "hh": {
+    "ra9": 9.0,
+    "ra9_ci95": 3.46,
+    "innings": 27.0,
+    "runs": 27
+   }
+  },
+  "pitcher_00543/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00544/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00544/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00545/2025": {
+   "sea": {
+    "ra9": 6.75,
+    "ra9_ci95": 4.96,
+    "innings": 10.7,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_00546/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00546/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00547/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00547/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 2.77,
+    "ra9_ci95": 3.03,
+    "innings": 13.0,
+    "runs": 4
+   }
+  },
+  "pitcher_00547/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00548/2025": {
+   "sea": {
+    "ra9": 5.32,
+    "ra9_ci95": 2.89,
+    "innings": 23.7,
+    "runs": 14
+   },
+   "hh": null
+  },
+  "pitcher_00549/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00550/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00551/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00553/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 4.38,
+    "ra9_ci95": 3.78,
+    "innings": 12.3,
+    "runs": 6
+   }
+  },
+  "pitcher_00554/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00555/2024": {
+   "sea": {
+    "ra9": 4.5,
+    "ra9_ci95": 3.89,
+    "innings": 12.0,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_00555/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00555/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00557/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00557/2025": {
+   "sea": {
+    "ra9": 2.84,
+    "ra9_ci95": 3.11,
+    "innings": 12.7,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00557/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00558/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 11.57,
+    "ra9_ci95": 6.05,
+    "innings": 11.7,
+    "runs": 15
+   }
+  },
+  "pitcher_00558/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00559/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 12.38,
+    "ra9_ci95": 5.29,
+    "innings": 16.0,
+    "runs": 22
+   }
+  },
+  "pitcher_00559/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00559/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00560/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00560/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00561/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00562/2024": {
+   "sea": {
+    "ra9": 2.45,
+    "ra9_ci95": 3.21,
+    "innings": 11.0,
+    "runs": 3
+   },
+   "hh": {
+    "ra9": 3.41,
+    "ra9_ci95": 2.11,
+    "innings": 29.0,
+    "runs": 11
+   }
+  },
+  "pitcher_00562/2025": {
+   "sea": {
+    "ra9": 4.11,
+    "ra9_ci95": 3.25,
+    "innings": 15.3,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00562/2026": {
+   "sea": {
+    "ra9": 3.86,
+    "ra9_ci95": 3.7,
+    "innings": 11.7,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00563/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00563/2026": {
+   "sea": {
+    "ra9": 7.04,
+    "ra9_ci95": 4.15,
+    "innings": 15.3,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_00564/2025": {
+   "sea": {
+    "ra9": 1.76,
+    "ra9_ci95": 1.52,
+    "innings": 30.7,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_00564/2026": {
+   "sea": {
+    "ra9": 3.68,
+    "ra9_ci95": 3.18,
+    "innings": 14.7,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_00565/2025": {
+   "sea": {
+    "ra9": 5.65,
+    "ra9_ci95": 3.89,
+    "innings": 14.3,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00565/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00566/2024": {
+   "sea": {
+    "ra9": 3.09,
+    "ra9_ci95": 3.38,
+    "innings": 11.7,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00566/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00568/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00569/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 7.2,
+    "ra9_ci95": 3.23,
+    "innings": 25.0,
+    "runs": 20
+   }
+  },
+  "pitcher_00571/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 17.42,
+    "ra9_ci95": 7.82,
+    "innings": 10.3,
+    "runs": 20
+   }
+  },
+  "pitcher_00573/2024": {
+   "sea": {
+    "ra9": 1.0,
+    "ra9_ci95": 1.7,
+    "innings": 18.0,
+    "runs": 2
+   },
+   "hh": {
+    "ra9": 6.35,
+    "ra9_ci95": 3.74,
+    "innings": 17.0,
+    "runs": 12
+   }
+  },
+  "pitcher_00574/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00574/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00575/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00576/2024": {
+   "sea": {
+    "ra9": 4.28,
+    "ra9_ci95": 2.16,
+    "innings": 33.7,
+    "runs": 16
+   },
+   "hh": null
+  },
+  "pitcher_00577/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 12.0,
+    "ra9_ci95": 5.39,
+    "innings": 15.0,
+    "runs": 20
+   }
+  },
+  "pitcher_00577/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00578/2024": {
+   "sea": {
+    "ra9": 1.24,
+    "ra9_ci95": 1.36,
+    "innings": 29.0,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00578/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00581/2024": {
+   "sea": {
+    "ra9": 5.4,
+    "ra9_ci95": 4.67,
+    "innings": 10.0,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_00581/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 4.15,
+    "ra9_ci95": 2.45,
+    "innings": 26.0,
+    "runs": 12
+   }
+  },
+  "pitcher_00581/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00583/2025": {
+   "sea": {
+    "ra9": 2.63,
+    "ra9_ci95": 2.89,
+    "innings": 13.7,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00584/2024": {
+   "sea": {
+    "ra9": 5.71,
+    "ra9_ci95": 3.53,
+    "innings": 17.3,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_00584/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00585/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00586/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 7.31,
+    "ra9_ci95": 4.13,
+    "innings": 16.0,
+    "runs": 13
+   }
+  },
+  "pitcher_00587/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00588/2024": {
+   "sea": {
+    "ra9": 2.7,
+    "ra9_ci95": 2.96,
+    "innings": 13.3,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00588/2025": {
+   "sea": {
+    "ra9": 2.13,
+    "ra9_ci95": 1.84,
+    "innings": 25.3,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_00588/2026": {
+   "sea": {
+    "ra9": 7.13,
+    "ra9_ci95": 3.87,
+    "innings": 17.7,
+    "runs": 14
+   },
+   "hh": null
+  },
+  "pitcher_00589/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00590/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00592/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00594/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00595/2025": {
+   "sea": {
+    "ra9": 5.33,
+    "ra9_ci95": 2.69,
+    "innings": 27.0,
+    "runs": 16
+   },
+   "hh": null
+  },
+  "pitcher_00595/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 1.46,
+    "ra9_ci95": 2.48,
+    "innings": 12.3,
+    "runs": 2
+   }
+  },
+  "pitcher_00596/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00597/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 3.46,
+    "ra9_ci95": 3.32,
+    "innings": 13.0,
+    "runs": 5
+   }
+  },
+  "pitcher_00597/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 9.24,
+    "ra9_ci95": 5.21,
+    "innings": 12.7,
+    "runs": 13
+   }
+  },
+  "pitcher_00597/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00598/2024": {
+   "sea": {
+    "ra9": 2.65,
+    "ra9_ci95": 2.54,
+    "innings": 17.0,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00599/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00600/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 5.4,
+    "ra9_ci95": 3.33,
+    "innings": 18.3,
+    "runs": 11
+   }
+  },
+  "pitcher_00601/2024": {
+   "sea": {
+    "ra9": 5.91,
+    "ra9_ci95": 4.68,
+    "innings": 10.7,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00601/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00601/2026": {
+   "sea": {
+    "ra9": 2.61,
+    "ra9_ci95": 3.41,
+    "innings": 10.3,
+    "runs": 3
+   },
+   "hh": null
+  },
+  "pitcher_00602/2025": {
+   "sea": {
+    "ra9": 4.24,
+    "ra9_ci95": 2.62,
+    "innings": 23.3,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_00603/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00604/2024": {
+   "sea": {
+    "ra9": 6.3,
+    "ra9_ci95": 3.42,
+    "innings": 20.0,
+    "runs": 14
+   },
+   "hh": {
+    "ra9": 2.6,
+    "ra9_ci95": 1.91,
+    "innings": 27.7,
+    "runs": 8
+   }
+  },
+  "pitcher_00604/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 6.75,
+    "ra9_ci95": 3.41,
+    "innings": 21.3,
+    "runs": 16
+   }
+  },
+  "pitcher_00605/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 7.42,
+    "ra9_ci95": 4.58,
+    "innings": 13.3,
+    "runs": 11
+   }
+  },
+  "pitcher_00605/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 8.44,
+    "ra9_ci95": 5.48,
+    "innings": 10.7,
+    "runs": 10
+   }
+  },
+  "pitcher_00605/2026": {
+   "sea": {
+    "ra9": 4.11,
+    "ra9_ci95": 3.25,
+    "innings": 15.3,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00606/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00607/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00608/2024": {
+   "sea": {
+    "ra9": 2.61,
+    "ra9_ci95": 3.41,
+    "innings": 10.3,
+    "runs": 3
+   },
+   "hh": null
+  },
+  "pitcher_00609/2024": {
+   "sea": {
+    "ra9": 3.26,
+    "ra9_ci95": 2.58,
+    "innings": 19.3,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00610/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 10.8,
+    "ra9_ci95": 5.45,
+    "innings": 13.3,
+    "runs": 16
+   }
+  },
+  "pitcher_00610/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 13.06,
+    "ra9_ci95": 6.83,
+    "innings": 10.3,
+    "runs": 15
+   }
+  },
+  "pitcher_00611/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00612/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00614/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00615/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00616/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00616/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00617/2024": {
+   "sea": {
+    "ra9": 3.55,
+    "ra9_ci95": 1.27,
+    "innings": 78.7,
+    "runs": 31
+   },
+   "hh": null
+  },
+  "pitcher_00617/2025": {
+   "sea": {
+    "ra9": 4.94,
+    "ra9_ci95": 1.86,
+    "innings": 51.0,
+    "runs": 28
+   },
+   "hh": null
+  },
+  "pitcher_00617/2026": {
+   "sea": {
+    "ra9": 2.15,
+    "ra9_ci95": 1.48,
+    "innings": 37.7,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00618/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00619/2024": {
+   "sea": {
+    "ra9": 0.0,
+    "ra9_ci95": 0.79,
+    "innings": 22.3,
+    "runs": 0
+   },
+   "hh": {
+    "ra9": 2.91,
+    "ra9_ci95": 1.38,
+    "innings": 55.7,
+    "runs": 18
+   }
+  },
+  "pitcher_00620/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00620/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00620/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00621/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00621/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00622/2024": {
+   "sea": {
+    "ra9": 3.65,
+    "ra9_ci95": 1.52,
+    "innings": 56.7,
+    "runs": 23
+   },
+   "hh": {
+    "ra9": 3.09,
+    "ra9_ci95": 2.27,
+    "innings": 23.3,
+    "runs": 8
+   }
+  },
+  "pitcher_00622/2025": {
+   "sea": {
+    "ra9": 3.94,
+    "ra9_ci95": 1.34,
+    "innings": 77.7,
+    "runs": 34
+   },
+   "hh": null
+  },
+  "pitcher_00622/2026": {
+   "sea": {
+    "ra9": 2.08,
+    "ra9_ci95": 2.28,
+    "innings": 17.3,
+    "runs": 4
+   },
+   "hh": {
+    "ra9": 2.92,
+    "ra9_ci95": 3.2,
+    "innings": 12.3,
+    "runs": 4
+   }
+  },
+  "pitcher_00623/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00623/2026": {
+   "sea": {
+    "ra9": 8.78,
+    "ra9_ci95": 4.95,
+    "innings": 13.3,
+    "runs": 13
+   },
+   "hh": null
+  },
+  "pitcher_00624/2024": {
+   "sea": {
+    "ra9": 3.78,
+    "ra9_ci95": 2.99,
+    "innings": 16.7,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00624/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00625/2024": {
+   "sea": {
+    "ra9": 3.67,
+    "ra9_ci95": 2.26,
+    "innings": 27.0,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_00625/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00626/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00626/2026": {
+   "sea": {
+    "ra9": 3.0,
+    "ra9_ci95": 2.88,
+    "innings": 15.0,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00627/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00627/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00629/2025": {
+   "sea": {
+    "ra9": 2.25,
+    "ra9_ci95": 2.94,
+    "innings": 12.0,
+    "runs": 3
+   },
+   "hh": {
+    "ra9": 8.76,
+    "ra9_ci95": 5.16,
+    "innings": 12.3,
+    "runs": 12
+   }
+  },
+  "pitcher_00632/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00632/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00633/2024": {
+   "sea": {
+    "ra9": 9.0,
+    "ra9_ci95": 4.88,
+    "innings": 14.0,
+    "runs": 14
+   },
+   "hh": null
+  },
+  "pitcher_00634/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00634/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00636/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00636/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00636/2026": {
+   "sea": {
+    "ra9": 4.22,
+    "ra9_ci95": 4.05,
+    "innings": 10.7,
+    "runs": 5
+   },
+   "hh": {
+    "ra9": 6.49,
+    "ra9_ci95": 3.0,
+    "innings": 26.3,
+    "runs": 19
+   }
+  },
+  "pitcher_00637/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00637/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00638/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00638/2026": {
+   "sea": {
+    "ra9": 4.63,
+    "ra9_ci95": 4.0,
+    "innings": 11.7,
+    "runs": 6
+   },
+   "hh": {
+    "ra9": 5.03,
+    "ra9_ci95": 3.11,
+    "innings": 19.7,
+    "runs": 11
+   }
+  },
+  "pitcher_00641/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00642/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 3.38,
+    "ra9_ci95": 3.7,
+    "innings": 10.7,
+    "runs": 4
+   }
+  },
+  "pitcher_00642/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00643/2024": {
+   "sea": {
+    "ra9": 5.4,
+    "ra9_ci95": 2.82,
+    "innings": 25.0,
+    "runs": 15
+   },
+   "hh": null
+  },
+  "pitcher_00644/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00646/2024": {
+   "sea": {
+    "ra9": 2.13,
+    "ra9_ci95": 2.79,
+    "innings": 12.7,
+    "runs": 3
+   },
+   "hh": {
+    "ra9": 4.32,
+    "ra9_ci95": 3.18,
+    "innings": 16.7,
+    "runs": 8
+   }
+  },
+  "pitcher_00646/2025": {
+   "sea": {
+    "ra9": 5.06,
+    "ra9_ci95": 3.49,
+    "innings": 16.0,
+    "runs": 9
+   },
+   "hh": {
+    "ra9": 5.22,
+    "ra9_ci95": 2.18,
+    "innings": 39.7,
+    "runs": 23
+   }
+  },
+  "pitcher_00647/2024": {
+   "sea": {
+    "ra9": 7.9,
+    "ra9_ci95": 4.65,
+    "innings": 13.7,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_00647/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00647/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00648/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00649/2024": {
+   "sea": {
+    "ra9": 5.97,
+    "ra9_ci95": 2.61,
+    "innings": 31.7,
+    "runs": 21
+   },
+   "hh": null
+  },
+  "pitcher_00649/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 4.5,
+    "ra9_ci95": 3.89,
+    "innings": 12.0,
+    "runs": 6
+   }
+  },
+  "pitcher_00651/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00651/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00653/2024": {
+   "sea": {
+    "ra9": 4.02,
+    "ra9_ci95": 3.18,
+    "innings": 15.7,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00653/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00655/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00657/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00657/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00658/2024": {
+   "sea": {
+    "ra9": 7.02,
+    "ra9_ci95": 3.96,
+    "innings": 16.7,
+    "runs": 13
+   },
+   "hh": null
+  },
+  "pitcher_00659/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 5.68,
+    "ra9_ci95": 3.35,
+    "innings": 19.0,
+    "runs": 12
+   }
+  },
+  "pitcher_00660/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 4.97,
+    "ra9_ci95": 3.94,
+    "innings": 12.7,
+    "runs": 7
+   }
+  },
+  "pitcher_00660/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00661/2025": {
+   "sea": {
+    "ra9": 2.7,
+    "ra9_ci95": 2.96,
+    "innings": 13.3,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00661/2026": {
+   "sea": {
+    "ra9": 4.91,
+    "ra9_ci95": 2.66,
+    "innings": 25.7,
+    "runs": 14
+   },
+   "hh": null
+  },
+  "pitcher_00662/2024": {
+   "sea": {
+    "ra9": 6.45,
+    "ra9_ci95": 3.26,
+    "innings": 22.3,
+    "runs": 16
+   },
+   "hh": null
+  },
+  "pitcher_00662/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00662/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00663/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00663/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 8.44,
+    "ra9_ci95": 5.48,
+    "innings": 10.7,
+    "runs": 10
+   }
+  },
+  "pitcher_00663/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 4.02,
+    "ra9_ci95": 3.18,
+    "innings": 15.7,
+    "runs": 7
+   }
+  },
+  "pitcher_00664/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 6.29,
+    "ra9_ci95": 3.08,
+    "innings": 24.3,
+    "runs": 17
+   }
+  },
+  "pitcher_00665/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00666/2024": {
+   "sea": {
+    "ra9": 2.78,
+    "ra9_ci95": 1.11,
+    "innings": 81.0,
+    "runs": 25
+   },
+   "hh": null
+  },
+  "pitcher_00666/2025": {
+   "sea": {
+    "ra9": 2.37,
+    "ra9_ci95": 1.34,
+    "innings": 49.3,
+    "runs": 13
+   },
+   "hh": {
+    "ra9": 9.69,
+    "ra9_ci95": 5.26,
+    "innings": 13.0,
+    "runs": 14
+   }
+  },
+  "pitcher_00666/2026": {
+   "sea": {
+    "ra9": 5.13,
+    "ra9_ci95": 2.37,
+    "innings": 33.3,
+    "runs": 19
+   },
+   "hh": null
+  },
+  "pitcher_00667/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00668/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00669/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00670/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00670/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00671/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00673/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00674/2025": {
+   "sea": {
+    "ra9": 9.45,
+    "ra9_ci95": 5.12,
+    "innings": 13.3,
+    "runs": 14
+   },
+   "hh": null
+  },
+  "pitcher_00675/2026": {
+   "sea": {
+    "ra9": 2.25,
+    "ra9_ci95": 1.65,
+    "innings": 32.0,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_00676/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00677/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00678/2024": {
+   "sea": {
+    "ra9": 7.52,
+    "ra9_ci95": 3.68,
+    "innings": 20.3,
+    "runs": 17
+   },
+   "hh": null
+  },
+  "pitcher_00678/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00679/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00680/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 3.04,
+    "ra9_ci95": 2.24,
+    "innings": 23.7,
+    "runs": 8
+   }
+  },
+  "pitcher_00680/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 7.15,
+    "ra9_ci95": 2.75,
+    "innings": 34.0,
+    "runs": 27
+   }
+  },
+  "pitcher_00681/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 5.51,
+    "ra9_ci95": 3.58,
+    "innings": 16.3,
+    "runs": 10
+   }
+  },
+  "pitcher_00682/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00682/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 6.64,
+    "ra9_ci95": 2.46,
+    "innings": 39.3,
+    "runs": 29
+   }
+  },
+  "pitcher_00682/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 2.45,
+    "ra9_ci95": 2.12,
+    "innings": 22.0,
+    "runs": 6
+   }
+  },
+  "pitcher_00683/2024": {
+   "sea": {
+    "ra9": 5.91,
+    "ra9_ci95": 4.68,
+    "innings": 10.7,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00684/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00684/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00685/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00686/2024": {
+   "sea": {
+    "ra9": 5.84,
+    "ra9_ci95": 4.29,
+    "innings": 12.3,
+    "runs": 8
+   },
+   "hh": {
+    "ra9": 6.75,
+    "ra9_ci95": 4.96,
+    "innings": 10.7,
+    "runs": 8
+   }
+  },
+  "pitcher_00687/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00688/2024": {
+   "sea": {
+    "ra9": 3.79,
+    "ra9_ci95": 1.98,
+    "innings": 35.7,
+    "runs": 15
+   },
+   "hh": null
+  },
+  "pitcher_00688/2025": {
+   "sea": {
+    "ra9": 4.97,
+    "ra9_ci95": 2.18,
+    "innings": 38.0,
+    "runs": 21
+   },
+   "hh": null
+  },
+  "pitcher_00689/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00690/2026": {
+   "sea": {
+    "ra9": 2.31,
+    "ra9_ci95": 3.02,
+    "innings": 11.7,
+    "runs": 3
+   },
+   "hh": null
+  },
+  "pitcher_00691/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00692/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00693/2025": {
+   "sea": {
+    "ra9": 6.16,
+    "ra9_ci95": 3.47,
+    "innings": 19.0,
+    "runs": 13
+   },
+   "hh": null
+  },
+  "pitcher_00695/2025": {
+   "sea": {
+    "ra9": 8.44,
+    "ra9_ci95": 5.48,
+    "innings": 10.7,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00696/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00697/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00697/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00697/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 8.82,
+    "ra9_ci95": 4.45,
+    "innings": 16.3,
+    "runs": 16
+   }
+  },
+  "pitcher_00698/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00699/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00699/2025": {
+   "sea": {
+    "ra9": 4.09,
+    "ra9_ci95": 3.93,
+    "innings": 11.0,
+    "runs": 5
+   },
+   "hh": {
+    "ra9": 5.09,
+    "ra9_ci95": 2.87,
+    "innings": 23.0,
+    "runs": 13
+   }
+  },
+  "pitcher_00701/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00702/2025": {
+   "sea": {
+    "ra9": 5.4,
+    "ra9_ci95": 3.05,
+    "innings": 21.7,
+    "runs": 13
+   },
+   "hh": {
+    "ra9": 5.03,
+    "ra9_ci95": 2.15,
+    "innings": 39.3,
+    "runs": 22
+   }
+  },
+  "pitcher_00702/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00703/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 4.15,
+    "ra9_ci95": 2.7,
+    "innings": 21.7,
+    "runs": 10
+   }
+  },
+  "pitcher_00703/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00704/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00705/2024": {
+   "sea": {
+    "ra9": 2.51,
+    "ra9_ci95": 1.48,
+    "innings": 43.0,
+    "runs": 12
+   },
+   "hh": {
+    "ra9": 9.95,
+    "ra9_ci95": 4.35,
+    "innings": 19.0,
+    "runs": 21
+   }
+  },
+  "pitcher_00705/2025": {
+   "sea": {
+    "ra9": 5.29,
+    "ra9_ci95": 3.44,
+    "innings": 17.0,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00705/2026": {
+   "sea": {
+    "ra9": 2.81,
+    "ra9_ci95": 2.7,
+    "innings": 16.0,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00706/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00707/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00708/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00709/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00710/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 10.91,
+    "ra9_ci95": 5.04,
+    "innings": 15.7,
+    "runs": 19
+   }
+  },
+  "pitcher_00711/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 6.3,
+    "ra9_ci95": 4.99,
+    "innings": 10.0,
+    "runs": 7
+   }
+  },
+  "pitcher_00711/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00712/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00712/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00713/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00714/2024": {
+   "sea": {
+    "ra9": 4.72,
+    "ra9_ci95": 3.74,
+    "innings": 13.3,
+    "runs": 7
+   },
+   "hh": {
+    "ra9": 7.5,
+    "ra9_ci95": 4.88,
+    "innings": 12.0,
+    "runs": 10
+   }
+  },
+  "pitcher_00714/2025": {
+   "sea": {
+    "ra9": 6.75,
+    "ra9_ci95": 4.65,
+    "innings": 12.0,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00714/2026": {
+   "sea": {
+    "ra9": 1.74,
+    "ra9_ci95": 2.96,
+    "innings": 10.3,
+    "runs": 2
+   },
+   "hh": {
+    "ra9": 4.5,
+    "ra9_ci95": 4.32,
+    "innings": 10.0,
+    "runs": 5
+   }
+  },
+  "pitcher_00716/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00717/2024": {
+   "sea": {
+    "ra9": 1.74,
+    "ra9_ci95": 2.96,
+    "innings": 10.3,
+    "runs": 2
+   },
+   "hh": null
+  },
+  "pitcher_00717/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00718/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 2.53,
+    "ra9_ci95": 3.31,
+    "innings": 10.7,
+    "runs": 3
+   }
+  },
+  "pitcher_00718/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00719/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00720/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00721/2024": {
+   "sea": {
+    "ra9": 3.65,
+    "ra9_ci95": 2.37,
+    "innings": 24.7,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00721/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00721/2026": {
+   "sea": {
+    "ra9": 1.93,
+    "ra9_ci95": 2.11,
+    "innings": 18.7,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00722/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00723/2024": {
+   "sea": {
+    "ra9": 2.57,
+    "ra9_ci95": 2.82,
+    "innings": 14.0,
+    "runs": 4
+   },
+   "hh": {
+    "ra9": 7.59,
+    "ra9_ci95": 2.51,
+    "innings": 42.7,
+    "runs": 36
+   }
+  },
+  "pitcher_00723/2025": {
+   "sea": {
+    "ra9": 7.05,
+    "ra9_ci95": 2.61,
+    "innings": 37.0,
+    "runs": 29
+   },
+   "hh": {
+    "ra9": 5.25,
+    "ra9_ci95": 4.16,
+    "innings": 12.0,
+    "runs": 7
+   }
+  },
+  "pitcher_00723/2026": {
+   "sea": {
+    "ra9": 2.38,
+    "ra9_ci95": 1.64,
+    "innings": 34.0,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00724/2024": {
+   "sea": {
+    "ra9": 3.81,
+    "ra9_ci95": 2.24,
+    "innings": 28.3,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_00725/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00725/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00726/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00726/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00727/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00727/2025": {
+   "sea": {
+    "ra9": 6.28,
+    "ra9_ci95": 2.82,
+    "innings": 28.7,
+    "runs": 20
+   },
+   "hh": null
+  },
+  "pitcher_00728/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00728/2025": {
+   "sea": {
+    "ra9": 8.1,
+    "ra9_ci95": 4.77,
+    "innings": 13.3,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_00730/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00731/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00732/2024": {
+   "sea": {
+    "ra9": 5.95,
+    "ra9_ci95": 3.36,
+    "innings": 19.7,
+    "runs": 13
+   },
+   "hh": null
+  },
+  "pitcher_00734/2024": {
+   "sea": {
+    "ra9": 6.95,
+    "ra9_ci95": 3.4,
+    "innings": 22.0,
+    "runs": 17
+   },
+   "hh": null
+  },
+  "pitcher_00734/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00736/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 6.33,
+    "ra9_ci95": 2.92,
+    "innings": 27.0,
+    "runs": 19
+   }
+  },
+  "pitcher_00736/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00736/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 6.3,
+    "ra9_ci95": 4.99,
+    "innings": 10.0,
+    "runs": 7
+   }
+  },
+  "pitcher_00737/2024": {
+   "sea": {
+    "ra9": 4.97,
+    "ra9_ci95": 2.51,
+    "innings": 29.0,
+    "runs": 16
+   },
+   "hh": {
+    "ra9": 6.88,
+    "ra9_ci95": 3.88,
+    "innings": 17.0,
+    "runs": 13
+   }
+  },
+  "pitcher_00737/2025": {
+   "sea": {
+    "ra9": 5.7,
+    "ra9_ci95": 2.98,
+    "innings": 23.7,
+    "runs": 15
+   },
+   "hh": {
+    "ra9": 8.34,
+    "ra9_ci95": 2.69,
+    "innings": 41.0,
+    "runs": 38
+   }
+  },
+  "pitcher_00738/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00739/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00740/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00741/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00742/2024": {
+   "sea": {
+    "ra9": 3.51,
+    "ra9_ci95": 1.98,
+    "innings": 33.3,
+    "runs": 13
+   },
+   "hh": null
+  },
+  "pitcher_00742/2025": {
+   "sea": {
+    "ra9": 3.55,
+    "ra9_ci95": 3.41,
+    "innings": 12.7,
+    "runs": 5
+   },
+   "hh": {
+    "ra9": 6.55,
+    "ra9_ci95": 4.81,
+    "innings": 11.0,
+    "runs": 8
+   }
+  },
+  "pitcher_00743/2025": {
+   "sea": {
+    "ra9": 2.66,
+    "ra9_ci95": 2.11,
+    "innings": 23.7,
+    "runs": 7
+   },
+   "hh": {
+    "ra9": 11.77,
+    "ra9_ci95": 5.76,
+    "innings": 13.0,
+    "runs": 17
+   }
+  },
+  "pitcher_00743/2026": {
+   "sea": {
+    "ra9": 4.5,
+    "ra9_ci95": 3.1,
+    "innings": 18.0,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00744/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00746/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00747/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00747/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00748/2024": {
+   "sea": {
+    "ra9": 2.33,
+    "ra9_ci95": 2.23,
+    "innings": 19.3,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00749/2024": {
+   "sea": {
+    "ra9": 3.89,
+    "ra9_ci95": 1.97,
+    "innings": 37.0,
+    "runs": 16
+   },
+   "hh": null
+  },
+  "pitcher_00749/2025": {
+   "sea": {
+    "ra9": 8.81,
+    "ra9_ci95": 3.15,
+    "innings": 31.7,
+    "runs": 31
+   },
+   "hh": null
+  },
+  "pitcher_00750/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00750/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00751/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00751/2025": {
+   "sea": {
+    "ra9": 6.9,
+    "ra9_ci95": 2.88,
+    "innings": 30.0,
+    "runs": 23
+   },
+   "hh": {
+    "ra9": 12.19,
+    "ra9_ci95": 6.61,
+    "innings": 10.3,
+    "runs": 14
+   }
+  },
+  "pitcher_00751/2026": {
+   "sea": {
+    "ra9": 3.31,
+    "ra9_ci95": 2.86,
+    "innings": 16.3,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_00752/2024": {
+   "sea": {
+    "ra9": 2.96,
+    "ra9_ci95": 2.17,
+    "innings": 24.3,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_00753/2024": {
+   "sea": {
+    "ra9": 2.84,
+    "ra9_ci95": 3.11,
+    "innings": 12.7,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00754/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 2.84,
+    "ra9_ci95": 3.11,
+    "innings": 12.7,
+    "runs": 4
+   }
+  },
+  "pitcher_00754/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00754/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00755/2024": {
+   "sea": {
+    "ra9": 3.51,
+    "ra9_ci95": 1.98,
+    "innings": 33.3,
+    "runs": 13
+   },
+   "hh": {
+    "ra9": 7.2,
+    "ra9_ci95": 5.29,
+    "innings": 10.0,
+    "runs": 8
+   }
+  },
+  "pitcher_00755/2025": {
+   "sea": {
+    "ra9": 4.5,
+    "ra9_ci95": 2.14,
+    "innings": 36.0,
+    "runs": 18
+   },
+   "hh": null
+  },
+  "pitcher_00756/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 6.55,
+    "ra9_ci95": 3.31,
+    "innings": 22.0,
+    "runs": 16
+   }
+  },
+  "pitcher_00756/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 12.98,
+    "ra9_ci95": 5.19,
+    "innings": 17.3,
+    "runs": 25
+   }
+  },
+  "pitcher_00756/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00757/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 4.91,
+    "ra9_ci95": 4.24,
+    "innings": 11.0,
+    "runs": 6
+   }
+  },
+  "pitcher_00758/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00759/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 8.59,
+    "ra9_ci95": 3.76,
+    "innings": 22.0,
+    "runs": 21
+   }
+  },
+  "pitcher_00759/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00761/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00762/2024": {
+   "sea": {
+    "ra9": 2.79,
+    "ra9_ci95": 2.41,
+    "innings": 19.3,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_00763/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00764/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00764/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00765/2025": {
+   "sea": {
+    "ra9": 7.62,
+    "ra9_ci95": 4.7,
+    "innings": 13.0,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_00766/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 0.67,
+    "ra9_ci95": 1.87,
+    "innings": 13.3,
+    "runs": 1
+   }
+  },
+  "pitcher_00767/2024": {
+   "sea": {
+    "ra9": 3.79,
+    "ra9_ci95": 2.79,
+    "innings": 19.0,
+    "runs": 8
+   },
+   "hh": {
+    "ra9": 6.97,
+    "ra9_ci95": 2.85,
+    "innings": 31.0,
+    "runs": 24
+   }
+  },
+  "pitcher_00767/2025": {
+   "sea": {
+    "ra9": 2.76,
+    "ra9_ci95": 2.65,
+    "innings": 16.3,
+    "runs": 5
+   },
+   "hh": {
+    "ra9": 7.2,
+    "ra9_ci95": 2.71,
+    "innings": 35.0,
+    "runs": 28
+   }
+  },
+  "pitcher_00767/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 6.94,
+    "ra9_ci95": 4.78,
+    "innings": 11.7,
+    "runs": 9
+   }
+  },
+  "pitcher_00768/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00769/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00770/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 5.14,
+    "ra9_ci95": 3.03,
+    "innings": 21.0,
+    "runs": 12
+   }
+  },
+  "pitcher_00771/2025": {
+   "sea": {
+    "ra9": 4.22,
+    "ra9_ci95": 4.05,
+    "innings": 10.7,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00772/2024": {
+   "sea": {
+    "ra9": 1.23,
+    "ra9_ci95": 2.08,
+    "innings": 14.7,
+    "runs": 2
+   },
+   "hh": null
+  },
+  "pitcher_00773/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00774/2024": {
+   "sea": {
+    "ra9": 3.65,
+    "ra9_ci95": 2.37,
+    "innings": 24.7,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00774/2025": {
+   "sea": {
+    "ra9": 6.23,
+    "ra9_ci95": 2.96,
+    "innings": 26.0,
+    "runs": 18
+   },
+   "hh": null
+  },
+  "pitcher_00775/2025": {
+   "sea": {
+    "ra9": 2.35,
+    "ra9_ci95": 2.57,
+    "innings": 15.3,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00775/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00776/2025": {
+   "sea": {
+    "ra9": 3.31,
+    "ra9_ci95": 2.86,
+    "innings": 16.3,
+    "runs": 6
+   },
+   "hh": {
+    "ra9": 5.25,
+    "ra9_ci95": 2.3,
+    "innings": 36.0,
+    "runs": 21
+   }
+  },
+  "pitcher_00776/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 6.75,
+    "ra9_ci95": 3.3,
+    "innings": 22.7,
+    "runs": 17
+   }
+  },
+  "pitcher_00777/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00777/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00778/2024": {
+   "sea": {
+    "ra9": 4.74,
+    "ra9_ci95": 2.13,
+    "innings": 38.0,
+    "runs": 20
+   },
+   "hh": {
+    "ra9": 5.57,
+    "ra9_ci95": 2.5,
+    "innings": 32.3,
+    "runs": 20
+   }
+  },
+  "pitcher_00778/2025": {
+   "sea": {
+    "ra9": 5.68,
+    "ra9_ci95": 1.97,
+    "innings": 52.3,
+    "runs": 33
+   },
+   "hh": {
+    "ra9": 5.06,
+    "ra9_ci95": 4.38,
+    "innings": 10.7,
+    "runs": 6
+   }
+  },
+  "pitcher_00779/2026": {
+   "sea": {
+    "ra9": 8.44,
+    "ra9_ci95": 5.48,
+    "innings": 10.7,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00780/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00781/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00782/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00782/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00782/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00784/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00785/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00785/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00786/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00786/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00787/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 9.0,
+    "ra9_ci95": 5.3,
+    "innings": 12.0,
+    "runs": 12
+   }
+  },
+  "pitcher_00789/2024": {
+   "sea": {
+    "ra9": 5.52,
+    "ra9_ci95": 3.8,
+    "innings": 14.7,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00790/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 4.22,
+    "ra9_ci95": 4.05,
+    "innings": 10.7,
+    "runs": 5
+   }
+  },
+  "pitcher_00790/2025": {
+   "sea": {
+    "ra9": 8.1,
+    "ra9_ci95": 5.58,
+    "innings": 10.0,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00791/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 9.22,
+    "ra9_ci95": 5.0,
+    "innings": 13.7,
+    "runs": 14
+   }
+  },
+  "pitcher_00792/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00793/2024": {
+   "sea": {
+    "ra9": 7.98,
+    "ra9_ci95": 4.5,
+    "innings": 14.7,
+    "runs": 13
+   },
+   "hh": null
+  },
+  "pitcher_00794/2024": {
+   "sea": {
+    "ra9": 3.07,
+    "ra9_ci95": 2.95,
+    "innings": 14.7,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00795/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00795/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00796/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00797/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00798/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00799/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00800/2024": {
+   "sea": {
+    "ra9": 5.23,
+    "ra9_ci95": 4.52,
+    "innings": 10.3,
+    "runs": 6
+   },
+   "hh": {
+    "ra9": 7.36,
+    "ra9_ci95": 3.22,
+    "innings": 25.7,
+    "runs": 21
+   }
+  },
+  "pitcher_00800/2025": {
+   "sea": {
+    "ra9": 6.06,
+    "ra9_ci95": 3.74,
+    "innings": 16.3,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_00800/2026": {
+   "sea": {
+    "ra9": 5.27,
+    "ra9_ci95": 3.87,
+    "innings": 13.7,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_00801/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00801/2025": {
+   "sea": {
+    "ra9": 15.19,
+    "ra9_ci95": 7.21,
+    "innings": 10.7,
+    "runs": 18
+   },
+   "hh": {
+    "ra9": 11.57,
+    "ra9_ci95": 5.49,
+    "innings": 14.0,
+    "runs": 18
+   }
+  },
+  "pitcher_00802/2025": {
+   "sea": {
+    "ra9": 2.7,
+    "ra9_ci95": 1.67,
+    "innings": 36.7,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_00803/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00804/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00805/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00806/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00807/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00807/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00809/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00810/2024": {
+   "sea": {
+    "ra9": 2.92,
+    "ra9_ci95": 3.2,
+    "innings": 12.3,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00810/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00810/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00811/2024": {
+   "sea": {
+    "ra9": 2.01,
+    "ra9_ci95": 1.31,
+    "innings": 44.7,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00812/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 7.33,
+    "ra9_ci95": 3.13,
+    "innings": 27.0,
+    "runs": 22
+   }
+  },
+  "pitcher_00813/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00814/2025": {
+   "sea": {
+    "ra9": 7.06,
+    "ra9_ci95": 2.95,
+    "innings": 29.3,
+    "runs": 23
+   },
+   "hh": null
+  },
+  "pitcher_00814/2026": {
+   "sea": {
+    "ra9": 7.06,
+    "ra9_ci95": 3.45,
+    "innings": 21.7,
+    "runs": 17
+   },
+   "hh": null
+  },
+  "pitcher_00816/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00816/2025": {
+   "sea": {
+    "ra9": 4.32,
+    "ra9_ci95": 3.18,
+    "innings": 16.7,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_00817/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00818/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 5.4,
+    "ra9_ci95": 3.72,
+    "innings": 15.0,
+    "runs": 9
+   }
+  },
+  "pitcher_00819/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 3.38,
+    "ra9_ci95": 3.7,
+    "innings": 10.7,
+    "runs": 4
+   }
+  },
+  "pitcher_00819/2025": {
+   "sea": {
+    "ra9": 5.3,
+    "ra9_ci95": 3.27,
+    "innings": 18.7,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_00819/2026": {
+   "sea": {
+    "ra9": 6.07,
+    "ra9_ci95": 4.18,
+    "innings": 13.3,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00820/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00821/2024": {
+   "sea": {
+    "ra9": 0.73,
+    "ra9_ci95": 1.24,
+    "innings": 24.7,
+    "runs": 2
+   },
+   "hh": null
+  },
+  "pitcher_00821/2025": {
+   "sea": {
+    "ra9": 3.68,
+    "ra9_ci95": 2.17,
+    "innings": 29.3,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_00821/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00822/2025": {
+   "sea": {
+    "ra9": 3.23,
+    "ra9_ci95": 1.58,
+    "innings": 47.3,
+    "runs": 17
+   },
+   "hh": null
+  },
+  "pitcher_00822/2026": {
+   "sea": {
+    "ra9": 7.07,
+    "ra9_ci95": 4.36,
+    "innings": 14.0,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_00823/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00823/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00824/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00825/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00826/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00827/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00828/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00829/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 6.75,
+    "ra9_ci95": 4.65,
+    "innings": 12.0,
+    "runs": 9
+   }
+  },
+  "pitcher_00829/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00830/2024": {
+   "sea": {
+    "ra9": 2.39,
+    "ra9_ci95": 1.07,
+    "innings": 75.3,
+    "runs": 20
+   },
+   "hh": null
+  },
+  "pitcher_00830/2025": {
+   "sea": {
+    "ra9": 4.11,
+    "ra9_ci95": 1.55,
+    "innings": 61.3,
+    "runs": 28
+   },
+   "hh": null
+  },
+  "pitcher_00830/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00831/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00832/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00832/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00832/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00833/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00833/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00833/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00834/2024": {
+   "sea": {
+    "ra9": 4.5,
+    "ra9_ci95": 2.54,
+    "innings": 26.0,
+    "runs": 13
+   },
+   "hh": null
+  },
+  "pitcher_00834/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00835/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00836/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00836/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00837/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00837/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00839/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00840/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00840/2025": {
+   "sea": {
+    "ra9": 4.86,
+    "ra9_ci95": 3.35,
+    "innings": 16.7,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00841/2024": {
+   "sea": {
+    "ra9": 2.03,
+    "ra9_ci95": 1.32,
+    "innings": 44.3,
+    "runs": 10
+   },
+   "hh": {
+    "ra9": 1.53,
+    "ra9_ci95": 2.0,
+    "innings": 17.7,
+    "runs": 3
+   }
+  },
+  "pitcher_00841/2025": {
+   "sea": {
+    "ra9": 3.65,
+    "ra9_ci95": 1.73,
+    "innings": 44.3,
+    "runs": 18
+   },
+   "hh": {
+    "ra9": 5.5,
+    "ra9_ci95": 2.29,
+    "innings": 37.7,
+    "runs": 23
+   }
+  },
+  "pitcher_00841/2026": {
+   "sea": {
+    "ra9": 3.0,
+    "ra9_ci95": 3.29,
+    "innings": 12.0,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00842/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00843/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00844/2024": {
+   "sea": {
+    "ra9": 3.59,
+    "ra9_ci95": 1.24,
+    "innings": 82.7,
+    "runs": 33
+   },
+   "hh": {
+    "ra9": 2.51,
+    "ra9_ci95": 2.75,
+    "innings": 14.3,
+    "runs": 4
+   }
+  },
+  "pitcher_00845/2024": {
+   "sea": {
+    "ra9": 6.16,
+    "ra9_ci95": 3.47,
+    "innings": 19.0,
+    "runs": 13
+   },
+   "hh": null
+  },
+  "pitcher_00845/2025": {
+   "sea": {
+    "ra9": 9.9,
+    "ra9_ci95": 6.11,
+    "innings": 10.0,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_00845/2026": {
+   "sea": {
+    "ra9": 6.35,
+    "ra9_ci95": 4.67,
+    "innings": 11.3,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_00846/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00847/2025": {
+   "sea": {
+    "ra9": 3.83,
+    "ra9_ci95": 1.57,
+    "innings": 56.3,
+    "runs": 24
+   },
+   "hh": {
+    "ra9": 5.52,
+    "ra9_ci95": 3.8,
+    "innings": 14.7,
+    "runs": 9
+   }
+  },
+  "pitcher_00847/2026": {
+   "sea": {
+    "ra9": 2.35,
+    "ra9_ci95": 1.53,
+    "innings": 38.3,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00848/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 4.5,
+    "ra9_ci95": 4.32,
+    "innings": 10.0,
+    "runs": 5
+   }
+  },
+  "pitcher_00848/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 12.6,
+    "ra9_ci95": 5.52,
+    "innings": 15.0,
+    "runs": 21
+   }
+  },
+  "pitcher_00849/2025": {
+   "sea": {
+    "ra9": 8.5,
+    "ra9_ci95": 4.16,
+    "innings": 18.0,
+    "runs": 17
+   },
+   "hh": null
+  },
+  "pitcher_00850/2025": {
+   "sea": {
+    "ra9": 4.26,
+    "ra9_ci95": 2.23,
+    "innings": 31.7,
+    "runs": 15
+   },
+   "hh": null
+  },
+  "pitcher_00850/2026": {
+   "sea": {
+    "ra9": 3.18,
+    "ra9_ci95": 3.48,
+    "innings": 11.3,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00851/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 9.5,
+    "ra9_ci95": 4.38,
+    "innings": 18.0,
+    "runs": 19
+   }
+  },
+  "pitcher_00851/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00852/2025": {
+   "sea": {
+    "ra9": 10.97,
+    "ra9_ci95": 6.19,
+    "innings": 10.7,
+    "runs": 13
+   },
+   "hh": null
+  },
+  "pitcher_00853/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00853/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00855/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 8.03,
+    "ra9_ci95": 4.95,
+    "innings": 12.3,
+    "runs": 11
+   }
+  },
+  "pitcher_00856/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00857/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00858/2026": {
+   "sea": {
+    "ra9": 2.45,
+    "ra9_ci95": 2.69,
+    "innings": 14.7,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00859/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00860/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00861/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00862/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00863/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00865/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00865/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00866/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 11.25,
+    "ra9_ci95": 4.09,
+    "innings": 24.0,
+    "runs": 30
+   }
+  },
+  "pitcher_00866/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 4.4,
+    "ra9_ci95": 3.48,
+    "innings": 14.3,
+    "runs": 7
+   }
+  },
+  "pitcher_00867/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00868/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00869/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00870/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00871/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00871/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00872/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00873/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00874/2025": {
+   "sea": {
+    "ra9": 3.22,
+    "ra9_ci95": 2.37,
+    "innings": 22.3,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_00875/2024": {
+   "sea": {
+    "ra9": 2.87,
+    "ra9_ci95": 2.76,
+    "innings": 15.7,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00875/2026": {
+   "sea": {
+    "ra9": 2.11,
+    "ra9_ci95": 2.03,
+    "innings": 21.3,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00876/2024": {
+   "sea": {
+    "ra9": 3.65,
+    "ra9_ci95": 2.37,
+    "innings": 24.7,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00876/2025": {
+   "sea": {
+    "ra9": 3.94,
+    "ra9_ci95": 2.22,
+    "innings": 29.7,
+    "runs": 13
+   },
+   "hh": null
+  },
+  "pitcher_00876/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00877/2025": {
+   "sea": {
+    "ra9": 0.9,
+    "ra9_ci95": 2.49,
+    "innings": 10.0,
+    "runs": 1
+   },
+   "hh": null
+  },
+  "pitcher_00878/2024": {
+   "sea": {
+    "ra9": 2.23,
+    "ra9_ci95": 1.64,
+    "innings": 32.3,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_00879/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00880/2026": {
+   "sea": {
+    "ra9": 3.6,
+    "ra9_ci95": 3.94,
+    "innings": 10.0,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00881/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00882/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 12.21,
+    "ra9_ci95": 5.63,
+    "innings": 14.0,
+    "runs": 19
+   }
+  },
+  "pitcher_00883/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00884/2024": {
+   "sea": {
+    "ra9": 6.0,
+    "ra9_ci95": 3.9,
+    "innings": 15.0,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00885/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00885/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00885/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00887/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00887/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00889/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 4.61,
+    "ra9_ci95": 3.65,
+    "innings": 13.7,
+    "runs": 7
+   }
+  },
+  "pitcher_00889/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00890/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00891/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00892/2024": {
+   "sea": {
+    "ra9": 4.82,
+    "ra9_ci95": 2.52,
+    "innings": 28.0,
+    "runs": 15
+   },
+   "hh": {
+    "ra9": 6.0,
+    "ra9_ci95": 3.03,
+    "innings": 24.0,
+    "runs": 16
+   }
+  },
+  "pitcher_00892/2025": {
+   "sea": {
+    "ra9": 7.91,
+    "ra9_ci95": 3.87,
+    "innings": 19.3,
+    "runs": 17
+   },
+   "hh": {
+    "ra9": 6.64,
+    "ra9_ci95": 2.46,
+    "innings": 39.3,
+    "runs": 29
+   }
+  },
+  "pitcher_00892/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00893/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 5.4,
+    "ra9_ci95": 4.67,
+    "innings": 10.0,
+    "runs": 6
+   }
+  },
+  "pitcher_00894/2026": {
+   "sea": {
+    "ra9": 0.71,
+    "ra9_ci95": 1.97,
+    "innings": 12.7,
+    "runs": 1
+   },
+   "hh": null
+  },
+  "pitcher_00895/2024": {
+   "sea": {
+    "ra9": 1.12,
+    "ra9_ci95": 1.91,
+    "innings": 16.0,
+    "runs": 2
+   },
+   "hh": null
+  },
+  "pitcher_00895/2025": {
+   "sea": {
+    "ra9": 4.42,
+    "ra9_ci95": 1.73,
+    "innings": 53.0,
+    "runs": 26
+   },
+   "hh": null
+  },
+  "pitcher_00897/2024": {
+   "sea": {
+    "ra9": 6.19,
+    "ra9_ci95": 3.82,
+    "innings": 16.0,
+    "runs": 11
+   },
+   "hh": {
+    "ra9": 8.0,
+    "ra9_ci95": 4.04,
+    "innings": 18.0,
+    "runs": 16
+   }
+  },
+  "pitcher_00898/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00900/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00901/2025": {
+   "sea": {
+    "ra9": 4.35,
+    "ra9_ci95": 4.18,
+    "innings": 10.3,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00901/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00902/2024": {
+   "sea": {
+    "ra9": 4.97,
+    "ra9_ci95": 2.7,
+    "innings": 25.3,
+    "runs": 14
+   },
+   "hh": null
+  },
+  "pitcher_00902/2025": {
+   "sea": {
+    "ra9": 6.75,
+    "ra9_ci95": 4.17,
+    "innings": 14.7,
+    "runs": 11
+   },
+   "hh": {
+    "ra9": 7.2,
+    "ra9_ci95": 5.29,
+    "innings": 10.0,
+    "runs": 8
+   }
+  },
+  "pitcher_00903/2024": {
+   "sea": {
+    "ra9": 3.6,
+    "ra9_ci95": 3.94,
+    "innings": 10.0,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00903/2025": {
+   "sea": {
+    "ra9": 8.1,
+    "ra9_ci95": 4.77,
+    "innings": 13.3,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_00903/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00904/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 5.79,
+    "ra9_ci95": 3.98,
+    "innings": 14.0,
+    "runs": 9
+   }
+  },
+  "pitcher_00904/2025": {
+   "sea": {
+    "ra9": 2.66,
+    "ra9_ci95": 2.11,
+    "innings": 23.7,
+    "runs": 7
+   },
+   "hh": {
+    "ra9": 5.68,
+    "ra9_ci95": 1.97,
+    "innings": 52.3,
+    "runs": 33
+   }
+  },
+  "pitcher_00904/2026": {
+   "sea": {
+    "ra9": 4.5,
+    "ra9_ci95": 3.56,
+    "innings": 14.0,
+    "runs": 7
+   },
+   "hh": {
+    "ra9": 8.8,
+    "ra9_ci95": 3.26,
+    "innings": 29.7,
+    "runs": 29
+   }
+  },
+  "pitcher_00905/2024": {
+   "sea": {
+    "ra9": 1.12,
+    "ra9_ci95": 1.47,
+    "innings": 24.0,
+    "runs": 3
+   },
+   "hh": null
+  },
+  "pitcher_00905/2025": {
+   "sea": {
+    "ra9": 5.91,
+    "ra9_ci95": 3.2,
+    "innings": 21.3,
+    "runs": 14
+   },
+   "hh": null
+  },
+  "pitcher_00905/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00906/2026": {
+   "sea": {
+    "ra9": 3.05,
+    "ra9_ci95": 2.41,
+    "innings": 20.7,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00907/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00908/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00909/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00910/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00912/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00913/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 3.97,
+    "ra9_ci95": 3.81,
+    "innings": 11.3,
+    "runs": 5
+   }
+  },
+  "pitcher_00913/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 7.2,
+    "ra9_ci95": 3.23,
+    "innings": 25.0,
+    "runs": 20
+   }
+  },
+  "pitcher_00913/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00914/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00915/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00916/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 7.71,
+    "ra9_ci95": 5.01,
+    "innings": 11.7,
+    "runs": 10
+   }
+  },
+  "pitcher_00916/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00918/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00919/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00920/2024": {
+   "sea": {
+    "ra9": 2.45,
+    "ra9_ci95": 1.94,
+    "innings": 25.7,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00920/2025": {
+   "sea": {
+    "ra9": 3.6,
+    "ra9_ci95": 3.94,
+    "innings": 10.0,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_00920/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00922/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00923/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00924/2025": {
+   "sea": {
+    "ra9": 6.5,
+    "ra9_ci95": 2.55,
+    "innings": 36.0,
+    "runs": 26
+   },
+   "hh": {
+    "ra9": 4.2,
+    "ra9_ci95": 3.33,
+    "innings": 15.0,
+    "runs": 7
+   }
+  },
+  "pitcher_00925/2025": {
+   "sea": {
+    "ra9": 6.14,
+    "ra9_ci95": 3.99,
+    "innings": 14.7,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00926/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00927/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00928/2026": {
+   "sea": {
+    "ra9": 3.97,
+    "ra9_ci95": 3.81,
+    "innings": 11.3,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00929/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00929/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00930/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00931/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00932/2024": {
+   "sea": {
+    "ra9": 5.03,
+    "ra9_ci95": 1.69,
+    "innings": 62.7,
+    "runs": 35
+   },
+   "hh": null
+  },
+  "pitcher_00932/2025": {
+   "sea": {
+    "ra9": 6.1,
+    "ra9_ci95": 2.11,
+    "innings": 48.7,
+    "runs": 33
+   },
+   "hh": {
+    "ra9": 6.26,
+    "ra9_ci95": 3.16,
+    "innings": 23.0,
+    "runs": 16
+   }
+  },
+  "pitcher_00932/2026": {
+   "sea": {
+    "ra9": 10.12,
+    "ra9_ci95": 5.96,
+    "innings": 10.7,
+    "runs": 12
+   },
+   "hh": {
+    "ra9": 9.53,
+    "ra9_ci95": 4.52,
+    "innings": 17.0,
+    "runs": 18
+   }
+  },
+  "pitcher_00934/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00935/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 8.79,
+    "ra9_ci95": 4.77,
+    "innings": 14.3,
+    "runs": 14
+   }
+  },
+  "pitcher_00936/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00937/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00937/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00938/2024": {
+   "sea": {
+    "ra9": 4.46,
+    "ra9_ci95": 1.52,
+    "innings": 68.7,
+    "runs": 34
+   },
+   "hh": null
+  },
+  "pitcher_00938/2025": {
+   "sea": {
+    "ra9": 4.21,
+    "ra9_ci95": 1.3,
+    "innings": 87.7,
+    "runs": 41
+   },
+   "hh": null
+  },
+  "pitcher_00938/2026": {
+   "sea": {
+    "ra9": 6.32,
+    "ra9_ci95": 3.9,
+    "innings": 15.7,
+    "runs": 11
+   },
+   "hh": {
+    "ra9": 7.24,
+    "ra9_ci95": 4.47,
+    "innings": 13.7,
+    "runs": 11
+   }
+  },
+  "pitcher_00939/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00939/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00940/2024": {
+   "sea": {
+    "ra9": 3.56,
+    "ra9_ci95": 1.74,
+    "innings": 43.0,
+    "runs": 17
+   },
+   "hh": null
+  },
+  "pitcher_00940/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00941/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00941/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00942/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00942/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00942/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00943/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00943/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00944/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 4.26,
+    "ra9_ci95": 3.68,
+    "innings": 12.7,
+    "runs": 6
+   }
+  },
+  "pitcher_00945/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00946/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00948/2024": {
+   "sea": {
+    "ra9": 0.67,
+    "ra9_ci95": 1.87,
+    "innings": 13.3,
+    "runs": 1
+   },
+   "hh": {
+    "ra9": 7.23,
+    "ra9_ci95": 3.33,
+    "innings": 23.7,
+    "runs": 19
+   }
+  },
+  "pitcher_00948/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00949/2025": {
+   "sea": {
+    "ra9": 1.74,
+    "ra9_ci95": 2.96,
+    "innings": 10.3,
+    "runs": 2
+   },
+   "hh": null
+  },
+  "pitcher_00950/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00951/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00952/2024": {
+   "sea": {
+    "ra9": 5.14,
+    "ra9_ci95": 3.78,
+    "innings": 14.0,
+    "runs": 8
+   },
+   "hh": {
+    "ra9": 8.13,
+    "ra9_ci95": 3.25,
+    "innings": 27.7,
+    "runs": 25
+   }
+  },
+  "pitcher_00952/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00953/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 10.9,
+    "ra9_ci95": 4.77,
+    "innings": 17.3,
+    "runs": 21
+   }
+  },
+  "pitcher_00954/2024": {
+   "sea": {
+    "ra9": 5.08,
+    "ra9_ci95": 2.17,
+    "innings": 39.0,
+    "runs": 22
+   },
+   "hh": null
+  },
+  "pitcher_00954/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00954/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 6.91,
+    "ra9_ci95": 4.26,
+    "innings": 14.3,
+    "runs": 11
+   }
+  },
+  "pitcher_00955/2025": {
+   "sea": {
+    "ra9": 3.29,
+    "ra9_ci95": 3.16,
+    "innings": 13.7,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00955/2026": {
+   "sea": {
+    "ra9": 4.61,
+    "ra9_ci95": 3.65,
+    "innings": 13.7,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_00956/2024": {
+   "sea": {
+    "ra9": 3.58,
+    "ra9_ci95": 1.35,
+    "innings": 70.3,
+    "runs": 28
+   },
+   "hh": null
+  },
+  "pitcher_00956/2025": {
+   "sea": {
+    "ra9": 4.8,
+    "ra9_ci95": 1.78,
+    "innings": 54.3,
+    "runs": 29
+   },
+   "hh": null
+  },
+  "pitcher_00956/2026": {
+   "sea": {
+    "ra9": 7.4,
+    "ra9_ci95": 3.62,
+    "innings": 20.7,
+    "runs": 17
+   },
+   "hh": null
+  },
+  "pitcher_00957/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00958/2024": {
+   "sea": {
+    "ra9": 3.58,
+    "ra9_ci95": 2.21,
+    "innings": 27.7,
+    "runs": 11
+   },
+   "hh": {
+    "ra9": 5.62,
+    "ra9_ci95": 2.01,
+    "innings": 49.7,
+    "runs": 31
+   }
+  },
+  "pitcher_00959/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00960/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00961/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00962/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00963/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00964/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 2.45,
+    "ra9_ci95": 3.21,
+    "innings": 11.0,
+    "runs": 3
+   }
+  },
+  "pitcher_00964/2026": {
+   "sea": {
+    "ra9": 1.04,
+    "ra9_ci95": 1.76,
+    "innings": 17.3,
+    "runs": 2
+   },
+   "hh": {
+    "ra9": 4.91,
+    "ra9_ci95": 2.89,
+    "innings": 22.0,
+    "runs": 12
+   }
+  },
+  "pitcher_00965/2024": {
+   "sea": {
+    "ra9": 5.68,
+    "ra9_ci95": 2.87,
+    "innings": 25.3,
+    "runs": 16
+   },
+   "hh": null
+  },
+  "pitcher_00966/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00967/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 10.48,
+    "ra9_ci95": 4.1,
+    "innings": 22.3,
+    "runs": 26
+   }
+  },
+  "pitcher_00967/2026": {
+   "sea": {
+    "ra9": 3.19,
+    "ra9_ci95": 1.97,
+    "innings": 31.0,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_00968/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00969/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 12.15,
+    "ra9_ci95": 5.77,
+    "innings": 13.3,
+    "runs": 18
+   }
+  },
+  "pitcher_00969/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00970/2024": {
+   "sea": {
+    "ra9": 3.38,
+    "ra9_ci95": 2.32,
+    "innings": 24.0,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00971/2024": {
+   "sea": {
+    "ra9": 7.3,
+    "ra9_ci95": 4.74,
+    "innings": 12.3,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_00972/2024": {
+   "sea": {
+    "ra9": 4.96,
+    "ra9_ci95": 3.42,
+    "innings": 16.3,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_00972/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 10.8,
+    "ra9_ci95": 6.36,
+    "innings": 10.0,
+    "runs": 12
+   }
+  },
+  "pitcher_00973/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00974/2025": {
+   "sea": {
+    "ra9": 2.72,
+    "ra9_ci95": 1.29,
+    "innings": 59.7,
+    "runs": 18
+   },
+   "hh": {
+    "ra9": 7.01,
+    "ra9_ci95": 3.15,
+    "innings": 25.7,
+    "runs": 20
+   }
+  },
+  "pitcher_00974/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00976/2024": {
+   "sea": {
+    "ra9": 5.87,
+    "ra9_ci95": 3.82,
+    "innings": 15.3,
+    "runs": 10
+   },
+   "hh": {
+    "ra9": 7.61,
+    "ra9_ci95": 3.42,
+    "innings": 23.7,
+    "runs": 20
+   }
+  },
+  "pitcher_00977/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00977/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00978/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 11.08,
+    "ra9_ci95": 5.59,
+    "innings": 13.0,
+    "runs": 16
+   }
+  },
+  "pitcher_00979/2025": {
+   "sea": {
+    "ra9": 6.48,
+    "ra9_ci95": 3.82,
+    "innings": 16.7,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_00981/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00981/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00982/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00983/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 3.95,
+    "ra9_ci95": 3.41,
+    "innings": 13.7,
+    "runs": 6
+   }
+  },
+  "pitcher_00983/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00983/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00984/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00985/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00986/2025": {
+   "sea": {
+    "ra9": 5.09,
+    "ra9_ci95": 1.99,
+    "innings": 46.0,
+    "runs": 26
+   },
+   "hh": null
+  },
+  "pitcher_00986/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00987/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 8.18,
+    "ra9_ci95": 5.32,
+    "innings": 11.0,
+    "runs": 10
+   }
+  },
+  "pitcher_00988/2025": {
+   "sea": {
+    "ra9": 5.87,
+    "ra9_ci95": 2.35,
+    "innings": 38.3,
+    "runs": 25
+   },
+   "hh": null
+  },
+  "pitcher_00989/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00990/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 11.57,
+    "ra9_ci95": 4.44,
+    "innings": 21.0,
+    "runs": 27
+   }
+  },
+  "pitcher_00991/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00991/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00992/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00993/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00993/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00993/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00994/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00995/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_00997/2026": {
+   "sea": {
+    "ra9": 3.38,
+    "ra9_ci95": 3.24,
+    "innings": 13.3,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_00998/2024": {
+   "sea": {
+    "ra9": 5.01,
+    "ra9_ci95": 2.83,
+    "innings": 23.3,
+    "runs": 13
+   },
+   "hh": null
+  },
+  "pitcher_00999/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 9.87,
+    "ra9_ci95": 4.55,
+    "innings": 17.3,
+    "runs": 19
+   }
+  },
+  "pitcher_00999/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01000/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01000/2025": {
+   "sea": {
+    "ra9": 5.82,
+    "ra9_ci95": 3.59,
+    "innings": 17.0,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_01001/2024": {
+   "sea": {
+    "ra9": 3.14,
+    "ra9_ci95": 3.01,
+    "innings": 14.3,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_01001/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01001/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01002/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01003/2024": {
+   "sea": {
+    "ra9": 3.38,
+    "ra9_ci95": 3.24,
+    "innings": 13.3,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_01003/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01004/2024": {
+   "sea": {
+    "ra9": 3.2,
+    "ra9_ci95": 2.54,
+    "innings": 19.7,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_01005/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01006/2025": {
+   "sea": {
+    "ra9": 6.94,
+    "ra9_ci95": 4.78,
+    "innings": 11.7,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_01006/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01007/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01008/2025": {
+   "sea": {
+    "ra9": 7.71,
+    "ra9_ci95": 4.18,
+    "innings": 16.3,
+    "runs": 14
+   },
+   "hh": null
+  },
+  "pitcher_01011/2024": {
+   "sea": {
+    "ra9": 9.26,
+    "ra9_ci95": 5.45,
+    "innings": 11.7,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_01012/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 8.37,
+    "ra9_ci95": 2.99,
+    "innings": 33.3,
+    "runs": 31
+   }
+  },
+  "pitcher_01013/2024": {
+   "sea": {
+    "ra9": 1.59,
+    "ra9_ci95": 2.7,
+    "innings": 11.3,
+    "runs": 2
+   },
+   "hh": null
+  },
+  "pitcher_01014/2024": {
+   "sea": {
+    "ra9": 4.9,
+    "ra9_ci95": 1.7,
+    "innings": 60.7,
+    "runs": 33
+   },
+   "hh": {
+    "ra9": 7.2,
+    "ra9_ci95": 5.29,
+    "innings": 10.0,
+    "runs": 8
+   }
+  },
+  "pitcher_01014/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01015/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01016/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01017/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01017/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01018/2024": {
+   "sea": {
+    "ra9": 2.7,
+    "ra9_ci95": 3.53,
+    "innings": 10.0,
+    "runs": 3
+   },
+   "hh": {
+    "ra9": 5.77,
+    "ra9_ci95": 2.46,
+    "innings": 34.3,
+    "runs": 22
+   }
+  },
+  "pitcher_01018/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01019/2024": {
+   "sea": {
+    "ra9": 3.58,
+    "ra9_ci95": 2.21,
+    "innings": 27.7,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_01019/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 11.32,
+    "ra9_ci95": 6.39,
+    "innings": 10.3,
+    "runs": 13
+   }
+  },
+  "pitcher_01019/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01020/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01020/2025": {
+   "sea": {
+    "ra9": 0.0,
+    "ra9_ci95": 1.26,
+    "innings": 14.0,
+    "runs": 0
+   },
+   "hh": null
+  },
+  "pitcher_01020/2026": {
+   "sea": {
+    "ra9": 2.61,
+    "ra9_ci95": 2.26,
+    "innings": 20.7,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_01021/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01022/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01023/2024": {
+   "sea": {
+    "ra9": 3.24,
+    "ra9_ci95": 2.23,
+    "innings": 25.0,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_01023/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 9.24,
+    "ra9_ci95": 5.21,
+    "innings": 12.7,
+    "runs": 13
+   }
+  },
+  "pitcher_01024/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01025/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01027/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01027/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01027/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01028/2024": {
+   "sea": {
+    "ra9": 6.57,
+    "ra9_ci95": 3.12,
+    "innings": 24.7,
+    "runs": 18
+   },
+   "hh": null
+  },
+  "pitcher_01028/2025": {
+   "sea": {
+    "ra9": 6.0,
+    "ra9_ci95": 3.9,
+    "innings": 15.0,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_01028/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 5.79,
+    "ra9_ci95": 3.98,
+    "innings": 14.0,
+    "runs": 9
+   }
+  },
+  "pitcher_01029/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01030/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01031/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01032/2024": {
+   "sea": {
+    "ra9": 6.18,
+    "ra9_ci95": 2.85,
+    "innings": 27.7,
+    "runs": 19
+   },
+   "hh": {
+    "ra9": 7.33,
+    "ra9_ci95": 3.13,
+    "innings": 27.0,
+    "runs": 22
+   }
+  },
+  "pitcher_01032/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 7.13,
+    "ra9_ci95": 3.87,
+    "innings": 17.7,
+    "runs": 14
+   }
+  },
+  "pitcher_01033/2025": {
+   "sea": {
+    "ra9": 5.4,
+    "ra9_ci95": 4.67,
+    "innings": 10.0,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_01033/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 7.24,
+    "ra9_ci95": 4.47,
+    "innings": 13.7,
+    "runs": 11
+   }
+  },
+  "pitcher_01034/2024": {
+   "sea": {
+    "ra9": 2.05,
+    "ra9_ci95": 1.96,
+    "innings": 22.0,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_01034/2025": {
+   "sea": {
+    "ra9": 6.35,
+    "ra9_ci95": 4.67,
+    "innings": 11.3,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_01035/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 11.81,
+    "ra9_ci95": 6.4,
+    "innings": 10.7,
+    "runs": 14
+   }
+  },
+  "pitcher_01035/2026": {
+   "sea": {
+    "ra9": 6.75,
+    "ra9_ci95": 4.96,
+    "innings": 10.7,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_01036/2024": {
+   "sea": {
+    "ra9": 5.93,
+    "ra9_ci95": 4.08,
+    "innings": 13.7,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_01037/2024": {
+   "sea": {
+    "ra9": 3.04,
+    "ra9_ci95": 1.27,
+    "innings": 68.0,
+    "runs": 23
+   },
+   "hh": {
+    "ra9": 3.6,
+    "ra9_ci95": 3.94,
+    "innings": 10.0,
+    "runs": 4
+   }
+  },
+  "pitcher_01037/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01038/2024": {
+   "sea": {
+    "ra9": 6.07,
+    "ra9_ci95": 4.18,
+    "innings": 13.3,
+    "runs": 9
+   },
+   "hh": null
+  },
+  "pitcher_01038/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01038/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01039/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01039/2025": {
+   "sea": {
+    "ra9": 3.38,
+    "ra9_ci95": 3.24,
+    "innings": 13.3,
+    "runs": 5
+   },
+   "hh": null
+  },
+  "pitcher_01039/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01040/2025": {
+   "sea": {
+    "ra9": 7.64,
+    "ra9_ci95": 3.99,
+    "innings": 17.7,
+    "runs": 15
+   },
+   "hh": null
+  },
+  "pitcher_01040/2026": {
+   "sea": {
+    "ra9": 2.3,
+    "ra9_ci95": 1.69,
+    "innings": 31.3,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_01041/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01043/2025": {
+   "sea": {
+    "ra9": 5.06,
+    "ra9_ci95": 4.38,
+    "innings": 10.7,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_01043/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01044/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 5.5,
+    "ra9_ci95": 3.39,
+    "innings": 18.0,
+    "runs": 11
+   }
+  },
+  "pitcher_01044/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01045/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01047/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01048/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01049/2026": {
+   "sea": {
+    "ra9": 3.78,
+    "ra9_ci95": 2.05,
+    "innings": 33.3,
+    "runs": 14
+   },
+   "hh": null
+  },
+  "pitcher_01050/2024": {
+   "sea": {
+    "ra9": 4.35,
+    "ra9_ci95": 2.28,
+    "innings": 31.0,
+    "runs": 15
+   },
+   "hh": null
+  },
+  "pitcher_01050/2025": {
+   "sea": {
+    "ra9": 2.35,
+    "ra9_ci95": 1.73,
+    "innings": 30.7,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_01050/2026": {
+   "sea": {
+    "ra9": 2.57,
+    "ra9_ci95": 2.82,
+    "innings": 14.0,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_01051/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01051/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 11.88,
+    "ra9_ci95": 5.08,
+    "innings": 16.7,
+    "runs": 22
+   }
+  },
+  "pitcher_01052/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01053/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01054/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01056/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01057/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01057/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01058/2025": {
+   "sea": {
+    "ra9": 6.57,
+    "ra9_ci95": 3.12,
+    "innings": 24.7,
+    "runs": 18
+   },
+   "hh": null
+  },
+  "pitcher_01058/2026": {
+   "sea": {
+    "ra9": 4.32,
+    "ra9_ci95": 3.18,
+    "innings": 16.7,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_01059/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01059/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01060/2024": {
+   "sea": {
+    "ra9": 0.0,
+    "ra9_ci95": 1.18,
+    "innings": 15.0,
+    "runs": 0
+   },
+   "hh": {
+    "ra9": 3.64,
+    "ra9_ci95": 1.3,
+    "innings": 76.7,
+    "runs": 31
+   }
+  },
+  "pitcher_01061/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01063/2024": {
+   "sea": {
+    "ra9": 3.36,
+    "ra9_ci95": 1.34,
+    "innings": 67.0,
+    "runs": 25
+   },
+   "hh": null
+  },
+  "pitcher_01064/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01065/2026": {
+   "sea": {
+    "ra9": 4.03,
+    "ra9_ci95": 2.62,
+    "innings": 22.3,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_01066/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01066/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01066/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01067/2024": {
+   "sea": {
+    "ra9": 3.55,
+    "ra9_ci95": 1.39,
+    "innings": 66.0,
+    "runs": 26
+   },
+   "hh": null
+  },
+  "pitcher_01067/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01067/2026": {
+   "sea": {
+    "ra9": 4.8,
+    "ra9_ci95": 3.53,
+    "innings": 15.0,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_01068/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01069/2024": {
+   "sea": {
+    "ra9": 3.34,
+    "ra9_ci95": 2.06,
+    "innings": 29.7,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_01069/2025": {
+   "sea": {
+    "ra9": 6.75,
+    "ra9_ci95": 3.98,
+    "innings": 16.0,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_01070/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01071/2024": {
+   "sea": {
+    "ra9": 10.05,
+    "ra9_ci95": 5.07,
+    "innings": 14.3,
+    "runs": 16
+   },
+   "hh": null
+  },
+  "pitcher_01071/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01072/2024": {
+   "sea": {
+    "ra9": 5.89,
+    "ra9_ci95": 3.47,
+    "innings": 18.3,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_01072/2025": {
+   "sea": {
+    "ra9": 6.46,
+    "ra9_ci95": 3.16,
+    "innings": 23.7,
+    "runs": 17
+   },
+   "hh": null
+  },
+  "pitcher_01072/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01073/2025": {
+   "sea": {
+    "ra9": 3.27,
+    "ra9_ci95": 1.71,
+    "innings": 41.3,
+    "runs": 15
+   },
+   "hh": {
+    "ra9": 5.25,
+    "ra9_ci95": 4.16,
+    "innings": 12.0,
+    "runs": 7
+   }
+  },
+  "pitcher_01073/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01074/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01075/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01075/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01076/2024": {
+   "sea": {
+    "ra9": 5.25,
+    "ra9_ci95": 4.16,
+    "innings": 12.0,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_01076/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01076/2026": {
+   "sea": {
+    "ra9": 3.18,
+    "ra9_ci95": 3.48,
+    "innings": 11.3,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_01077/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01078/2026": {
+   "sea": {
+    "ra9": 7.5,
+    "ra9_ci95": 3.92,
+    "innings": 18.0,
+    "runs": 15
+   },
+   "hh": null
+  },
+  "pitcher_01079/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01080/2024": {
+   "sea": {
+    "ra9": 3.81,
+    "ra9_ci95": 1.63,
+    "innings": 52.0,
+    "runs": 22
+   },
+   "hh": null
+  },
+  "pitcher_01081/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01082/2025": {
+   "sea": {
+    "ra9": 4.38,
+    "ra9_ci95": 3.78,
+    "innings": 12.3,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_01082/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01083/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01084/2024": {
+   "sea": {
+    "ra9": 6.91,
+    "ra9_ci95": 4.26,
+    "innings": 14.3,
+    "runs": 11
+   },
+   "hh": {
+    "ra9": 8.1,
+    "ra9_ci95": 4.77,
+    "innings": 13.3,
+    "runs": 12
+   }
+  },
+  "pitcher_01085/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 4.5,
+    "ra9_ci95": 4.32,
+    "innings": 10.0,
+    "runs": 5
+   }
+  },
+  "pitcher_01086/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01087/2025": {
+   "sea": {
+    "ra9": 7.45,
+    "ra9_ci95": 3.76,
+    "innings": 19.3,
+    "runs": 16
+   },
+   "hh": null
+  },
+  "pitcher_01087/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01088/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01089/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01090/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01091/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01092/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01092/2025": {
+   "sea": {
+    "ra9": 3.94,
+    "ra9_ci95": 2.22,
+    "innings": 29.7,
+    "runs": 13
+   },
+   "hh": null
+  },
+  "pitcher_01092/2026": {
+   "sea": {
+    "ra9": 5.68,
+    "ra9_ci95": 4.18,
+    "innings": 12.7,
+    "runs": 8
+   },
+   "hh": {
+    "ra9": 7.84,
+    "ra9_ci95": 5.4,
+    "innings": 10.3,
+    "runs": 9
+   }
+  },
+  "pitcher_01093/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01093/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01093/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01094/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01096/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01097/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01098/2024": {
+   "sea": {
+    "ra9": 4.32,
+    "ra9_ci95": 3.18,
+    "innings": 16.7,
+    "runs": 8
+   },
+   "hh": null
+  },
+  "pitcher_01098/2025": {
+   "sea": {
+    "ra9": 8.71,
+    "ra9_ci95": 5.66,
+    "innings": 10.3,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_01099/2025": {
+   "sea": {
+    "ra9": 2.61,
+    "ra9_ci95": 3.41,
+    "innings": 10.3,
+    "runs": 3
+   },
+   "hh": null
+  },
+  "pitcher_01099/2026": {
+   "sea": null,
+   "hh": {
+    "ra9": 7.63,
+    "ra9_ci95": 4.3,
+    "innings": 15.3,
+    "runs": 13
+   }
+  },
+  "pitcher_01100/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01101/2024": {
+   "sea": {
+    "ra9": 0.0,
+    "ra9_ci95": 1.26,
+    "innings": 14.0,
+    "runs": 0
+   },
+   "hh": {
+    "ra9": 2.7,
+    "ra9_ci95": 2.14,
+    "innings": 23.3,
+    "runs": 7
+   }
+  },
+  "pitcher_01101/2025": {
+   "sea": {
+    "ra9": 3.48,
+    "ra9_ci95": 3.82,
+    "innings": 10.3,
+    "runs": 4
+   },
+   "hh": {
+    "ra9": 7.04,
+    "ra9_ci95": 4.15,
+    "innings": 15.3,
+    "runs": 12
+   }
+  },
+  "pitcher_01101/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01102/2025": {
+   "sea": {
+    "ra9": 9.82,
+    "ra9_ci95": 4.01,
+    "innings": 22.0,
+    "runs": 24
+   },
+   "hh": null
+  },
+  "pitcher_01103/2024": {
+   "sea": {
+    "ra9": 1.16,
+    "ra9_ci95": 1.51,
+    "innings": 23.3,
+    "runs": 3
+   },
+   "hh": null
+  },
+  "pitcher_01103/2026": {
+   "sea": {
+    "ra9": 4.11,
+    "ra9_ci95": 3.25,
+    "innings": 15.3,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_01104/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01104/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01104/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01105/2025": {
+   "sea": null,
+   "hh": {
+    "ra9": 4.09,
+    "ra9_ci95": 3.93,
+    "innings": 11.0,
+    "runs": 5
+   }
+  },
+  "pitcher_01105/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01106/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01107/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01108/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01109/2025": {
+   "sea": {
+    "ra9": 4.2,
+    "ra9_ci95": 1.84,
+    "innings": 45.0,
+    "runs": 21
+   },
+   "hh": null
+  },
+  "pitcher_01109/2026": {
+   "sea": {
+    "ra9": 5.59,
+    "ra9_ci95": 2.34,
+    "innings": 37.0,
+    "runs": 23
+   },
+   "hh": null
+  },
+  "pitcher_01110/2025": {
+   "sea": {
+    "ra9": 2.75,
+    "ra9_ci95": 1.7,
+    "innings": 36.0,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_01110/2026": {
+   "sea": {
+    "ra9": 5.91,
+    "ra9_ci95": 4.68,
+    "innings": 10.7,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_01111/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01112/2025": {
+   "sea": {
+    "ra9": 10.03,
+    "ra9_ci95": 5.66,
+    "innings": 11.7,
+    "runs": 13
+   },
+   "hh": null
+  },
+  "pitcher_01112/2026": {
+   "sea": {
+    "ra9": 2.08,
+    "ra9_ci95": 2.28,
+    "innings": 17.3,
+    "runs": 4
+   },
+   "hh": null
+  },
+  "pitcher_01113/2026": {
+   "sea": {
+    "ra9": 6.1,
+    "ra9_ci95": 2.67,
+    "innings": 31.0,
+    "runs": 21
+   },
+   "hh": null
+  },
+  "pitcher_01114/2025": {
+   "sea": {
+    "ra9": 3.86,
+    "ra9_ci95": 3.7,
+    "innings": 11.7,
+    "runs": 5
+   },
+   "hh": {
+    "ra9": 2.02,
+    "ra9_ci95": 2.65,
+    "innings": 13.3,
+    "runs": 3
+   }
+  },
+  "pitcher_01114/2026": {
+   "sea": {
+    "ra9": 3.45,
+    "ra9_ci95": 2.98,
+    "innings": 15.7,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_01115/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01116/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01117/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01117/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01118/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01119/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01120/2024": {
+   "sea": {
+    "ra9": 3.86,
+    "ra9_ci95": 2.38,
+    "innings": 25.7,
+    "runs": 11
+   },
+   "hh": null
+  },
+  "pitcher_01121/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01122/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01122/2026": {
+   "sea": {
+    "ra9": 5.23,
+    "ra9_ci95": 4.52,
+    "innings": 10.3,
+    "runs": 6
+   },
+   "hh": null
+  },
+  "pitcher_01123/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01124/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01125/2024": {
+   "sea": {
+    "ra9": 7.9,
+    "ra9_ci95": 4.65,
+    "innings": 13.7,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_01125/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01127/2024": {
+   "sea": {
+    "ra9": 4.4,
+    "ra9_ci95": 2.38,
+    "innings": 28.7,
+    "runs": 14
+   },
+   "hh": null
+  },
+  "pitcher_01127/2025": {
+   "sea": {
+    "ra9": 4.5,
+    "ra9_ci95": 2.35,
+    "innings": 30.0,
+    "runs": 15
+   },
+   "hh": null
+  },
+  "pitcher_01128/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01129/2024": {
+   "sea": null,
+   "hh": {
+    "ra9": 3.24,
+    "ra9_ci95": 2.8,
+    "innings": 16.7,
+    "runs": 6
+   }
+  },
+  "pitcher_01129/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01130/2024": {
+   "sea": {
+    "ra9": 5.79,
+    "ra9_ci95": 3.98,
+    "innings": 14.0,
+    "runs": 9
+   },
+   "hh": {
+    "ra9": 5.71,
+    "ra9_ci95": 3.53,
+    "innings": 17.3,
+    "runs": 11
+   }
+  },
+  "pitcher_01131/2024": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01131/2025": {
+   "sea": {
+    "ra9": 7.94,
+    "ra9_ci95": 5.16,
+    "innings": 11.3,
+    "runs": 10
+   },
+   "hh": null
+  },
+  "pitcher_01132/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01132/2026": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01133/2024": {
+   "sea": {
+    "ra9": 5.4,
+    "ra9_ci95": 3.18,
+    "innings": 20.0,
+    "runs": 12
+   },
+   "hh": null
+  },
+  "pitcher_01133/2025": {
+   "sea": null,
+   "hh": null
+  },
+  "pitcher_01133/2026": {
+   "sea": {
+    "ra9": 4.97,
+    "ra9_ci95": 3.94,
+    "innings": 12.7,
+    "runs": 7
+   },
+   "hh": null
+  },
+  "pitcher_01134/2025": {
+   "sea": {
+    "ra9": 4.57,
+    "ra9_ci95": 2.82,
+    "innings": 21.7,
+    "runs": 11
+   },
+   "hh": {
+    "ra9": 4.36,
+    "ra9_ci95": 2.2,
+    "innings": 33.0,
+    "runs": 16
+   }
+  },
+  "pitcher_01134/2026": {
+   "sea": {
+    "ra9": 3.91,
+    "ra9_ci95": 2.54,
+    "innings": 23.0,
+    "runs": 10
+   },
+   "hh": {
+    "ra9": 6.83,
+    "ra9_ci95": 2.99,
+    "innings": 27.7,
+    "runs": 21
+   }
+  }
+ }
+}

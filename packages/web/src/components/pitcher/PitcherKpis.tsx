@@ -4,6 +4,7 @@ import { InconclusiveValue } from '@/components/metric/InconclusiveValue'
 import { formatNumber, formatSigned, formatSignedMetric } from '@/domain/format'
 import { isAboveAverage } from '@/domain/pitcher'
 import type { PitcherSeason } from '@/domain/types'
+import type { PitcherRuns } from '@/sources/runsSource'
 import { es } from '@/i18n/es'
 
 const Tile = ({
@@ -34,9 +35,12 @@ const Tile = ({
 export const PitcherKpis = ({
   card,
   rank,
+  runs = null,
 }: {
   readonly card: PitcherSeason
   readonly rank: { readonly sea: number; readonly hh: number; readonly of: number }
+  /** RA/9 por entorno (`analysis/pitcher_runs.py`); `null` si el artefacto no existe. */
+  readonly runs?: { readonly minInnings: number; readonly pitcher: PitcherRuns | null } | null
 }) => (
   <div className="flex flex-wrap border border-(--color-border) bg-(--color-surface-card)">
     <Tile label={es.ficha.kpi.hh}>
@@ -64,6 +68,29 @@ export const PitcherKpis = ({
         <MetricValue metric={card.altitudeTax} digits={2} />
       )}
     </Tile>
+    {runs === null ? null : (
+      <Tile label={es.ficha.kpi.runs} note={es.ficha.kpi.runsNote(runs.minInnings)}>
+        <div className="flex flex-col gap-0.5 text-[15px]">
+          {(['hh', 'sea'] as const).map((env) => {
+            const value = runs.pitcher?.[env] ?? null
+            return (
+              <div key={env} className="flex items-baseline justify-between gap-3">
+                <span className="text-[11px] text-(--color-text-muted)">
+                  {es.ficha.kpi.runsIn[env]}
+                </span>
+                {value === null ? (
+                  <span className="text-[12px] text-(--color-semantic-inconclusive)">
+                    {es.insufficientSample}
+                  </span>
+                ) : (
+                  <MetricValue metric={value.ra9} digits={2} />
+                )}
+              </div>
+            )
+          })}
+        </div>
+      </Tile>
+    )}
     <Tile
       label={es.ficha.kpi.loss}
       note={[
