@@ -199,7 +199,7 @@ export const es = {
       runs: 'Carreras permitidas c/9 ent.',
       runsIn: { hh: 'alt. extrema', sea: 'nivel del mar' } satisfies Record<Environment, string>,
       runsNote: (minInnings: number): string =>
-        `RA/9: todas las carreras entre entradas, banda al 95%. No es ERA: el dataset no marca qué carreras son limpias. Con menos de ${String(minInnings)} entradas no se muestra.`,
+        `RA/9 con banda al 95%, mínimo ${String(minInnings)} entradas. No es ERA: el dataset no marca carreras limpias.`,
       loss: 'Pierde',
       lossUnit: 'de IVB promedio en su arsenal.',
       rank: (sea: number, hh: number, of: number): string =>
