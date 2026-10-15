@@ -39,7 +39,7 @@ uv run python scripts/check_pendientes.py       # el estado, ahora mismo
   | #81 | Todas las pantallas nuevas y sus arreglos | ✅ en `main` |
   | #82 | Q&A, renombre, Decision Log, esqueleto del documento técnico, ficha ejecutiva | ✅ en `main` |
   | #83–#85 | El Traductor (tarea 4), las convenciones de PRs y la integración de datos (ADR 0010) | ✅ en `main` |
-  | **#86–#89** | Ajustes del 14 de octubre: Radar, Simulador, Ficha y Traductor de varios lanzadores | En revisión; fusionar en ese orden (#88 tiene un conflicto de una línea en `es.ts` con #86) |
+  | **Ajustes de UX (14–15 oct)** | Radar, Simulador, Ficha y Traductor de varios lanzadores, más la segunda ronda del 15 de octubre (mapas legibles con su ayuda, selector de temporada, leyenda de «sufre en la altura»). Reúne #86–#89, que se cerraron | En revisión; un solo PR, revisable por commit |
 
 - **Cómo se trabaja desde aquí:** un PR por tarea de esta checklist, desde `main` y hacia `main`. La
   documentación de la tarea va en el mismo PR, y la casilla se marca ahí mismo.
@@ -53,6 +53,11 @@ las pantallas, y el Traductor es para quien no está en los datos (`docs/12` §2
 
 **Checklist, en orden.** Cada tarea tiene su criterio de hecho.
 
+- [x] **15 oct · Segunda ronda de ajustes.** Los mapas de movimiento se leen (letra en unidades del
+      lienzo para el tamaño al que se dibujan) y todos tienen «¿Cómo leer este mapa?» con dos diagramas
+      dibujados; la Ficha tiene selector de temporada en todas sus pestañas (solo las del lanzador);
+      la marca roja se explica arriba de cada tabla que la usa.
+      ✔ `Ficha.test.tsx` (selector), `Simulator.test.tsx` (ayuda); capturas a 1440×900.
 - [x] **14 oct · Radar: tabla clásica** (ajustes del equipo del 14 de octubre). La «Trampa de
       Altitud» se llama «Sufre en la altura»; el Impuesto se explica en pantalla; la tabla se ordena
       con un clic en el encabezado (otro clic invierte); los filtros son menús desplegables con
