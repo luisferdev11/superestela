@@ -161,6 +161,7 @@ export const FILE_PROBLEMS = [
   'missing_columns',
   'mixed_pitchers',
   'mixed_hands',
+  'too_many_pitchers',
 ] as const
 export type FileProblem = (typeof FILE_PROBLEMS)[number]
 

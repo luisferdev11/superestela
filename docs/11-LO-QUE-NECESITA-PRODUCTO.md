@@ -166,6 +166,12 @@ el Traductor además preguntan a la API en vivo.
 | **C1–C3** · ablaciones | Corridas de MLflow y `report/claims.toml` | Las tablas las genera `report.build` |
 | **Lectura de la Ficha** | `packages/web/src/domain/reading.ts`, `verdictOf` | Ver §5.5 |
 
+**Traductor de varios lanzadores** (14 oct): `POST /api/v1/arsenals/score` puntúa cada lanzador de un
+archivo en el formato del dataset con su `Scorer` (draws conjuntos en los dos aires). Muestra un
+**Impuesto proyectado** que invierte `scale.sd_xrv`; si A2/A3 dan una forma mejor de pasar Stuff+ a
+carreras, se cambia en `api/arsenal_batch.py`. Su revisión contra el medido está en
+`analysis/projected_tax_check.py`, que corre `scripts/regenerate.py`.
+
 ### 5.1 A2 · los pesos
 
 `RUN_VALUE` (`analysis/evidence.py`) son pesos sabermétricos clásicos puestos a mano. De ahí salen:
