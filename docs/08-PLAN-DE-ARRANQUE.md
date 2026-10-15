@@ -52,6 +52,12 @@ las pantallas, y el Traductor es para quien no está en los datos (`docs/12` §2
 
 **Checklist, en orden.** Cada tarea tiene su criterio de hecho.
 
+- [x] **14 oct · Radar: tabla clásica** (ajustes del equipo del 14 de octubre). La «Trampa de
+      Altitud» se llama «Sufre en la altura»; el Impuesto se explica en pantalla; la tabla se ordena
+      con un clic en el encabezado (otro clic invierte); los filtros son menús desplegables con
+      buscador y «Limpiar»; el tipo de pitch deja a todos los que lo tiran y muestra el Stuff+ de ese
+      pitch.
+      ✔ `RadarTable.test.tsx` y los tests de `filters` y `ranking`; captura a 1440×900.
 - [x] **1 · Que entren #80, #81 y #82.** Hecho el 1 de octubre: los tres en `main`, y
       `check_pendientes` marca P3, P7, `report/build.py` y «Scorer reproducible».
       ✔ `git ls-tree origin/main packages/models/score.py report/build.py packages/web/src/app/traductor/page.tsx docs/12-DECISION-LOG.md`

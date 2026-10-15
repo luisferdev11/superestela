@@ -4,7 +4,16 @@ import { evidencePath, mockupDataPath } from '@/sources/paths'
 import { mockupDataSchema } from '@/sources/schema'
 import { toPitcherSeason, toSeasonEntry } from '@/sources/adapter'
 import { selectRadarCohort, summarize } from './cohort'
-import { rankBy, rankCorrelation, scoreIn, sortRadar } from './ranking'
+import {
+  DEFAULT_RADAR_SORT,
+  firstDirection,
+  focusOf,
+  rankBy,
+  rankCorrelation,
+  scoreIn,
+  sortRadar,
+} from './ranking'
+import { nextSort } from './tableSort'
 
 /**
  * `README`, regla 2: ningun numero sin su corrida.
@@ -92,14 +101,52 @@ describe('el contraste entre entornos es el producto', () => {
   })
 })
 
-describe('ordenar por las tasas que lee Diablos', () => {
-  it('K-BB% de mayor a menor, y la muestra insuficiente al final', async () => {
-    const { cards } = await load()
-    const sorted = sortRadar(cards, 'kMinusBb')
-    const values = sorted.map((c) => c.outcomes.kMinusBbPct?.value ?? null)
+describe('ordenar el radar por columna', () => {
+  const nullsLast = (values: readonly (number | null)[], direction: 'desc' | 'asc') => {
     const firstNull = values.indexOf(null)
     const known = (firstNull === -1 ? values : values.slice(0, firstNull)) as number[]
-    expect(known.every((v, i) => i === 0 || (known[i - 1] ?? v) >= v)).toBe(true)
-    if (firstNull !== -1) expect(values.slice(firstNull).every((v) => v === null)).toBe(true)
+    const ordered = known.every((v, i) =>
+      i === 0 ? true : direction === 'desc' ? (known[i - 1] ?? v) >= v : (known[i - 1] ?? v) <= v,
+    )
+    const tailIsNull = firstNull === -1 || values.slice(firstNull).every((v) => v === null)
+    return ordered && tailIsNull
+  }
+
+  it('K-BB% de mayor a menor y al reves, con la muestra insuficiente siempre al final', async () => {
+    const { cards } = await load()
+    for (const direction of ['desc', 'asc'] as const) {
+      const sorted = sortRadar(cards, { key: 'kMinusBb', direction })
+      expect(
+        nullsLast(
+          sorted.map((c) => c.outcomes.kMinusBbPct?.value ?? null),
+          direction,
+        ),
+      ).toBe(true)
+    }
+  })
+
+  it('el impuesto ordena solo los concluyentes; los demas van al final', async () => {
+    const { cards } = await load()
+    const sorted = sortRadar(cards, { key: 'tax', direction: 'desc' })
+    const values = sorted.map((c) => c.altitudeTax?.value ?? null)
+    expect(nullsLast(values, 'desc')).toBe(true)
+    expect(values[0]).not.toBeNull()
+  })
+
+  it('con un pitch elegido, ordena por el Stuff+ de ese pitch', async () => {
+    const { cards } = await load()
+    const withSlider = cards.filter((c) => c.arsenal.some((e) => e.pitch === 'Slider'))
+    const sorted = sortRadar(withSlider, DEFAULT_RADAR_SORT, 'Slider')
+    const values = sorted.map((c) => focusOf(c, 'Slider').hh?.value ?? null)
+    expect(nullsLast(values, 'desc')).toBe(true)
+    expect(focusOf(sorted[0] ?? withSlider[0]!, 'Slider').pitch).toBe('Slider')
+  })
+
+  it('el nombre empieza de la A a la Z, y un segundo clic invierte', () => {
+    expect(firstDirection('pitcher')).toBe('asc')
+    expect(firstDirection('tax')).toBe('desc')
+    const once = nextSort(DEFAULT_RADAR_SORT, 'tax', firstDirection('tax'))
+    expect(once).toEqual({ key: 'tax', direction: 'desc' })
+    expect(nextSort(once, 'tax', firstDirection('tax'))).toEqual({ key: 'tax', direction: 'asc' })
   })
 })

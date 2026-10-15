@@ -7,7 +7,6 @@ import type { Verdict } from '@/domain/reading'
 import type { Target } from '@/domain/projection'
 import type { RosterGrouping } from '@/domain/roster'
 import type { FileProblem, Origin } from '@/domain/translator'
-import type { RadarSort } from '@/domain/ranking'
 import type { ScaleKind } from '@/domain/scale'
 
 /**
@@ -28,6 +27,7 @@ export const es = {
   handLong: { Right: 'Diestro', Left: 'Zurdo' } as Record<string, string | undefined>,
   inconclusive: 'no concluyente',
   inconclusiveShort: 'no concl.',
+  noSampleShort: 'sin muestra',
   brand: { top: 'SUPER', bottom: 'ESTELA' },
   nav: {
     groups: { signings: 'Fichajes', roster: 'Roster', lab: 'Laboratorio' },
@@ -57,13 +57,13 @@ export const es = {
     `Stuff+ v0 baseline \u00b7 ${pitches.toLocaleString('es-MX')} lanzamientos \u00b7 ${String(seasons)} temporadas`,
   filter: 'Filtrar',
   all: 'Todos',
-  trapsOnly: 'Solo Trampas',
+  trapsOnly: 'Solo los que sufren en la altura',
   noMatches: 'Ning\u00fan candidato cumple estos filtros.',
   throws: { Right: 'Diestros', Left: 'Zurdos' } as Record<string, string | undefined>,
   rolePlural: { starter: 'Abridores', reliever: 'Relevistas' } satisfies Record<Role, string>,
   sortBy: 'Ordenar por',
   legend: {
-    trap: 'Trampa de Altitud \u2014 se ve fuerte a nivel del mar y su Stuff+ cae mucho en altitud extrema.',
+    trap: 'Sufre en la altura \u2014 se ve fuerte a nivel del mar y su Stuff+ cae mucho en altitud extrema.',
     inconclusive: (significant: number, total: number): string =>
       `\u2014 el Impuesto no alcanza significancia: solo ${String(significant)} de ${String(total)} la alcanzan.`,
     stale:
@@ -110,12 +110,30 @@ export const es = {
       readonly stuffPlus: string
     }
   >,
-  radarSort: {
-    hh: 'Stuff+ altitud extrema',
-    sea: 'Stuff+ nivel del mar',
-    kMinusBb: 'K\u2212BB%',
-    whiff: 'Whiff%',
-  } satisfies Record<RadarSort, string>,
+  filterBar: {
+    pitch: 'Tipo de pitch',
+    throws: 'Mano',
+    role: 'Rol',
+    season: 'Temporada',
+    all: 'Todos',
+    pitchOption: (pitch: string, count: number): string => `${pitch} (${String(count)})`,
+    search: 'Buscar lanzador',
+    searchPlaceholder: 'pitcher_00069',
+    clear: 'Limpiar filtros',
+    results: (shown: number, total: number): string =>
+      `${String(shown)} de ${String(total)} lanzadores`,
+    pitchNote: (pitch: string): string =>
+      `Todos los que tiran ${pitch} con al menos 25 en altitud extrema, ordenados por el Stuff+ de su ${pitch}. Las columnas de Stuff+, \u0394 y uso son las de ese pitch.`,
+  },
+  sortHint: 'Haz clic en el nombre de una columna para ordenar; otro clic invierte el orden.',
+  taxExplainer:
+    'Impuesto de Altitud: cu\u00e1ntas carreras de m\u00e1s permite por cada 9 entradas en altitud extrema, contra nivel del mar, medido en sus propios lanzamientos. Solo se muestra cuando la diferencia es concluyente; si no, dice \u00abno concl.\u00bb.',
+  pitchColumns: {
+    hh: (pitch: string): string => `Stuff+ ${pitch} alt. extrema`,
+    sea: (pitch: string): string => `${pitch} nivel del mar`,
+    pitch: 'Pitch',
+    usage: 'Uso',
+  },
   columnHelp: [
     'El lanzador, anonimizado. Lleva a su Ficha.',
     'Su última temporada con muestra en los dos entornos. En ámbar si no es la más reciente.',
@@ -145,7 +163,11 @@ export const es = {
         text: 'Cinco parques: Puebla, Ciudad de México, Aguascalientes, Querétaro y León. El aire es más delgado y la pelota se mueve menos.',
       },
       {
-        term: 'Trampa de Altitud ▌',
+        term: 'Impuesto de Altitud',
+        text: 'Las carreras de más que permite por cada 9 entradas cuando lanza en altitud extrema, contra lo que permite a nivel del mar. Sale de sus propios lanzamientos en los dos entornos, no del modelo. Si la diferencia no es concluyente al 95%, se dice así en vez de dar un número.',
+      },
+      {
+        term: 'Sufre en la altura ▌',
         text: 'Se ve fuerte a nivel del mar y pierde mucho en la altitud: el mercado lo paga por lo que no va a dar en casa.',
       },
       {
@@ -173,9 +195,9 @@ export const es = {
     'Candidatos en su \u00faltima temporada jugada, ordenados por su valor en altitud extrema, la de la casa de Diablos.',
   evaluated: 'Evaluados',
   conclusiveTax: 'Impuesto concluyente',
-  traps: 'Trampas de Altitud',
+  traps: 'Sufren en la altura',
   outOf: (total: number): string => `de ${String(total)}`,
-  trap: 'Trampa de Altitud',
+  trap: 'Sufre en la altura',
   trapDescription: 'Se ve fuerte a nivel del mar y su Stuff+ cae mucho en altitud extrema.',
   ficha: {
     breadcrumb: 'Fichajes',
@@ -242,7 +264,7 @@ export const es = {
       } satisfies Record<Verdict, string>,
       lever: (best: string, bestDelta: string, worst: string, worstDelta: string): string =>
         `Si ya estuviera en el roster, la palanca es el ${best}: es lo que mejor aguanta la altitud (${bestDelta} contra ${worstDelta} del ${worst}).`,
-      rule: 'Regla provisional de producto: Trampa de Altitud, no al precio de nivel del mar; banda completa del Stuff+ en altitud extrema arriba de 100, fichar; lo dem\u00e1s, con reservas. El veredicto final lo respalda el modelo del equipo de datos.',
+      rule: 'Regla provisional de producto: si sufre en la altura, no al precio de nivel del mar; banda completa del Stuff+ en altitud extrema arriba de 100, fichar; lo dem\u00e1s, con reservas. El veredicto final lo respalda el modelo del equipo de datos.',
     },
     location: {
       title: (id: string): string => `Arsenal \u00b7 ${id}`,
