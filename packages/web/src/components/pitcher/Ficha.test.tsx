@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises'
-import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { fireEvent, render, screen } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
 import { PitcherHeader } from './PitcherHeader'
 import { PitcherKpis } from './PitcherKpis'
 import { PitcherReading } from './PitcherReading'
@@ -11,6 +11,10 @@ import { loadPitcherRuns } from '@/sources/runsSource'
 import { mockupDataSchema } from '@/sources/schema'
 import { toPitcherSeason, toSeasonEntry } from '@/sources/adapter'
 import { es } from '@/i18n/es'
+
+// El selector de temporada navega con el router de Next; aqui no hay app router montado.
+const push = vi.fn()
+vi.mock('next/navigation', () => ({ useRouter: () => ({ push }) }))
 
 /** Los componentes de la Ficha con las tarjetas reales, no con un fixture. */
 const load = async (pitcherId: string) => {
@@ -23,7 +27,7 @@ const load = async (pitcherId: string) => {
 }
 
 describe('la Ficha de pitcher_00069', () => {
-  it('abre con su temporada, su rol y la Trampa, y solo Resumen es enlace', async () => {
+  it('abre con su temporada, su rol y si sufre en la altura, y solo Resumen es enlace', async () => {
     const { own, card } = await load('pitcher_00069')
     render(
       <PitcherHeader
@@ -40,6 +44,26 @@ describe('la Ficha de pitcher_00069', () => {
     expect(screen.getByText(es.trap)).toBeInTheDocument()
     expect(screen.getByRole('link', { name: es.ficha.tabs.summary })).toBeInTheDocument()
     expect(screen.queryByRole('link', { name: es.ficha.tabs.plan })).toBeNull()
+  })
+
+  it('el selector de temporada ofrece solo sus temporadas con score y lleva a la misma pestana', async () => {
+    const { card: base } = await load('pitcher_00069')
+    render(
+      <PitcherHeader
+        card={base}
+        seasons={[2024, 2026, 2025]}
+        tab="projection"
+        tabHrefs={{ summary: fichaHref(base.pitcherId, base.season) }}
+      />,
+    )
+    const select = screen.getByLabelText(es.ficha.season)
+    expect([...select.querySelectorAll('option')].map((o) => o.textContent)).toEqual([
+      '2026',
+      '2025',
+      '2024',
+    ])
+    fireEvent.change(select, { target: { value: '2024' } })
+    expect(push).toHaveBeenCalledWith(`/proyeccion/${base.pitcherId}/2024`)
   })
 
   it('el impuesto dice no concluyente y ademas cuanto midio', async () => {

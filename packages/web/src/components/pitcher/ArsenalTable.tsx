@@ -6,7 +6,7 @@ import { formatNumber } from '@/domain/format'
 import type { Metric, PitcherSeason } from '@/domain/types'
 import { es } from '@/i18n/es'
 
-const base = 'border-b border-(--color-border-hairline) px-2 py-2 tabular-nums'
+const base = 'border-b border-(--color-border-hairline) px-1.5 py-2 tabular-nums'
 const cell = `${base} text-right`
 const cellLeft = `${base} text-left`
 

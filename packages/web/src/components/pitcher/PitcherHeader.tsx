@@ -2,7 +2,8 @@ import type { Route } from 'next'
 import Link from 'next/link'
 import { RoleChip } from '@/components/chip/RoleChip'
 import { FICHA_TABS, type FichaTab } from '@/domain/navigation'
-import { fichaHref } from '@/domain/pitcher'
+import { fichaHref, tabHref } from '@/domain/pitcher'
+import { SeasonSelect } from './SeasonSelect'
 import type { PitcherSeason } from '@/domain/types'
 import { es } from '@/i18n/es'
 
@@ -13,8 +14,9 @@ const tabClass = (active: boolean): string =>
 
 /**
  * La cabecera de la Ficha: de donde viene (el Radar), que temporada se ve y en
- * que pestana. Solo las temporadas con score son enlaces; la trayectoria
- * completa, con sus huecos, esta en la tabla de temporadas.
+ * que pestana. El selector de temporada lleva a la misma pestana en otro ano;
+ * solo ofrece temporadas con score. La trayectoria completa, con sus huecos,
+ * esta en la tabla de temporadas.
  */
 export const PitcherHeader = ({
   card,
@@ -82,7 +84,13 @@ export const PitcherHeader = ({
           )}
         </p>
       </div>
-      <div className="flex items-center gap-2 text-[12px]">
+      <div className="flex flex-wrap items-center gap-4 text-[12px]">
+        <SeasonSelect
+          current={card.season}
+          options={[...seasons]
+            .sort((a, b) => b - a)
+            .map((season) => ({ season, href: tabHref(tab, card.pitcherId, season) }))}
+        />
         <span className="border border-(--color-border) bg-(--color-surface-card) px-2.5 py-1">
           <RoleChip role={card.role} />
         </span>

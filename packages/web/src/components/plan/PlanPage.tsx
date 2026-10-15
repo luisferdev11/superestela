@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation'
 import { PageShell } from '@/components/chrome/PageShell'
 import { MetricValue } from '@/components/metric/MetricValue'
 import { PitcherHeader } from '@/components/pitcher/PitcherHeader'
-import { PitcherSelect } from './PitcherSelect'
 import { PlanDeficit } from './PlanDeficit'
 import { PlanSentences } from './PlanSentences'
 import {
@@ -46,12 +45,6 @@ export const PlanPage = async ({
     holds !== undefined && canSimulate(arsenals, pitcherId, card.season, holds)
       ? (simulatorHref(pitcherId, card.season, holds) as Route)
       : null
-  const options = [...cards]
-    .sort((a, b) => a.pitcherId.localeCompare(b.pitcherId) || b.season - a.season)
-    .map((c) => ({
-      href: planHref(c.pitcherId, c.season),
-      label: es.sim.pitcherOption(c.pitcherId, c.season),
-    }))
 
   return (
     <PageShell density={density} nPitches={nPitches} seasons={seasons} current="/radar">
@@ -72,7 +65,6 @@ export const PlanPage = async ({
           <p className="mt-0.5 text-[13px] text-(--color-text-muted)">{es.plan.subtitle}</p>
         </div>
         <div className="flex items-center gap-6">
-          <PitcherSelect options={options} current={planHref(pitcherId, card.season)} />
           <div className="flex items-baseline gap-2.5">
             <span className="text-[10px] font-bold tracking-widest text-(--color-text-muted) uppercase">
               {es.plan.today}

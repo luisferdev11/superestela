@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation'
 import { PageShell } from '@/components/chrome/PageShell'
 import { PitcherHeader } from '@/components/pitcher/PitcherHeader'
-import { PitcherSelect } from '@/components/plan/PitcherSelect'
 import { ProjectionTable } from './ProjectionTable'
 import {
   cardsOf,
@@ -36,12 +35,6 @@ export const ProjectionPage = async ({
   const card = pickSeason(own, season)
   if (card === null) notFound()
   const projection = projections.pitchers.get(locationKey(pitcherId, card.season))
-  const options = [...cards]
-    .sort((a, b) => a.pitcherId.localeCompare(b.pitcherId) || b.season - a.season)
-    .map((c) => ({
-      href: projectionHref(c.pitcherId, c.season),
-      label: es.sim.pitcherOption(c.pitcherId, c.season),
-    }))
 
   return (
     <PageShell density={density} nPitches={nPitches} seasons={seasons} current="/radar">
@@ -61,7 +54,6 @@ export const ProjectionPage = async ({
           <h2 className="text-[22px] font-bold tracking-tight">{es.projection.title}</h2>
           <p className="mt-0.5 text-[13px] text-(--color-text-muted)">{es.projection.subtitle}</p>
         </div>
-        <PitcherSelect options={options} current={projectionHref(pitcherId, card.season)} />
       </div>
       <section className="flex flex-col gap-1.5 border-l-[3px] border-(--color-altitude-extreme) bg-(--color-surface-card) px-4 py-3 text-[13px]">
         <h3 className="m-0 text-[13px] font-bold">{es.projection.purpose.title}</h3>

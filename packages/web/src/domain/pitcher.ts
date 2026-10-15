@@ -1,5 +1,6 @@
 import type { Route } from 'next'
 import { MIN_PITCHES_FOR_SCORE } from './constants'
+import type { FichaTab } from './navigation'
 import type { Environment, PitcherSeason, Role, SeasonEntry } from './types'
 
 /**
@@ -123,3 +124,20 @@ export const planHref = (pitcherId: string, season: number): Route =>
 /** La Proyeccion de una temporada (P7). */
 export const projectionHref = (pitcherId: string, season: number): Route =>
   `/proyeccion/${pitcherId}/${String(season)}` as Route
+
+/**
+ * La misma pestana de la Ficha en otra temporada: el selector de temporada de
+ * la cabecera cambia de ano sin sacar al usuario de lo que estaba viendo.
+ */
+export const tabHref = (tab: FichaTab, pitcherId: string, season: number): Route => {
+  switch (tab) {
+    case 'summary':
+      return fichaHref(pitcherId, season)
+    case 'arsenal':
+      return fichaArsenalHref(pitcherId, season)
+    case 'projection':
+      return projectionHref(pitcherId, season)
+    case 'plan':
+      return planHref(pitcherId, season)
+  }
+}
