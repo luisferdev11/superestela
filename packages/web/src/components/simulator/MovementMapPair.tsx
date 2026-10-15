@@ -1,4 +1,5 @@
 import { MovementMap } from './MovementMap'
+import { MovementMapHelp } from './MovementMapHelp'
 import { cellAt, sharedExtent, sharedWhiffRange, type MapPanel } from '@/domain/movementMap'
 import type { Environment } from '@/domain/types'
 import type { PitchType } from '@/domain/simulator'
@@ -29,10 +30,16 @@ export const MovementMapPair = ({
   pitchType,
   panels,
   result,
+  showExtremes,
+  onShowExtremesChange,
 }: {
   readonly pitchType: PitchType
   readonly panels: Readonly<Record<Environment, MapPanel>>
   readonly result: SimulateResponse
+  /** Si se dibujan los pitches mas y menos efectivos de la liga. */
+  readonly showExtremes: boolean
+  /** Solo en modo lanzador: la casilla para mostrarlos u ocultarlos. Sin ella, no hay casilla. */
+  readonly onShowExtremesChange?: (next: boolean) => void
 }) => {
   const at = {
     sea: {
@@ -52,10 +59,25 @@ export const MovementMapPair = ({
   return (
     <div className="flex flex-col gap-3">
       <div className="border-b-2 border-(--color-ink) pb-2">
-        <div className="text-[13px] font-semibold">{es.sim.map.title}</div>
+        <div className="flex items-start justify-between gap-3">
+          <div className="text-[13px] font-semibold">{es.sim.map.title}</div>
+          <MovementMapHelp />
+        </div>
         <div className="text-[11px] text-(--color-text-muted)">
           {es.sim.map.subtitle(pitchType)}
         </div>
+        {onShowExtremesChange === undefined ? null : (
+          <label className="mt-1.5 flex items-center gap-2 text-[12px]">
+            <input
+              type="checkbox"
+              checked={showExtremes}
+              onChange={(event) => {
+                onShowExtremesChange(event.target.checked)
+              }}
+            />
+            {es.sim.map.showExtremes}
+          </label>
+        )}
       </div>
       <div className="grid grid-cols-2 gap-4">
         {envs.map((env) => (
@@ -68,6 +90,7 @@ export const MovementMapPair = ({
             extent={extent}
             pitch={at[env]}
             ghost={env === 'hh' ? at.sea : null}
+            showExtremes={showExtremes}
             label={es.sim.map.label(
               pitchType,
               es.sim.map.panel[env],
@@ -86,14 +109,18 @@ export const MovementMapPair = ({
           <Swatch fill="var(--color-altitude-extreme)" />
           {es.sim.map.legend.less}
         </span>
-        <span className="inline-flex items-center gap-1.5">
-          <Swatch fill="var(--color-ink)" />
-          {es.sim.map.legend.most}
-        </span>
-        <span className="inline-flex items-center gap-1.5">
-          <Swatch fill="" ring />
-          {es.sim.map.legend.least}
-        </span>
+        {showExtremes ? (
+          <>
+            <span className="inline-flex items-center gap-1.5">
+              <Swatch fill="var(--color-ink)" />
+              {es.sim.map.legend.most}
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <Swatch fill="" ring />
+              {es.sim.map.legend.least}
+            </span>
+          </>
+        ) : null}
         <span className="inline-flex items-center gap-1.5">
           <Swatch fill="var(--color-diablos)" />
           {es.sim.map.legend.simulated}

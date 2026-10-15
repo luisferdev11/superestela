@@ -531,6 +531,29 @@ export const es = {
         `${env}: la liga casi no lanza esta forma; no hay muestra en la zona.`,
       label: (pitchType: string, env: string, ivb: string, hb: string): string =>
         `Mapa de movimiento de ${pitchType} en ${env}. El pitch simulado cae en IVB ${ivb} y break horizontal ${hb} pulgadas.`,
+      showExtremes: 'Mostrar los pitches más y menos efectivos de la liga',
+      help: {
+        open: '¿Cómo leer este mapa?',
+        title: 'Cómo leer el mapa de movimiento',
+        close: 'Cerrar',
+        diagram: {
+          glove: '◂ lado del guante',
+          arm: 'lado del brazo ▸',
+          rises: 'sube',
+          drops: 'cae',
+          pitcher: 'el lanzador, visto desde atrás',
+          fourSeam: 'recta: sube y se carga al brazo',
+          slider: 'slider: cae poco y se va al guante',
+        },
+        items: [
+          'Cada punto es la forma de un pitch: cuánto se mueve de lado (break horizontal) y cuánto sube o cae (IVB), en pulgadas, contra lo que haría sin spin.',
+          'Se ve como lo ve el lanzador desde atrás: a la derecha está el lado de su brazo y a la izquierda el lado de su guante. Un zurdo se refleja, para que los dos se lean igual.',
+          'Arriba, el pitch «sube» (una recta con mucho IVB); abajo, cae (una curva).',
+          'El color de fondo es el whiff por swing que la liga logra con esa forma: azul, más que la media; naranja, menos.',
+          'El punto rojo es el pitch que simulas. En el panel de altitud extrema, la flecha sale de su forma a nivel del mar: así se ve cuánto movimiento se lleva el aire delgado.',
+          'Los puntos negros y huecos son los pitches reales más y menos efectivos de la liga (el 10% de arriba y el de abajo).',
+        ],
+      },
     },
     arsenal: {
       title: (fastball: string): string => `Contra su recta · ${fastball}`,
@@ -542,6 +565,7 @@ export const es = {
         'En la altura los diferenciales de movimiento se encogen y los de velocidad no: el engaño por forma se pierde, el de velocidad sobrevive.',
     },
     comparables: {
+      toggle: 'Ver pitchers reales con una forma parecida',
       title: 'Los pitches reales más parecidos',
       row: (id: string, season: number, n: number): string =>
         `${id} · ${String(season)} · ${String(n)} pitches`,

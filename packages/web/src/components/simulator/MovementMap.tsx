@@ -29,6 +29,7 @@ export const MovementMap = ({
   pitch,
   ghost,
   label,
+  showExtremes = true,
 }: {
   readonly title: string
   readonly panel: MapPanel
@@ -39,6 +40,8 @@ export const MovementMap = ({
   /** En el panel de altura, la forma a nivel del mar, para ver cuanto se movio. */
   readonly ghost: Point | null
   readonly label: string
+  /** Los pitches mas y menos efectivos de la liga. En el laboratorio no se dibujan. */
+  readonly showExtremes?: boolean
 }) => {
   const x = (hb: number): number =>
     MARGIN.left + (SIZE * (hb - extent.hbMin)) / (extent.hbMax - extent.hbMin)
@@ -147,7 +150,7 @@ export const MovementMap = ({
         <text x={MARGIN.left + 4} y={MARGIN.top + 11} fontSize="9" fill="var(--color-text-muted)">
           {es.sim.map.rises}
         </text>
-        {panel.extremes.map((e) => (
+        {(showExtremes ? panel.extremes : []).map((e) => (
           <circle
             key={`${e.pitcherId}:${String(e.season)}`}
             cx={x(e.horizontalBreak)}
