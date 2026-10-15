@@ -13,7 +13,7 @@ import { es } from '@/i18n/es'
 
 // Base sin alineacion: con `text-right` en la base, un `text-left` agregado
 // pierde segun el orden de Tailwind, no segun el orden de las clases.
-const base = 'px-3 py-2 border-b border-(--color-border-hairline)'
+const base = 'px-2 py-2 border-b border-(--color-border-hairline)'
 const cell = `${base} text-right`
 const cellLeft = `${base} text-left`
 
@@ -36,7 +36,7 @@ export const RadarRow = ({
 
   return (
     <tr className={card.altitudeTrap ? 'bg-(--color-diablos-wash)' : undefined}>
-      <td className={cellLeft}>
+      <td className={`${cellLeft} whitespace-nowrap`}>
         <Link
           href={fichaHref(card.pitcherId, card.season)}
           className={`border-b border-(--color-border-underline) text-inherit no-underline ${card.altitudeTrap ? 'font-semibold' : ''}`}

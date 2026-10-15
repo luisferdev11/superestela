@@ -103,62 +103,64 @@ export const RadarTable = ({
         <p className="mb-3 text-[11px] text-(--color-text-muted)">
           {filters.pitch === null ? es.sortHint : es.filterBar.pitchNote(filters.pitch)}
         </p>
-        <table className="w-full border-collapse">
-          <thead>
-            <tr>
-              {es.columns.map((column, index) => {
-                const key = SORT_KEYS[index] ?? null
-                const isActive = key !== null && sort.key === key
-                const label = headerOf(index, column, filters.pitch)
-                const thClass = `border-b border-(--color-border-strong) px-3 pb-2 text-[10px] font-bold tracking-wider whitespace-nowrap uppercase ${
-                  LEFT_ALIGNED.has(index) ? 'text-left' : 'text-right'
-                } ${isActive ? 'text-(--color-ink)' : 'text-(--color-text-muted)'}`
-                return (
-                  <th
-                    key={column}
-                    scope="col"
-                    title={help[index]}
-                    aria-sort={
-                      isActive
-                        ? sort.direction === 'desc'
-                          ? 'descending'
-                          : 'ascending'
-                        : undefined
-                    }
-                    className={thClass}
-                  >
-                    {key === null ? (
-                      label
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setSort(nextSort(sort, key, firstDirection(key)))
-                        }}
-                        className="cursor-pointer border-0 bg-transparent p-0 text-inherit uppercase hover:underline"
-                      >
-                        {label}
-                        <span aria-hidden="true" className="pl-1">
-                          {isActive ? (sort.direction === 'desc' ? '▼' : '▲') : '↕'}
-                        </span>
-                      </button>
-                    )}
-                  </th>
-                )
-              })}
-            </tr>
-          </thead>
-          <tbody className="text-[13px]">
-            {rows.map((card) => (
-              <RadarRow
-                key={`${card.pitcherId}:${String(card.season)}`}
-                card={card}
-                latestSeason={latestSeason}
-                pitch={filters.pitch}
-              />
-            ))}
-          </tbody>
-        </table>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse">
+            <thead>
+              <tr>
+                {es.columns.map((column, index) => {
+                  const key = SORT_KEYS[index] ?? null
+                  const isActive = key !== null && sort.key === key
+                  const label = headerOf(index, column, filters.pitch)
+                  const thClass = `border-b border-(--color-border-strong) px-2 pb-2 text-[10px] font-bold tracking-wider whitespace-nowrap uppercase ${
+                    LEFT_ALIGNED.has(index) ? 'text-left' : 'text-right'
+                  } ${isActive ? 'text-(--color-ink)' : 'text-(--color-text-muted)'}`
+                  return (
+                    <th
+                      key={column}
+                      scope="col"
+                      title={help[index]}
+                      aria-sort={
+                        isActive
+                          ? sort.direction === 'desc'
+                            ? 'descending'
+                            : 'ascending'
+                          : undefined
+                      }
+                      className={thClass}
+                    >
+                      {key === null ? (
+                        label
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSort(nextSort(sort, key, firstDirection(key)))
+                          }}
+                          className="cursor-pointer border-0 bg-transparent p-0 text-inherit uppercase hover:underline"
+                        >
+                          {label}
+                          <span aria-hidden="true" className="pl-1">
+                            {isActive ? (sort.direction === 'desc' ? '▼' : '▲') : '↕'}
+                          </span>
+                        </button>
+                      )}
+                    </th>
+                  )
+                })}
+              </tr>
+            </thead>
+            <tbody className="text-[13px]">
+              {rows.map((card) => (
+                <RadarRow
+                  key={`${card.pitcherId}:${String(card.season)}`}
+                  card={card}
+                  latestSeason={latestSeason}
+                  pitch={filters.pitch}
+                />
+              ))}
+            </tbody>
+          </table>
+        </div>
 
         {/* El estado vacio, uno de los cuatro de docs/07 seccion 5.2 regla 3. */}
         {rows.length === 0 ? (

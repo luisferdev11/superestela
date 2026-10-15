@@ -129,8 +129,8 @@ export const es = {
   taxExplainer:
     'Impuesto de Altitud: cu\u00e1ntas carreras de m\u00e1s permite por cada 9 entradas en altitud extrema, contra nivel del mar, medido en sus propios lanzamientos. Solo se muestra cuando la diferencia es concluyente; si no, dice \u00abno concl.\u00bb.',
   pitchColumns: {
-    hh: (pitch: string): string => `Stuff+ ${pitch} alt. extrema`,
-    sea: (pitch: string): string => `${pitch} nivel del mar`,
+    hh: (pitch: string): string => `${pitch} alt. extrema`,
+    sea: (pitch: string): string => `${pitch} n. del mar`,
     pitch: 'Pitch',
     usage: 'Uso',
   },
