@@ -119,6 +119,7 @@ auditable: qué se decidió, contra qué y con qué evidencia.
 
 | Regla | Valor | Por qué | Dónde vive |
 |---|---|---|---|
+| Qué muestra el mapa del Simulador | Los pitches más y menos efectivos de la liga solo con un lanzador real, y con una casilla; en el laboratorio no. Los pitches parecidos van en un plegable cerrado | En el laboratorio no hay un lanzador contra quien comparar, y los puntos distraían; los parecidos no respondían la pregunta de la pantalla. Decidido el 14 de octubre | `components/simulator/` |
 | Mínimo para tener Stuff+ | 100 lanzamientos en cada entorno | Debajo, la banda no distingue a nadie | `contracts/schemas.py → MIN_PITCHES_FOR_SCORE` |
 | Mínimo para K%, BB% y K−BB% | 50 turnos | Con 50, un K% de 20 todavía carga ±11 puntos | `MIN_PLATE_APPEARANCES_FOR_RATE` (#72) |
 | Mínimo para el whiff | 50 swings | La misma lógica que los turnos | `MIN_SWINGS_FOR_RATE` (#72) |

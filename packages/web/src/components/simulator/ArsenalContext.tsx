@@ -1,12 +1,12 @@
-import { formatNumber, formatSigned } from '@/domain/format'
+import { formatSigned } from '@/domain/format'
 import type { SimulateResponse } from '@/sources/simulateResponse'
 import { es } from '@/i18n/es'
 
 /**
  * El arsenal, que el reto hace criterio de evaluacion: el pitch contra su recta
- * primaria en los dos entornos, y los pitches reales mas parecidos con lo que
- * de verdad lograron. Los diferenciales de movimiento se encogen en la altura y
- * los de velocidad no; la tabla lo deja ver sin explicarlo dos veces.
+ * primaria en los dos entornos. Los diferenciales de movimiento se encogen en
+ * la altura y los de velocidad no; la tabla lo deja ver sin explicarlo dos
+ * veces. Los pitches reales parecidos viven aparte (`Comparables`).
  */
 export const ArsenalContext = ({
   result,
@@ -42,7 +42,7 @@ export const ArsenalContext = ({
         ] as const)
 
   return (
-    <div className="grid grid-cols-2 gap-5">
+    <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-2">
         <div className="border-b-2 border-(--color-ink) pb-2 text-[13px] font-semibold">
           {primaryFastball === null ? es.sim.arsenal.none : es.sim.arsenal.title(primaryFastball)}
@@ -87,40 +87,6 @@ export const ArsenalContext = ({
             </p>
           </>
         )}
-      </div>
-      <div className="flex flex-col gap-2">
-        <div className="border-b-2 border-(--color-ink) pb-2 text-[13px] font-semibold">
-          {es.sim.comparables.title}
-        </div>
-        {(
-          [
-            ['sea', sea],
-            ['hh', hh],
-          ] as const
-        ).map(([env, r]) => (
-          <div key={env} className="flex flex-col gap-1">
-            <div className="text-[10px] font-bold tracking-widest text-(--color-text-muted) uppercase">
-              {es.sim.map.panel[env]}
-            </div>
-            <ul className="m-0 flex list-none flex-col gap-0.5 p-0 text-xs">
-              {r.comparables.map((c) => (
-                <li
-                  key={`${c.pitcherId}:${String(c.season)}`}
-                  className="flex justify-between tabular-nums"
-                >
-                  <span>{es.sim.comparables.row(c.pitcherId, c.season, c.n)}</span>
-                  <span className="text-(--color-text-muted)">
-                    {formatNumber(c.releaseSpeed)} · {formatNumber(c.ivb)}″ ·{' '}
-                    {formatNumber(c.horizontalBreak)}″ ·{' '}
-                    {c.whiffPerSwing === null
-                      ? '—'
-                      : es.sim.comparables.whiff(`${formatNumber(100 * c.whiffPerSwing, 0)}%`)}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
       </div>
     </div>
   )

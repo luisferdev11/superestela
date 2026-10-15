@@ -6,6 +6,7 @@ import { StuffPlusKpis } from './StuffPlusKpis'
 import { AltitudePhysics } from './AltitudePhysics'
 import { MovementMapPair } from './MovementMapPair'
 import { ArsenalContext } from './ArsenalContext'
+import { Comparables } from './Comparables'
 import { useSimulation } from './useSimulation'
 import {
   CONTROL_GROUPS,
@@ -111,6 +112,8 @@ export const Simulator = ({
         }
   const [selection, setSelection] = useState<Selection>(initial)
   const [values, setValues] = useState<PitchValues>(() => baselineOf(initial))
+  // Los puntos de los pitches mas y menos efectivos: solo en modo lanzador, y a eleccion.
+  const [showExtremes, setShowExtremes] = useState(true)
 
   const select = (next: Partial<Selection>): void => {
     const merged = { ...selection, ...next }
@@ -285,20 +288,35 @@ export const Simulator = ({
                   inPitcherMode && changedControls(values, baseline).length > 0 ? realResult : null
                 }
               />
-              <div className="border border-(--color-border) bg-(--color-surface-card) p-5">
-                <MovementMapPair
-                  pitchType={selection.pitchType}
-                  panels={maps[selection.pitchType]}
-                  result={result}
-                />
+              {/* Mapa y fisica lado a lado: a 1440x900 los dos caben sin scroll (14 oct). */}
+              <div className="grid grid-cols-1 items-start gap-4 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
+                <div className="border border-(--color-border) bg-(--color-surface-card) p-4">
+                  <MovementMapPair
+                    pitchType={selection.pitchType}
+                    panels={maps[selection.pitchType]}
+                    result={result}
+                    showExtremes={inPitcherMode && showExtremes}
+                    onShowExtremesChange={inPitcherMode ? setShowExtremes : undefined}
+                  />
+                </div>
+                <div className="border border-(--color-border) bg-(--color-surface-card) p-4">
+                  <AltitudePhysics result={result} scale={scale} spinRate={values.spinRate} />
+                </div>
               </div>
-              <div className="border border-(--color-border) bg-(--color-surface-card) p-5">
-                <AltitudePhysics result={result} scale={scale} spinRate={values.spinRate} />
-              </div>
-              {inPitcherMode || result.sea.comparables.length > 0 ? (
+              {inPitcherMode ? (
                 <div className="border border-(--color-border) bg-(--color-surface-card) p-5">
                   <ArsenalContext result={result} pitchType={selection.pitchType} />
                 </div>
+              ) : null}
+              {!inPitcherMode && result.sea.comparables.length > 0 ? (
+                <details className="border border-(--color-border) bg-(--color-surface-card) px-5 py-3">
+                  <summary className="cursor-pointer text-[12px] font-semibold">
+                    {es.sim.comparables.toggle}
+                  </summary>
+                  <div className="mt-3">
+                    <Comparables result={result} />
+                  </div>
+                </details>
               ) : null}
             </>
           )}

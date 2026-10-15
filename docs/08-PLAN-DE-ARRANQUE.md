@@ -64,6 +64,12 @@ las pantallas, y el Traductor es para quien no está en los datos (`docs/12` §2
       ✔ `git ls-tree origin/main packages/models/score.py report/build.py packages/web/src/app/traductor/page.tsx docs/12-DECISION-LOG.md`
       lista los cuatro, y `uv run python scripts/check_pendientes.py` marca P3, P7, `report/build.py`
       y «Scorer reproducible».
+- [x] **14 oct · Simulador en una pantalla** (ajustes del equipo del 14 de octubre). El mapa va
+      al lado de «Qué le hace la altura a esta forma» y los dos caben sin scroll a 1440×900; los
+      pitches más y menos efectivos de la liga solo aparecen con un lanzador real, con una casilla
+      para ocultarlos; los pitches parecidos pasan a un plegable cerrado en el laboratorio; el mapa
+      tiene una ayuda con diagrama del lado del guante y del brazo.
+      ✔ `Simulator.test.tsx` (casilla, laboratorio, plegable, ayuda); captura a 1440×900.
 - [ ] **2 · Correo a ISAC y Diablos con lo que no sabemos.** El borrador está en la memoria del
       proyecto (`superestela-qa-diablos`): la escala con el ejemplo de `docs/11` §8.3 y el ajuste
       «por temporada», y el formato del holdout (columnas y quién corre el scorer). La fecha y la demo
