@@ -11,40 +11,40 @@ const copy = es.sim.map.help
  * tipicos. SVG a mano, sin imagenes externas (`docs/07` seccion 5.1).
  */
 const Diagram = () => (
-  <svg viewBox="0 0 360 240" role="img" aria-label={copy.title} className="w-full max-w-[420px]">
-    <line x1="20" y1="120" x2="340" y2="120" stroke="var(--color-border-strong)" />
-    <line x1="180" y1="20" x2="180" y2="220" stroke="var(--color-border-strong)" />
+  <svg viewBox="0 0 440 250" role="img" aria-label={copy.title} className="w-full max-w-[480px]">
+    <line x1="20" y1="120" x2="420" y2="120" stroke="var(--color-border-strong)" />
+    <line x1="220" y1="20" x2="220" y2="230" stroke="var(--color-border-strong)" />
     <text x="22" y="112" fontSize="11" fill="var(--color-text-muted)">
       {copy.diagram.glove}
     </text>
-    <text x="338" y="112" fontSize="11" textAnchor="end" fill="var(--color-text-muted)">
+    <text x="418" y="112" fontSize="11" textAnchor="end" fill="var(--color-text-muted)">
       {copy.diagram.arm}
     </text>
-    <text x="186" y="30" fontSize="11" fill="var(--color-text-muted)">
+    <text x="226" y="30" fontSize="11" fill="var(--color-text-muted)">
       {copy.diagram.rises}
     </text>
-    <text x="186" y="216" fontSize="11" fill="var(--color-text-muted)">
+    <text x="226" y="226" fontSize="11" fill="var(--color-text-muted)">
       {copy.diagram.drops}
     </text>
     {/* El lanzador de espaldas: el brazo de lanzar sube a la derecha. */}
     <g stroke="var(--color-ink)" strokeWidth="2" fill="none" strokeLinecap="round">
-      <circle cx="180" cy="150" r="7" fill="var(--color-surface-card)" />
-      <line x1="180" y1="157" x2="180" y2="185" />
-      <line x1="180" y1="165" x2="165" y2="178" />
-      <line x1="180" y1="163" x2="197" y2="146" />
-      <line x1="180" y1="185" x2="170" y2="202" />
-      <line x1="180" y1="185" x2="190" y2="202" />
+      <circle cx="220" cy="155" r="7" fill="var(--color-surface-card)" />
+      <line x1="220" y1="162" x2="220" y2="190" />
+      <line x1="220" y1="170" x2="205" y2="183" />
+      <line x1="220" y1="168" x2="237" y2="151" />
+      <line x1="220" y1="190" x2="210" y2="207" />
+      <line x1="220" y1="190" x2="230" y2="207" />
     </g>
-    <text x="180" y="232" fontSize="10" textAnchor="middle" fill="var(--color-text-muted)">
+    <text x="220" y="244" fontSize="10" textAnchor="middle" fill="var(--color-text-muted)">
       {copy.diagram.pitcher}
     </text>
     {/* Una recta: sube y se carga al brazo. Un slider: casi no sube y se va al guante. */}
-    <circle cx="250" cy="55" r="6" fill="var(--color-diablos)" />
-    <text x="260" y="59" fontSize="10" fill="var(--color-text)">
+    <circle cx="330" cy="55" r="6" fill="var(--color-diablos)" />
+    <text x="320" y="44" fontSize="10" textAnchor="middle" fill="var(--color-text)">
       {copy.diagram.fourSeam}
     </text>
-    <circle cx="110" cy="110" r="6" fill="var(--color-ink)" />
-    <text x="24" y="98" fontSize="10" fill="var(--color-text)">
+    <circle cx="100" cy="135" r="6" fill="var(--color-ink)" />
+    <text x="100" y="156" fontSize="10" textAnchor="middle" fill="var(--color-text)">
       {copy.diagram.slider}
     </text>
   </svg>

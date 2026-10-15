@@ -185,4 +185,58 @@ describe('el Simulador', () => {
       screen.getByText(es.sim.provenanceUnpublished('0.1.0+abcdef0'), { exact: false }),
     ).toBeInTheDocument()
   })
+
+  it('con un lanzador, una casilla muestra u oculta los pitches mas y menos efectivos', async () => {
+    renderSimulator()
+    await settle()
+    const box = screen.getByLabelText(es.sim.map.showExtremes)
+    expect(box).toBeChecked()
+    expect(screen.getByText(es.sim.map.legend.most)).toBeInTheDocument()
+    fireEvent.click(box)
+    expect(screen.queryByText(es.sim.map.legend.most)).toBeNull()
+  })
+
+  it('en el laboratorio no hay puntos de la liga ni casilla', async () => {
+    renderSimulator()
+    fireEvent.click(screen.getByRole('button', { name: es.sim.modes.lab }))
+    await settle()
+    expect(screen.queryByLabelText(es.sim.map.showExtremes)).toBeNull()
+    expect(screen.queryByText(es.sim.map.legend.most)).toBeNull()
+  })
+
+  it('en el laboratorio, los pitches parecidos quedan en un plegable cerrado', async () => {
+    const comparable = {
+      pitcherId: 'pitcher_00001',
+      season: 2025,
+      n: 120,
+      ivb: 20,
+      horizontalBreak: 8,
+      releaseSpeed: 93,
+      whiffPerSwing: 0.25,
+    }
+    const withComparables = {
+      ...RESPONSE,
+      sea: { ...RESPONSE.sea, comparables: [comparable] },
+      harpHelu: { ...RESPONSE.harpHelu, comparables: [comparable] },
+    }
+    vi.mocked(fetch).mockImplementation(() =>
+      Promise.resolve(new Response(JSON.stringify(withComparables), { status: 200 })),
+    )
+    renderSimulator()
+    fireEvent.click(screen.getByRole('button', { name: es.sim.modes.lab }))
+    await settle()
+    const details = screen.getByText(es.sim.comparables.toggle).closest('details')
+    expect(details).not.toBeNull()
+    expect(details).not.toHaveAttribute('open')
+    expect(details?.textContent).toContain(es.sim.comparables.title)
+  })
+
+  it('la ayuda del mapa abre una explicacion y se cierra', async () => {
+    renderSimulator()
+    await settle()
+    fireEvent.click(screen.getByRole('button', { name: es.sim.map.help.open }))
+    expect(screen.getByRole('dialog', { name: es.sim.map.help.title })).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: es.sim.map.help.close }))
+    expect(screen.queryByRole('dialog')).toBeNull()
+  })
 })
