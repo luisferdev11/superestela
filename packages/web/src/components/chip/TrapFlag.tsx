@@ -18,3 +18,17 @@ export const TrapFlag = ({ trap }: { readonly trap: boolean }) => {
     </span>
   )
 }
+
+/**
+ * La explicacion de la marca, siempre visible arriba de una tabla que la usa
+ * (14 de octubre): quien llega nuevo no tiene por que abrir la guia para saber
+ * que significa una barra roja junto a un nombre.
+ */
+export const TrapLegend = () => (
+  <p className="m-0 flex items-baseline gap-2 text-[12px] text-(--color-text)">
+    <span aria-hidden="true" className="font-bold text-(--color-semantic-trap)">
+      {'▌'}
+    </span>
+    <span>{es.legend.trap}</span>
+  </p>
+)

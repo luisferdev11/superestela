@@ -15,6 +15,7 @@ import { summarize, type CohortSummary } from '@/domain/cohort'
 import { DEFAULT_RADAR_SORT, firstDirection, sortRadar, type RadarSortKey } from '@/domain/ranking'
 import { nextSort, type SortState } from '@/domain/tableSort'
 import { RadarGuide } from './RadarGuide'
+import { TrapLegend } from '@/components/chip/TrapFlag'
 import type { PitcherSeason } from '@/domain/types'
 import type { ScaleKind } from '@/domain/scale'
 import { es } from '@/i18n/es'
@@ -99,6 +100,9 @@ export const RadarTable = ({
       <RadarGuide scale={scale} />
 
       <div className="border border-(--color-border) bg-(--color-surface-card) p-5">
+        <div className="mb-1">
+          <TrapLegend />
+        </div>
         <p className="mb-1 text-[12px] text-(--color-text)">{es.taxExplainer}</p>
         <p className="mb-3 text-[11px] text-(--color-text-muted)">
           {filters.pitch === null ? es.sortHint : es.filterBar.pitchNote(filters.pitch)}

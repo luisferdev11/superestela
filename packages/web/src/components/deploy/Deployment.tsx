@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { TrapFlag } from '@/components/chip/TrapFlag'
+import { TrapFlag, TrapLegend } from '@/components/chip/TrapFlag'
 import { MetricValue } from '@/components/metric/MetricValue'
 import { dominantPitch } from '@/domain/arsenal'
 import { isStaleSeason } from '@/domain/emphasis'
@@ -44,6 +44,7 @@ export const Deployment = ({
 
   return (
     <div className="flex flex-col gap-4">
+      <TrapLegend />
       <div className="flex items-center justify-end gap-3">
         <span className="text-[10px] font-bold tracking-widest text-(--color-text-muted) uppercase">
           {es.deploy.stadium}
