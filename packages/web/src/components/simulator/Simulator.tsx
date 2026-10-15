@@ -289,7 +289,7 @@ export const Simulator = ({
                 }
               />
               {/* Mapa y fisica lado a lado: a 1440x900 los dos caben sin scroll (14 oct). */}
-              <div className="grid grid-cols-1 items-start gap-4 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
+              <div className="grid grid-cols-1 items-start gap-4 xl:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)]">
                 <div className="border border-(--color-border) bg-(--color-surface-card) p-4">
                   <MovementMapPair
                     pitchType={selection.pitchType}

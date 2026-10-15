@@ -201,6 +201,8 @@ export const es = {
   trapDescription: 'Se ve fuerte a nivel del mar y su Stuff+ cae mucho en altitud extrema.',
   ficha: {
     breadcrumb: 'Fichajes',
+    season: 'Temporada',
+    onlySeason: 'Única temporada con muestra en los dos entornos.',
     tabs: {
       summary: 'Resumen',
       arsenal: 'Arsenal',
@@ -568,24 +570,45 @@ export const es = {
       showExtremes: 'Mostrar los pitches más y menos efectivos de la liga',
       help: {
         open: '¿Cómo leer este mapa?',
-        title: 'Cómo leer el mapa de movimiento',
+        eyebrow: 'Antes de la física',
+        title: 'Cómo leer un mapa de movimiento',
         close: 'Cerrar',
-        diagram: {
-          glove: '◂ lado del guante',
-          arm: 'lado del brazo ▸',
+        intro:
+          'Todos los mapas de la app hablan el mismo idioma. Imagina que estás parado detrás del lanzador, mirando hacia el plato: esa es la «vista del lanzador», y es la que usamos siempre.',
+        behind: {
+          title: 'Detrás de un lanzador diestro',
+          leftBatter: 'bateador zurdo',
+          rightBatter: 'bateador diestro',
+          glove: '◂ guante',
+          arm: 'brazo ▸',
+          throwingArm: 'brazo de lanzar',
+          gloveHand: 'guante',
           rises: 'sube',
-          drops: 'cae',
-          pitcher: 'el lanzador, visto desde atrás',
-          fourSeam: 'recta: sube y se carga al brazo',
-          slider: 'slider: cae poco y se va al guante',
+        },
+        plane: {
+          title: 'El plano de movimiento',
+          rises: 'sube (IVB +)',
+          drops: 'cae (IVB −)',
+          glove: '◂ guante',
+          arm: 'brazo ▸',
         },
         items: [
-          'Cada punto es la forma de un pitch: cuánto se mueve de lado (break horizontal) y cuánto sube o cae (IVB), en pulgadas, contra lo que haría sin spin.',
-          'Se ve como lo ve el lanzador desde atrás: a la derecha está el lado de su brazo y a la izquierda el lado de su guante. Un zurdo se refleja, para que los dos se lean igual.',
-          'Arriba, el pitch «sube» (una recta con mucho IVB); abajo, cae (una curva).',
-          'El color de fondo es el whiff por swing que la liga logra con esa forma: azul, más que la media; naranja, menos.',
-          'El punto rojo es el pitch que simulas. En el panel de altitud extrema, la flecha sale de su forma a nivel del mar: así se ve cuánto movimiento se lleva el aire delgado.',
-          'Los puntos negros y huecos son los pitches reales más y menos efectivos de la liga (el 10% de arriba y el de abajo).',
+          {
+            term: 'Brazo, guante y sube.',
+            text: '«Brazo» es el lado del brazo con el que lanza; «guante», el contrario. Para un diestro, el lado del brazo es donde se para el bateador diestro: por eso su recta «se le mete» a ese bateador. Un zurdo se refleja, para que los dos se lean igual.',
+          },
+          {
+            term: 'Cada punto es una forma.',
+            text: 'Cuánto se mueve de lado (break horizontal, HB) y cuánto sube o cae (IVB), en pulgadas, contra lo que haría sin spin. Arriba a la derecha vive la recta; abajo a la izquierda, la curva.',
+          },
+          {
+            term: 'Del mar a la altura.',
+            text: 'Donde hay dos puntos unidos por una línea, uno es la forma a nivel del mar y el otro en altitud extrema. El aire delgado encoge el movimiento: la forma se acerca al centro.',
+          },
+          {
+            term: 'El fondo de color',
+            text: 'En el Simulador, es el whiff por swing que la liga logra con cada forma: azul, más que la media; naranja, menos. Los puntos negros y huecos son el 10% de pitches más y menos efectivos.',
+          },
         ],
       },
     },

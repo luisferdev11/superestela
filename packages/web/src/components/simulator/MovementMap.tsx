@@ -5,7 +5,10 @@ import { es } from '@/i18n/es'
 type Point = { readonly ivb: number; readonly horizontalBreak: number }
 
 const SIZE = 300
-const MARGIN = { left: 34, right: 10, top: 10, bottom: 30 }
+// La letra en unidades del lienzo: el panel se dibuja a ~240 px, asi que 16
+// unidades quedan en ~12 px de pantalla. Con 9, eran 5 px (14 oct).
+const FONT = 22
+const MARGIN = { left: 56, right: 14, top: 14, bottom: 2 * FONT + 14 }
 const WIDTH = SIZE + MARGIN.left + MARGIN.right
 const HEIGHT = SIZE + MARGIN.top + MARGIN.bottom
 const TICK_EVERY_IN = 6
@@ -101,9 +104,9 @@ export const MovementMap = ({
             />
             <text
               x={x(t)}
-              y={MARGIN.top + SIZE + 12}
+              y={MARGIN.top + SIZE + FONT + 2}
               textAnchor="middle"
-              fontSize="9"
+              fontSize={FONT}
               fill="var(--color-text-muted)"
             >
               {formatNumber(t, 0)}
@@ -120,10 +123,10 @@ export const MovementMap = ({
               stroke={t === 0 ? 'var(--color-border-strong)' : 'var(--color-border-hairline)'}
             />
             <text
-              x={MARGIN.left - 5}
-              y={y(t) + 3}
+              x={MARGIN.left - 6}
+              y={y(t) + FONT / 3}
               textAnchor="end"
-              fontSize="9"
+              fontSize={FONT}
               fill="var(--color-text-muted)"
             >
               {formatNumber(t, 0)}
@@ -132,22 +135,27 @@ export const MovementMap = ({
         ))}
         <text
           x={MARGIN.left + SIZE - 4}
-          y={MARGIN.top + SIZE + 24}
+          y={MARGIN.top + SIZE + 2 * FONT + 6}
           textAnchor="end"
-          fontSize="9"
+          fontSize={FONT}
           fill="var(--color-text-muted)"
         >
           {es.sim.map.armSide}
         </text>
         <text
           x={MARGIN.left + 4}
-          y={MARGIN.top + SIZE + 24}
-          fontSize="9"
+          y={MARGIN.top + SIZE + 2 * FONT + 6}
+          fontSize={FONT}
           fill="var(--color-text-muted)"
         >
           {es.sim.map.gloveSide}
         </text>
-        <text x={MARGIN.left + 4} y={MARGIN.top + 11} fontSize="9" fill="var(--color-text-muted)">
+        <text
+          x={MARGIN.left + 5}
+          y={MARGIN.top + FONT}
+          fontSize={FONT}
+          fill="var(--color-text-muted)"
+        >
           {es.sim.map.rises}
         </text>
         {(showExtremes ? panel.extremes : []).map((e) => (

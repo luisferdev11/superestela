@@ -1,5 +1,5 @@
 import { MovementMap } from './MovementMap'
-import { MovementMapHelp } from './MovementMapHelp'
+import { MovementMapHelp } from '@/components/map/MovementMapHelp'
 import { cellAt, sharedExtent, sharedWhiffRange, type MapPanel } from '@/domain/movementMap'
 import type { Environment } from '@/domain/types'
 import type { PitchType } from '@/domain/simulator'
