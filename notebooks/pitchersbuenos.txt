@@ -1,0 +1,16 @@
+anraku,pitcher_00198
+bauer,pitcher_00619
+aldo_montes,pitcher_00903
+zag_grotz_god,,pitcher_00841
+david_goat_reyes,pitcher_00666
+stephen_tarpley,pitcher_00617
+gerardo_reyes,god,pitcher_00258
+contreras,pitcher_00699
+mcgarity,pitcher_00853
+clifton,pitcher_00083
+jeancarlos_mejia,pitcher_00315
+o_despaigne(YUC),pitcher_00292
+arturo_lopez,pitcher_00526
+domigo_tapia,pitcher_00978
+luis_vera,pitcher_01000
+

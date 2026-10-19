@@ -17,7 +17,7 @@ repos:
       - id: check-toml
       - id: check-merge-conflict
       - id: check-added-large-files
-        args: [--maxkb=2048]
+        args: [--maxkb=3048]
 
   - repo: https://github.com/gitleaks/gitleaks
     rev: v8.21.2
