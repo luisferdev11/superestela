@@ -70,6 +70,8 @@ WEAK_EV = 71.0                       # mph: contacto débil (igual que is_weak_c
 EXCLUDE_PITCH_TYPES = ["Other", "Knuckleball", "Undefined", "Splitter", "Sweeper",
                        "OneSeamFastBall", "TwoSeamFastBall"]   # Splitter: su log-loss fue peor que la base
 MIN_ROWS_PER_TYPE = 3000
+PROJECT_K = 1.841            # exponente de la ley de escala del break (docs/09 §3.2): B_dest = B_orig * (rho_dest/rho_orig)^k
+_SHAPE_COLS = ["InducedVertBreak", "HorzBreak_m", "ivb_diff", "hb_diff", "ivb_diff_env", "hb_diff_env"]
 
 
 # ============================================================================= 1. TARGETS (clases)
@@ -289,6 +291,8 @@ DEFAULT_CFG = dict(
     fit_final=False, save_oof=False,
     pitch_types=None, pitcher_frac=1.0,
     hand_neutral=False,      # True: puntúa cada pitcheo promediando same_hand=0/1 (Stuff+ sin efecto de la lateralidad enfrentada)
+    project_to=None,         # p.ej. 0.858: además puntúa cada pitcheo "como si" se lanzara a esa densidad (traduce IVB/HB con la ley de Magnus)
+    center_by_count=False,   # Location+: resta el xRV medio de cada (tipo, conteo) para que el valor no dependa del conteo en que lanza
     cache_models=True,       # reutiliza modelos ya entrenados cuando solo cambia el valor de carrera (rv / rv_mult)
 )
 _MODEL_CACHE = {}
@@ -355,6 +359,15 @@ GRID_LOCATION = [
       product_claim="location-plus-significa-algo")
     for i, (t, f) in enumerate([("all8", "loc_only"), ("all8", "loc_count"), ("all8", "loc_count_hand"),
                                 ("all8", "loc_count_hand_dist"), ("all_cq", "loc_count_hand_dist")], 1)
+]
+
+
+# Location+ ronda 2: valor centrado por conteo (quita el efecto de en qué conteos lanza cada quien) y más árboles
+GRID_LOCATION2 = [
+    E(name="L6_chd_centrado", target="all8", rv="by_count", features="loc_count_hand_dist", center_by_count=True,
+      rounds=250, question="B-loc", save_oof=True, product_claim="location-plus-significa-algo"),
+    E(name="L7_chd_centrado_600", target="all8", rv="by_count", features="loc_count_hand_dist", center_by_count=True,
+      rounds=600, question="B-loc", save_oof=True, product_claim="location-plus-significa-algo"),
 ]
 
 
@@ -508,6 +521,7 @@ def next_season(res, min_n=80, min_sw=30):
         "next_whiff_r_persist": _corr(m["whiff_c"], m["whiff_c_next"]),
         "next_rv_r_stuff": _corr(m["stuff_c"], m["rv_c_next"]),
         "next_rv_r_persist": _corr(m["rv_c"], m["rv_c_next"]),
+        "next_stuff_r_self": _corr(m["stuff_c"], m["stuff_c_next"]),     # ¿la propia métrica se repite de un año al siguiente?
     }
 
 
@@ -565,6 +579,47 @@ def evaluate_scored(res, fold_summary, type_report):
     return out, tables
 
 
+# ----------------------------------------------------------------------------- reclutamiento: ranking por entorno y proyección
+def projection_check(res, min_n=40):
+    """¿Funciona la proyección? Pitcheos lanzados a nivel del mar, proyectados a altitud extrema, contra lo que el MISMO
+    lanzador y tipo puntúa de verdad en altitud extrema. El sesgo debería ser ~0 (sin proyectar es ~ +10)."""
+    if "stuff_proj" not in res or res["stuff_proj"].isna().all():
+        return {}
+    sea = res[res[ALT] == "No Altitude"].groupby([GROUP_COL, PT]).agg(proj=("stuff_proj", "mean"), raw=("stuff", "mean"), n=("stuff", "size"))
+    alt = res[res[ALT] == "Extreme Altitude"].groupby([GROUP_COL, PT]).agg(obs=("stuff", "mean"), n2=("stuff", "size"))
+    t = sea.join(alt, how="inner")
+    t = t[(t["n"] >= min_n) & (t["n2"] >= min_n)]
+    if len(t) < 20:
+        return {"proj_n": int(len(t))}
+    return {"proj_n": int(len(t)), "proj_r_sea_to_alt": _corr(t["proj"], t["obs"]),
+            "proj_bias": float((t["proj"] - t["obs"]).mean()), "proj_bias_sin_proyectar": float((t["raw"] - t["obs"]).mean()),
+            "proj_mae": float((t["proj"] - t["obs"]).abs().mean())}
+
+
+def ranking_entorno(res, env="Extreme Altitude", col="stuff", min_n=100, year=None):
+    """Ranking de lanzadores DENTRO de un entorno: 100 = promedio de ese entorno (por tipo de pitcheo).
+    env=None usa todos los pitcheos (útil con col='stuff_proj': todos puestos a la misma densidad).
+    Devuelve una fila por (lanzador, temporada): stuff_abs (escala global), stuff_env (100 = promedio del entorno),
+    pctl_env, n, y si hay muestra en el otro entorno, el cambio nivel del mar -> altitud (delta) y su percentil."""
+    r = res if env is None else res[res[ALT] == env]
+    if year is not None:
+        r = r[r[YEAR] == year]
+    r = r[r[col].notna()].copy()
+    g = r.groupby(PT)[col]
+    r["z_env"] = 100 + 10 * (r[col] - g.transform("mean")) / g.transform("std")
+    t = r.groupby([GROUP_COL, YEAR]).agg(n=(col, "size"), stuff_abs=(col, "mean"), stuff_env=("z_env", "mean")).reset_index()
+    t = t[t["n"] >= min_n].copy()
+    t["pctl_env"] = (100 * t["stuff_env"].rank(pct=True)).round(1)
+    if env == "Extreme Altitude" and col == "stuff":
+        sea = (res[(res[ALT] == "No Altitude") & res[col].notna()].groupby([GROUP_COL, YEAR])
+               .agg(n_sea=(col, "size"), stuff_sea=(col, "mean")).reset_index())
+        t = t.merge(sea, on=[GROUP_COL, YEAR], how="left")
+        ok = t["n_sea"] >= min_n
+        t["delta_alt_menos_mar"] = np.where(ok, t["stuff_abs"] - t["stuff_sea"], np.nan)
+        t["pctl_resistencia"] = (100 * t["delta_alt_menos_mar"].rank(pct=True)).round(1)   # alto = pierde menos
+    return t.sort_values("stuff_env", ascending=False).reset_index(drop=True).round(2)
+
+
 # ----------------------------------------------------------------------------- bootstrap por lanzador
 def _wcorr(x, y, w):
     m = ~(np.isnan(x) | np.isnan(y)) & (w > 0)
@@ -605,6 +660,7 @@ def _boot_tables(res, min_n=80, min_sw=30, min_sw_bridge=150, min_n_alt=40, min_
 _BOOT_METRICS = {
     "next_whiff_r_stuff": ("nx", "stuff_c", "whiff_c_next"),
     "next_rv_r_stuff": ("nx", "stuff_c", "rv_c_next"),
+    "next_stuff_r_self": ("nx", "stuff_c", "stuff_c_next"),
     "xrv_vs_observed_r": ("b", "xrv", "rv"),
     "xrv_next_season_rv_r": ("bt", "xrv", "rv_next"),
     "s6_r_dstuff_dwhiff": ("s6", "ds", "dw"),
@@ -774,7 +830,7 @@ def run_experiment(df, cfg, *, experiment_name="superestela/A-target/stuff-grid"
     # ---- marco de trabajo
     need = list(dict.fromkeys([GROUP_COL, GAME_COL, PT, ALT, YEAR, "event_type", "delta_run_exp", "has_rv",
                                "Balls", "Strikes", "valid_hand", "ExitSpeed", "in_strike_zone", "same_hand",
-                               "PitchUID"] + model_feats + STUFF_CORE))
+                               "PitchUID", "density_index"] + model_feats + STUFF_CORE))
     d = _decat(df[[c for c in need if c in df.columns]].copy())
     if cfg["pitcher_frac"] < 1:
         ps = np.sort(d[GROUP_COL].dropna().unique())
@@ -815,6 +871,7 @@ def run_experiment(df, cfg, *, experiment_name="superestela/A-target/stuff-grid"
         P_use = np.full((n, K), np.nan)
         x_all = np.full(n, np.nan); x_sw = np.full(n, np.nan)
         x_all_ref = np.full(n, np.nan); x_sw_ref = np.full(n, np.nan)
+        x_all_pr = np.full(n, np.nan); x_sw_pr = np.full(n, np.nan)
         used = []
         for f in range(cfg["n_folds"]):
             te = fl == f
@@ -853,6 +910,14 @@ def run_experiment(df, cfg, *, experiment_name="superestela/A-target/stuff-grid"
             if ref_ok:
                 _, xa2, xs2 = _score_hn(bst, n_used, Xte, mte, rv, sw, controls, draws, {"density_index": 1.0}, p_same)
                 x_all_ref[te], x_sw_ref[te] = xa2, xs2
+            if cfg["project_to"] and "density_index" in sub.columns:
+                dens = sub["density_index"].to_numpy(float)[te]
+                fac = np.where(np.isnan(dens), 1.0, (cfg["project_to"] / np.clip(dens, 0.70, 1.05)) ** PROJECT_K)
+                ov = {c: Xte[c].to_numpy() * fac for c in _SHAPE_COLS if c in Xte.columns}
+                if "density_index" in Xte.columns:
+                    ov["density_index"] = cfg["project_to"]
+                _, xa3, xs3 = _score_hn(bst, n_used, Xte, mte, rv, sw, controls, draws, ov, p_same)
+                x_all_pr[te], x_sw_pr[te] = xa3, xs3
             if cfg["shap_sample"] and f == 0:
                 ix = np.random.default_rng(0).choice(len(Xte), min(cfg["shap_sample"], len(Xte)), replace=False)
                 C = bst.predict(xgb.DMatrix(Xte.iloc[ix]), pred_contribs=True, iteration_range=(0, n_used))
@@ -882,7 +947,8 @@ def run_experiment(df, cfg, *, experiment_name="superestela/A-target/stuff-grid"
             cal_rows.append((pt, cn, obs[ci], pred[ci], pred[ci] - obs[ci]))
         xu = x_all if stuff_from == "all" else x_sw
         xr = x_all_ref if stuff_from == "all" else x_sw_ref
-        r = pd.DataFrame({"xrv_use": xu, "xrv_use_ref": xr, "xrv_sw": x_sw, "p_whiff_sw": pw}, index=sub.index)
+        xp_ = x_all_pr if stuff_from == "all" else x_sw_pr
+        r = pd.DataFrame({"xrv_use": xu, "xrv_use_ref": xr, "xrv_proj": xp_, "xrv_sw": x_sw, "p_whiff_sw": pw}, index=sub.index)
         res_parts.append(r)
         if verbose:
             print(f"  [{pt}] {time.time() - t0:.0f}s | logloss {ll:.4f} vs base {base:.4f} ({imp:+.2f}%) | "
@@ -891,12 +957,17 @@ def run_experiment(df, cfg, *, experiment_name="superestela/A-target/stuff-grid"
     if not res_parts:
         raise RuntimeError("Ningún tipo de pitcheo se entrenó")
     R = pd.concat(res_parts)
-    res = d.loc[R.index, [GROUP_COL, GAME_COL, PT, ALT, YEAR, "PitchUID", "fold", "is_swing", "is_whiff", "rv_real"]].join(R)
+    res = d.loc[R.index, [GROUP_COL, GAME_COL, PT, ALT, YEAR, "PitchUID", "fold", "is_swing", "is_whiff", "rv_real",
+                          "Balls", "Strikes"]].join(R)
+    if cfg["center_by_count"]:
+        for c in ("xrv_use", "xrv_use_ref"):
+            res[c] = res[c] - res.groupby([PT, "Balls", "Strikes"])[c].transform("mean")
     # Stuff+ por tipo: 100 - 10 z del xRV
     grp = res.groupby(PT)["xrv_use"]
     mu, sd = grp.transform("mean"), grp.transform("std").replace(0, np.nan)
     res["stuff"] = 100 - 10 * (res["xrv_use"] - mu) / sd
     res["stuff_ref"] = 100 - 10 * (res["xrv_use_ref"] - mu) / sd
+    res["stuff_proj"] = 100 - 10 * (res["xrv_proj"] - mu) / sd
     res["is_swing"] = res["is_swing"].astype(bool)
 
     curves_df = pd.DataFrame(curves, columns=["pitch_type", "fold", "iter", "train_mlogloss", "val_mlogloss"])
@@ -908,6 +979,7 @@ def run_experiment(df, cfg, *, experiment_name="superestela/A-target/stuff-grid"
     imp_df["gain_pct"] = 100 * imp_df["gain"] / imp_df.groupby("pitch_type")["gain"].transform("sum")
     cal_df = pd.DataFrame(cal_rows, columns=["pitch_type", "clase", "observado", "predicho", "dif"])
     metrics, tables = evaluate_scored(res, folds_df, rep_df)
+    metrics.update(projection_check(res))
     metrics["n_pitches_scored"] = int(len(res))
     metrics["runtime_s"] = round(time.time() - t_start)
     pitcher_tab = (res.groupby([GROUP_COL, YEAR, PT]).agg(n=("stuff", "size"), stuff=("stuff", "mean"),
@@ -926,7 +998,7 @@ def run_experiment(df, cfg, *, experiment_name="superestela/A-target/stuff-grid"
         pd.DataFrame(shap_rows, columns=["pitch_type", "clase", "feature", "mean_abs_shap"]).to_csv(
             os.path.join(run_dir, "shap_mean_abs.csv"), index=False)
     if cfg["save_oof"]:
-        res.drop(columns=["xrv_use_ref"]).to_parquet(os.path.join(run_dir, "oof.parquet"))
+        res.drop(columns=["xrv_use_ref", "xrv_proj"]).to_parquet(os.path.join(run_dir, "oof.parquet"))
     json.dump({**cfg, "features_resolved": feats, "controls": controls}, open(os.path.join(run_dir, "config.json"), "w"), indent=2, default=str)
     json.dump({k: (None if (isinstance(v, float) and np.isnan(v)) else v) for k, v in metrics.items()},
               open(os.path.join(run_dir, "metrics.json"), "w"), indent=2)
@@ -1023,8 +1095,8 @@ def run_grid(df, grid, *, screen=True, skip_done=True, experiment_name="superest
 
 COMPARE_COLS = ["tags.mlflow.runName", "params.target", "params.rv", "params.features", "params.params",
                 "metrics.improve_pct", "metrics.auc_whiff", "metrics.calib_slope", "metrics.calib_slope_extreme",
-                "metrics.splithalf_r_mean", "metrics.next_whiff_r_stuff", "metrics.next_rv_r_stuff",
-                "metrics.s6_r_dstuff_dwhiff", "metrics.xrv_vs_observed_r", "metrics.xrv_next_season_rv_r",
+                "metrics.splithalf_r_mean", "metrics.next_whiff_r_stuff", "metrics.next_rv_r_stuff", "metrics.next_stuff_r_self",
+                "metrics.s6_r_dstuff_dwhiff", "metrics.proj_bias", "metrics.proj_bias_sin_proyectar", "metrics.proj_r_sea_to_alt", "metrics.xrv_vs_observed_r", "metrics.xrv_next_season_rv_r",
                 "metrics.n_trees_mean", "metrics.val_minus_train_logloss", "metrics.runtime_s"]
 
 
