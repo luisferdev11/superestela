@@ -197,3 +197,38 @@ def test_the_analysis_features_follow_datas_formulas_and_stay_empty_without_inpu
     assert a.loc[0, "alt_ord"] == 2
     assert -7 < float(a["vaa_est"].iloc[0]) < -3  # a riding four-seam arrives flat-ish
     assert a.loc[1, ["vaa_est", "loc_abs_side", "alt_ord"]].isna().all()
+
+
+def test_the_distilled_model_never_lowers_stuff_plus_when_the_pitch_gets_faster(stuff_model):
+    from dataclasses import replace
+
+    from models.stuff.monotone import MonotoneStuffScorer
+
+    rng = np.random.default_rng(3)
+    features = [f for f in STUFF_FEATURES if f != "same_hand"]
+    x = pd.DataFrame(rng.normal(size=(2000, len(features))), columns=features)
+    # A target where speed helps on average but not everywhere: the constraint must win.
+    y = -0.01 * x["RelSpeed"] + 0.02 * np.sin(3 * x["RelSpeed"]) + 0.01 * x["SpinRate"]
+    params = {
+        "objective": "reg:squarederror",
+        "max_depth": 3,
+        "monotone_constraints": str(tuple(-1 if f == "RelSpeed" else 0 for f in features)),
+    }
+    boosters = tuple(
+        xgb.train(dict(params, seed=k), xgb.DMatrix(x, label=y), num_boost_round=30)
+        for k in range(3)
+    )
+    run = replace(stuff_model.run, features=tuple(features), boosters={"Slider": boosters})
+    model = MonotoneStuffScorer(
+        model_id="1.1.0+abcdef0",
+        scale=stuff_model.scale,
+        pitch_types=("Slider",),
+        run=run,
+        p_same=stuff_model.p_same,
+        clip=stuff_model.clip,
+    )
+    speeds = np.arange(-2.5, 2.5, 0.05)  # the synthetic speeds' own range, where it bends
+    draws = model.draws([_slider(release_speed=float(v)) for v in speeds], [1.0] * len(speeds))
+    assert draws.shape == (3, len(speeds))
+    assert (np.diff(draws, axis=1) >= -1e-9).all()
+    assert draws[:, -1].mean() > draws[:, 0].mean()  # and it does move

@@ -32,10 +32,9 @@ export const PlanPage = async ({
   readonly pitcherId: string
   readonly season?: number
 }) => {
-  const [{ scale, cards, density, nPitches, seasons }, { arsenals }] = await Promise.all([
-    loadDataset(),
-    loadSimulatorDataset(),
-  ])
+  const [{ scale, cards, density, nPitches, seasons, runBridge }, { arsenals }] = await Promise.all(
+    [loadDataset(), loadSimulatorDataset()],
+  )
   const own = cardsOf(cards, pitcherId)
   const card = pickSeason(own, season)
   if (card === null) notFound()
@@ -99,14 +98,16 @@ export const PlanPage = async ({
       ) : (
         <>
           <PlanDeficit plan={plan} />
-          <PlanSentences plan={plan} simulatorHref={tryHref} scale={scale} />
+          <PlanSentences plan={plan} simulatorHref={tryHref} scale={scale} runBridge={runBridge} />
         </>
       )}
       <aside className="flex gap-4 border-l-[3px] border-(--color-diablos) bg-(--color-diablos-wash) px-4.5 py-3.5">
         <span className="shrink-0 pt-0.5 text-[10px] font-bold tracking-widest text-(--color-diablos) uppercase">
           {es.plan.limitTitle}
         </span>
-        <p className="m-0 text-[12px] leading-relaxed">{es.plan.limit}</p>
+        <p className="m-0 text-[12px] leading-relaxed">
+          {runBridge === null ? es.plan.limit : es.plan.limitWithBridge(runBridge.modelId)}
+        </p>
       </aside>
     </PageShell>
   )

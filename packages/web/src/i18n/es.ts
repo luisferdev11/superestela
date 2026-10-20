@@ -391,6 +391,10 @@ export const es = {
     tryInSimulator: (pitch: string): string => `Probar el ${pitch} en el Simulador \u2192`,
     none: 'No hay plan que proponer: hace falta al menos dos pitches con score en los dos entornos.',
     limitTitle: 'L\u00edmite del modelo',
+    runs: (runs: string): string =>
+      `En carreras: ${runs} carreras permitidas por 9 entradas en altitud extrema (banda al 95%, que supone independientes los dos pitches).`,
+    limitWithBridge: (model: string): string =>
+      `Las carreras salen del modelo ${model}: cada punto de Stuff+ vale una décima de la desviación del xRV de su tipo, y cada lanzamiento movido vale el xRV de su propio tipo. Son carreras esperadas por calidad del pitch, no un pronóstico de su ERA.`,
     limit:
       'Estas ganancias est\u00e1n en puntos de Stuff+, no en carreras. El puente de Stuff+ a carreras todav\u00eda no existe: construirlo es el trabajo del modelo final, y es lo que convertir\u00eda este plan en carreras. Las bandas suponen que los pitches son muestras independientes.',
   },
@@ -576,7 +580,8 @@ export const es = {
       unreachable: 'No se pudo calcular: la API del Simulador no respondió.',
       rejected: 'La API rechazó este pitch. Revisa que los valores sean físicos.',
     },
-    noRuns: 'El Simulador no imprime carreras: el puente de Stuff+ a carreras todavía no existe.',
+    noRuns:
+      'El Simulador compara Stuff+ entre entornos; el paso a carreras está en el Plan de Desarrollo.',
     map: {
       title: 'Mapa de movimiento · pitches más y menos efectivos',
       subtitle: (pitchType: string): string =>
@@ -829,6 +834,7 @@ export const es = {
       hh: 'proyectado en altitud extrema',
       note: 'Forma proyectada con la ley de densidad, no medida. Break horizontal del lado del brazo.',
     },
-    noRuns: 'El Traductor no imprime carreras: el puente de Stuff+ a carreras todavía no existe.',
+    noRuns:
+      'El Traductor compara Stuff+; las carreras están en el Impuesto proyectado de «Varios lanzadores».',
   },
 } as const

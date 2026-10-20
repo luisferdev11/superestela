@@ -55,8 +55,12 @@ HEIGHT_RANGE_FT = (0.5, 4.5)
 CELLS = 10
 
 
-def panel(group: pd.DataFrame) -> dict | None:
-    """One environment's map and numbers, or None below the product's minimum sample."""
+def panel(group: pd.DataFrame, swings: int, whiffs: int) -> dict | None:
+    """One environment's map and numbers, or None below the product's minimum sample.
+
+    ``swings`` and ``whiffs`` come from every pitch type, as the Ficha's outcomes
+    table counts them (evidence.outcome_counts), so the two whiffs agree.
+    """
     if len(group) < MIN_PITCHES_FOR_SCORE:
         return None
     side = group.PlateLocSide.to_numpy(dtype=float)
@@ -70,12 +74,6 @@ def panel(group: pd.DataFrame) -> dict | None:
     )
     # Rows from the top down, as the screen draws them; shares of all located pitches.
     grid = counts[::-1] / max(int(located.sum()), 1)
-    swings = int(group.is_swing.fillna(False).astype(bool).sum())
-    whiffs = int(
-        (
-            group.is_swing.fillna(False).astype(bool) & group.is_whiff.fillna(False).astype(bool)
-        ).sum()
-    )
     if swings == 0:
         return None  # whiff per swing has no denominator; the screen says "pendiente"
     return {
@@ -93,8 +91,14 @@ def panel(group: pd.DataFrame) -> dict | None:
 
 def pitcher_locations(df: pd.DataFrame, keys: set[str]) -> dict:
     """Both panels for every pitcher-season the Ficha can open, keyed like arsenals.json."""
-    d = df[df.altitude_category.isin(ENVIRONMENTS) & df.AutoPitchType.isin(MAIN_PITCHES)]
-    d = d.dropna(subset=KEPT_IF_PRESENT)
+    keys_cols = ["pitcher_anon_id", "year", "altitude_category"]
+    physics = df[df.altitude_category.isin(ENVIRONMENTS)].dropna(subset=KEPT_IF_PRESENT[:8])
+    rates = (
+        physics.assign(swings=physics.is_swing.astype(int), whiffs=physics.is_whiff.astype(int))
+        .groupby(keys_cols, observed=True)[["swings", "whiffs"]]
+        .sum()
+    )
+    d = physics[physics.AutoPitchType.isin(MAIN_PITCHES)].dropna(subset=KEPT_IF_PRESENT)
     out: dict[str, dict] = {}
     for (pitcher, year, category), group in d.groupby(
         ["pitcher_anon_id", "year", "altitude_category"], observed=True
@@ -102,7 +106,10 @@ def pitcher_locations(df: pd.DataFrame, keys: set[str]) -> dict:
         key = f"{pitcher}/{int(year)}"
         if key not in keys:
             continue
-        out.setdefault(key, {"sea": None, "hh": None})[ENVIRONMENTS[str(category)]] = panel(group)
+        counts = rates.loc[(pitcher, year, category)]
+        out.setdefault(key, {"sea": None, "hh": None})[ENVIRONMENTS[str(category)]] = panel(
+            group, int(counts.swings), int(counts.whiffs)
+        )
     return dict(sorted(out.items()))
 
 

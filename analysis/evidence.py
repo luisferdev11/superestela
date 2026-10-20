@@ -825,6 +825,10 @@ def stuff_plus_from_scorer(d, model_path):
         "n_scored": int(value.notna().sum()),
         "n_unscored": int(value.isna().sum()),
     }
+    by_type = getattr(scorer.scale, "by_type", None)
+    if by_type:
+        # The bridge to runs: Stuff+ back to xRV per pitch, per type (docs/15).
+        metrics["xrv_by_type"] = {t: [float(m), float(s)] for t, (m, s) in by_type.items()}
     return value, metrics
 
 

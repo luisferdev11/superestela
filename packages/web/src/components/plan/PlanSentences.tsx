@@ -14,6 +14,7 @@ import {
   type Plan,
   type ShapeLoss,
 } from '@/domain/plan'
+import { runsOfShift, type RunBridge } from '@/domain/runBridge'
 import type { ScaleKind } from '@/domain/scale'
 import { es } from '@/i18n/es'
 
@@ -57,18 +58,29 @@ export const PlanSentences = ({
   plan,
   simulatorHref,
   scale = 'league',
+  runBridge = null,
 }: {
   readonly plan: Plan
   /** Como se define el 100: decide si el Δ es «cuanto cambia» o «cuanto cambia su lugar». */
   readonly scale?: ScaleKind
   /** Para probar en el Simulador el pitch que aguanta, si tiene de donde partir. */
   readonly simulatorHref: Route | null
+  /** Stuff+ a carreras, si el modelo lo trae; sin el, el cambio se dice solo en Stuff+. */
+  readonly runBridge?: RunBridge | null
 }) => {
   const [points, setPoints] = useState<number>(() => defaultShift(plan))
   const { degrades, holds } = plan
   const shift = shiftUsage(plan, points)
   const helps = shiftHelps(plan)
   const fromBefore = plan.contributions.find((c) => c.pitch === shift.from)?.share ?? 0
+  const runs =
+    runBridge === null
+      ? null
+      : runsOfShift(
+          runBridge,
+          shift,
+          new Map(plan.contributions.map((c) => [c.pitch, c.stuffPlusHh])),
+        )
 
   return (
     <section className="flex border border-(--color-border) bg-(--color-surface-card)">
@@ -136,6 +148,7 @@ export const PlanSentences = ({
                   formatMetric(shift.before),
                   formatMetric(shift.after),
                 )}
+                {runs === null ? null : ` ${es.plan.runs(formatSignedMetric(runs, 2))}`}
               </p>
             </>
           ) : (

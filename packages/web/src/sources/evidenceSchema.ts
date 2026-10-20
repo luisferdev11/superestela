@@ -18,6 +18,15 @@ export const evidenceSchema = z.object({
   seasons: z.object({
     pitchers_with_a_gap: z.number().int().nonnegative(),
   }),
+  // Pitches per inning in each environment, to turn runs per pitch into runs per 9.
+  run_environment: z.record(z.string(), z.unknown()),
+  // Only when a data model scored the cards (regenerate.py --model).
+  stuff_plus_model: z
+    .object({
+      model_id: z.string(),
+      xrv_by_type: z.record(z.string(), z.tuple([z.number(), z.number()])).optional(),
+    })
+    .optional(),
 })
 
 export type EvidenceRaw = z.infer<typeof evidenceSchema>
