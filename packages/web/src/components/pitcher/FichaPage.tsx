@@ -5,13 +5,14 @@ import { PitcherHeader } from './PitcherHeader'
 import { ArsenalMap } from './ArsenalMap'
 import { ArsenalTable } from './ArsenalTable'
 import { LocationMap } from './LocationMap'
+import { LocationReadingText } from './LocationReadingText'
 import { PitcherKpis } from './PitcherKpis'
 import { PitcherPhysics } from './PitcherPhysics'
 import { PitcherReading } from './PitcherReading'
 import { SeasonTable } from './SeasonTable'
 import { OutcomesTable } from './OutcomesTable'
 import { arsenalMapPitches } from '@/domain/arsenalMap'
-import { locationKey, sharedMax } from '@/domain/location'
+import { locationKey, readLocation, sharedMax } from '@/domain/location'
 import type { FichaTab } from '@/domain/navigation'
 import {
   cardsOf,
@@ -105,7 +106,11 @@ export const FichaPage = async ({
         <ArsenalTable card={card} simulatorHrefs={simulatorHrefs} />
         <section className="flex flex-col gap-1.5 border border-(--color-border) bg-(--color-surface-card) p-5">
           <h2 className="text-[15px] font-bold">{es.ficha.location.readTitle}</h2>
-          <p className="text-[13px] text-(--color-text-muted)">{es.ficha.location.readPending}</p>
+          {sea === null || hh === null ? (
+            <p className="text-[13px] text-(--color-text-muted)">{es.ficha.location.readPending}</p>
+          ) : (
+            <LocationReadingText reading={readLocation(sea, hh)} />
+          )}
         </section>
       </PageShell>
     )

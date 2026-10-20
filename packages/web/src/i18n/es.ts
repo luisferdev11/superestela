@@ -288,6 +288,18 @@ export const es = {
       pendingDetail:
         'Aqu\u00ed va d\u00f3nde pone sus lanzamientos en cada entorno, su altura media, su porcentaje en zona y su whiff.',
       readTitle: 'Lo que dice su ubicaci\u00f3n',
+      read: {
+        changes: (height: string, zone: string): string =>
+          `En altitud extrema su altura media en el plato cambia ${height} pulgadas y su porcentaje en zona ${zone} puntos (bandas al 95%).`,
+        verdict: {
+          overcompensates:
+            'Sobrecompensa la altura con la mira: apunta m\u00e1s alto y pierde la zona.',
+          higher: 'Apunta m\u00e1s alto en la altura, pero sin perder la zona.',
+          losesZone: 'Pierde la zona en la altura sin apuntar m\u00e1s alto.',
+          noChange:
+            'Su ubicaci\u00f3n no cambia de forma distinguible del ruido entre los dos entornos.',
+        },
+      },
       readPending:
         'Si sobrecompensa la altura con la mira \u2014apunta m\u00e1s alto y pierde la zona\u2014 se lee aqu\u00ed cuando llegue la ubicaci\u00f3n. Sin ella no hay lectura: no se inventa.',
       mapLabel: (env: string, n: number): string =>

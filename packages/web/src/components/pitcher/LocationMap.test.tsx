@@ -7,6 +7,7 @@ import { es } from '@/i18n/es'
 const PANEL: LocationPanel = {
   nPitches: 543,
   meanPlateHeightFt: 2.64,
+  plateHeightSdFt: 0.9,
   zoneShare: 0.424,
   whiffPerSwing: 0.264,
   grid: [

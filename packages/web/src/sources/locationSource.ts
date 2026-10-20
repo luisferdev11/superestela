@@ -10,6 +10,7 @@ const panel = z
   .object({
     n_pitches: z.number().int().nonnegative(),
     mean_plate_height_ft: z.number(),
+    plate_height_sd_ft: z.number().nonnegative(),
     zone_share: z.number().min(0).max(1),
     whiff_per_swing: z.number().min(0).max(1),
     grid: z.array(z.array(z.number().nonnegative())),
@@ -30,6 +31,7 @@ const toPanel = (raw: z.infer<typeof panel> | null) =>
     : {
         nPitches: raw.n_pitches,
         meanPlateHeightFt: raw.mean_plate_height_ft,
+        plateHeightSdFt: raw.plate_height_sd_ft,
         zoneShare: raw.zone_share,
         whiffPerSwing: raw.whiff_per_swing,
         grid: raw.grid,
