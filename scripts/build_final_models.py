@@ -51,6 +51,53 @@ CLIP_QUANTILES = (0.001, 0.999)
 RV_TOLERANCE = 1e-6
 HANDS = ("Right", "Left")
 
+# The metrics the API shows to compare runs, higher is better for every one
+# but next_rv_r_stuff, where more negative is better: delta_run_exp is the
+# batter's, so a better Stuff+ predicts fewer runs (docs/14).
+COMPARED = {
+    "calib_slope": "higher",
+    "splithalf_r_mean": "higher",
+    "next_whiff_r_stuff": "higher",
+    "next_rv_r_stuff": "lower",
+    "xrv_next_season_rv_r": "higher",
+    "s6_r_dstuff_dwhiff": "higher",
+    "auc_whiff": "higher",
+}
+STUFF_CANDIDATES = ("FINAL_v1", "FIN_B_all8", "FIN_C_allcq")
+
+
+def candidates(runs: Path, names: tuple[str, ...]) -> list[dict[str, object]]:
+    """Each run's configuration and the metrics that compare runs with different targets."""
+    out = []
+    for name in names:
+        if not (runs / name).exists():
+            continue
+        config = json.loads((runs / name / "config.json").read_text())
+        metrics = json.loads((runs / name / "metrics.json").read_text())
+        out.append(
+            {
+                "run": name,
+                "target": config["target"],
+                "features": config["features"],
+                "status": config["status"],
+                "metrics": {k: round(float(metrics[k]), 4) for k in COMPARED if k in metrics},
+            }
+        )
+    return out
+
+
+def leads(chosen: str, rivals: list[dict[str, object]]) -> list[str]:
+    """The comparison metrics on which the chosen run is the best of the candidates."""
+    best = []
+    for k, better in COMPARED.items():
+        values = {str(c["run"]): c["metrics"].get(k) for c in rivals}  # type: ignore[union-attr]
+        if any(v is None for v in values.values()):
+            continue
+        pick = (max if better == "higher" else min)(values, key=lambda r: values[r])
+        if pick == chosen:
+            best.append(k)
+    return best
+
 
 def prepare(raw: pd.DataFrame, run_values: pd.DataFrame) -> pd.DataFrame:
     """Return the canonical training frame with outcomes, run values and arm-side shapes."""
@@ -130,8 +177,24 @@ def build_stuff(
         kind="league",
         by_type=by_type,
     )
+    rivals = candidates(path.parent, STUFF_CANDIDATES)
+    provenance = {
+        "run": run.name,
+        "data_commit": sha,
+        "selection": (
+            "Elegido por el equipo de datos el 19 de octubre como modelo principal. Entre los "
+            f"candidatos es el mejor en: {', '.join(leads(run.name, rivals))}."
+        ),
+        "candidates": rivals,
+    }
     model = stuff.FinalStuffScorer(
-        model_id=f"1.0.0+{sha}", scale=scale, pitch_types=types, run=run, p_same=p_same, clip=clip
+        model_id=f"1.0.0+{sha}",
+        scale=scale,
+        pitch_types=types,
+        run=run,
+        p_same=p_same,
+        clip=clip,
+        provenance=provenance,
     )
     return model, {
         "run": run.name,
@@ -166,6 +229,16 @@ def build_location(
             "100 = la ubicación promedio de su tipo en la liga (xRV del modelo final L3 sobre "
             "los lanzamientos de entrenamiento); 10 puntos = una desviación estándar"
         ),
+        provenance={
+            "run": run.name,
+            "data_commit": sha,
+            "selection": (
+                "Elegido por el equipo de datos el 19 de octubre (el único Location+ con modelos "
+                "guardados). Describe cómo ubicó un lanzador; no proyecta: split-half 0.53 y "
+                "sin correlación con las carreras de la temporada siguiente."
+            ),
+            "candidates": candidates(path.parent, (run.name,)),
+        },
     )
     rows = frame[frame["base_ok"] & frame["pitch_type"].isin(types)]
     xrv = pd.Series(model.xrv(rows).mean(axis=0), index=rows.index)

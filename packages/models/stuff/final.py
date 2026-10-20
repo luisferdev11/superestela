@@ -27,7 +27,7 @@ the score as if it had a band (CONVENTIONS.md 8.2).
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 import numpy as np
 import numpy.typing as npt
@@ -63,6 +63,8 @@ class FinalStuffScorer:
     # Per type, the training (low, high) quantiles of each arsenal feature.
     clip: Mapping[str, Mapping[str, tuple[float, float]]]
     uses_arsenal: bool = True
+    # Which run, why it was chosen, and its rivals' metrics (the API returns it).
+    provenance: Mapping[str, object] = field(default_factory=dict)
 
     @property
     def has_bands(self) -> bool:

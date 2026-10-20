@@ -13,12 +13,14 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Annotated, Literal
 
+import joblib
 from fastapi import Depends, FastAPI
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
 from api.arsenal_batch import Band, score_pitchers
 from api.arsenal_file import ArsenalFileError, summarize_arsenal
+from api.pitch_scores import MissingColumnsError, score_pitches
 from api.schemas import (
     ArsenalFileProblem,
     ArsenalFileRequest,
@@ -28,6 +30,9 @@ from api.schemas import (
     ArsenalScoresResponse,
     Metric,
     PitcherScoreOut,
+    PitchScoresProblem,
+    PitchScoresRequest,
+    PitchScoresResponse,
     Rate,
     SimulateRequest,
     SimulateResponse,
@@ -39,6 +44,7 @@ from api.schemas import (
 from api.simulator import SimulatorService, load_service
 from contracts.schemas import MIN_PITCHES_FOR_SCORE
 from core.translate import PitchShape, break_scaling_factor, translate
+from models.location.final import FinalLocationScorer
 
 REPO = Path(__file__).resolve().parents[2]
 
@@ -219,3 +225,46 @@ def score_arsenal_file(
         has_swings=result.has_swings,
         tax_validation=validation,
     )
+
+
+@lru_cache(maxsize=1)
+def location_scorer() -> FinalLocationScorer | None:
+    """Load data's final Location+ once per process, or None when it is not there."""
+    path = os.environ.get(
+        "SUPERESTELA_LOCATION_MODEL", str(REPO / "artifacts" / "location_plus_l3.joblib")
+    )
+    if not os.path.exists(path):
+        return None
+    model = joblib.load(path)
+    if not isinstance(model, FinalLocationScorer):
+        raise TypeError(f"{path} does not hold a FinalLocationScorer")
+    return model
+
+
+@app.post(
+    "/api/v1/pitches/score",
+    response_model=PitchScoresResponse,
+    response_model_by_alias=True,
+    responses={422: {"model": PitchScoresProblem}},
+)
+def score_pitch_rows(
+    req: PitchScoresRequest,
+    service: Annotated[SimulatorService, Depends(simulator_service)],
+    location: Annotated[FinalLocationScorer | None, Depends(location_scorer)],
+) -> PitchScoresResponse | JSONResponse:
+    """Stuff+ and Location+ of each pitch, each model on its own inputs (docs/14).
+
+    The Stuff+ model is the one the Simulator serves (``SUPERESTELA_MODEL``).
+    Unlike the Simulator, the score comes back even before the model has
+    passed its gates: this endpoint is for checking a model, and every
+    answer names the model and run behind it.
+    """
+    try:
+        return score_pitches(req, service.scorer, location)
+    except MissingColumnsError as exc:
+        problem = PitchScoresProblem(
+            error="missing_columns",
+            model="stuff" if exc.model == "stuff" else "location",
+            columns=exc.columns,
+        )
+        return JSONResponse(status_code=422, content=problem.model_dump(by_alias=True))

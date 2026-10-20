@@ -7,7 +7,6 @@ hand-neutral mix, run values by count, the per-type scale, and that nothing
 missing is scored as a zero.
 """
 
-import json
 from pathlib import Path
 
 import joblib
@@ -19,58 +18,20 @@ import xgboost as xgb
 from models import outcomes
 from models.location import final as location
 from models.runs import read_run
-from models.scoring import PitchInput, ScaleSpec, Scorer, implied_xrv
+from models.scoring import PitchInput, Scorer, implied_xrv
 from models.stuff import final as stuff
-
-STUFF_FEATURES = [
-    "RelSpeed",
-    "SpinRate",
-    "SpinAxis_sin",
-    "SpinAxis_cos",
-    "InducedVertBreak",
-    "HorzBreak_m",
-    "RelHeight",
-    "RelSide_m",
-    "Extension",
-    "same_hand",
-    "speed_diff_env",
-    "ivb_diff_env",
-    "hb_diff_env",
-]
-LOCATION_FEATURES = ["PlateLocHeight", "PlateLocSide", "Balls", "Strikes", "same_hand"]
-
-
-def _run(path: Path, features: list[str], classes: tuple[str, ...], folds: int = 0) -> Path:
-    rng = np.random.default_rng(1)
-    (path / "models" / "folds").mkdir(parents=True)
-    (path / "config.json").write_text(
-        json.dumps({"name": path.name, "features_resolved": features})
-    )
-    rv = pd.Series(np.linspace(-0.2, 1.0, len(classes)), index=list(classes), name="rv_neutral")
-    rv.to_csv(path / "rv_values.csv")
-    for k in range(max(folds, 1)):
-        x = pd.DataFrame(rng.normal(size=(300, len(features))), columns=features)
-        y = rng.integers(0, len(classes), 300)
-        params = {"objective": "multi:softprob", "num_class": len(classes), "max_depth": 2}
-        b = xgb.train(params, xgb.DMatrix(x, label=y), num_boost_round=5)
-        target = (
-            path / "models" / (f"folds/stuff_Slider_f{k}.json" if folds else "stuff_Slider.json")
-        )
-        b.save_model(str(target))
-    return path
+from models.tests.data_runs import (
+    LOCATION_FEATURES,
+    STUFF_FEATURES,
+    toy_location,
+    toy_stuff,
+    write_run,
+)
 
 
 @pytest.fixture
 def stuff_model(tmp_path: Path) -> stuff.FinalStuffScorer:
-    run = read_run(str(_run(tmp_path / "FINAL", STUFF_FEATURES, stuff.CLASSES)), stuff.CLASSES)
-    return stuff.FinalStuffScorer(
-        model_id="1.0.0+abcdef0",
-        scale=ScaleSpec("toy", 0.0, 0.05, by_type={"Slider": (0.01, 0.02)}),
-        pitch_types=("Slider",),
-        run=run,
-        p_same={"Slider": 0.6},
-        clip={"Slider": {c: (-5.0, 5.0) for c in stuff.DIFF_FEATURES.values()}},
-    )
+    return toy_stuff(tmp_path / "FINAL")
 
 
 def _slider(**changes: object) -> PitchInput:
@@ -132,31 +93,21 @@ def test_one_booster_is_one_draw_and_no_band(stuff_model):
 
 
 def test_fold_boosters_are_the_draws(tmp_path):
-    run = read_run(str(_run(tmp_path / "F", STUFF_FEATURES, stuff.CLASSES, folds=5)), stuff.CLASSES)
+    run = read_run(
+        str(write_run(tmp_path / "F", STUFF_FEATURES, stuff.CLASSES, folds=5)), stuff.CLASSES
+    )
     assert run.has_folds and len(run.boosters["Slider"]) == 5
 
 
 def test_a_run_whose_boosters_disagree_with_its_classes_is_refused(tmp_path):
-    path = _run(tmp_path / "BAD", STUFF_FEATURES, stuff.CLASSES)
+    path = write_run(tmp_path / "BAD", STUFF_FEATURES, stuff.CLASSES)
     with pytest.raises(ValueError, match="rv_values"):
         read_run(str(path), location.CLASSES)
 
 
 @pytest.fixture
 def location_model(tmp_path: Path) -> location.FinalLocationScorer:
-    run = read_run(
-        str(_run(tmp_path / "L3", LOCATION_FEATURES, location.CLASSES)), location.CLASSES
-    )
-    by_count = np.tile(np.asarray(run.rv_neutral)[:, None, None], (1, 4, 3))
-    by_count[0, 3, :] = 0.5  # a ball at three balls is worth more
-    return location.FinalLocationScorer(
-        model_id="1.0.0+abcdef0",
-        pitch_types=("Slider",),
-        run=run,
-        rv_by_count=by_count,
-        scale={"Slider": (0.0, 0.05)},
-        scale_description="toy",
-    )
+    return toy_location(tmp_path / "L3")
 
 
 def _located(**changes: object) -> pd.DataFrame:
@@ -222,3 +173,27 @@ def test_the_outcome_port_classifies_as_data_did():
     rv = outcomes.delta_run_exp(raw, events, table)
     assert rv.iloc[3] == 0.3  # a ball at three balls is a walk
     assert rv.iloc[0] == -0.2
+
+
+def test_the_analysis_features_follow_datas_formulas_and_stay_empty_without_inputs():
+    from models.features.analysis import analysis_features
+
+    frame = pd.DataFrame(
+        {
+            "release_speed": [94.0, None],
+            "ivb": [16.0, 2.0],
+            "horizontal_break": [8.0, -5.0],
+            "spin_rate": [2400.0, 2500.0],
+            "extension": [6.3, 6.0],
+            "release_height": [5.9, 5.8],
+            "plate_side": [0.3, None],
+            "plate_height": [2.9, 1.9],
+            "environment": ["Extreme Altitude", None],
+        }
+    )
+    a = analysis_features(frame)
+    assert a.loc[0, "total_break"] == pytest.approx((16**2 + 8**2) ** 0.5)
+    assert a.loc[0, "loc_dist_center"] == pytest.approx((0.3**2 + 0.4**2) ** 0.5)
+    assert a.loc[0, "alt_ord"] == 2
+    assert -7 < float(a["vaa_est"].iloc[0]) < -3  # a riding four-seam arrives flat-ish
+    assert a.loc[1, ["vaa_est", "loc_abs_side", "alt_ord"]].isna().all()

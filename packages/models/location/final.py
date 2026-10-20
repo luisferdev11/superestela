@@ -26,7 +26,7 @@ located; it does not project him.
 from __future__ import annotations
 
 from collections.abc import Mapping
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 import numpy as np
 import numpy.typing as npt
@@ -64,6 +64,8 @@ class FinalLocationScorer:
     # Per type (mean, sd) of the xRV that sets 100 and one sd.
     scale: Mapping[str, tuple[float, float]]
     scale_description: str
+    # Which run, why it was chosen, and its metrics (the API returns it).
+    provenance: Mapping[str, object] = field(default_factory=dict)
 
     @property
     def has_bands(self) -> bool:
