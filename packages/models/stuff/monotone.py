@@ -22,7 +22,7 @@ import numpy.typing as npt
 import pandas as pd
 import xgboost as xgb
 
-from models.stuff.final import DIFF_FEATURES, FinalStuffScorer
+from models.stuff.final import FinalStuffScorer
 
 FloatArray = npt.NDArray[np.float64]
 
@@ -45,9 +45,6 @@ class MonotoneStuffScorer(FinalStuffScorer):
                 model was not trained on.
         """
         out = np.full((len(next(iter(self.run.boosters.values()))), len(frame)), np.nan)
-        missing = frame[list(DIFF_FEATURES)].isna().any(axis=1)
-        if missing.any():
-            raise ValueError(f"{int(missing.sum())} pitches have no fastball differentials")
         positions = np.arange(len(frame))
         for pitch_type, idx in frame.groupby("pitch_type", sort=False).indices.items():
             if pitch_type not in self.pitch_types:

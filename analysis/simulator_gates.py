@@ -457,7 +457,9 @@ def main():
         # The expected run value the model implies, inverted from its own scale.
         scored = frame.pitch_type.isin(model.pitch_types)
         if model.uses_arsenal:
-            scored &= frame[["speed_diff", "ivb_diff", "hb_diff"]].notna().all(axis=1)
+            # Every row here has its arsenal key; a NaN gap is a reference
+            # without a measure, which the model reads as missing (docs/15).
+            scored &= frame[["pitcher_id", "year", "environment"]].notna().all(axis=1)
             frame = frame[scored | ~frame.pitch_type.isin(model.pitch_types)]
             scored = scored[frame.index]
         value = stuff_plus_of(model, frame[scored])[0]

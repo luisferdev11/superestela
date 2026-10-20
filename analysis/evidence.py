@@ -814,7 +814,10 @@ def stuff_plus_from_scorer(d, model_path):
     )
     if scorer.uses_arsenal:
         # A pitch whose arsenal is unknown is left unscored, never a zero gap.
-        frame = frame.join(d.loc[ok, list(DIFF_COLUMNS)]).dropna(subset=list(DIFF_COLUMNS))
+        # A known arsenal whose reference lacks a measure keeps its NaN: the
+        # model takes it as missing, as in training (docs/15).
+        known = d.loc[ok, ["pitcher_anon_id", "year", "altitude_category"]].notna().all(axis=1)
+        frame = frame.join(d.loc[ok, list(DIFF_COLUMNS)])[known]
         ok = ok & d.index.isin(frame.index)
     value = pd.Series(np.nan, index=d.index)
     value[ok] = stuff_plus_of(scorer, frame)[0]

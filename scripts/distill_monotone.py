@@ -105,7 +105,9 @@ def main() -> None:
     oof = pd.read_parquet(TEACHER_RUN / "retrained" / "FINAL_v1_folds" / "oof.parquet")
     frame = prepare(pd.read_parquet(DATA), pd.read_csv(RUNS / "runValues.csv"))
     rows = frame.drop_duplicates("pitch_id").set_index("pitch_id").loc[oof["PitchUID"]]
-    valid = rows[["speed_diff", "ivb_diff", "hb_diff"]].notna().all(axis=1).to_numpy()
+    # A NaN gap is a known arsenal whose reference lacks a measure: the teacher
+    # reads it as missing, and the student learns to do the same.
+    valid = rows[["pitcher_anon_id", "year", "environment"]].notna().all(axis=1).to_numpy()
     features = [f for f in teacher.run.features if f != "same_hand"]
     params = dict(
         nb.PARAM_SETS["base"],

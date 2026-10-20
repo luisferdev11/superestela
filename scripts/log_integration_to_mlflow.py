@@ -74,7 +74,10 @@ def main() -> None:
     for kind, file, claim in (
         ("stuff", "stuff_plus_final_v1", "stuff-plus-significa-algo"),
         ("location", "location_plus_l3", "location-plus-significa-algo"),
+        ("monotone", "stuff_plus_final_v1_monotone", "stuff-plus-significa-algo"),
     ):
+        if not (ARTIFACTS / f"{file}.joblib").exists() or build.get(kind) is None:
+            continue
         model = joblib.load(ARTIFACTS / f"{file}.joblib")
         record = build[kind]
         with mlflow.start_run(run_name=f"product-{file}"):
@@ -98,22 +101,33 @@ def main() -> None:
                     "boosters_per_type": len(next(iter(model.run.boosters.values()))),
                 }
             )
-            checks = verify[kind]
-            mlflow.log_metrics(
-                {
-                    "rv_gap_vs_data": float(record["rv_gap"]),
-                    "pitcher_table_r": float(checks["r"]),
-                    "pitcher_table_r_n100": float(checks["r_n100"]),
-                    "pitcher_table_mean_abs_gap_n100": float(checks["mean_abs_gap_n100"]),
-                    "rows_scored": float(checks["rows_scored"]),
-                    **{
-                        f"parity_{k}": float(v)
-                        for k, v in verify["parity"].items()
-                        if kind == "stuff"
-                    },
-                }
-            )
-            if kind == "stuff":
+            if kind == "monotone":
+                # The served model: its agreement with FINAL_v1 and data's evaluation of both.
+                m = record["metrics"]
+                mlflow.log_metrics(
+                    {
+                        "agreement_pitcher_season_r_n100": m["agreement_pitcher_season_r_n100"],
+                        **{f"student_{k}": v for k, v in m["student"].items() if v is not None},
+                        **{f"teacher_{k}": v for k, v in m["teacher"].items() if v is not None},
+                    }
+                )
+            checks = verify.get(kind)
+            if checks is not None:
+                mlflow.log_metrics(
+                    {
+                        "rv_gap_vs_data": float(record.get("rv_gap", 0.0)),
+                        "pitcher_table_r": float(checks["r"]),
+                        "pitcher_table_r_n100": float(checks["r_n100"]),
+                        "pitcher_table_mean_abs_gap_n100": float(checks["mean_abs_gap_n100"]),
+                        "rows_scored": float(checks["rows_scored"]),
+                        **{
+                            f"parity_{k}": float(v)
+                            for k, v in verify["parity"].items()
+                            if kind == "stuff"
+                        },
+                    }
+                )
+            if kind in ("stuff", "monotone"):
                 verdict_path = ARTIFACTS / f"{file}.validation.json"
                 if verdict_path.exists():
                     verdict = json.loads(verdict_path.read_text())

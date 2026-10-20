@@ -205,7 +205,6 @@ def score_pitchers(
     needed = list(NUMERIC)
     if scorer is not None and scorer.uses_arsenal:
         df = _with_differentials(df)
-        needed += ["speed_diff", "ivb_diff", "hb_diff"]
     types = scorer.pitch_types if scorer is not None else tuple(df["pitch_type"].dropna().unique())
     supported = df["pitch_type"].isin(types) & df["pitcher_hand"].isin(["Right", "Left"])
     complete = df[needed].notna().all(axis=1) & df[PITCHER].notna()

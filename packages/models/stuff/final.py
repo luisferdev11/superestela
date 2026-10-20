@@ -108,9 +108,6 @@ class FinalStuffScorer:
                 model was not trained on.
         """
         out = np.full((len(next(iter(self.run.boosters.values()))), len(frame)), np.nan)
-        missing = frame[list(DIFF_FEATURES)].isna().any(axis=1)
-        if missing.any():
-            raise ValueError(f"{int(missing.sum())} pitches have no fastball differentials")
         rv = np.asarray(self.run.rv_neutral)
         positions = np.arange(len(frame))
         for pitch_type, idx in frame.groupby("pitch_type", sort=False).indices.items():
@@ -136,6 +133,11 @@ class FinalStuffScorer:
     def draws(self, pitches: Sequence[PitchInput], density_indices: Sequence[float]) -> FloatArray:
         """Return one row of Stuff+ per booster. The density index is not a feature."""
         del density_indices  # FINAL_v1 reads altitude only through the shape
+        if any(getattr(p, c) is None for p in pitches for c in DIFF_FEATURES):
+            # No arsenal at all: refused, never read as a zero gap. (A NaN gap is
+            # a known arsenal whose reference lacks a measure: the trees take
+            # it as missing, as in training.)
+            raise ValueError("a pitch without its fastball differentials")
         frame = pd.DataFrame([p.__dict__ for p in pitches])
         return self.stuff_plus(frame)
 

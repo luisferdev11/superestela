@@ -185,8 +185,12 @@ def score_frame(
     status = pd.Series(SCORED, index=frame.index, dtype=object)
     status[rho.isna()] = MISSING_DENSITY
     status[~frame["pitcher_hand"].isin(["Right", "Left"])] = UNKNOWN_HAND
-    numeric = list(NUMERIC) + (list(DIFF_COLUMNS) if scorer.uses_arsenal else [])
-    status[frame[numeric].isna().any(axis=1)] = MISSING_FEATURES
+    missing = frame[list(NUMERIC)].isna().any(axis=1)
+    if scorer.uses_arsenal:
+        # No arsenal to measure against; a NaN gap with a known arsenal is the
+        # model's missing value, as in training (docs/15).
+        missing |= frame[list(ARSENAL_KEY)].isna().any(axis=1)
+    status[missing] = MISSING_FEATURES
     status[~frame["pitch_type"].isin(scorer.pitch_types)] = UNSUPPORTED_PITCH_TYPE
 
     # Several problems on one row report the first of: unsupported type,

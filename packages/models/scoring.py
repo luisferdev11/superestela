@@ -47,7 +47,8 @@ class PitchInput:
     release_side: float  # feet, arm side positive
     # Against the pitcher's primary fastball, for a model with ``uses_arsenal``
     # (models.features.arsenal). None when the caller had no arsenal: such a
-    # model must refuse the pitch, never read the gap as zero.
+    # model must refuse the pitch, never read the gap as zero. NaN when the
+    # arsenal is known but its reference lacks the measure: missing, as in training.
     speed_diff: float | None = None  # mph
     ivb_diff: float | None = None  # inches
     hb_diff: float | None = None  # inches, arm side
@@ -201,10 +202,15 @@ def load_scorer(path: str) -> Scorer:
 DIFF_FIELDS = ("speed_diff", "ivb_diff", "hb_diff")
 
 
-def _optional(value: object) -> float | None:
-    """A frame's NaN as the contract's None: a missing gap is not a zero gap."""
-    number = float(value)  # type: ignore[arg-type]
-    return None if np.isnan(number) else number
+def _optional(value: object) -> float:
+    """A gap as the model reads it.
+
+    A NaN here is an arsenal that is known but whose reference pitch lacks the
+    measure (one four-seam without IVB): the model takes it as missing, as it
+    did in training. A pitch with no arsenal at all never reaches this point
+    with a value: the caller leaves the field out and the model refuses it.
+    """
+    return float(value)  # type: ignore[arg-type]
 
 
 # Pitches per call to the model: bounds the memory of the draws, not the result.
