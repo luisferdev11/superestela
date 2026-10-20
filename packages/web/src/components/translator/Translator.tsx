@@ -99,6 +99,13 @@ export const Translator = ({
     setOrigin(summary.origin ?? 'sea')
     setLoads((n) => n + 1)
   }
+  const clear = (): void => {
+    setSource(null)
+    setEdited(true)
+    setRows([])
+    setOrigin('sea')
+    setLoads((n) => n + 1)
+  }
   const edit = (next: TranslatorRow[], remount = false): void => {
     setRows(next)
     setEdited(true)
@@ -166,7 +173,7 @@ export const Translator = ({
 
   return (
     <div className="flex flex-col gap-4">
-      <FileUpload onLoad={loadFile} />
+      <FileUpload onLoad={loadFile} onClear={clear} />
 
       <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
         {example === null ? null : (

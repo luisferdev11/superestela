@@ -241,7 +241,7 @@ describe('el Traductor', () => {
     vi.mocked(fetch).mockImplementation((url) =>
       Promise.resolve(
         url === '/api/arsenals/summarize'
-          ? new Response(JSON.stringify({ error: 'missing_columns', columns: ['spin_rate'] }), {
+          ? new Response(JSON.stringify({ error: 'missing_columns', columns: ['SpinRate'] }), {
               status: 422,
             })
           : new Response(JSON.stringify(response(114, 94)), { status: 200 }),
@@ -256,7 +256,67 @@ describe('el Traductor', () => {
     })
     await settle()
     expect(
-      screen.getByText(`${es.translator.upload.problems.missing_columns} spin_rate.`),
+      screen.getByText(`${es.translator.upload.problems.missing_columns} SpinRate.`),
     ).toBeInTheDocument()
+    // The example's rows do not stay under the error.
+    expect(screen.queryByLabelText(`Four-Seam · ${es.sim.controls.releaseSpeed}`)).toBeNull()
+  })
+
+  const uploadFile = async (text: string, name: string) => {
+    await act(async () => {
+      fireEvent.change(screen.getByLabelText(es.translator.upload.label), {
+        target: { files: [new File([text], name)] },
+      })
+      await vi.advanceTimersByTimeAsync(0)
+    })
+    await settle()
+  }
+
+  it('un archivo vacio dice que no trae lanzamientos, no que la API no contesta', async () => {
+    renderTranslator()
+    await settle()
+    const asked = vi.mocked(fetch).mock.calls.length
+    await uploadFile('', 'vacio.csv')
+    expect(screen.getByText(es.translator.upload.problems.empty)).toBeInTheDocument()
+    expect(vi.mocked(fetch).mock.calls).toHaveLength(asked)
+  })
+
+  it('un rechazo de la API que no es del archivo se lee como archivo ilegible', async () => {
+    vi.mocked(fetch).mockImplementation(() =>
+      Promise.resolve(new Response(JSON.stringify({ detail: [] }), { status: 422 })),
+    )
+    renderTranslator()
+    await uploadFile('x', 'raro.csv')
+    expect(screen.getByText(es.translator.upload.problems.unreadable)).toBeInTheDocument()
+  })
+
+  it('un archivo medido en altitud extrema avisa y no se traduce', async () => {
+    renderTranslator()
+    await settle()
+    vi.mocked(fetch).mockImplementation((url) =>
+      Promise.resolve(
+        new Response(
+          JSON.stringify(
+            url === '/api/arsenals/summarize'
+              ? { ...SUMMARY, origin: null, isMeasuredAtExtreme: true }
+              : response(114, 94),
+          ),
+          { status: 200 },
+        ),
+      ),
+    )
+    await uploadFile('csv', 'altura.csv')
+    await settle()
+    expect(screen.getByText(es.translator.upload.extreme)).toBeInTheDocument()
+    expect(screen.queryByText('97.0 ± 6.2')).not.toBeInTheDocument()
+    expect(screen.queryByLabelText(`Sinker · ${es.sim.controls.releaseSpeed}`)).toBeNull()
+  })
+
+  it('el selector de archivo habla espanol y muestra el nombre elegido', async () => {
+    renderTranslator()
+    expect(screen.getByText(es.translator.upload.noFile)).toBeInTheDocument()
+    expect(screen.getByText(es.translator.upload.choose)).toBeInTheDocument()
+    await uploadFile('csv', 'agente.csv')
+    expect(screen.getAllByText('agente.csv').length).toBeGreaterThan(0)
   })
 })

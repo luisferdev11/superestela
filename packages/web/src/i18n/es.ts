@@ -698,6 +698,8 @@ export const es = {
       label: 'Subir su export de TrackMan',
       hint: 'Un CSV con un renglón por lanzamiento y las columnas de TrackMan: AutoPitchType, PitcherThrows, RelSpeed, InducedVertBreak, HorzBreak, SpinRate, SpinAxis, Extension, RelHeight y RelSide. Si trae altitude_category, de ahí sale dónde se midió.',
       manual: 'O captura el arsenal a mano en la tabla.',
+      choose: 'Elegir archivo',
+      noFile: 'Ning\u00fan archivo elegido',
       reading: 'Leyendo el archivo…',
       loaded: (name: string, used: string, types: string): string =>
         `${name}: ${used} lanzamientos en ${types} tipos de pitch.`,
@@ -707,7 +709,7 @@ export const es = {
       omittedTypes: (types: string): string =>
         `Solo caben seis tipos; quedaron fuera los menos usados: ${types}.`,
       extreme:
-        'Este archivo ya se midió en altitud extrema: el Traductor es para quien no ha lanzado ahí. Su Ficha lo mide directamente.',
+        'Este archivo ya se midió en altitud extrema: el Traductor es para quien no ha lanzado ahí, así que no se traduce. Su Ficha lo mide directamente.',
       problems: {
         unreadable: 'El archivo no se pudo leer como CSV.',
         empty: 'El archivo no trae lanzamientos.',

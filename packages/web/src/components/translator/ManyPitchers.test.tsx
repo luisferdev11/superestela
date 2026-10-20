@@ -88,6 +88,18 @@ describe('el Traductor con varios lanzadores', () => {
     expect(screen.getAllByLabelText(formatMetric({ value: 25, se: 5 }))).toHaveLength(3)
   })
 
+  it('tras un archivo que falla, la tabla anterior se va y el motivo es el del archivo', async () => {
+    render(<ManyPitchers />)
+    await upload()
+    expect(document.querySelectorAll('tbody tr')).toHaveLength(3)
+    vi.mocked(fetch).mockImplementation(() =>
+      Promise.resolve(new Response(JSON.stringify({ detail: [] }), { status: 422 })),
+    )
+    await upload()
+    expect(document.querySelectorAll('tbody tr')).toHaveLength(0)
+    expect(screen.getByText(es.translator.upload.problems.unreadable)).toBeInTheDocument()
+  })
+
   it('filtra por mano', async () => {
     render(<ManyPitchers />)
     await upload()
