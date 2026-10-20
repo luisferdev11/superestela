@@ -8,7 +8,7 @@ import { LARGE_DELTA, isStaleSeason } from '@/domain/emphasis'
 import { formatNumber, formatSigned } from '@/domain/format'
 import { fichaHref } from '@/domain/pitcher'
 import { focusOf } from '@/domain/ranking'
-import type { PitcherSeason } from '@/domain/types'
+import type { RadarCard } from '@/domain/cohort'
 import { es } from '@/i18n/es'
 
 // Base sin alineacion: con `text-right` en la base, un `text-left` agregado
@@ -26,7 +26,7 @@ export const RadarRow = ({
   latestSeason,
   pitch = null,
 }: {
-  readonly card: PitcherSeason
+  readonly card: RadarCard
   readonly latestSeason: number
   readonly pitch?: string | null
 }) => {
@@ -70,10 +70,10 @@ export const RadarRow = ({
         )}
       </td>
       <td className={cell}>
-        <RateValue metric={card.outcomes.kMinusBbPct} compact />
+        <RateValue metric={card.ratesHh.kMinusBbPct} compact />
       </td>
       <td className={cell}>
-        <RateValue metric={card.outcomes.whiffPerSwing} compact />
+        <RateValue metric={card.ratesHh.whiffPerSwing} compact />
       </td>
       <td className={cellLeft}>
         <RoleChip role={card.role} />

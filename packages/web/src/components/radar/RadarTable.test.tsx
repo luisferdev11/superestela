@@ -1,11 +1,12 @@
 import { readFile } from 'node:fs/promises'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { RadarTable } from './RadarTable'
 import { mockupDataPath } from '@/sources/paths'
 import { mockupDataSchema } from '@/sources/schema'
 import { toPitcherSeason, toSeasonEntry } from '@/sources/adapter'
 import { selectRadarCohort, summarize } from '@/domain/cohort'
+import { formatMetric } from '@/domain/format'
 import { es } from '@/i18n/es'
 
 /**
@@ -78,6 +79,22 @@ describe('la tabla del Radar', { timeout: 30_000 }, () => {
     expect(screen.queryByText(es.filterBar.results(cards.length, cards.length))).toBeNull()
     fireEvent.click(screen.getByRole('button', { name: es.filterBar.clear }))
     expect(screen.getByText(es.filterBar.results(cards.length, cards.length))).toBeInTheDocument()
+  })
+
+  it('las tasas de una fila son las de la Ficha en altitud extrema, con su banda', async () => {
+    const cards = await renderTable()
+    const thin = cards.find(
+      (c) => c.ratesHh.kMinusBbPct === null && c.ratesHh.whiffPerSwing !== null,
+    )
+    if (thin?.ratesHh.whiffPerSwing == null) throw new Error('falta un caso con muestra corta')
+    fireEvent.change(screen.getByLabelText(es.filterBar.search), {
+      target: { value: thin.pitcherId },
+    })
+    const row = document.querySelector('tbody tr')
+    expect(row?.textContent).toContain(es.insufficientSampleShort)
+    expect(
+      within(row as HTMLElement).getByLabelText(formatMetric(thin.ratesHh.whiffPerSwing)),
+    ).toBeInTheDocument()
   })
 
   it('explica el Impuesto de Altitud en pantalla', async () => {

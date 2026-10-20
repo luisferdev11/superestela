@@ -11,12 +11,11 @@ import {
   NO_FILTERS,
   type RadarFilters as Filters,
 } from '@/domain/filters'
-import { summarize, type CohortSummary } from '@/domain/cohort'
+import { summarize, type CohortSummary, type RadarCard } from '@/domain/cohort'
 import { DEFAULT_RADAR_SORT, firstDirection, sortRadar, type RadarSortKey } from '@/domain/ranking'
 import { nextSort, type SortState } from '@/domain/tableSort'
 import { RadarGuide } from './RadarGuide'
 import { TrapLegend } from '@/components/chip/TrapFlag'
-import type { PitcherSeason } from '@/domain/types'
 import type { ScaleKind } from '@/domain/scale'
 import { es } from '@/i18n/es'
 
@@ -65,7 +64,7 @@ export const RadarTable = ({
   cohortSummary,
   scale = 'league',
 }: {
-  readonly cards: readonly PitcherSeason[]
+  readonly cards: readonly RadarCard[]
   readonly latestSeason: number
   readonly cohortSummary: CohortSummary
   /** Como se define el 100 (`domain/scale.ts`): cambia la ayuda del Δ y la guia. */

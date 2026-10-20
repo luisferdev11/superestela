@@ -70,7 +70,9 @@ export const toPitcherSeason = (raw: PitcherCardRaw): PitcherSeason => ({
   altitudeTaxMeasured: toMetric(raw.altitude_tax_runs_per_9, raw.altitude_tax_se),
   meanIvbLossIn: raw.mean_ivb_loss_in,
   altitudeTrap: raw.altitude_trap,
-  outcomes: toOutcomes(raw.outcomes),
+  // `raw.outcomes` is the whole season, middle altitude included: a rate no
+  // screen shows. The Radar and the Ficha read the per-environment rates of
+  // `pitcher_seasons`, so the same pitcher shows the same number on both.
   arsenal: raw.arsenal.map(toArsenalEntry),
 })
 

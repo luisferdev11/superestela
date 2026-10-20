@@ -141,8 +141,8 @@ export const es = {
     'Calidad de su arsenal en altitud extrema, ponderada por uso, con su banda al 95%.',
     'La misma medida a nivel del mar.',
     'Carreras de más por 9 entradas en altitud extrema, ± un error estándar. «No concl.» si no es significativo al 95%.',
-    'Ponches menos bases por bolas, por cada 100 turnos, en la temporada.',
-    'Swings abanicados por cada 100 swings, en la temporada.',
+    'Ponches menos bases por bolas, por cada 100 turnos, en altitud extrema en esa temporada, con su banda al 95%. Es la misma cifra que la Ficha; debajo del mínimo de turnos, «muestra insuf.».',
+    'Swings abanicados por cada 100 swings, en altitud extrema en esa temporada, con su banda al 95%. Es la misma cifra que la Ficha; debajo del mínimo de swings, «muestra insuf.».',
     'Abridor o relevista, por cómo entra a los juegos.',
     'El pitch que más usa.',
     'Qué tanto lo usa.',
@@ -151,8 +151,8 @@ export const es = {
     title: 'Cómo leer esta tabla',
     stuffPlusTerm: 'Stuff+',
     insufficient: { term: 'Muestra insuficiente' },
-    insufficientText: (pitches: number, pa: number): string =>
-      `Menos de ${String(pitches)} lanzamientos en un entorno, o de ${String(pa)} turnos para una tasa. No se muestra un número con una banda tan ancha que no diga nada.`,
+    insufficientText: (pitches: number, pa: number, swings: number): string =>
+      `Menos de ${String(pitches)} lanzamientos en un entorno, de ${String(pa)} turnos para K\u2212BB% o de ${String(swings)} swings para el whiff. No se muestra un número con una banda tan ancha que no diga nada.`,
     items: [
       {
         term: 'La banda «±»',
@@ -172,7 +172,7 @@ export const es = {
       },
       {
         term: 'K\u2212BB% y Whiff%',
-        text: 'Lo que el cuerpo técnico mira primero: ponches menos bases por bolas, y swings abanicados. En la altura hasta el contacto débil se vuelve hit; abanicar es lo que aguanta.',
+        text: 'Lo que el cuerpo técnico mira primero: ponches menos bases por bolas, y swings abanicados, medidos en altitud extrema. En la altura hasta el contacto débil se vuelve hit; abanicar es lo que aguanta. La Ficha da los dos entornos.',
       },
     ],
   },
@@ -184,8 +184,8 @@ export const es = {
     'Nivel del mar',
     '\u0394',
     'Impuesto c/9 ent.',
-    'K\u2212BB%',
-    'Whiff%',
+    'K\u2212BB% alt. ext.',
+    'Whiff% alt. ext.',
     'Rol',
     'Pitch principal',
     'Uso',

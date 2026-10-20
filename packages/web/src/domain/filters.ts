@@ -44,10 +44,10 @@ export const isFiltered = (filters: RadarFilters): boolean =>
 export const throwsPitch = (card: PitcherSeason, pitch: string): boolean =>
   card.arsenal.some((entry) => entry.pitch === pitch)
 
-export const applyFilters = (
-  cards: readonly PitcherSeason[],
+export const applyFilters = <T extends PitcherSeason>(
+  cards: readonly T[],
   filters: RadarFilters,
-): readonly PitcherSeason[] => {
+): readonly T[] => {
   const query = filters.query.trim().toLowerCase()
   return cards.filter((card) => {
     if (filters.throws !== null && card.throws !== filters.throws) return false
