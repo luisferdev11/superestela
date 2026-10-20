@@ -1,7 +1,7 @@
 {
-  "model_id": "0.1.0+b126006",
-  "uses_arsenal": false,
-  "scale": "100 - 10 z of out-of-bag expected run value over the whole league, both environments and all pitch types, as stuff_plus_v0",
+  "model_id": "1.1.0+19966f3",
+  "uses_arsenal": true,
+  "scale": "100 = el pitch promedio de su tipo en la liga (xRV fuera de fold del modelo final con la regla de velocidad); 10 puntos = una desviación estándar del xRV del tipo",
   "display_gates": [
     "S1",
     "S2",
@@ -207,8 +207,8 @@
       "id": "S1",
       "name": "+1 mph on 300 real sea-level four-seams",
       "value": {
-        "mean_delta": 1.791,
-        "violation_share": 0.093
+        "mean_delta": 1.407,
+        "violation_share": 0.0
       },
       "threshold": "mean > 0 and violations <= 0.10",
       "passed": true,
@@ -226,8 +226,8 @@
       "id": "S3",
       "name": "Stuff+ jump per slider step (0.1 mph, 0.1 in) on 50 four-seams",
       "value": {
-        "p99": 1.233,
-        "max": 2.859
+        "p99": 0.967,
+        "max": 1.918
       },
       "threshold": "p99 <= 1.5",
       "passed": true,
@@ -238,8 +238,8 @@
       "name": "simulator score of a real arsenal pitch against the Radar's number",
       "value": {
         "n": 2153,
-        "r": 0.951,
-        "mean_abs_delta": 2.469
+        "r": 0.942,
+        "mean_abs_delta": 2.312
       },
       "threshold": "r >= 0.9 and mean |delta| <= 3",
       "passed": true,
@@ -251,16 +251,16 @@
       "value": {
         "spearman": 1.0,
         "run_value_by_decile": [
-          0.0329,
-          0.0273,
-          0.021,
-          0.0204,
-          0.015,
-          0.0116,
-          0.0088,
-          0.0053,
-          0.0015,
-          -0.0099
+          0.038,
+          0.0286,
+          0.022,
+          0.0199,
+          0.0152,
+          0.0122,
+          0.0075,
+          0.0036,
+          -0.0011,
+          -0.0119
         ]
       },
       "threshold": "spearman >= 0.8",
@@ -272,12 +272,12 @@
       "name": "natural experiment: simulated delta against observed whiff delta",
       "value": {
         "n_pitcher_pitches": 521,
-        "r": 0.144,
+        "r": 0.218,
         "ci95": [
-          0.047,
-          0.23
+          0.127,
+          0.297
         ],
-        "mean_simulated_delta": -10.53,
+        "mean_simulated_delta": -8.62,
         "mean_observed_whiff_delta": -0.019
       },
       "threshold": "correlation > 0 with the 95% interval above zero",
@@ -289,8 +289,8 @@
       "name": "against the challenge's null model, run value by count",
       "value": {
         "rmse_null_count": 0.21747,
-        "rmse_model": 0.21888,
-        "rmse_count_plus_model": 0.21732
+        "rmse_model": 0.22004,
+        "rmse_count_plus_model": 0.21723
       },
       "threshold": "rmse_model < rmse_null_count",
       "passed": false,

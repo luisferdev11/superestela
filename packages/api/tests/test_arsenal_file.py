@@ -128,10 +128,10 @@ def test_file_refusals_carry_their_reason(df: pd.DataFrame, code: str) -> None:
     assert caught.value.code == code
 
 
-def test_missing_columns_are_named_canonically() -> None:
+def test_missing_columns_are_named_as_the_file_should_carry_them() -> None:
     with pytest.raises(ArsenalFileError) as caught:
         summarize_arsenal(csv(export({"Four-Seam": 10}).drop(columns=["SpinRate", "RelSide"])))
-    assert caught.value.columns == ("spin_rate", "release_side")
+    assert caught.value.columns == ("SpinRate", "RelSide")
 
 
 def test_endpoint_returns_the_arsenal_in_camel_case() -> None:

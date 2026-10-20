@@ -22,7 +22,7 @@ import numpy as np
 import pandas as pd
 
 from api.schemas import Hand, PitchType
-from contracts.mapping import normalize_columns
+from contracts.mapping import CANONICAL_TO_VENDOR, normalize_columns
 from models.batch import NUMERIC, PITCHER, REQUIRED
 from models.scoring import to_arm_side
 
@@ -53,6 +53,18 @@ class ArsenalFileError(ValueError):
         super().__init__(code if not columns else f"{code}: {', '.join(columns)}")
         self.code: ProblemCode = code
         self.columns = columns
+
+
+def missing_columns(canonical: tuple[str, ...]) -> ArsenalFileError:
+    """The refusal for missing columns, naming them as the file should carry them.
+
+    The person fixing the file reads TrackMan's names (``InducedVertBreak``),
+    not ours (``ivb``); a column with no vendor name (``pitcher_anon_id``)
+    keeps its own.
+    """
+    return ArsenalFileError(
+        "missing_columns", tuple(CANONICAL_TO_VENDOR.get(c, c) for c in canonical)
+    )
 
 
 @dataclass(frozen=True)
@@ -127,7 +139,7 @@ def summarize_arsenal(csv_text: str) -> ArsenalSummary:
         raise ArsenalFileError("empty")
     missing = tuple(c for c in REQUIRED if c not in df.columns)
     if missing:
-        raise ArsenalFileError("missing_columns", missing)
+        raise missing_columns(missing)
     if PITCHER in df.columns and len(df[PITCHER].dropna().unique()) > 1:
         raise ArsenalFileError("mixed_pitchers")
     hands = df["pitcher_hand"].dropna().unique()

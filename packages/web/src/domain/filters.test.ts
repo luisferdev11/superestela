@@ -7,6 +7,7 @@ import { selectRadarCohort } from './cohort'
 import { dominantPitch } from './arsenal'
 import {
   applyFilters,
+  hasUnknownRole,
   availablePitches,
   availableSeasons,
   availableThrows,
@@ -52,6 +53,15 @@ describe('los filtros del radar', () => {
     expect(
       applyFilters(cards, { ...NO_FILTERS, trapsOnly: true }).every((c) => c.altitudeTrap),
     ).toBe(true)
+  })
+
+  it('«Sin rol» deja a los que la regla no clasifico, como pitcher_00649', async () => {
+    const cards = await cohort()
+    expect(hasUnknownRole(cards)).toBe(true)
+    const unknown = applyFilters(cards, { ...NO_FILTERS, role: 'unknown' })
+    expect(unknown.length).toBeGreaterThan(0)
+    expect(unknown.every((c) => c.role === null)).toBe(true)
+    expect(unknown.map((c) => c.pitcherId)).toContain('pitcher_00649')
   })
 
   it('el tipo de pitch deja a todos los que lo tiran, no solo a quien lo tiene de principal', async () => {

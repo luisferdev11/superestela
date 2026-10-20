@@ -74,8 +74,6 @@ export type PitcherSeason = {
   readonly altitudeTaxMeasured: Metric | null
   readonly meanIvbLossIn: number | null
   readonly altitudeTrap: boolean
-  /** La temporada completa: todos sus juegos, altitud media incluida. */
-  readonly outcomes: Outcomes
   readonly arsenal: readonly ArsenalEntry[]
 }
 

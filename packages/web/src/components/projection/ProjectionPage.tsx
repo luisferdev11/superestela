@@ -27,7 +27,7 @@ export const ProjectionPage = async ({
   readonly pitcherId: string
   readonly season?: number
 }) => {
-  const [{ cards, density, nPitches, seasons }, projections] = await Promise.all([
+  const [{ cards, density, nPitches, seasons, seasonsByPitcher }, projections] = await Promise.all([
     loadDataset(),
     loadProjections(),
   ])
@@ -41,6 +41,7 @@ export const ProjectionPage = async ({
       <PitcherHeader
         card={card}
         seasons={own.map((c) => c.season)}
+        history={seasonsByPitcher.get(pitcherId) ?? []}
         tab="projection"
         tabHrefs={{
           summary: fichaHref(pitcherId, card.season),

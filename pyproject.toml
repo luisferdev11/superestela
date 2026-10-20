@@ -11,9 +11,10 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-models = ["scikit-learn>=1.5", "mlflow>=2.16"]
-# The API scores with the fitted bridge, so it carries scikit-learn too.
-api = ["fastapi>=0.115", "uvicorn[standard]>=0.30", "scikit-learn>=1.5"]
+# xgboost: the final Stuff+ and Location+ boosters from data (docs/14) were saved by 3.2.
+models = ["scikit-learn>=1.5", "mlflow>=2.16", "xgboost-cpu>=3.2,<4"]
+# The API scores with the fitted models, so it carries their libraries too.
+api = ["fastapi>=0.115", "uvicorn[standard]>=0.30", "scikit-learn>=1.5", "xgboost-cpu>=3.2,<4"]
 dev = [
     "pytest>=8.3",
     "pytest-cov>=5.0",

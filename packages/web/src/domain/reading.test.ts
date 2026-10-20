@@ -21,18 +21,18 @@ describe('la lectura de pitcher_00069 2025, la del prototipo', () => {
     expect(verdictOf(await find('pitcher_00069', 2025))).toBe('notAtSeaLevelPrice')
   })
 
-  it('la recta pierde 20.6 y el slider 1.7: el slider es la palanca', async () => {
+  it('la recta pierde 16.6 y la curva 6.6: la curva es la palanca', async () => {
     const reading = readingOf(await find('pitcher_00069', 2025))
     expect(reading.main?.pitch).toBe('Four-Seam')
-    expect(reading.main?.delta.value).toBeCloseTo(-20.6, 5)
-    expect(reading.lever?.best.pitch).toBe('Slider')
-    expect(reading.lever?.best.delta.value).toBeCloseTo(-1.7, 5)
+    expect(reading.main?.delta.value).toBeCloseTo(-16.6, 5)
+    expect(reading.lever?.best.pitch).toBe('Curveball')
+    expect(reading.lever?.best.delta.value).toBeCloseTo(-6.6, 5)
     expect(reading.lever?.worst.pitch).toBe('Four-Seam')
   })
 
   it('cada perdida lleva su banda, en cuadratura', async () => {
     const [fastball] = pitchDeltas(await find('pitcher_00069', 2025))
-    expect(fastball?.delta.se).toBeCloseTo(Math.hypot(1.0, 0.5), 5)
+    expect(fastball?.delta.se).toBeCloseTo(Math.hypot(0.9, 1.0), 5)
   })
 })
 

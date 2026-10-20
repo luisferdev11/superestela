@@ -1,7 +1,11 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { RadarGuide } from './RadarGuide'
-import { MIN_PITCHES_FOR_SCORE, MIN_PLATE_APPEARANCES_FOR_RATE } from '@/domain/constants'
+import {
+  MIN_PITCHES_FOR_SCORE,
+  MIN_PLATE_APPEARANCES_FOR_RATE,
+  MIN_SWINGS_FOR_RATE,
+} from '@/domain/constants'
 import { es } from '@/i18n/es'
 
 describe('como leer el Radar', () => {
@@ -15,7 +19,11 @@ describe('como leer el Radar', () => {
     render(<RadarGuide />)
     expect(
       screen.getByText(
-        es.guide.insufficientText(MIN_PITCHES_FOR_SCORE, MIN_PLATE_APPEARANCES_FOR_RATE),
+        es.guide.insufficientText(
+          MIN_PITCHES_FOR_SCORE,
+          MIN_PLATE_APPEARANCES_FOR_RATE,
+          MIN_SWINGS_FOR_RATE,
+        ),
       ),
     ).toBeInTheDocument()
   })

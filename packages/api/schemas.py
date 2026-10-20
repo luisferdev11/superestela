@@ -291,7 +291,9 @@ class ArsenalScoresResponse(Wire):
 
     model_id: str | None
     stuff_plus_shown: bool
-    stuff_plus_reason: Literal["model_unavailable", "model_not_gated", "gates_failed"] | None
+    stuff_plus_reason: (
+        Literal["model_unavailable", "model_not_gated", "gates_failed", "missing_arsenal"] | None
+    )
     n_rows: int
     pitchers: list[PitcherScoreOut]
     few_pitches: int
@@ -301,3 +303,134 @@ class ArsenalScoresResponse(Wire):
     has_swings: bool
     # analysis/projected_tax_check.py, when it has run: the screen quotes it.
     tax_validation: TaxValidation | None
+
+
+# ---------------------------------------------------------------- pitch scores
+# POST /api/v1/pitches/score (docs/15): data's final Stuff+ and Location+ on
+# any pitches, each with the inputs it needs and nothing borrowed from the other.
+
+ScoreStatus = Literal[
+    "scored",
+    "missing_features",
+    "unsupported_pitch_type",
+    "unknown_hand",
+    "missing_arsenal",
+    "model_unavailable",
+]
+
+
+class PitchRowIn(Wire):
+    """One pitch, in the product's names. Every field is optional on purpose.
+
+    What is missing is reported per model and per pitch, by name, instead of
+    one validation error for the whole request: a pitch without its plate
+    location can still have a Stuff+. Horizontal break, release side and
+    spin axis are on the arm side, as in the Simulator; ``plate_side`` is the
+    catcher's view, as Location+ was trained.
+    """
+
+    pitch_id: str | None = None
+    pitch_type: str | None = None
+    pitcher_hand: str | None = None
+    batter_hand: str | None = None
+    release_speed: float | None = None
+    spin_rate: float | None = None
+    spin_axis: float | None = None
+    ivb: float | None = None
+    horizontal_break: float | None = None
+    extension: float | None = None
+    release_height: float | None = None
+    release_side: float | None = None
+    plate_height: float | None = None
+    plate_side: float | None = None
+    balls: int | None = None
+    strikes: int | None = None
+    # The arsenal each pitch belongs to, when the request has no ``arsenal``.
+    pitcher_id: str | None = None
+    year: int | None = None
+    environment: str | None = None
+
+
+class PitchScoresRequest(Wire):
+    """Pitches to score and, optionally, the arsenal they all belong to."""
+
+    pitches: list[PitchRowIn] = Field(min_length=1, max_length=20_000)
+    # One pitcher's repertoire. Without it, each pitch is graded against the
+    # fastball of the request's own pitches with its pitcher_id/year/environment.
+    arsenal: list[ArsenalPitchIn] | None = None
+    models: list[Literal["stuff", "location"]] = Field(default=["stuff", "location"], min_length=1)
+
+
+class ScoreOut(Wire):
+    """A score, its band when the model has one (``se`` null: no band yet, docs/15)."""
+
+    value: float
+    se: float | None
+
+
+class ModelScore(Wire):
+    """One model's answer for one pitch: the score, or why not and what was missing."""
+
+    status: ScoreStatus
+    score: ScoreOut | None
+    missing: list[str]
+
+
+class AnalysisFeatures(Wire):
+    """data's descriptive features; no score reads them."""
+
+    alt_ord: float | None
+    total_break: float | None
+    move_per_rpm: float | None
+    vaa_est: float | None
+    loc_abs_side: float | None
+    loc_dist_center: float | None
+
+
+class PitchScoreOut(Wire):
+    """Both scores of one pitch, in the order the pitches came."""
+
+    pitch_id: str
+    stuff_plus: ModelScore | None
+    location_plus: ModelScore | None
+    analysis: AnalysisFeatures
+
+
+class CandidateRun(Wire):
+    """A run data trained, with the metrics that compare runs across targets."""
+
+    run: str
+    target: str
+    features: str
+    status: str
+    metrics: dict[str, float]
+
+
+class ModelInfo(Wire):
+    """Which model answered, why it was chosen and what it needs."""
+
+    model_id: str
+    run: str | None
+    selection: str | None
+    has_bands: bool
+    scale: str
+    pitch_types: list[str]
+    required: list[str]
+    candidates: list[CandidateRun]
+
+
+class PitchScoresResponse(Wire):
+    """Every pitch's scores and the provenance of each model."""
+
+    stuff_model: ModelInfo | None
+    location_model: ModelInfo | None
+    optional_features: list[str]
+    pitches: list[PitchScoreOut]
+
+
+class PitchScoresProblem(Wire):
+    """A column every pitch lacks, for a model that was asked for: nothing can be scored."""
+
+    error: Literal["missing_columns"]
+    model: Literal["stuff", "location"]
+    columns: list[str]

@@ -92,7 +92,11 @@ export const ProjectionTable = ({
                 {es.projection.columns
                   .filter((_, i) => compare || i < 6)
                   .map((c, i) => (
-                    <th key={c} className={i === 0 ? cellLeft : cell}>
+                    <th
+                      key={c}
+                      // «¿Acertó?» is one word to the eye: it does not break.
+                      className={`${i === 0 ? cellLeft : cell} ${i === es.projection.columns.length - 1 ? 'whitespace-nowrap' : ''}`}
+                    >
                       {c}
                     </th>
                   ))}
@@ -108,11 +112,13 @@ export const ProjectionTable = ({
                     <td className={`${cellLeft} font-semibold`}>{x.pitchType}</td>
                     <td className={cell}>{`${formatNumber(100 * x.usage)}%`}</td>
                     <td className={`${cell} text-(--color-text-muted)`}>{inches(x.sea.ivb)}</td>
-                    <td className={`${cell} font-semibold`}>{`${formatMetric(p.ivb)}″`}</td>
+                    <td className={`${cell} font-semibold whitespace-nowrap`}>
+                      {`${formatMetric(p.ivb)}″`}
+                    </td>
                     <td className={`${cell} text-(--color-text-muted)`}>
                       {inches(x.sea.horizontalBreak)}
                     </td>
-                    <td className={`${cell} font-semibold`}>
+                    <td className={`${cell} font-semibold whitespace-nowrap`}>
                       {`${formatMetric(p.horizontalBreak)}″`}
                     </td>
                     {compare ? (

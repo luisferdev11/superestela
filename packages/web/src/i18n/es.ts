@@ -54,7 +54,12 @@ export const es = {
   extremeParks:
     'Promedio de cinco parques: Puebla, Ciudad de México, Aguascalientes, Querétaro y León. El dataset no distingue entre ellos.',
   baselineNote: (pitches: number, seasons: number): string =>
-    `Stuff+ v0 baseline \u00b7 ${pitches.toLocaleString('es-MX')} lanzamientos \u00b7 ${String(seasons)} temporadas`,
+    `Stuff+ medido sobre ${pitches.toLocaleString('es-MX')} lanzamientos \u00b7 ${String(seasons)} temporadas`,
+  notFound: {
+    title: 'Esta p\u00e1gina no existe',
+    body: 'El enlace puede estar mal escrito, o el lanzador o la temporada no tienen muestra en los dos entornos.',
+    back: 'Volver al Radar de candidatos \u2192',
+  },
   filter: 'Filtrar',
   all: 'Todos',
   trapsOnly: 'Solo los que sufren en la altura',
@@ -127,7 +132,7 @@ export const es = {
   },
   sortHint: 'Haz clic en el nombre de una columna para ordenar; otro clic invierte el orden.',
   taxExplainer:
-    'Impuesto de Altitud: cu\u00e1ntas carreras de m\u00e1s permite por cada 9 entradas en altitud extrema, contra nivel del mar, medido en sus propios lanzamientos. Solo se muestra cuando la diferencia es concluyente; si no, dice \u00abno concl.\u00bb.',
+    'Impuesto de Altitud: cu\u00e1ntas carreras de m\u00e1s permite por cada 9 entradas en altitud extrema, contra nivel del mar, medido con el valor en carreras de sus propios lanzamientos. Solo se muestra cuando la banda al 95% no cruza el cero; si la cruza, dice \u00abno concl.\u00bb.',
   pitchColumns: {
     hh: (pitch: string): string => `${pitch} alt. extrema`,
     sea: (pitch: string): string => `${pitch} n. del mar`,
@@ -139,10 +144,10 @@ export const es = {
     'Su última temporada con muestra en los dos entornos. En ámbar si no es la más reciente.',
     'Mano con la que lanza.',
     'Calidad de su arsenal en altitud extrema, ponderada por uso, con su banda al 95%.',
-    'La misma medida a nivel del mar.',
-    'Carreras de más por 9 entradas en altitud extrema, ± un error estándar. «No concl.» si no es significativo al 95%.',
-    'Ponches menos bases por bolas, por cada 100 turnos, en la temporada.',
-    'Swings abanicados por cada 100 swings, en la temporada.',
+    'La misma medida a nivel del mar, con su banda al 95%.',
+    'Carreras de más por 9 entradas en altitud extrema, con su banda al 95%, según el valor en carreras de sus lanzamientos. «No concl.» si la banda cruza el cero.',
+    'Ponches menos bases por bolas, por cada 100 turnos, en altitud extrema en esa temporada, con su banda al 95%. Es la misma cifra que la Ficha; debajo del mínimo de turnos, «muestra insuf.».',
+    'Swings abanicados por cada 100 swings, en altitud extrema en esa temporada, con su banda al 95%. Es la misma cifra que la Ficha; debajo del mínimo de swings, «muestra insuf.».',
     'Abridor o relevista, por cómo entra a los juegos.',
     'El pitch que más usa.',
     'Qué tanto lo usa.',
@@ -151,12 +156,12 @@ export const es = {
     title: 'Cómo leer esta tabla',
     stuffPlusTerm: 'Stuff+',
     insufficient: { term: 'Muestra insuficiente' },
-    insufficientText: (pitches: number, pa: number): string =>
-      `Menos de ${String(pitches)} lanzamientos en un entorno, o de ${String(pa)} turnos para una tasa. No se muestra un número con una banda tan ancha que no diga nada.`,
+    insufficientText: (pitches: number, pa: number, swings: number): string =>
+      `Menos de ${String(pitches)} lanzamientos en un entorno, de ${String(pa)} turnos para K\u2212BB% o de ${String(swings)} swings para el whiff. No se muestra un número con una banda tan ancha que no diga nada.`,
     items: [
       {
         term: 'La banda «±»',
-        text: 'Cuánto podría moverse el número con más lanzamientos. En el Radar y la Ficha, el ± del Stuff+ y de las tasas es la banda al 95%; el del Impuesto, el Simulador y el Traductor es un error estándar. Si dos lanzadores se traslapan, no hay diferencia que defender.',
+        text: 'Cuánto podría moverse el número con más lanzamientos. En todas las pantallas, el ± es la banda al 95%. Si dos lanzadores se traslapan, no hay diferencia que defender.',
       },
       {
         term: 'Altitud extrema',
@@ -164,7 +169,7 @@ export const es = {
       },
       {
         term: 'Impuesto de Altitud',
-        text: 'Las carreras de más que permite por cada 9 entradas cuando lanza en altitud extrema, contra lo que permite a nivel del mar. Sale de sus propios lanzamientos en los dos entornos, no del modelo. Si la diferencia no es concluyente al 95%, se dice así en vez de dar un número.',
+        text: 'Las carreras de más que permite por cada 9 entradas cuando lanza en altitud extrema, contra lo que permite a nivel del mar. Sale del valor en carreras de sus propios lanzamientos en los dos entornos, no del modelo ni del marcador: por eso no es la resta de sus RA/9. Si la banda al 95% cruza el cero, se dice «no concluyente» en vez de dar un número.',
       },
       {
         term: 'Sufre en la altura ▌',
@@ -172,7 +177,7 @@ export const es = {
       },
       {
         term: 'K\u2212BB% y Whiff%',
-        text: 'Lo que el cuerpo técnico mira primero: ponches menos bases por bolas, y swings abanicados. En la altura hasta el contacto débil se vuelve hit; abanicar es lo que aguanta.',
+        text: 'Lo que el cuerpo técnico mira primero: ponches menos bases por bolas, y swings abanicados, medidos en altitud extrema. En la altura hasta el contacto débil se vuelve hit; abanicar es lo que aguanta. La Ficha da los dos entornos.',
       },
     ],
   },
@@ -184,8 +189,8 @@ export const es = {
     'Nivel del mar',
     '\u0394',
     'Impuesto c/9 ent.',
-    'K\u2212BB%',
-    'Whiff%',
+    'K\u2212BB% alt.',
+    'Whiff% alt.',
     'Rol',
     'Pitch principal',
     'Uso',
@@ -203,6 +208,9 @@ export const es = {
     breadcrumb: 'Fichajes',
     season: 'Temporada',
     onlySeason: 'Única temporada con muestra en los dos entornos.',
+    otherSeasonsWithoutScore: 'Sus otras temporadas no tienen muestra para score.',
+    seasonWithoutScore: (season: number, hh: number, sea: number, min: number): string =>
+      `${String(season)} · sin score (${String(hh)} en altitud, ${String(sea)} a nivel del mar; hacen falta ${String(min)} en cada uno)`,
     tabs: {
       summary: 'Resumen',
       arsenal: 'Arsenal',
@@ -219,7 +227,9 @@ export const es = {
       delta: 'Δ por altitud',
       tax: 'Impuesto de Altitud',
       taxMeasured: (measured: string): string =>
-        `mide ${measured} c/9 ent.; la banda cruza el cero`,
+        `Mide ${measured} c/9 ent. con banda al 95%: cruza el cero.`,
+      taxDefinition:
+        'Valor en carreras de sus lanzamientos, llevado a 9 entradas: no es la resta de sus RA/9, que cuentan las carreras anotadas.',
       runs: 'Carreras permitidas c/9 ent.',
       runsIn: { hh: 'alt. extrema', sea: 'nivel del mar' } satisfies Record<Environment, string>,
       runsNote: (minInnings: number): string =>
@@ -236,7 +246,7 @@ export const es = {
       simulate: 'abrir \u2192',
       simulateLabel: (pitch: string): string => `Abrir el ${pitch} en el Simulador`,
       measuredAt:
-        'Uso, velocidad, spin y whiff, medidos en altitud extrema. IVB y |HB| en pulgadas; Stuff+ con su banda al 95%.',
+        'Uso, velocidad, spin y whiff, medidos en altitud extrema. IVB y |HB| en pulgadas; Stuff+ con su banda al 95%. Solo entran los pitches con muestra en altitud extrema; su forma a nivel del mar se da aunque all\u00ed tenga menos lanzamientos de los que el mapa, la Proyecci\u00f3n y el Simulador piden para partir.',
       noSea: 'sin muestra a nivel del mar',
     },
     map: {
@@ -251,10 +261,13 @@ export const es = {
       axisX: 'break horizontal (pulgadas)',
       axisY: 'IVB',
       usage: (share: number): string => `${(100 * share).toFixed(1)}% de uso`,
+      noSeaUsage: 'sin muestra a nivel del mar',
+      belowMinimum: (pitches: string, min: number): string =>
+        `${pitches}: sin punto a nivel del mar, con menos de ${String(min)} lanzamientos ah\u00ed (el m\u00ednimo del Simulador y la Proyecci\u00f3n). Su uso s\u00ed es el de nivel del mar.`,
       label: (pitch: string, sea: string, hh: string): string =>
         `${pitch}: ${sea} a nivel del mar, ${hh} en altitud extrema`,
       none: 'sin muestra',
-      note: 'Forma medida en cada entorno, no simulada. Break horizontal del lado del brazo. El uso es el de nivel del mar; la tabla da el de altitud extrema.',
+      note: 'Forma medida en cada entorno, no simulada. Break horizontal del lado del brazo. El uso es el de nivel del mar; la tabla da el de altitud extrema. El mapa incluye tambi\u00e9n los pitches que solo tienen muestra a nivel del mar.',
     },
     physics: {
       title: 'El mecanismo f\u00edsico.',
@@ -283,11 +296,25 @@ export const es = {
       less: 'menos',
       more: 'm\u00e1s',
       stats: (height: string, zone: string, whiff: string): string =>
-        `Altura media ${height} ft \u00b7 ${zone}% en zona \u00b7 ${whiff}% de whiff por swing.`,
+        `Altura media ${height} pulgadas \u00b7 ${zone}% en zona \u00b7 ${whiff}% de whiff por swing.`,
+      locationPlus: (value: string): string =>
+        `Location+ ${value}: qué tan bien la puso para el conteo y el bateador (100 = el promedio de su tipo). Describe cómo ubicó; no proyecta.`,
       pending: 'Pendiente: la ubicaci\u00f3n la entrega el equipo de datos con Location+.',
       pendingDetail:
         'Aqu\u00ed va d\u00f3nde pone sus lanzamientos en cada entorno, su altura media, su porcentaje en zona y su whiff.',
       readTitle: 'Lo que dice su ubicaci\u00f3n',
+      read: {
+        changes: (height: string, zone: string): string =>
+          `En altitud extrema su altura media en el plato cambia ${height} pulgadas y su porcentaje en zona ${zone} puntos (bandas al 95%).`,
+        verdict: {
+          overcompensates:
+            'Sobrecompensa la altura con la mira: apunta m\u00e1s alto y pierde la zona.',
+          higher: 'Apunta m\u00e1s alto en la altura, pero sin perder la zona.',
+          losesZone: 'Pierde la zona en la altura sin apuntar m\u00e1s alto.',
+          noChange:
+            'Su ubicaci\u00f3n no cambia de forma distinguible del ruido entre los dos entornos.',
+        },
+      },
       readPending:
         'Si sobrecompensa la altura con la mira \u2014apunta m\u00e1s alto y pierde la zona\u2014 se lee aqu\u00ed cuando llegue la ubicaci\u00f3n. Sin ella no hay lectura: no se inventa.',
       mapLabel: (env: string, n: number): string =>
@@ -332,7 +359,10 @@ export const es = {
   plan: {
     title: 'Plan de Desarrollo',
     subtitle: 'Qu\u00e9 cambiar de su arsenal para que sobreviva en casa, en orden de impacto.',
-    today: 'Stuff+ alt. extrema hoy',
+    today: 'Stuff+ ponderado alt. extrema hoy',
+    todayCard: 'Stuff+ alt. extrema hoy',
+    todayNote: (card: string): string =>
+      `Promedio de sus tipos de pitch con score, ponderado por uso: es la cifra que mueve el plan. La Ficha da ${card}, el promedio de todos sus lanzamientos.`,
     pitcher: 'Lanzador',
     deficitTitle: (deficit: string): string =>
       `D\u00f3nde se pierde \u00b7 contribuci\u00f3n de cada lanzamiento al d\u00e9ficit de ${deficit} puntos`,
@@ -347,6 +377,16 @@ export const es = {
     ivb: (sea: string, hh: string): string => `Su IVB pasa de ${sea}\u2033 a ${hh}\u2033.`,
     holdsWhy: (ivb: string, worstIvb: string, worst: string): string =>
       `Tiene menos ride que perder: ${ivb}\u2033 de IVB contra ${worstIvb}\u2033 del ${worst}, y el aire delgado se lleva sobre todo el break.`,
+    holdsDrops: (
+      sea: string,
+      hh: string,
+      worst: string,
+      worstSea: string,
+      worstHh: string,
+    ): string =>
+      `Es un pitch de caída, no de ride: en la altura su IVB pasa de ${sea}\u2033 a ${hh}\u2033, mientras el ${worst} pasa de ${worstSea}\u2033 a ${worstHh}\u2033. El aire delgado encoge el break en las dos direcciones.`,
+    holdsDespiteRide: (ivb: string, worstIvb: string, worst: string): string =>
+      `Conserva m\u00e1s aunque tiene m\u00e1s ride que perder: ${ivb}\u2033 de IVB contra ${worstIvb}\u2033 del ${worst}.`,
     changes: (
       from: string,
       fromBefore: string,
@@ -359,10 +399,15 @@ export const es = {
     noShift: (to: string, from: string): string =>
       `Mover uso no lo compensa: el ${to} pierde menos, pero en altitud extrema sigue rindiendo menos que el ${from}. La palanca aqu\u00ed no es el reparto.`,
     shiftBy: 'Mover',
-    points: (n: number): string => `${String(n)} pts`,
+    points: (n: string): string => `${n} pts`,
+    allOf: (n: string): string => `todo su uso (${n} pts)`,
     tryInSimulator: (pitch: string): string => `Probar el ${pitch} en el Simulador \u2192`,
     none: 'No hay plan que proponer: hace falta al menos dos pitches con score en los dos entornos.',
     limitTitle: 'L\u00edmite del modelo',
+    runs: (runs: string): string =>
+      `En carreras: ${runs} carreras permitidas por 9 entradas en altitud extrema (banda al 95%, que supone independientes los dos pitches).`,
+    limitWithBridge: (model: string): string =>
+      `Las carreras salen del modelo ${model}: cada punto de Stuff+ vale una décima de la desviación del xRV de su tipo, y cada lanzamiento movido vale el xRV de su propio tipo. Son carreras esperadas por calidad del pitch, no un pronóstico de su ERA.`,
     limit:
       'Estas ganancias est\u00e1n en puntos de Stuff+, no en carreras. El puente de Stuff+ a carreras todav\u00eda no existe: construirlo es el trabajo del modelo final, y es lo que convertir\u00eda este plan en carreras. Las bandas suponen que los pitches son muestras independientes.',
   },
@@ -404,7 +449,7 @@ export const es = {
     inBand: 's\u00ed, en banda',
     outOfBand: 'no, fuera',
     noSample: 'sin muestra',
-    note: 'Pulgadas; HB del lado del brazo. El \u00b1 es un error est\u00e1ndar: el error medido de la ley por tipo de pitch, el mismo que muestra el Simulador. \u00abEn banda\u00bb compara lo medido contra la banda al 95%, \u00b11.96 errores, en los dos ejes.',
+    note: 'Pulgadas; HB del lado del brazo. El \u00b1 es la banda al 95%, del error medido de la ley por tipo de pitch, la misma que muestra el Simulador. \u00abEn banda\u00bb: lo medido cae dentro de esa banda en los dos ejes.',
     none: 'Sin muestra a nivel del mar para proyectar esta temporada.',
   },
   roster: {
@@ -489,7 +534,8 @@ export const es = {
     },
     controls: {
       releaseSpeed: 'Velocidad de salida',
-      ivb: 'Induced vertical break',
+      // CONVENTIONS §2.2: IVB is the term of art and stays as is in the UI.
+      ivb: 'IVB',
       horizontalBreak: 'Break horizontal',
       extension: 'Extensión',
       releaseHeight: 'Altura de liberación',
@@ -518,12 +564,16 @@ export const es = {
       delta: 'Δ por altitud',
       shape: 'por la forma',
       environment: 'por el entorno',
+      shapeOnly:
+        'todo por la forma: el modelo mide la altura por cuánto se encoge el pitch, no por el aire',
       real: 'su pitch real',
     },
     reasons: {
       model_unavailable: 'Modelo no disponible. La física sigue contestando.',
       model_not_gated: 'Este modelo no pasó por las compuertas: su Stuff+ no se muestra.',
       gates_failed: 'El modelo no pasó sus compuertas de coherencia: su Stuff+ no se muestra.',
+      missing_arsenal:
+        'Este modelo mide cada pitch contra la recta del lanzador: elige un lanzador real para ver su Stuff+.',
     } satisfies Record<StuffPlusReason, string>,
     physics: {
       title: 'Qué le hace la altura a esta forma',
@@ -545,7 +595,8 @@ export const es = {
       unreachable: 'No se pudo calcular: la API del Simulador no respondió.',
       rejected: 'La API rechazó este pitch. Revisa que los valores sean físicos.',
     },
-    noRuns: 'El Simulador no imprime carreras: el puente de Stuff+ a carreras todavía no existe.',
+    noRuns:
+      'El Simulador compara Stuff+ entre entornos; el paso a carreras está en el Plan de Desarrollo.',
     map: {
       title: 'Mapa de movimiento · pitches más y menos efectivos',
       subtitle: (pitchType: string): string =>
@@ -607,7 +658,7 @@ export const es = {
           },
           {
             term: 'El fondo de color',
-            text: 'En el Simulador, es el whiff por swing que la liga logra con cada forma: azul, más que la media; naranja, menos. Los puntos negros y huecos son el 10% de pitches más y menos efectivos.',
+            text: 'En el Simulador, es el whiff por swing que la liga logra con cada forma: verde azulado, más que la media; naranja, menos. Los puntos negros y huecos son el 10% de pitches más y menos efectivos.',
           },
         ],
       },
@@ -677,16 +728,20 @@ export const es = {
         'Carreras de más por 9 entradas que el modelo proyecta en altitud extrema. Proyectado, no medido.',
       ],
       taxNote: (n: number, r: string, projected: string, measured: string): string =>
-        `Impuesto proyectado: lo que el modelo espera que pierda en carreras por 9 entradas al subir, no lo que se midió. Revisado contra los ${String(n)} lanzadores del Radar que sí lanzaron en los dos entornos: en promedio coincide (${projected} contra ${measured} carreras c/9 ent.), pero lanzador por lanzador ordena poco (r = ${r}). Úsalo como referencia de liga, no para elegir entre dos lanzadores.`,
+        `Impuesto proyectado: lo que el modelo espera que pierda en carreras por 9 entradas al subir, no lo que se midió. Revisado contra las ${String(n)} temporadas de lanzador con muestra en los dos entornos (un lanzador puede tener varias; el Radar muestra solo la última de cada uno): en promedio coincide (${projected} contra ${measured} carreras c/9 ent.), pero lanzador por lanzador ordena poco (r = ${r}). Úsalo como referencia de liga, no para elegir entre dos lanzadores.`,
       taxNoteUnchecked:
         'Impuesto proyectado: lo que el modelo espera que pierda en carreras por 9 entradas al subir, no lo que se midió. Todavía no se ha revisado contra el medido.',
       band: 'Banda al 95% en Stuff+, \u0394 e Impuesto; el whiff lleva la suya.',
       empty: 'Ning\u00fan lanzador del archivo cumple estos filtros.',
+      noneScored: (min: number): string =>
+        `Ning\u00fan lanzador del archivo llega a ${String(min)} lanzamientos: con menos no se le da Stuff+.`,
     },
     upload: {
       label: 'Subir su export de TrackMan',
       hint: 'Un CSV con un renglón por lanzamiento y las columnas de TrackMan: AutoPitchType, PitcherThrows, RelSpeed, InducedVertBreak, HorzBreak, SpinRate, SpinAxis, Extension, RelHeight y RelSide. Si trae altitude_category, de ahí sale dónde se midió.',
       manual: 'O captura el arsenal a mano en la tabla.',
+      choose: 'Elegir archivo',
+      noFile: 'Ning\u00fan archivo elegido',
       reading: 'Leyendo el archivo…',
       loaded: (name: string, used: string, types: string): string =>
         `${name}: ${used} lanzamientos en ${types} tipos de pitch.`,
@@ -696,7 +751,7 @@ export const es = {
       omittedTypes: (types: string): string =>
         `Solo caben seis tipos; quedaron fuera los menos usados: ${types}.`,
       extreme:
-        'Este archivo ya se midió en altitud extrema: el Traductor es para quien no ha lanzado ahí. Su Ficha lo mide directamente.',
+        'Este archivo ya se midió en altitud extrema: el Traductor es para quien no ha lanzado ahí, así que no se traduce. Su Ficha lo mide directamente.',
       problems: {
         unreadable: 'El archivo no se pudo leer como CSV.',
         empty: 'El archivo no trae lanzamientos.',
@@ -787,13 +842,14 @@ export const es = {
       unusualNote:
         'Marcado como forma inusual: esa combinación no se ha lanzado en la LMB, y su Stuff+ es una extrapolación.',
       openInSimulator: 'Abrir en el Simulador',
-      note: 'Pulgadas; HB del lado del brazo. El ± es un error estándar: el de la ley por tipo de pitch, el mismo que muestra el Simulador. El Stuff+ es el del Simulador para la misma forma.',
+      note: 'Pulgadas; HB del lado del brazo. El ± es la banda al 95% de la ley por tipo de pitch, la misma que muestra el Simulador. El Stuff+ es el del Simulador para la misma forma.',
     },
     map: {
       sea: 'a nivel del mar',
       hh: 'proyectado en altitud extrema',
       note: 'Forma proyectada con la ley de densidad, no medida. Break horizontal del lado del brazo.',
     },
-    noRuns: 'El Traductor no imprime carreras: el puente de Stuff+ a carreras todavía no existe.',
+    noRuns:
+      'El Traductor compara Stuff+; las carreras están en el Impuesto proyectado de «Varios lanzadores».',
   },
 } as const

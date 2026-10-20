@@ -6,6 +6,7 @@ import { evidenceSchema, type EvidenceRaw } from './evidenceSchema'
 import { toDensityLevel, toOutcomes, toPitcherSeason, toSeasonEntry } from './adapter'
 import { orderByDensity, type DensityScale } from '@/domain/density'
 import type { LeagueShapes } from '@/domain/arsenalMap'
+import type { RunBridge } from '@/domain/runBridge'
 import type { ScaleKind } from '@/domain/scale'
 import type { Environment, Outcomes, PitcherSeason, SeasonEntry } from '@/domain/types'
 
@@ -29,6 +30,19 @@ export type Dataset = {
   readonly leagueShapes: LeagueShapes
   /** K%, BB%, K-BB% y whiff de la liga en cada entorno (`evidence.json → league_outcomes`). */
   readonly leagueOutcomes: Readonly<Record<Environment, Outcomes>> | null
+  /** Stuff+ to runs, when the model that scored the cards has a per-type scale (`docs/15`). */
+  readonly runBridge: RunBridge | null
+}
+
+const runBridgeOf = (evidence: EvidenceRaw, extremeLabel: string): RunBridge | null => {
+  const model = evidence.stuff_plus_model
+  const extreme = evidence.run_environment[extremeLabel]
+  const perInning =
+    typeof extreme === 'object' && extreme !== null && 'pitches_per_inning' in extreme
+      ? extreme.pitches_per_inning
+      : undefined
+  if (model?.xrv_by_type === undefined || typeof perInning !== 'number') return null
+  return { modelId: model.model_id, xrvByType: model.xrv_by_type, pitchesPerInning: perInning }
 }
 
 const toLeagueShapes = (raw: unknown, sea: string, extreme: string): LeagueShapes => {
@@ -89,5 +103,6 @@ export const loadDataset = async (): Promise<Dataset> => {
     pitchersWithGap: evidence.seasons.pitchers_with_a_gap,
     leagueShapes: toLeagueShapes(parsed.pitch_profiles, sea.label, extreme.label),
     leagueOutcomes: leagueOutcomesOf(evidence.league_outcomes, sea.label, extreme.label),
+    runBridge: runBridgeOf(evidence, extreme.label),
   }
 }

@@ -1,4 +1,8 @@
-import { MIN_PITCHES_FOR_SCORE, MIN_PLATE_APPEARANCES_FOR_RATE } from '@/domain/constants'
+import {
+  MIN_PITCHES_FOR_SCORE,
+  MIN_PLATE_APPEARANCES_FOR_RATE,
+  MIN_SWINGS_FOR_RATE,
+} from '@/domain/constants'
 import type { ScaleKind } from '@/domain/scale'
 import { es } from '@/i18n/es'
 
@@ -16,7 +20,11 @@ export const RadarGuide = ({ scale = 'league' }: { readonly scale?: ScaleKind })
         ...es.guide.items,
         {
           term: es.guide.insufficient.term,
-          text: es.guide.insufficientText(MIN_PITCHES_FOR_SCORE, MIN_PLATE_APPEARANCES_FOR_RATE),
+          text: es.guide.insufficientText(
+            MIN_PITCHES_FOR_SCORE,
+            MIN_PLATE_APPEARANCES_FOR_RATE,
+            MIN_SWINGS_FOR_RATE,
+          ),
         },
       ].map((item) => (
         <div key={item.term} className="flex flex-col gap-0.5">

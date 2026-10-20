@@ -20,10 +20,10 @@ los demás equipos; si hay que recortar, se recorta de las otras.
 | 1 | Marco: sabermetría, física y el entorno de la LMB | 1 | `entorno-de-carreras.md` | `ra9-sea`, `ra9-extreme`, `ra9-effect` | ✅ redactable |
 | 2 | Datos, auditoría y el diseño within-pitcher | 1 | `datos.md` | `n-pitches`, `within-pitcher-*`, `spin-unchanged`, `best-lose-more` | ✅ redactable |
 | **3** | **El Índice de Densidad: derivación y validación** | 1 | `densidad.md` | `density-*`, `magnus-extreme` · 🔴 `density-validated` (D4) | 🟡 falta D4 |
-| 4 | Modelado: target, arquitectura, ablaciones | 2 | `baseline.md` + las de A1–A3 | `v0-r2`, `whiff-learnable`, `skill-persists` · 🔴 `components-beat-direct` | 🔴 espera a datos |
+| 4 | Modelado: target, arquitectura, ablaciones · **⚠️ incluye la regla de velocidad** | 2 | `baseline.md` + MLflow (`final-folds`, `final-monotone`) | `v0-r2`, `whiff-learnable`, `skill-persists`, `speed-rule-calibration`, `speed-rule-agreement` · 🔴 `components-beat-direct` | 🟡 redactable (docs/15) |
 | **5** | **La escala Stuff+: definición formal y calibración** | 1 | (de datos) | 🔴 `scale-meaning` | 🔴 espera la escala |
 | **6** | **Veredicto de hipótesis, con H2 refutada** | 1 | `hipotesis.md` | `h1`–`h4` · 🔴 `low-ride-survives` | ✅ salvo el +0.531 |
-| 7 | Validación: lanzador, temporada y parque | 1.5 | `compuertas.md` | `gates-display`, `gate-s7` · 🔴 `stuff-to-runs`, `generalizes` | 🟡 |
+| 7 | Validación: lanzador, temporada y parque · **⚠️ incluye la regla de velocidad** | 1.5 | `compuertas.md` | `gates-display`, `gate-s7`, `gate-s4-consistency`, `stuff-to-runs`, `speed-rule-finding`, `speed-rule-slow-end`, `speed-rule-fixed` · 🔴 `generalizes` | ✅ redactable |
 | **8** | **El Traductor de Altitud** | 1 | `traductor.md` | `translator-*` | ✅ redactable |
 | 9 | Fronteras declaradas | 0.5 | — | las 🔴 de la matriz | ✅ |
 | 10 | Qué haríamos con más tiempo | 0.5 | — | — | ✅ (abajo) |
@@ -35,6 +35,33 @@ Las dos secciones que no están en `docs/05` §5 salen del Q&A:
 - **La política de datos faltantes** va en §2, porque Diablos dijo que también se evalúa.
 
 ---
+
+## §4 y §7 · ⚠️ La regla de velocidad — hallazgo importante, va en el documento
+
+**Es la historia más fuerte del proyecto sobre rigor:** el modelo elegido por datos estaba bien
+calibrado y aun así decía que lanzar más rápido empeora una recta. Lo detectó una prueba de sentido
+común del producto, y la solución conservó el modelo y su precisión. El detalle, las cifras y la
+reproducción están en `docs/15` §3. Para el documento, media página repartida así:
+
+1. **El hallazgo (§7, validación).** La compuerta S1: +1 mph sobre 300 rectas reales, todo lo demás
+   fijo. Con el modelo de datos, `speed-rule-finding` (14.7%), concentrado en los extremos
+   (`speed-rule-slow-end`, 36% debajo de 89.2 mph). Por qué importa: en el Simulador, un scout sube
+   la velocidad y el Stuff+ baja.
+2. **Por qué pasa (§4, modelado).** Árboles que aprenden escalones con pocos datos en los extremos, y
+   un modelo multiclase que no admite la regla: la regla es sobre la mezcla de 7 resultados, no sobre
+   ninguno.
+3. **Lo que no funcionó, en una línea.** Más boosters, parámetros más suaves y mezclar modelos (rompe
+   S4). La prueba no se redefinió.
+4. **La solución (§4).** Destilación: el modelo de datos enseña a un regresor por tipo que predice el
+   mismo xRV con la restricción monótona de XGBoost en velocidad, sin fuga entre folds. Diagrama de
+   `docs/15` §3.5.
+5. **El resultado (§4 y §7).** `speed-rule-fixed` (0.0%); la calibración no empeora
+   (`speed-rule-calibration` contra `speed-rule-teacher-calibration`); coincide con el modelo de datos
+   (`speed-rule-agreement`); el Simulador y el Radar dicen lo mismo (`gate-s4-consistency`).
+6. **Figura:** `docs/figures/regla-de-velocidad.png`. Tres rectas reales y la distribución de S1, los
+   dos modelos.
+7. **La trampa evitada, en una nota al pie:** el primer intento salía «mejor que el maestro en todo»
+   por una fuga entre folds. Se detectó porque no era creíble, y se corrigió.
 
 ## §2 · Política de datos faltantes
 

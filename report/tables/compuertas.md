@@ -2,7 +2,7 @@
 
 > Generado por `report/build.py` desde `simulator_validation.json → gates`. No se edita a mano.
 
-Modelo `0.1.0+b126006` · usa arsenal: no · Stuff+ mostrado: sí
+Modelo `1.1.0+19966f3` · usa arsenal: sí · Stuff+ mostrado: sí
 
 | Compuerta | Qué prueba | Umbral | Pasa | Decide si se muestra |
 | :--- | :--- | :--- | :--- | :--- |

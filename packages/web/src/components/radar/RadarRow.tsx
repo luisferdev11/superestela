@@ -8,12 +8,12 @@ import { LARGE_DELTA, isStaleSeason } from '@/domain/emphasis'
 import { formatNumber, formatSigned } from '@/domain/format'
 import { fichaHref } from '@/domain/pitcher'
 import { focusOf } from '@/domain/ranking'
-import type { PitcherSeason } from '@/domain/types'
+import type { RadarCard } from '@/domain/cohort'
 import { es } from '@/i18n/es'
 
 // Base sin alineacion: con `text-right` en la base, un `text-left` agregado
 // pierde segun el orden de Tailwind, no segun el orden de las clases.
-const base = 'px-2 py-2 border-b border-(--color-border-hairline)'
+const base = 'px-1.5 py-2 border-b border-(--color-border-hairline)'
 const cell = `${base} text-right`
 const cellLeft = `${base} text-left`
 
@@ -26,7 +26,7 @@ export const RadarRow = ({
   latestSeason,
   pitch = null,
 }: {
-  readonly card: PitcherSeason
+  readonly card: RadarCard
   readonly latestSeason: number
   readonly pitch?: string | null
 }) => {
@@ -57,7 +57,7 @@ export const RadarRow = ({
         {focus.hh === null ? es.noSampleShort : <MetricValue metric={focus.hh} />}
       </td>
       <td className={`${cell} text-(--color-text-muted)`}>
-        {focus.sea === null ? es.noSampleShort : formatNumber(focus.sea.value)}
+        {focus.sea === null ? es.noSampleShort : <MetricValue metric={focus.sea} />}
       </td>
       <td className={`${cell} ${isLargeDelta ? 'font-semibold text-(--color-diablos)' : ''}`}>
         {focus.delta === null ? '' : formatSigned(focus.delta)}
@@ -70,10 +70,10 @@ export const RadarRow = ({
         )}
       </td>
       <td className={cell}>
-        <RateValue metric={card.outcomes.kMinusBbPct} compact />
+        <RateValue metric={card.ratesHh.kMinusBbPct} compact />
       </td>
       <td className={cell}>
-        <RateValue metric={card.outcomes.whiffPerSwing} compact />
+        <RateValue metric={card.ratesHh.whiffPerSwing} compact />
       </td>
       <td className={cellLeft}>
         <RoleChip role={card.role} />

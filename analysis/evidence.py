@@ -34,6 +34,7 @@ from sklearn.model_selection import GroupKFold
 from contracts.mapping import normalize_columns
 from contracts.schemas import MIN_PLATE_APPEARANCES_FOR_RATE, MIN_SWINGS_FOR_RATE
 from core.rates import difference_band, rate_band
+from models.features.arsenal import DIFF_COLUMNS, raw_differentials
 from models.features.role import STARTER_FIRST_INNING_SHARE, classify_roles
 from models.scoring import load_scorer, stuff_plus_of, to_arm_side
 
@@ -811,6 +812,13 @@ def stuff_plus_from_scorer(d, model_path):
         spin_axis=axis,
         density_index=d.loc[ok, "density_index"],
     )
+    if scorer.uses_arsenal:
+        # A pitch whose arsenal is unknown is left unscored, never a zero gap.
+        # A known arsenal whose reference lacks a measure keeps its NaN: the
+        # model takes it as missing, as in training (docs/15).
+        known = d.loc[ok, ["pitcher_anon_id", "year", "altitude_category"]].notna().all(axis=1)
+        frame = frame.join(d.loc[ok, list(DIFF_COLUMNS)])[known]
+        ok = ok & d.index.isin(frame.index)
     value = pd.Series(np.nan, index=d.index)
     value[ok] = stuff_plus_of(scorer, frame)[0]
     metrics = {
@@ -820,6 +828,10 @@ def stuff_plus_from_scorer(d, model_path):
         "n_scored": int(value.notna().sum()),
         "n_unscored": int(value.isna().sum()),
     }
+    by_type = getattr(scorer.scale, "by_type", None)
+    if by_type:
+        # The bridge to runs: Stuff+ back to xRV per pitch, per type (docs/15).
+        metrics["xrv_by_type"] = {t: [float(m), float(s)] for t, (m, s) in by_type.items()}
     return value, metrics
 
 
@@ -1121,6 +1133,10 @@ def main():
     os.makedirs(OUT, exist_ok=True)
     df = load()
     log(f"  {len(df):,} pitches x {df.shape[1]} columns")
+    # Each pitch against its primary fastball, from every row before any filter,
+    # as data's final Stuff+ was trained (models.features.arsenal). Only a
+    # model with uses_arsenal reads them.
+    df = df.join(raw_differentials(df))
 
     R["audit"] = audit(df)
     log("Data-quality audit done.")

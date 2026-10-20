@@ -70,14 +70,14 @@ describe('el tablero de despliegue', () => {
 })
 
 describe('lo que justifica la pantalla, sobre la cohorte del Radar', () => {
-  it('el orden cambia entre casa y gira: Spearman 0.638, cambio mediano 40.25, 8 de 10', async () => {
+  it('el orden cambia entre casa y gira: Spearman 0.786, cambio mediano 30.75, 5 de 10', async () => {
     const { cards, seasonsByPitcher } = await loadDataset()
     const shift = orderShift(selectRadarCohort(cards, seasonsByPitcher))
     expect(shift.n).toBe(296)
     // Cruzado con una corrida independiente en Python, con rangos promedio.
-    expect(shift.rankCorrelation).toBeCloseTo(0.63845, 4)
-    expect(shift.medianMove).toBe(40.25)
-    expect(shift.topTenTurnover).toBe(8)
+    expect(shift.rankCorrelation).toBeCloseTo(0.7863, 4)
+    expect(shift.medianMove).toBe(30.75)
+    expect(shift.topTenTurnover).toBe(5)
   })
 })
 

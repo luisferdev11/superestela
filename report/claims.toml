@@ -208,9 +208,11 @@ value = false
 
 [[claim]]
 id = "stuff-to-runs"
-text = "Un cambio de Stuff+ vale carreras"
+text = "Un cambio de Stuff+ vale carreras: el xRV del modelo publicado correlaciona 0.365 con las carreras observadas por lanzador y temporada"
 section = "§7"
-awaits = "A3 (equipo de datos)"
+source = "speed_rule.json"
+path = ["evaluation", "student", "xrv_vs_observed_r"]
+value = "0.365"
 
 [[claim]]
 id = "generalizes"
@@ -251,3 +253,61 @@ section = "§2"
 source = "evidence.json"
 path = ["within_pitcher", "Four-Seam", "n_pitchers"]
 value = "268"
+
+# --- §4/§7 La regla de velocidad (docs/15 §3, hallazgo importante) ----------------------------
+
+[[claim]]
+id = "speed-rule-finding"
+text = "Con el modelo de datos tal cual, en 14.7% de las rectas reales subir 1 mph le baja el Stuff+ (compuerta S1)"
+section = "§7"
+source = "speed_rule.json"
+path = ["final_v1", "s1_violation_pct"]
+value = "14.7"
+
+[[claim]]
+id = "speed-rule-slow-end"
+text = "Entre las rectas de menos de 89.2 mph le pasa al 36%"
+section = "§7"
+source = "speed_rule.json"
+path = ["final_v1", "s1_violation_pct_by_speed", "(0.0, 89.2]"]
+value = "36"
+
+[[claim]]
+id = "speed-rule-fixed"
+text = "Con la regla de velocidad le pasa al 0.0%"
+section = "§7"
+source = "speed_rule.json"
+path = ["monotone", "s1_violation_pct"]
+value = "0.0"
+
+[[claim]]
+id = "speed-rule-calibration"
+text = "Y la calibración no empeora: 0.841 contra 0.808 del modelo de datos"
+section = "§4"
+source = "speed_rule.json"
+path = ["evaluation", "student", "calib_slope"]
+value = "0.841"
+
+[[claim]]
+id = "speed-rule-teacher-calibration"
+text = "El modelo de datos calibra 0.808"
+section = "§4"
+source = "speed_rule.json"
+path = ["evaluation", "teacher", "calib_slope"]
+value = "0.808"
+
+[[claim]]
+id = "speed-rule-agreement"
+text = "Por lanzador, temporada y tipo coincide con el modelo de datos en r 0.994"
+section = "§4"
+source = "speed_rule.json"
+path = ["evaluation", "agreement_pitcher_season_r"]
+value = "0.994"
+
+[[claim]]
+id = "gate-s4-consistency"
+text = "El Simulador y el Radar coinciden para el mismo pitch: r 0.942 (S4)"
+section = "§7"
+source = "simulator_validation.json"
+path = ["gates", "id=S4", "value", "r"]
+value = "0.942"

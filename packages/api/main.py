@@ -13,12 +13,14 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Annotated, Literal
 
+import joblib
 from fastapi import Depends, FastAPI
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
 from api.arsenal_batch import Band, score_pitchers
 from api.arsenal_file import ArsenalFileError, summarize_arsenal
+from api.pitch_scores import MissingColumnsError, score_pitches
 from api.schemas import (
     ArsenalFileProblem,
     ArsenalFileRequest,
@@ -28,6 +30,9 @@ from api.schemas import (
     ArsenalScoresResponse,
     Metric,
     PitcherScoreOut,
+    PitchScoresProblem,
+    PitchScoresRequest,
+    PitchScoresResponse,
     Rate,
     SimulateRequest,
     SimulateResponse,
@@ -39,6 +44,7 @@ from api.schemas import (
 from api.simulator import SimulatorService, load_service
 from contracts.schemas import MIN_PITCHES_FOR_SCORE
 from core.translate import PitchShape, break_scaling_factor, translate
+from models.location.final import FinalLocationScorer
 
 REPO = Path(__file__).resolve().parents[2]
 
@@ -58,13 +64,24 @@ def health() -> Health:
     return Health(status="ok", version=app.version)
 
 
+# The model analysis/outputs/simulator_validation.json was published for
+# (docs/15): FINAL_v1 with the speed rule. Without it on disk (a fresh clone:
+# artifacts/ is not in git), the v0 bridge, which says it is not gated.
+PUBLISHED_MODEL = "stuff_plus_final_v1_monotone.joblib"
+BRIDGE_MODEL = "stuff_plus_v0_bridge.joblib"
+
+
+def default_model() -> str:
+    """The published model if it is in artifacts/, else the v0 bridge."""
+    published = REPO / "artifacts" / PUBLISHED_MODEL
+    return str(published if published.exists() else REPO / "artifacts" / BRIDGE_MODEL)
+
+
 @lru_cache(maxsize=1)
 def simulator_service() -> SimulatorService:
     """Load the simulator's evidence and model once per process."""
     outputs = os.environ.get("SUPERESTELA_OUTPUTS", str(REPO / "analysis" / "outputs"))
-    model = os.environ.get(
-        "SUPERESTELA_MODEL", str(REPO / "artifacts" / "stuff_plus_v0_bridge.joblib")
-    )
+    model = os.environ.get("SUPERESTELA_MODEL", default_model())
     return load_service(outputs, model)
 
 
@@ -138,9 +155,7 @@ def tax_validation(
     """
     if service.scorer is None:
         return None
-    model = os.environ.get(
-        "SUPERESTELA_MODEL", str(REPO / "artifacts" / "stuff_plus_v0_bridge.joblib")
-    )
+    model = os.environ.get("SUPERESTELA_MODEL", default_model())
     outputs = os.environ.get("SUPERESTELA_OUTPUTS", str(REPO / "analysis" / "outputs"))
     for path in (
         os.path.splitext(model)[0] + ".tax_check.json",
@@ -219,3 +234,46 @@ def score_arsenal_file(
         has_swings=result.has_swings,
         tax_validation=validation,
     )
+
+
+@lru_cache(maxsize=1)
+def location_scorer() -> FinalLocationScorer | None:
+    """Load data's final Location+ once per process, or None when it is not there."""
+    path = os.environ.get(
+        "SUPERESTELA_LOCATION_MODEL", str(REPO / "artifacts" / "location_plus_l3.joblib")
+    )
+    if not os.path.exists(path):
+        return None
+    model = joblib.load(path)
+    if not isinstance(model, FinalLocationScorer):
+        raise TypeError(f"{path} does not hold a FinalLocationScorer")
+    return model
+
+
+@app.post(
+    "/api/v1/pitches/score",
+    response_model=PitchScoresResponse,
+    response_model_by_alias=True,
+    responses={422: {"model": PitchScoresProblem}},
+)
+def score_pitch_rows(
+    req: PitchScoresRequest,
+    service: Annotated[SimulatorService, Depends(simulator_service)],
+    location: Annotated[FinalLocationScorer | None, Depends(location_scorer)],
+) -> PitchScoresResponse | JSONResponse:
+    """Stuff+ and Location+ of each pitch, each model on its own inputs (docs/15).
+
+    The Stuff+ model is the one the Simulator serves (``SUPERESTELA_MODEL``).
+    Unlike the Simulator, the score comes back even before the model has
+    passed its gates: this endpoint is for checking a model, and every
+    answer names the model and run behind it.
+    """
+    try:
+        return score_pitches(req, service.scorer, location)
+    except MissingColumnsError as exc:
+        problem = PitchScoresProblem(
+            error="missing_columns",
+            model="stuff" if exc.model == "stuff" else "location",
+            columns=exc.columns,
+        )
+        return JSONResponse(status_code=422, content=problem.model_dump(by_alias=True))
