@@ -17,11 +17,12 @@ const pitcher = async (key: string) => {
 }
 
 describe('la proyeccion de pitcher_00069 2025', () => {
-  it('la recta proyecta 15.6 ± 0.9 de IVB en altitud extrema, el mismo numero que el Simulador', async () => {
+  it('la recta proyecta 15.6 ± 1.8 de IVB en altitud extrema, el mismo numero que el Simulador', async () => {
     const [fastball] = projectedPitches(await pitcher('pitcher_00069/2025'))
     expect(fastball?.pitchType).toBe('Four-Seam')
     expect(fastball?.projected.hh.ivb.value).toBeCloseTo(15.61, 2)
-    expect(fastball?.projected.hh.ivb.se).toBe(0.92)
+    // The artifact's standard error (0.92) is shown as the 95% half-width.
+    expect(fastball?.projected.hh.ivb.se).toBeCloseTo(1.96 * 0.92, 9)
   })
 
   it('la mayoria de sus pitches con muestra en altura cae dentro de la banda (docs/10 T6)', async () => {

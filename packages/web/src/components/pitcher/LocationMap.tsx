@@ -1,4 +1,4 @@
-import { STRIKE_ZONE, type LocationPanel } from '@/domain/location'
+import { meanPlateHeightIn, STRIKE_ZONE, type LocationPanel } from '@/domain/location'
 import { formatNumber } from '@/domain/format'
 import { es } from '@/i18n/es'
 
@@ -75,7 +75,7 @@ export const LocationMap = ({
         {panel === null
           ? `${es.ficha.location.pending} ${es.ficha.location.pendingDetail}`
           : es.ficha.location.stats(
-              formatNumber(panel.meanPlateHeightFt, 2),
+              formatNumber(meanPlateHeightIn(panel)),
               formatNumber(100 * panel.zoneShare),
               formatNumber(100 * panel.whiffPerSwing),
             )}

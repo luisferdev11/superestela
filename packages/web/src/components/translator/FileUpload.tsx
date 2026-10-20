@@ -5,9 +5,11 @@ import { formatNumber } from '@/domain/format'
 import type { FileProblem } from '@/domain/translator'
 import {
   arsenalSummarySchema,
-  fileProblemSchema,
+  isBlank,
+  uploadProblemOf,
   type ArsenalSummary,
 } from '@/sources/arsenalSummary'
+import { FilePicker } from './FilePicker'
 import { es } from '@/i18n/es'
 
 /** El mismo tope que la API (`MAX_ARSENAL_FILE_CHARS`): mas grande no se manda. */
@@ -37,17 +39,15 @@ export const readText = (file: File): Promise<string> =>
   })
 
 const ask = async (csv: string): Promise<Upload & { readonly status: 'loaded' | 'error' }> => {
+  if (isBlank(csv)) return { status: 'error', problem: 'empty', columns: [] }
   const response = await fetch('/api/arsenals/summarize', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ csv }),
   })
-  const body: unknown = await response.json()
+  const body: unknown = await response.json().catch(() => null)
   if (response.ok) return { status: 'loaded', name: '', summary: arsenalSummarySchema.parse(body) }
-  const problem = fileProblemSchema.safeParse(body)
-  return problem.success
-    ? { status: 'error', problem: problem.data.error, columns: problem.data.columns }
-    : { status: 'error', problem: 'unreachable', columns: [] }
+  return { status: 'error', ...uploadProblemOf(response.status, body) }
 }
 
 /**
@@ -56,28 +56,45 @@ const ask = async (csv: string): Promise<Upload & { readonly status: 'loaded' | 
  * que conoce los nombres del proveedor; aqui solo se lee, se manda y se cuenta
  * lo que la API dejo fuera, para que nada se descarte en silencio.
  */
-export const FileUpload = ({ onLoad }: { readonly onLoad: (summary: ArsenalSummary) => void }) => {
+export const FileUpload = ({
+  onLoad,
+  onClear,
+}: {
+  readonly onLoad: (summary: ArsenalSummary) => void
+  /**
+   * A file that failed, or one already measured at extreme altitude: whatever
+   * an earlier file put in the table must not stay under the new message.
+   */
+  readonly onClear: () => void
+}) => {
   const id = useId()
   const [upload, setUpload] = useState<Upload>({ status: 'idle' })
+
+  const fail = (next: Upload & { readonly status: 'error' }): void => {
+    setUpload(next)
+    onClear()
+  }
 
   const handleFile = async (file: File | undefined): Promise<void> => {
     if (file === undefined) return
     if (file.size > MAX_FILE_BYTES) {
-      setUpload({ status: 'error', problem: 'tooLarge', columns: [] })
+      fail({ status: 'error', problem: 'tooLarge', columns: [] })
       return
     }
     setUpload({ status: 'reading' })
     try {
       const result = await ask(await readText(file))
-      if (result.status === 'loaded') {
-        setUpload({ ...result, name: file.name })
-        onLoad(result.summary)
-      } else {
-        setUpload(result)
+      if (result.status === 'error') {
+        fail(result)
+        return
       }
+      setUpload({ ...result, name: file.name })
+      // Already measured where the Translator projects to: nothing to translate.
+      if (result.summary.isMeasuredAtExtreme) onClear()
+      else onLoad(result.summary)
     } catch (error: unknown) {
       console.error(error)
-      setUpload({ status: 'error', problem: 'unreachable', columns: [] })
+      fail({ status: 'error', problem: 'unreachable', columns: [] })
     }
   }
 
@@ -87,13 +104,10 @@ export const FileUpload = ({ onLoad }: { readonly onLoad: (summary: ArsenalSumma
       <label htmlFor={id} className="text-[15px] font-bold">
         {copy.label}
       </label>
-      <input
+      <FilePicker
         id={id}
-        type="file"
-        accept=".csv,text/csv"
-        className="text-[13px]"
-        onChange={(event) => {
-          void handleFile(event.target.files?.[0])
+        onFile={(file) => {
+          void handleFile(file)
         }}
       />
       <p className="text-[12px] text-(--color-text-muted)">{copy.hint}</p>

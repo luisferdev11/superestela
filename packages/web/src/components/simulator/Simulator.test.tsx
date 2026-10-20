@@ -2,7 +2,7 @@ import { act, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { Simulator } from './Simulator'
 import type { Distributions, PitcherArsenal, PitchValues } from '@/domain/simulator'
-import { CONTROLS, PITCH_TYPES } from '@/domain/simulator'
+import { CONTROLS, PITCH_TYPES, simulatorHref } from '@/domain/simulator'
 import type { DensityScale } from '@/domain/density'
 import type { MovementMaps } from '@/domain/movementMap'
 import type { SimulateResponse } from '@/sources/simulateResponse'
@@ -137,6 +137,25 @@ describe('el Simulador', () => {
       [...CONTROLS, 'pitchType', 'pitcherHand'].sort(),
     )
     expect(screen.getByText('113.7')).toBeInTheDocument()
+  })
+
+  it('elegir lanzador o pitch deja la seleccion en la URL', () => {
+    const onPitcherChange = vi.fn()
+    render(
+      <Simulator
+        distributions={DISTRIBUTIONS}
+        maps={MAPS}
+        arsenals={ARSENALS}
+        scale={SCALE}
+        validation={null}
+        onPitcherChange={onPitcherChange}
+      />,
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Four-Seam' }))
+    expect(onPitcherChange).toHaveBeenLastCalledWith(
+      { pitcherKey: 'pitcher_00069/2025', pitchType: 'Four-Seam' },
+      simulatorHref('pitcher_00069', 2025, 'Four-Seam'),
+    )
   })
 
   it('no ofrece como punto de partida un pitch sin muestra', () => {

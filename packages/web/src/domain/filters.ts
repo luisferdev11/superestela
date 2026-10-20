@@ -13,9 +13,15 @@ import type { PitcherSeason, Role } from './types'
  * Funciones puras, fuera de los componentes (`CONVENTIONS.md` seccion 4,
  * regla 6), para que los tests no monten React.
  */
+/**
+ * A role, or `unknown` for the pitchers the rule could not classify (`role:
+ * null`): they are in the table as «Sin rol», so the filter must reach them.
+ */
+export type RoleFilter = Role | 'unknown'
+
 export type RadarFilters = {
   readonly throws: string | null
-  readonly role: Role | null
+  readonly role: RoleFilter | null
   readonly season: number | null
   readonly pitch: string | null
   readonly trapsOnly: boolean
@@ -44,14 +50,14 @@ export const isFiltered = (filters: RadarFilters): boolean =>
 export const throwsPitch = (card: PitcherSeason, pitch: string): boolean =>
   card.arsenal.some((entry) => entry.pitch === pitch)
 
-export const applyFilters = (
-  cards: readonly PitcherSeason[],
+export const applyFilters = <T extends PitcherSeason>(
+  cards: readonly T[],
   filters: RadarFilters,
-): readonly PitcherSeason[] => {
+): readonly T[] => {
   const query = filters.query.trim().toLowerCase()
   return cards.filter((card) => {
     if (filters.throws !== null && card.throws !== filters.throws) return false
-    if (filters.role !== null && card.role !== filters.role) return false
+    if (filters.role !== null && (card.role ?? 'unknown') !== filters.role) return false
     if (filters.season !== null && card.season !== filters.season) return false
     if (filters.trapsOnly && !card.altitudeTrap) return false
     if (filters.pitch !== null && !throwsPitch(card, filters.pitch)) return false
@@ -59,6 +65,10 @@ export const applyFilters = (
     return true
   })
 }
+
+/** Whether anyone in the cohort has no role: only then is «Sin rol» offered. */
+export const hasUnknownRole = (cards: readonly PitcherSeason[]): boolean =>
+  cards.some((card) => card.role === null)
 
 /** Los valores presentes en la cohorte, para no ofrecer un filtro que da cero. */
 export const availableThrows = (cards: readonly PitcherSeason[]): readonly string[] =>

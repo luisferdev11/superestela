@@ -33,6 +33,6 @@ describe('el mapa de ubicacion', () => {
     const cells = container.querySelectorAll('rect[fill-opacity]')
     expect(cells).toHaveLength(4)
     expect(cells[3]?.getAttribute('fill-opacity')).toBe('1')
-    expect(screen.getByText(es.ficha.location.stats('2.64', '42.4', '26.4'))).toBeInTheDocument()
+    expect(screen.getByText(es.ficha.location.stats('31.7', '42.4', '26.4'))).toBeInTheDocument()
   })
 })

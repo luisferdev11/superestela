@@ -152,7 +152,8 @@ describe('el archivo y la validacion', () => {
   })
 
   it('lo medido se juzga contra la banda al 95% y solo con 30 lanzamientos o mas', () => {
-    const projected = { ivb: { value: 15, se: 1 }, horizontalBreak: { value: 6, se: 1 } }
+    // `se` is the 95% half-width, already converted from the API's standard error.
+    const projected = { ivb: { value: 15, se: 1.96 }, horizontalBreak: { value: 6, se: 1.96 } }
     const measured = (pitchType: 'Four-Seam' | 'Slider', ivb: number, n: number) => ({
       ...PITCH,
       ivb,

@@ -1,6 +1,7 @@
 import 'server-only'
 import { readFile } from 'node:fs/promises'
 import { z } from 'zod'
+import { halfWidth95 } from '@/domain/band'
 import { projectionsPath } from './paths'
 import type { PitcherProjection, Projections } from '@/domain/projection'
 
@@ -50,7 +51,8 @@ export const projectionsSchema = z
 
 type Raw = z.infer<typeof projectionsSchema>
 
-const toMetric = (value: number, se: number) => ({ value, se })
+/** The artifact carries a standard error; the screen's «±» is the 95% half-width. */
+const toMetric = (value: number, se: number) => ({ value, se: halfWidth95(se) })
 
 const toPitcher = (key: string, raw: Raw['pitchers'][string]): PitcherProjection => ({
   key,

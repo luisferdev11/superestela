@@ -6,14 +6,17 @@ import { es } from '@/i18n/es'
  * de 370 celdas de Impuesto, o sea la columna, no un caso borde.
  */
 export const InconclusiveValue = ({ short = false }: { readonly short?: boolean }) => (
-  <span className="text-(--color-semantic-inconclusive)" title={es.inconclusive}>
+  <span className="whitespace-nowrap text-(--color-semantic-inconclusive)" title={es.inconclusive}>
     {short ? es.inconclusiveShort : es.inconclusive}
   </span>
 )
 
 /** Debajo del umbral de muestra no se dice un numero con banda enorme. */
 export const InsufficientSample = ({ short = false }: { readonly short?: boolean }) => (
-  <span className="text-(--color-semantic-inconclusive)" title={es.insufficientSample}>
+  <span
+    className="whitespace-nowrap text-(--color-semantic-inconclusive)"
+    title={es.insufficientSample}
+  >
     {short ? es.insufficientSampleShort : es.insufficientSample}
   </span>
 )

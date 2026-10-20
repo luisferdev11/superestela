@@ -1,6 +1,15 @@
 import { readFile } from 'node:fs/promises'
 import { describe, expect, it } from 'vitest'
-import { contributions, planOf, shiftHelps, shiftUsage, SHIFT_STEPS } from './plan'
+import {
+  contributions,
+  defaultShift,
+  planOf,
+  shiftHelps,
+  shiftOptions,
+  shiftUsage,
+  SHIFT_STEPS,
+  weightedToday,
+} from './plan'
 import { mockupDataPath } from '@/sources/paths'
 import { mockupDataSchema } from '@/sources/schema'
 import { toPitcherSeason } from '@/sources/adapter'
@@ -76,5 +85,27 @@ describe('el reparto de uso, en toda la liga', () => {
       const plan = planOf(card)
       if (plan !== null) expect(plan.degrades.pitch).not.toBe(plan.holds.pitch)
     }
+  })
+})
+
+describe('el ponderado de hoy y el deficit dicen lo mismo', () => {
+  it('pitcher_00019 2026: el ponderado de hoy es 100 mas el deficit, no el Stuff+ de la tarjeta', async () => {
+    const plan = planOf(await find('pitcher_00019', 2026))
+    if (plan === null) throw new Error('sin plan')
+    const today = weightedToday(plan)
+    const total = plan.contributions.reduce((s, c) => s + c.share, 0)
+    expect(today.value).toBeCloseTo(100 + plan.deficit.value / total, 9)
+    expect(today).toEqual(shiftUsage(plan, 0).before)
+  })
+
+  it('pitcher_00019 2026: la recta tiene 13.6% de uso, asi que no se ofrecen 20 ni 30 puntos', async () => {
+    const plan = planOf(await find('pitcher_00019', 2026))
+    if (plan === null) throw new Error('sin plan')
+    const available =
+      100 * (plan.contributions.find((c) => c.pitch === plan.degrades.pitch)?.share ?? 0)
+    expect(shiftOptions(plan)).toEqual(
+      [...SHIFT_STEPS.filter((s) => s < available), available].slice(0, SHIFT_STEPS.length),
+    )
+    expect(defaultShift(plan)).toBeLessThanOrEqual(available)
   })
 })

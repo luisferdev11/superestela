@@ -156,6 +156,8 @@ export type RosterRow = SeasonRow & {
   readonly pitcherId: string
   /** La tarjeta de esa temporada, si tiene score. */
   readonly card: PitcherSeason | null
+  /** The role the pitcher is grouped under: that of his last scored season. */
+  readonly group: Role | null
 }
 
 export type RosterGrouping = 'role' | 'all'
@@ -176,18 +178,17 @@ export const rosterRows = (
 ): readonly RosterRow[] => {
   const rows = ids.flatMap((pitcherId) => {
     const own = cardsOf(cards, pitcherId)
+    const group = pickSeason(own)?.role ?? null
     return seasonTimeline(seasonsByPitcher.get(pitcherId) ?? [], own).map((row) => ({
       ...row,
       pitcherId,
       card: own.find((c) => c.season === row.season) ?? null,
+      group,
     }))
   })
-  const roleOf = (id: string): Role | null => pickSeason(cardsOf(cards, id))?.role ?? null
   return rows.sort(
     (a, b) =>
-      (grouping === 'role'
-        ? ROLE_ORDER.indexOf(roleOf(a.pitcherId)) - ROLE_ORDER.indexOf(roleOf(b.pitcherId))
-        : 0) ||
+      (grouping === 'role' ? ROLE_ORDER.indexOf(a.group) - ROLE_ORDER.indexOf(b.group) : 0) ||
       a.pitcherId.localeCompare(b.pitcherId) ||
       a.season - b.season,
   )

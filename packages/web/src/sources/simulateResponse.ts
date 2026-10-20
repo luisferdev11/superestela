@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { PITCH_TYPES } from '@/domain/simulator'
+import { toBand95 } from '@/domain/band'
 
 /**
  * La respuesta de `POST /api/v1/simulate`, validada en la frontera
@@ -7,7 +8,11 @@ import { PITCH_TYPES } from '@/domain/simulator'
  * muestra el estado de error en vez de dibujar numeros a medias.
  */
 
-const metric = z.object({ value: z.number(), se: z.number().nonnegative() })
+/**
+ * The API sends a standard error; the screens show the 95% half-width, the one
+ * «±» convention (`docs/12` §2.1). The conversion happens here, once.
+ */
+const metric = z.object({ value: z.number(), se: z.number().nonnegative() }).transform(toBand95)
 
 const differentials = z.object({
   releaseSpeed: z.number(),

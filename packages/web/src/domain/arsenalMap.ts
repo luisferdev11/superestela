@@ -1,4 +1,9 @@
-import { baselinePitches, type ArsenalPitch, type PitcherArsenal } from './simulator'
+import {
+  baselinePitches,
+  MIN_PITCHES_FOR_BASELINE,
+  type ArsenalPitch,
+  type PitcherArsenal,
+} from './simulator'
 
 /**
  * El mapa de movimiento de la Ficha: el arsenal medido en los dos entornos,
@@ -17,8 +22,17 @@ export type LeagueShapes = ReadonlyMap<
 
 export type MapPitch = {
   readonly pitchType: string
-  /** El uso a nivel del mar, o en altura si solo ahi hay muestra. */
-  readonly usage: number
+  /**
+   * The sea-level usage, as the caption says; `null` when the pitch was not
+   * thrown at sea level at all. Never the altitude usage: mixing the two made
+   * the labels add up to more than 100%.
+   */
+  readonly usage: number | null
+  /**
+   * Thrown at sea level, but fewer times than the minimum to draw its shape
+   * (`MIN_PITCHES_FOR_BASELINE`, the Simulator's and the Projection's too).
+   */
+  readonly seaBelowMinimum?: boolean
   readonly sea: Shape | null
   readonly hh: Shape | null
   readonly league: Shape | null
@@ -39,18 +53,54 @@ export const arsenalMapPitches = (
     .map((pitchType): MapPitch => {
       const s = sea.find((p) => p.pitchType === pitchType)
       const h = hh.find((p) => p.pitchType === pitchType)
+      const seaAny = arsenal.sea.find((p) => p.pitchType === pitchType)
       const own = s ?? h
       const avg = league.get(pitchType)?.sea ?? null
       const side = own === undefined || own.horizontalBreak >= 0 ? 1 : -1
       return {
         pitchType,
-        usage: s?.usage ?? h?.usage ?? 0,
+        usage: seaAny?.usage ?? null,
+        seaBelowMinimum: seaAny !== undefined && seaAny.n < MIN_PITCHES_FOR_BASELINE,
         sea: shapeOf(s),
         hh: shapeOf(h),
         league: avg === null ? null : { ivb: avg.ivb, hb: side * avg.absHb },
       }
     })
-    .sort((a, b) => b.usage - a.usage)
+    .sort((a, b) => (b.usage ?? -1) - (a.usage ?? -1))
+}
+
+/** A label on the map: where its anchor point is and roughly how wide it reads. */
+export type LabelBox = {
+  readonly x: number
+  readonly y: number
+  readonly width: number
+  /** `end`: the text runs to the left of `x`. */
+  readonly anchor: 'start' | 'end'
+}
+
+const extent = (b: LabelBox): readonly [number, number] =>
+  b.anchor === 'start' ? [b.x, b.x + b.width] : [b.x - b.width, b.x]
+
+/**
+ * Nudges labels down, top to bottom, until no two overlap: a simple collision
+ * pass so two pitches with close shapes do not print one name over the other.
+ * Returns the new `y` of each label, in the order given.
+ */
+export const separateLabels = (boxes: readonly LabelBox[], lineHeight: number): number[] => {
+  const order = boxes.map((b, i) => ({ b, i })).sort((p, q) => p.b.y - q.b.y)
+  const placed: { readonly x: readonly [number, number]; readonly y: number }[] = []
+  const ys = boxes.map((b) => b.y)
+  for (const { b, i } of order) {
+    const [left, right] = extent(b)
+    let y = b.y
+    for (const other of [...placed].sort((p, q) => p.y - q.y)) {
+      const overlapsX = left < other.x[1] && other.x[0] < right
+      if (overlapsX && Math.abs(y - other.y) < lineHeight) y = other.y + lineHeight
+    }
+    placed.push({ x: [left, right], y })
+    ys[i] = y
+  }
+  return ys
 }
 
 /**

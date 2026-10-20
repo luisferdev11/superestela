@@ -23,6 +23,15 @@ export type PitcherLocation = {
   readonly hh: LocationPanel | null
 }
 
+const INCHES_PER_FOOT = 12
+
+/**
+ * The mean plate height in inches: the rest of the Arsenal tab (break, the
+ * reading of how much it changes) speaks inches, so one unit on the screen.
+ */
+export const meanPlateHeightIn = (panel: LocationPanel): number =>
+  INCHES_PER_FOOT * panel.meanPlateHeightFt
+
 /** Llave de `locations.json`, la misma de `arsenals.json`. */
 export const locationKey = (pitcherId: string, season: number): string =>
   `${pitcherId}/${String(season)}`

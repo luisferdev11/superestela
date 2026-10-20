@@ -31,7 +31,7 @@ import numpy as np
 import numpy.typing as npt
 import pandas as pd
 
-from api.arsenal_file import ArsenalFileError
+from api.arsenal_file import ArsenalFileError, missing_columns
 from contracts.mapping import normalize_columns
 from contracts.schemas import MIN_PITCHES_FOR_SCORE, MIN_SWINGS_FOR_RATE
 from core.density import DENSITY_INDEX_EXTREME, DENSITY_INDEX_SEA_LEVEL
@@ -197,7 +197,7 @@ def score_pitchers(
         raise ArsenalFileError("empty")
     missing = tuple(c for c in (*REQUIRED, PITCHER) if c not in df.columns)
     if missing:
-        raise ArsenalFileError("missing_columns", missing)
+        raise missing_columns(missing)
     if df[PITCHER].nunique() > MAX_PITCHERS:
         raise ArsenalFileError("too_many_pitchers")
 

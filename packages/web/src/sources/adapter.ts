@@ -8,6 +8,7 @@ import type {
   seasonEntrySchema,
 } from './schema'
 import type { DensityLevel } from '@/domain/density'
+import { halfWidth95 } from '@/domain/band'
 
 /**
  * El unico lugar del proyecto donde `snake_case` se vuelve `camelCase`.
@@ -61,16 +62,24 @@ export const toPitcherSeason = (raw: PitcherCardRaw): PitcherSeason => ({
   stuffPlusDelta: raw.stuff_plus_delta,
   role: raw.role,
   medianEntryInning: raw.median_entry_inning,
+  // The artifact carries the tax's standard error; the screens show the 95%
+  // half-width, like every other «±». «Significant» is the same test either
+  // way: |tax| > 1.96 SE is the 95% band not crossing zero.
   altitudeTax:
     raw.altitude_tax_significant &&
     raw.altitude_tax_runs_per_9 !== null &&
     raw.altitude_tax_se !== null
-      ? { value: raw.altitude_tax_runs_per_9, se: raw.altitude_tax_se }
+      ? { value: raw.altitude_tax_runs_per_9, se: halfWidth95(raw.altitude_tax_se) }
       : null,
-  altitudeTaxMeasured: toMetric(raw.altitude_tax_runs_per_9, raw.altitude_tax_se),
+  altitudeTaxMeasured: toMetric(
+    raw.altitude_tax_runs_per_9,
+    raw.altitude_tax_se === null ? null : halfWidth95(raw.altitude_tax_se),
+  ),
   meanIvbLossIn: raw.mean_ivb_loss_in,
   altitudeTrap: raw.altitude_trap,
-  outcomes: toOutcomes(raw.outcomes),
+  // `raw.outcomes` is the whole season, middle altitude included: a rate no
+  // screen shows. The Radar and the Ficha read the per-environment rates of
+  // `pitcher_seasons`, so the same pitcher shows the same number on both.
   arsenal: raw.arsenal.map(toArsenalEntry),
 })
 

@@ -130,10 +130,13 @@ las pantallas, y el Traductor es para quien no está en los datos (`docs/12` §2
       del mar: la recta y la curva caen en la banda, el slider no (IVB 5.4 ± 1.2 proyectado, 2.7
       medido), y eso es una pregunta para datos. Queda por decidir si los tipos con muy poca muestra
       entran a la tabla.
-- [ ] **5 · Aplicar la convención del «±».** **Decidida el 1 de octubre: la banda al 95% en todas las
-      pantallas** (`docs/12` §2.1). Hoy, en el Radar y la Ficha ya es la banda; en el Impuesto, el
-      Simulador, el Traductor y la Proyección es un error estándar, y hay que pasarlos a la banda.
-      ✔ Ninguna pantalla muestra un error estándar como «±», y la guía del Radar dice la convención.
+- [x] **5 · Aplicar la convención del «±».** **Decidida el 1 de octubre: la banda al 95% en todas las
+      pantallas** (`docs/12` §2.1). El Impuesto, el Simulador, el Traductor y la Proyección traían un
+      error estándar; ahora se convierte a la banda (1.96 errores) en la frontera de cada fuente
+      (`adapter.ts`, `simulateResponse.ts`, `projectionSource.ts`; `domain/band.ts`), y «en banda»
+      compara contra esa misma banda.
+      ✔ Ninguna pantalla muestra un error estándar como «±», y la guía del Radar dice la convención
+      (`domain/band.test.ts` lo vigila en la copia).
 - [ ] **6 · Cifras de los documentos sin corrida** (tabla abajo, en «Revisión de código»): se
       calculan en `evidence.py` o se quitan de los documentos.
       ✔ `grep` de cada una en `docs/` solo devuelve citas con su artefacto.

@@ -6,6 +6,7 @@ import { RateValue } from '@/components/metric/RateValue'
 import {
   DEFAULT_MANY_SORT,
   firstManyDirection,
+  isManyFiltered,
   NO_MANY_FILTERS,
   toBand95,
   viewOf,
@@ -16,8 +17,9 @@ import { nextSort, type SortState } from '@/domain/tableSort'
 import { formatNumber } from '@/domain/format'
 import type { FileProblem } from '@/domain/translator'
 import { arsenalScoresSchema, type ArsenalScores } from '@/sources/arsenalScores'
-import { fileProblemSchema } from '@/sources/arsenalSummary'
+import { isBlank, uploadProblemOf } from '@/sources/arsenalSummary'
 import { MAX_FILE_BYTES, readText } from './FileUpload'
+import { FilePicker } from './FilePicker'
 import { es } from '@/i18n/es'
 
 const copy = es.translator.many
@@ -53,17 +55,15 @@ const cell = `${base} text-right`
 const cellLeft = `${base} text-left`
 
 const ask = async (csv: string): Promise<State> => {
+  if (isBlank(csv)) return { status: 'error', problem: 'empty', columns: [] }
   const response = await fetch('/api/arsenals/score', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ csv }),
   })
-  const body: unknown = await response.json()
+  const body: unknown = await response.json().catch(() => null)
   if (response.ok) return { status: 'loaded', scores: arsenalScoresSchema.parse(body) }
-  const problem = fileProblemSchema.safeParse(body)
-  return problem.success
-    ? { status: 'error', problem: problem.data.error, columns: problem.data.columns }
-    : { status: 'error', problem: 'unreachable', columns: [] }
+  return { status: 'error', ...uploadProblemOf(response.status, body) }
 }
 
 /**
@@ -103,13 +103,10 @@ export const ManyPitchers = () => {
         <label htmlFor={ids.file} className="text-[15px] font-bold">
           {copy.upload}
         </label>
-        <input
+        <FilePicker
           id={ids.file}
-          type="file"
-          accept=".csv,text/csv"
-          className="text-[13px]"
-          onChange={(event) => {
-            void handleFile(event.target.files?.[0])
+          onFile={(file) => {
+            void handleFile(file)
           }}
         />
         <p className="text-[12px] text-(--color-text-muted)">{copy.hint}</p>
@@ -280,7 +277,9 @@ export const ManyPitchers = () => {
             </table>
           </div>
           {rows.length === 0 ? (
-            <p className="py-6 text-center text-sm text-(--color-text-muted)">{copy.empty}</p>
+            <p className="py-6 text-center text-sm text-(--color-text-muted)">
+              {isManyFiltered(filters) ? copy.empty : copy.noneScored(scores.minPitches)}
+            </p>
           ) : null}
           <p className="text-[11px] text-(--color-text-muted)">{copy.band}</p>
         </section>

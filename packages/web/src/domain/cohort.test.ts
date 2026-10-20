@@ -14,6 +14,7 @@ import {
   sortRadar,
 } from './ranking'
 import { nextSort } from './tableSort'
+import { MIN_PLATE_APPEARANCES_FOR_RATE } from './constants'
 
 /**
  * `README`, regla 2: ningun numero sin su corrida.
@@ -101,6 +102,24 @@ describe('el contraste entre entornos es el producto', () => {
   })
 })
 
+describe('las tasas del Radar son las de la Ficha', () => {
+  it('cada fila trae las tasas en altitud extrema de su temporada, banda incluida', async () => {
+    const { cards, seasonsByPitcher } = await load()
+    for (const card of selectRadarCohort(cards, seasonsByPitcher)) {
+      const entry = seasonsByPitcher.get(card.pitcherId)?.find((s) => s.season === card.season)
+      expect(card.ratesHh).toEqual(entry?.outcomesHh)
+    }
+  })
+
+  it('debajo del minimo de turnos no hay K-BB%, aunque la temporada completa lo tenga', async () => {
+    const { cards, seasonsByPitcher } = await load()
+    const cohort = selectRadarCohort(cards, seasonsByPitcher)
+    const thin = cohort.filter((c) => c.ratesHh.plateAppearances < MIN_PLATE_APPEARANCES_FOR_RATE)
+    expect(thin.length).toBeGreaterThan(0)
+    for (const card of thin) expect(card.ratesHh.kMinusBbPct).toBeNull()
+  })
+})
+
 describe('ordenar el radar por columna', () => {
   const nullsLast = (values: readonly (number | null)[], direction: 'desc' | 'asc') => {
     const firstNull = values.indexOf(null)
@@ -113,20 +132,19 @@ describe('ordenar el radar por columna', () => {
   }
 
   it('K-BB% de mayor a menor y al reves, con la muestra insuficiente siempre al final', async () => {
-    const { cards } = await load()
+    const { cards, seasonsByPitcher } = await load()
+    const cohort = selectRadarCohort(cards, seasonsByPitcher)
     for (const direction of ['desc', 'asc'] as const) {
-      const sorted = sortRadar(cards, { key: 'kMinusBb', direction })
-      expect(
-        nullsLast(
-          sorted.map((c) => c.outcomes.kMinusBbPct?.value ?? null),
-          direction,
-        ),
-      ).toBe(true)
+      const sorted = sortRadar(cohort, { key: 'kMinusBb', direction })
+      const values = sorted.map((c) => c.ratesHh.kMinusBbPct?.value ?? null)
+      expect(nullsLast(values, direction)).toBe(true)
+      expect(values).toContain(null)
     }
   })
 
   it('el impuesto ordena solo los concluyentes; los demas van al final', async () => {
-    const { cards } = await load()
+    const { cards: all, seasonsByPitcher } = await load()
+    const cards = selectRadarCohort(all, seasonsByPitcher)
     const sorted = sortRadar(cards, { key: 'tax', direction: 'desc' })
     const values = sorted.map((c) => c.altitudeTax?.value ?? null)
     expect(nullsLast(values, 'desc')).toBe(true)
@@ -134,7 +152,8 @@ describe('ordenar el radar por columna', () => {
   })
 
   it('con un pitch elegido, ordena por el Stuff+ de ese pitch', async () => {
-    const { cards } = await load()
+    const { cards: all, seasonsByPitcher } = await load()
+    const cards = selectRadarCohort(all, seasonsByPitcher)
     const withSlider = cards.filter((c) => c.arsenal.some((e) => e.pitch === 'Slider'))
     const sorted = sortRadar(withSlider, DEFAULT_RADAR_SORT, 'Slider')
     const values = sorted.map((c) => focusOf(c, 'Slider').hh?.value ?? null)

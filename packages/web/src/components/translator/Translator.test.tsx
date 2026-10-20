@@ -133,10 +133,11 @@ describe('el Traductor', () => {
   it('pondera el arsenal por uso con lo que contesta la API', async () => {
     renderTranslator()
     await settle()
-    // 0.75 × 94 + 0.25 × 106 = 97.0; la banda, independiente: hypot(3, 1) = 3.2.
-    expect(screen.getByText('97.0 ± 3.2')).toBeInTheDocument()
+    // 0.75 × 94 + 0.25 × 106 = 97.0. The API's SE of 4 is a 95% half-width of 7.84;
+    // independent pitches: hypot(0.75, 0.25) × 7.84 = 6.2. IVB: 1.96 × 0.9 = 1.8.
+    expect(screen.getByText('97.0 ± 6.2')).toBeInTheDocument()
     // Dos en la traduccion y dos en la validacion, que pone lo proyectado junto a lo medido.
-    expect(screen.getAllByText('15.6 ± 0.9')).toHaveLength(4)
+    expect(screen.getAllByText('15.6 ± 1.8')).toHaveLength(4)
   })
 
   it('cambiar el origen vuelve a preguntar con la densidad de altitud media y avisa que extrapola', async () => {
@@ -176,14 +177,14 @@ describe('el Traductor', () => {
     vi.spyOn(console, 'error').mockImplementation(() => undefined)
     renderTranslator()
     await settle()
-    expect(screen.getByText('97.0 ± 3.2')).toBeInTheDocument()
+    expect(screen.getByText('97.0 ± 6.2')).toBeInTheDocument()
     vi.mocked(fetch).mockImplementation(() => Promise.reject(new Error('down')))
     fireEvent.change(screen.getByLabelText(`${es.translator.editor.pitch} 2`), {
       target: { value: 'Curveball' },
     })
     await settle()
     expect(screen.getByText(es.sim.status.unreachable)).toBeInTheDocument()
-    expect(screen.queryByText('97.0 ± 3.2')).not.toBeInTheDocument()
+    expect(screen.queryByText('97.0 ± 6.2')).not.toBeInTheDocument()
   })
 
   it('si la API no contesta lo dice, y la tabla sigue editable', async () => {
@@ -240,7 +241,7 @@ describe('el Traductor', () => {
     vi.mocked(fetch).mockImplementation((url) =>
       Promise.resolve(
         url === '/api/arsenals/summarize'
-          ? new Response(JSON.stringify({ error: 'missing_columns', columns: ['spin_rate'] }), {
+          ? new Response(JSON.stringify({ error: 'missing_columns', columns: ['SpinRate'] }), {
               status: 422,
             })
           : new Response(JSON.stringify(response(114, 94)), { status: 200 }),
@@ -255,7 +256,67 @@ describe('el Traductor', () => {
     })
     await settle()
     expect(
-      screen.getByText(`${es.translator.upload.problems.missing_columns} spin_rate.`),
+      screen.getByText(`${es.translator.upload.problems.missing_columns} SpinRate.`),
     ).toBeInTheDocument()
+    // The example's rows do not stay under the error.
+    expect(screen.queryByLabelText(`Four-Seam · ${es.sim.controls.releaseSpeed}`)).toBeNull()
+  })
+
+  const uploadFile = async (text: string, name: string) => {
+    await act(async () => {
+      fireEvent.change(screen.getByLabelText(es.translator.upload.label), {
+        target: { files: [new File([text], name)] },
+      })
+      await vi.advanceTimersByTimeAsync(0)
+    })
+    await settle()
+  }
+
+  it('un archivo vacio dice que no trae lanzamientos, no que la API no contesta', async () => {
+    renderTranslator()
+    await settle()
+    const asked = vi.mocked(fetch).mock.calls.length
+    await uploadFile('', 'vacio.csv')
+    expect(screen.getByText(es.translator.upload.problems.empty)).toBeInTheDocument()
+    expect(vi.mocked(fetch).mock.calls).toHaveLength(asked)
+  })
+
+  it('un rechazo de la API que no es del archivo se lee como archivo ilegible', async () => {
+    vi.mocked(fetch).mockImplementation(() =>
+      Promise.resolve(new Response(JSON.stringify({ detail: [] }), { status: 422 })),
+    )
+    renderTranslator()
+    await uploadFile('x', 'raro.csv')
+    expect(screen.getByText(es.translator.upload.problems.unreadable)).toBeInTheDocument()
+  })
+
+  it('un archivo medido en altitud extrema avisa y no se traduce', async () => {
+    renderTranslator()
+    await settle()
+    vi.mocked(fetch).mockImplementation((url) =>
+      Promise.resolve(
+        new Response(
+          JSON.stringify(
+            url === '/api/arsenals/summarize'
+              ? { ...SUMMARY, origin: null, isMeasuredAtExtreme: true }
+              : response(114, 94),
+          ),
+          { status: 200 },
+        ),
+      ),
+    )
+    await uploadFile('csv', 'altura.csv')
+    await settle()
+    expect(screen.getByText(es.translator.upload.extreme)).toBeInTheDocument()
+    expect(screen.queryByText('97.0 ± 6.2')).not.toBeInTheDocument()
+    expect(screen.queryByLabelText(`Sinker · ${es.sim.controls.releaseSpeed}`)).toBeNull()
+  })
+
+  it('el selector de archivo habla espanol y muestra el nombre elegido', async () => {
+    renderTranslator()
+    expect(screen.getByText(es.translator.upload.noFile)).toBeInTheDocument()
+    expect(screen.getByText(es.translator.upload.choose)).toBeInTheDocument()
+    await uploadFile('csv', 'agente.csv')
+    expect(screen.getAllByText('agente.csv').length).toBeGreaterThan(0)
   })
 })

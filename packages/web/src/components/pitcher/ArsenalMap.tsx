@@ -1,4 +1,5 @@
-import { mapHalfSpan, type MapPitch, type Shape } from '@/domain/arsenalMap'
+import { mapHalfSpan, separateLabels, type MapPitch, type Shape } from '@/domain/arsenalMap'
+import { MIN_PITCHES_FOR_BASELINE } from '@/domain/simulator'
 import { formatNumber } from '@/domain/format'
 import { MovementMapHelp } from '@/components/map/MovementMapHelp'
 import { es } from '@/i18n/es'
@@ -14,35 +15,67 @@ const STEP_IN = 6
 const shapeText = (s: Shape | null): string =>
   s === null ? es.ficha.map.none : `${formatNumber(s.ivb)}″ IVB, ${formatNumber(s.hb)}″ HB`
 
-/** El nombre y el uso junto al punto de altura, o al del mar si solo ahi hay muestra. */
-const PitchLabel = ({
-  pitch,
-  x,
-  y,
-}: {
+/** Roughly how wide a character reads at `FONT`, to keep labels from overlapping. */
+const CHAR_WIDTH = 0.56 * FONT
+const LINE_HEIGHT = FONT + 3
+
+const usageText = (pitch: MapPitch): string =>
+  pitch.usage === null ? es.ficha.map.noSeaUsage : es.ficha.map.usage(pitch.usage)
+
+type PlacedLabel = {
   readonly pitch: MapPitch
-  readonly x: (hb: number) => number
-  readonly y: (ivb: number) => number
-}) => {
-  const at = pitch.hh ?? pitch.sea
-  if (at === null) return null
-  // Cerca del borde del brazo, la etiqueta va a la izquierda del punto: si no, se corta.
-  const isNearRight = x(at.hb) > M.left + SIZE * 0.6
-  return (
-    <text
-      x={x(at.hb) + (isNearRight ? -10 : 10)}
-      y={y(at.ivb) + 18}
-      textAnchor={isNearRight ? 'end' : 'start'}
-      fontSize={FONT}
-      fill="var(--color-text)"
-    >
-      <tspan fontWeight="600">{pitch.pitchType}</tspan>
-      <tspan dx="4" fill="var(--color-text-muted)">
-        {es.ficha.map.usage(pitch.usage)}
-      </tspan>
-    </text>
-  )
+  readonly x: number
+  readonly y: number
+  readonly anchor: 'start' | 'end'
 }
+
+/**
+ * Name and usage next to the altitude point, or the sea-level one when only
+ * that exists. Close shapes would print one label over another, so they are
+ * nudged apart (`separateLabels`).
+ */
+const placeLabels = (
+  pitches: readonly MapPitch[],
+  x: (hb: number) => number,
+  y: (ivb: number) => number,
+): readonly PlacedLabel[] => {
+  const raw = pitches.flatMap((pitch) => {
+    const at = pitch.hh ?? pitch.sea
+    if (at === null) return []
+    // Near the arm-side edge the label goes to the left of the point, or it is cut.
+    const isNearRight = x(at.hb) > M.left + SIZE * 0.6
+    const anchor: 'start' | 'end' = isNearRight ? 'end' : 'start'
+    return [
+      {
+        pitch,
+        x: x(at.hb) + (isNearRight ? -10 : 10),
+        y: y(at.ivb) + 18,
+        anchor,
+        width: CHAR_WIDTH * (pitch.pitchType.length + 1 + usageText(pitch).length),
+      },
+    ]
+  })
+  const ys = separateLabels(raw, LINE_HEIGHT)
+  return raw.map((label, i) => ({ ...label, y: ys[i] ?? label.y }))
+}
+
+const PitchLabel = ({ label }: { readonly label: PlacedLabel }) => (
+  <text
+    x={label.x}
+    y={label.y}
+    textAnchor={label.anchor}
+    fontSize={FONT}
+    fill="var(--color-text)"
+    stroke="var(--color-surface-card)"
+    strokeWidth={3}
+    paintOrder="stroke"
+  >
+    <tspan fontWeight="600">{label.pitch.pitchType}</tspan>
+    <tspan dx="4" fill="var(--color-text-muted)">
+      {usageText(label.pitch)}
+    </tspan>
+  </text>
+)
 
 /**
  * El arsenal completo sobre el plano de break (`Ficha.dc.html`): cada pitch a
@@ -66,6 +99,8 @@ export const ArsenalMap = ({
   const y = (ivb: number): number => M.top + (SIZE * (half - ivb)) / (2 * half)
   const ticks: number[] = []
   for (let t = -half; t <= half; t += STEP_IN) ticks.push(t)
+  const labels = placeLabels(pitches, x, y)
+  const fewAtSea = pitches.filter((p) => p.seaBelowMinimum === true).map((p) => p.pitchType)
 
   return (
     <figure className="m-0 flex flex-col gap-2 border border-(--color-border) bg-(--color-surface-card) p-5">
@@ -224,11 +259,19 @@ export const ArsenalMap = ({
             {p.hh === null ? null : (
               <circle cx={x(p.hh.hb)} cy={y(p.hh.ivb)} r="6" fill="var(--color-diablos)" />
             )}
-            <PitchLabel pitch={p} x={x} y={y} />
           </g>
+        ))}
+        {/* Labels last, so no point is drawn over a name. */}
+        {labels.map((label) => (
+          <PitchLabel key={label.pitch.pitchType} label={label} />
         ))}
       </svg>
       <p className="text-[11px] text-(--color-text-muted)">{note}</p>
+      {fewAtSea.length === 0 ? null : (
+        <p className="text-[11px] text-(--color-text-muted)">
+          {es.ficha.map.belowMinimum(fewAtSea.join(', '), MIN_PITCHES_FOR_BASELINE)}
+        </p>
+      )}
     </figure>
   )
 }

@@ -13,7 +13,8 @@ import {
   planHref,
   projectionHref,
 } from '@/domain/pitcher'
-import { planOf } from '@/domain/plan'
+import { planOf, weightedToday } from '@/domain/plan'
+import { formatMetric } from '@/domain/format'
 import { canSimulate, simulatorHref } from '@/domain/simulator'
 import { loadDataset } from '@/sources/mockupSource'
 import { loadSimulatorDataset } from '@/sources/simulatorSource'
@@ -65,14 +66,30 @@ export const PlanPage = async ({
           <p className="mt-0.5 text-[13px] text-(--color-text-muted)">{es.plan.subtitle}</p>
         </div>
         <div className="flex items-center gap-6">
-          <div className="flex items-baseline gap-2.5">
-            <span className="text-[10px] font-bold tracking-widest text-(--color-text-muted) uppercase">
-              {es.plan.today}
-            </span>
-            <span className="text-[26px]">
-              <MetricValue metric={card.stuffPlusHh} />
-            </span>
-          </div>
+          {plan === null ? (
+            <div className="flex items-baseline gap-2.5">
+              <span className="text-[10px] font-bold tracking-widest text-(--color-text-muted) uppercase">
+                {es.plan.todayCard}
+              </span>
+              <span className="text-[26px]">
+                <MetricValue metric={card.stuffPlusHh} />
+              </span>
+            </div>
+          ) : (
+            <div className="flex max-w-[360px] flex-col items-end gap-0.5">
+              <div className="flex items-baseline gap-2.5">
+                <span className="text-[10px] font-bold tracking-widest text-(--color-text-muted) uppercase">
+                  {es.plan.today}
+                </span>
+                <span className="text-[26px]">
+                  <MetricValue metric={weightedToday(plan)} />
+                </span>
+              </div>
+              <p className="m-0 text-right text-[11px] text-(--color-text-muted)">
+                {es.plan.todayNote(formatMetric(card.stuffPlusHh))}
+              </p>
+            </div>
+          )}
         </div>
       </div>
       {plan === null ? (

@@ -17,6 +17,7 @@ import {
   buildRequest,
   changedControls,
   leagueMedian,
+  simulatorHref,
   sliderSpec,
   type Control,
   type Distributions,
@@ -76,6 +77,7 @@ export const Simulator = ({
   scale,
   validation,
   start = null,
+  onPitcherChange,
 }: {
   readonly distributions: Distributions
   readonly maps: MovementMaps
@@ -84,6 +86,11 @@ export const Simulator = ({
   readonly validation: Validation | null
   /** De donde parte si se llega desde la Ficha; `null` es el lanzador por defecto. */
   readonly start?: SimulatorStart | null
+  /**
+   * Called with the address of the pitcher and pitch now shown, so the URL
+   * follows the selection and can be shared or reloaded.
+   */
+  readonly onPitcherChange?: (start: SimulatorStart, href: string) => void
 }) => {
   const byKey = useMemo(() => new Map(arsenals.map((a) => [a.key, a])), [arsenals])
   const first = arsenals.find((a) => a.pitcherId === DEFAULT_PITCHER) ?? arsenals[0] ?? null
@@ -128,6 +135,12 @@ export const Simulator = ({
     const resolved = { ...merged, pitchType }
     setSelection(resolved)
     setValues(baselineOf(resolved))
+    if (resolved.mode === 'pitcher' && arsenal !== undefined) {
+      onPitcherChange?.(
+        { pitcherKey: resolved.pitcherKey, pitchType },
+        simulatorHref(arsenal.pitcherId, arsenal.season, pitchType),
+      )
+    }
   }
 
   const arsenal = byKey.get(selection.pitcherKey)
