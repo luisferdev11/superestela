@@ -5,6 +5,7 @@ import {
   availablePitches,
   availableSeasons,
   availableThrows,
+  hasUnknownRole,
   isFiltered,
   NO_FILTERS,
   type RadarFilters as Filters,
@@ -100,7 +101,10 @@ export const RadarFilters = ({
           value={filters.role ?? ''}
           onChange={(event) => {
             const value = event.target.value
-            set({ role: ROLES.find((r: Role) => r === value) ?? null })
+            set({
+              role:
+                value === 'unknown' ? 'unknown' : (ROLES.find((r: Role) => r === value) ?? null),
+            })
           }}
         >
           <option value="">{es.filterBar.all}</option>
@@ -109,6 +113,7 @@ export const RadarFilters = ({
               {es.rolePlural[role]}
             </option>
           ))}
+          {hasUnknownRole(cards) ? <option value="unknown">{es.unknownRole}</option> : null}
         </select>
       </div>
 
