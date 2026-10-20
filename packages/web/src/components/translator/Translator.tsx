@@ -149,7 +149,7 @@ export const Translator = ({
       ? []
       : rows.map((r, i) => ({
           pitchType: r.pitchType,
-          usage: shares[i] ?? 0,
+          usage: shares[i] ?? null,
           sea: {
             ivb: current[i]?.sea.shape.ivb.value ?? r.ivb,
             hb: current[i]?.sea.shape.horizontalBreak.value ?? r.horizontalBreak,

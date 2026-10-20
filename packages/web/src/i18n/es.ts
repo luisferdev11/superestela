@@ -238,7 +238,7 @@ export const es = {
       simulate: 'abrir \u2192',
       simulateLabel: (pitch: string): string => `Abrir el ${pitch} en el Simulador`,
       measuredAt:
-        'Uso, velocidad, spin y whiff, medidos en altitud extrema. IVB y |HB| en pulgadas; Stuff+ con su banda al 95%.',
+        'Uso, velocidad, spin y whiff, medidos en altitud extrema. IVB y |HB| en pulgadas; Stuff+ con su banda al 95%. Solo entran los pitches con muestra en altitud extrema; su forma a nivel del mar se da aunque all\u00ed tenga menos lanzamientos de los que el mapa, la Proyecci\u00f3n y el Simulador piden para partir.',
       noSea: 'sin muestra a nivel del mar',
     },
     map: {
@@ -253,10 +253,13 @@ export const es = {
       axisX: 'break horizontal (pulgadas)',
       axisY: 'IVB',
       usage: (share: number): string => `${(100 * share).toFixed(1)}% de uso`,
+      noSeaUsage: 'sin muestra a nivel del mar',
+      belowMinimum: (pitches: string, min: number): string =>
+        `${pitches}: sin punto a nivel del mar, con menos de ${String(min)} lanzamientos ah\u00ed (el m\u00ednimo del Simulador y la Proyecci\u00f3n). Su uso s\u00ed es el de nivel del mar.`,
       label: (pitch: string, sea: string, hh: string): string =>
         `${pitch}: ${sea} a nivel del mar, ${hh} en altitud extrema`,
       none: 'sin muestra',
-      note: 'Forma medida en cada entorno, no simulada. Break horizontal del lado del brazo. El uso es el de nivel del mar; la tabla da el de altitud extrema.',
+      note: 'Forma medida en cada entorno, no simulada. Break horizontal del lado del brazo. El uso es el de nivel del mar; la tabla da el de altitud extrema. El mapa incluye tambi\u00e9n los pitches que solo tienen muestra a nivel del mar.',
     },
     physics: {
       title: 'El mecanismo f\u00edsico.',
