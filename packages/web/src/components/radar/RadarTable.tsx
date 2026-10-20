@@ -106,7 +106,12 @@ export const RadarTable = ({
         <p className="mb-3 text-[11px] text-(--color-text-muted)">
           {filters.pitch === null ? es.sortHint : es.filterBar.pitchNote(filters.pitch)}
         </p>
-        <div className="overflow-x-auto">
+        {/*
+         * A scroll box breaks a sticky header, so it only scrolls sideways
+         * where the twelve columns do not fit; from 1400 px they do, and the
+         * header stays on screen while the list scrolls.
+         */}
+        <div className="overflow-x-auto min-[1400px]:overflow-visible">
           <table className="w-full border-collapse">
             <thead>
               <tr>
@@ -114,7 +119,7 @@ export const RadarTable = ({
                   const key = SORT_KEYS[index] ?? null
                   const isActive = key !== null && sort.key === key
                   const label = headerOf(index, column, filters.pitch)
-                  const thClass = `border-b border-(--color-border-strong) px-1.5 pb-2 text-[10px] font-bold tracking-wider whitespace-nowrap uppercase ${
+                  const thClass = `sticky top-0 z-10 bg-(--color-surface-card) border-b border-(--color-border-strong) px-1.5 pt-2 pb-2 text-[10px] font-bold tracking-wider whitespace-nowrap uppercase ${
                     LEFT_ALIGNED.has(index) ? 'text-left' : 'text-right'
                   } ${isActive ? 'text-(--color-ink)' : 'text-(--color-text-muted)'}`
                   return (

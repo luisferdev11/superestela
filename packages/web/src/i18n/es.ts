@@ -293,7 +293,7 @@ export const es = {
       less: 'menos',
       more: 'm\u00e1s',
       stats: (height: string, zone: string, whiff: string): string =>
-        `Altura media ${height} ft \u00b7 ${zone}% en zona \u00b7 ${whiff}% de whiff por swing.`,
+        `Altura media ${height} pulgadas \u00b7 ${zone}% en zona \u00b7 ${whiff}% de whiff por swing.`,
       pending: 'Pendiente: la ubicaci\u00f3n la entrega el equipo de datos con Location+.',
       pendingDetail:
         'Aqu\u00ed va d\u00f3nde pone sus lanzamientos en cada entorno, su altura media, su porcentaje en zona y su whiff.',
@@ -624,7 +624,7 @@ export const es = {
           },
           {
             term: 'El fondo de color',
-            text: 'En el Simulador, es el whiff por swing que la liga logra con cada forma: azul, más que la media; naranja, menos. Los puntos negros y huecos son el 10% de pitches más y menos efectivos.',
+            text: 'En el Simulador, es el whiff por swing que la liga logra con cada forma: verde azulado, más que la media; naranja, menos. Los puntos negros y huecos son el 10% de pitches más y menos efectivos.',
           },
         ],
       },
