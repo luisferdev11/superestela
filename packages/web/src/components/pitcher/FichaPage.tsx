@@ -75,6 +75,7 @@ export const FichaPage = async ({
     <PitcherHeader
       card={card}
       seasons={own.map((c) => c.season)}
+      history={seasonsByPitcher.get(pitcherId) ?? []}
       tab={tab}
       tabHrefs={{
         summary: fichaHref(pitcherId, card.season),

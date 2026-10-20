@@ -208,6 +208,9 @@ export const es = {
     breadcrumb: 'Fichajes',
     season: 'Temporada',
     onlySeason: 'Única temporada con muestra en los dos entornos.',
+    otherSeasonsWithoutScore: 'Sus otras temporadas no tienen muestra para score.',
+    seasonWithoutScore: (season: number, hh: number, sea: number, min: number): string =>
+      `${String(season)} · sin score (${String(hh)} en altitud, ${String(sea)} a nivel del mar; hacen falta ${String(min)} en cada uno)`,
     tabs: {
       summary: 'Resumen',
       arsenal: 'Arsenal',

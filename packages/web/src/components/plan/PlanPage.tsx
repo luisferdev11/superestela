@@ -32,9 +32,8 @@ export const PlanPage = async ({
   readonly pitcherId: string
   readonly season?: number
 }) => {
-  const [{ scale, cards, density, nPitches, seasons, runBridge }, { arsenals }] = await Promise.all(
-    [loadDataset(), loadSimulatorDataset()],
-  )
+  const [{ scale, cards, density, nPitches, seasons, runBridge, seasonsByPitcher }, { arsenals }] =
+    await Promise.all([loadDataset(), loadSimulatorDataset()])
   const own = cardsOf(cards, pitcherId)
   const card = pickSeason(own, season)
   if (card === null) notFound()
@@ -51,6 +50,7 @@ export const PlanPage = async ({
       <PitcherHeader
         card={card}
         seasons={own.map((c) => c.season)}
+        history={seasonsByPitcher.get(pitcherId) ?? []}
         tab="plan"
         tabHrefs={{
           summary: fichaHref(pitcherId, card.season),

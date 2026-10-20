@@ -3,9 +3,30 @@ import Link from 'next/link'
 import { RoleChip } from '@/components/chip/RoleChip'
 import { FICHA_TABS, type FichaTab } from '@/domain/navigation'
 import { fichaHref, tabHref } from '@/domain/pitcher'
-import { SeasonSelect } from './SeasonSelect'
-import type { PitcherSeason } from '@/domain/types'
+import { SeasonSelect, type SeasonOption } from './SeasonSelect'
+import type { PitcherSeason, SeasonEntry } from '@/domain/types'
 import { es } from '@/i18n/es'
+
+/**
+ * Las temporadas del selector: las que tienen score llevan a la misma pestana;
+ * las que no, aparecen deshabilitadas con sus conteos, para que se vea por que
+ * no se pueden abrir en vez de que el selector parezca roto.
+ */
+const seasonOptions = (
+  scored: readonly number[],
+  history: readonly SeasonEntry[],
+  hrefOf: (season: number) => Route,
+): SeasonOption[] => {
+  const unscored = history.filter((e) => !scored.includes(e.season))
+  return [
+    ...scored.map((season) => ({ season, href: hrefOf(season), sample: null })),
+    ...unscored.map((e) => ({
+      season: e.season,
+      href: null,
+      sample: { hh: e.nPitchesHh, sea: e.nPitchesSea },
+    })),
+  ].sort((a, b) => b.season - a.season)
+}
 
 const tabClass = (active: boolean): string =>
   active
@@ -21,11 +42,14 @@ const tabClass = (active: boolean): string =>
 export const PitcherHeader = ({
   card,
   seasons,
+  history = [],
   tab,
   tabHrefs,
 }: {
   readonly card: PitcherSeason
   readonly seasons: readonly number[]
+  /** Every season he pitched, scored or not: the selector shows why one cannot be opened. */
+  readonly history?: readonly SeasonEntry[]
   readonly tab: FichaTab
   /** La ruta de cada pestana que ya existe; las demas se muestran sin enlace. */
   readonly tabHrefs: Partial<Record<FichaTab, Route>>
@@ -87,9 +111,9 @@ export const PitcherHeader = ({
       <div className="flex flex-wrap items-center gap-4 text-[12px]">
         <SeasonSelect
           current={card.season}
-          options={[...seasons]
-            .sort((a, b) => b - a)
-            .map((season) => ({ season, href: tabHref(tab, card.pitcherId, season) }))}
+          options={seasonOptions(seasons, history, (season) =>
+            tabHref(tab, card.pitcherId, season),
+          )}
         />
         <span className="border border-(--color-border) bg-(--color-surface-card) px-2.5 py-1">
           <RoleChip role={card.role} />
