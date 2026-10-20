@@ -114,7 +114,7 @@ export const RadarTable = ({
                   const key = SORT_KEYS[index] ?? null
                   const isActive = key !== null && sort.key === key
                   const label = headerOf(index, column, filters.pitch)
-                  const thClass = `border-b border-(--color-border-strong) px-2 pb-2 text-[10px] font-bold tracking-wider whitespace-nowrap uppercase ${
+                  const thClass = `border-b border-(--color-border-strong) px-1.5 pb-2 text-[10px] font-bold tracking-wider whitespace-nowrap uppercase ${
                     LEFT_ALIGNED.has(index) ? 'text-left' : 'text-right'
                   } ${isActive ? 'text-(--color-ink)' : 'text-(--color-text-muted)'}`
                   return (

@@ -13,7 +13,7 @@ import { es } from '@/i18n/es'
 
 // Base sin alineacion: con `text-right` en la base, un `text-left` agregado
 // pierde segun el orden de Tailwind, no segun el orden de las clases.
-const base = 'px-2 py-2 border-b border-(--color-border-hairline)'
+const base = 'px-1.5 py-2 border-b border-(--color-border-hairline)'
 const cell = `${base} text-right`
 const cellLeft = `${base} text-left`
 
