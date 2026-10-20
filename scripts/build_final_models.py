@@ -64,6 +64,10 @@ COMPARED = {
     "auc_whiff": "higher",
 }
 STUFF_CANDIDATES = ("FINAL_v1", "FIN_B_all8", "FIN_C_allcq")
+FOLDS_NOTE = (
+    " La banda es la dispersión entre los 5 boosters de la validación cruzada, re-entrenados con "
+    "el código y la configuración de datos (scripts/retrain_final_folds.py, registrado en MLflow)."
+)
 
 
 def candidates(runs: Path, names: tuple[str, ...]) -> list[dict[str, object]]:
@@ -184,6 +188,7 @@ def build_stuff(
         "selection": (
             "Elegido por el equipo de datos el 19 de octubre como modelo principal. Entre los "
             f"candidatos es el mejor en: {', '.join(leads(run.name, rivals))}."
+            + (FOLDS_NOTE if run.has_folds else "")
         ),
         "candidates": rivals,
     }
@@ -236,19 +241,35 @@ def build_location(
                 "Elegido por el equipo de datos el 19 de octubre (el único Location+ con modelos "
                 "guardados). Describe cómo ubicó un lanzador; no proyecta: split-half 0.53 y "
                 "sin correlación con las carreras de la temporada siguiente."
+                + (FOLDS_NOTE if run.has_folds else "")
             ),
             "candidates": candidates(path.parent, (run.name,)),
         },
     )
-    rows = frame[frame["base_ok"] & frame["pitch_type"].isin(types)]
-    xrv = pd.Series(model.xrv(rows).mean(axis=0), index=rows.index)
-    stats = xrv.groupby(rows["pitch_type"]).agg(["mean", "std", "size"])
+    oof = path / "xrv_media_desviacion_por_pitch.csv"
+    if oof.exists():
+        # Out of fold, from the run itself (scripts/retrain_final_folds.py), as FINAL_v1's.
+        table = pd.read_csv(oof).set_index("AutoPitchType")
+        stats = table.rename(columns={"media_xRV": "mean", "desviacion_xRV": "std", "n": "size"})
+        source = "out of fold"
+    else:
+        # Fallback: the final booster on its own training rows (optimistic, docs/15).
+        rows = frame[frame["base_ok"] & frame["pitch_type"].isin(types)]
+        xrv = pd.Series(model.xrv(rows).mean(axis=0), index=rows.index)
+        stats = xrv.groupby(rows["pitch_type"]).agg(["mean", "std", "size"])
+        source = "final booster, in sample"
     model.scale = {t: (float(stats.loc[t, "mean"]), float(stats.loc[t, "std"])) for t in types}
+    if source == "out of fold":
+        model.scale_description = model.scale_description.replace(
+            "xRV del modelo final L3 sobre los lanzamientos de entrenamiento",
+            "xRV fuera de fold de L3",
+        )
     return model, {
         "run": run.name,
         "has_folds": run.has_folds,
         "rv_gap": rv_gap,
         "rv_by_count": by_count.round(6).tolist(),
+        "scale_source": source,
         "scale": {
             t: {"mean": m, "sd": s, "n": int(stats.loc[t, "size"])}
             for t, (m, s) in model.scale.items()
