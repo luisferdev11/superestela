@@ -64,13 +64,24 @@ def health() -> Health:
     return Health(status="ok", version=app.version)
 
 
+# The model analysis/outputs/simulator_validation.json was published for
+# (docs/15): FINAL_v1 with the speed rule. Without it on disk (a fresh clone:
+# artifacts/ is not in git), the v0 bridge, which says it is not gated.
+PUBLISHED_MODEL = "stuff_plus_final_v1_monotone.joblib"
+BRIDGE_MODEL = "stuff_plus_v0_bridge.joblib"
+
+
+def default_model() -> str:
+    """The published model if it is in artifacts/, else the v0 bridge."""
+    published = REPO / "artifacts" / PUBLISHED_MODEL
+    return str(published if published.exists() else REPO / "artifacts" / BRIDGE_MODEL)
+
+
 @lru_cache(maxsize=1)
 def simulator_service() -> SimulatorService:
     """Load the simulator's evidence and model once per process."""
     outputs = os.environ.get("SUPERESTELA_OUTPUTS", str(REPO / "analysis" / "outputs"))
-    model = os.environ.get(
-        "SUPERESTELA_MODEL", str(REPO / "artifacts" / "stuff_plus_v0_bridge.joblib")
-    )
+    model = os.environ.get("SUPERESTELA_MODEL", default_model())
     return load_service(outputs, model)
 
 
@@ -144,9 +155,7 @@ def tax_validation(
     """
     if service.scorer is None:
         return None
-    model = os.environ.get(
-        "SUPERESTELA_MODEL", str(REPO / "artifacts" / "stuff_plus_v0_bridge.joblib")
-    )
+    model = os.environ.get("SUPERESTELA_MODEL", default_model())
     outputs = os.environ.get("SUPERESTELA_OUTPUTS", str(REPO / "analysis" / "outputs"))
     for path in (
         os.path.splitext(model)[0] + ".tax_check.json",
