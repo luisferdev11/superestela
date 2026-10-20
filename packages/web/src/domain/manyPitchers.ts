@@ -57,6 +57,10 @@ export type ManyFilters = { readonly hand: string | null; readonly query: string
 
 export const NO_MANY_FILTERS: ManyFilters = { hand: null, query: '' }
 
+/** Whether any filter is on: an empty table then means «no match», not «nobody scored». */
+export const isManyFiltered = (filters: ManyFilters): boolean =>
+  filters.hand !== null || filters.query.trim() !== ''
+
 /** Filtra por mano y por parte del id, y ordena por la columna pedida (los `null` al final). */
 export const viewOf = <T extends ScoredPitcher>(
   pitchers: readonly T[],

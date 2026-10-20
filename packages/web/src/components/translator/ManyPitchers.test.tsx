@@ -100,6 +100,27 @@ describe('el Traductor con varios lanzadores', () => {
     expect(screen.getByText(es.translator.upload.problems.unreadable)).toBeInTheDocument()
   })
 
+  it('sin filtros y sin filas, dice que nadie llega al minimo de lanzamientos', async () => {
+    vi.mocked(fetch).mockImplementation(() =>
+      Promise.resolve(
+        new Response(JSON.stringify({ ...SCORES, pitchers: [], fewPitches: 3 }), { status: 200 }),
+      ),
+    )
+    render(<ManyPitchers />)
+    await upload()
+    expect(screen.getByText(es.translator.many.noneScored(100))).toBeInTheDocument()
+    expect(screen.queryByText(es.translator.many.empty)).toBeNull()
+  })
+
+  it('con un filtro que deja la tabla vacia, dice que nadie cumple el filtro', async () => {
+    render(<ManyPitchers />)
+    await upload()
+    fireEvent.change(screen.getByLabelText(es.translator.many.search), {
+      target: { value: 'nadie' },
+    })
+    expect(screen.getByText(es.translator.many.empty)).toBeInTheDocument()
+  })
+
   it('filtra por mano', async () => {
     render(<ManyPitchers />)
     await upload()

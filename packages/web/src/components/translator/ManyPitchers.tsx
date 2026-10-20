@@ -6,6 +6,7 @@ import { RateValue } from '@/components/metric/RateValue'
 import {
   DEFAULT_MANY_SORT,
   firstManyDirection,
+  isManyFiltered,
   NO_MANY_FILTERS,
   toBand95,
   viewOf,
@@ -276,7 +277,9 @@ export const ManyPitchers = () => {
             </table>
           </div>
           {rows.length === 0 ? (
-            <p className="py-6 text-center text-sm text-(--color-text-muted)">{copy.empty}</p>
+            <p className="py-6 text-center text-sm text-(--color-text-muted)">
+              {isManyFiltered(filters) ? copy.empty : copy.noneScored(scores.minPitches)}
+            </p>
           ) : null}
           <p className="text-[11px] text-(--color-text-muted)">{copy.band}</p>
         </section>

@@ -694,11 +694,13 @@ export const es = {
         'Carreras de más por 9 entradas que el modelo proyecta en altitud extrema. Proyectado, no medido.',
       ],
       taxNote: (n: number, r: string, projected: string, measured: string): string =>
-        `Impuesto proyectado: lo que el modelo espera que pierda en carreras por 9 entradas al subir, no lo que se midió. Revisado contra los ${String(n)} lanzadores del Radar que sí lanzaron en los dos entornos: en promedio coincide (${projected} contra ${measured} carreras c/9 ent.), pero lanzador por lanzador ordena poco (r = ${r}). Úsalo como referencia de liga, no para elegir entre dos lanzadores.`,
+        `Impuesto proyectado: lo que el modelo espera que pierda en carreras por 9 entradas al subir, no lo que se midió. Revisado contra las ${String(n)} temporadas de lanzador con muestra en los dos entornos (un lanzador puede tener varias; el Radar muestra solo la última de cada uno): en promedio coincide (${projected} contra ${measured} carreras c/9 ent.), pero lanzador por lanzador ordena poco (r = ${r}). Úsalo como referencia de liga, no para elegir entre dos lanzadores.`,
       taxNoteUnchecked:
         'Impuesto proyectado: lo que el modelo espera que pierda en carreras por 9 entradas al subir, no lo que se midió. Todavía no se ha revisado contra el medido.',
       band: 'Banda al 95% en Stuff+, \u0394 e Impuesto; el whiff lleva la suya.',
       empty: 'Ning\u00fan lanzador del archivo cumple estos filtros.',
+      noneScored: (min: number): string =>
+        `Ning\u00fan lanzador del archivo llega a ${String(min)} lanzamientos: con menos no se le da Stuff+.`,
     },
     upload: {
       label: 'Subir su export de TrackMan',
