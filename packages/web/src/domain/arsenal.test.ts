@@ -60,7 +60,7 @@ describe('la tabla del arsenal de la Ficha', () => {
     }
   })
 
-  it('pitcher_00069 2025: la recta pasa de 20.7 a 15.0 de IVB y de 111.0 a 90.4 de Stuff+', async () => {
+  it('pitcher_00069 2025: la recta pasa de 20.7 a 15.0 de IVB y de 115.2 a 98.6 de Stuff+', async () => {
     const card = (await cards()).find((c) => c.pitcherId === 'pitcher_00069' && c.season === 2025)
     const fastball = card === undefined ? undefined : arsenalRows(card)[0]
     expect(fastball).toMatchObject({
@@ -70,8 +70,8 @@ describe('la tabla del arsenal de la Ficha', () => {
       ivbHh: 15,
       absHbSea: 8.2,
       absHbHh: 5.2,
-      stuffPlusSea: { value: 111, se: 1 },
-      stuffPlusHh: { value: 90.4, se: 0.5 },
+      stuffPlusSea: { value: 115.2, se: 0.9 },
+      stuffPlusHh: { value: 98.6, se: 1 },
     })
   })
 

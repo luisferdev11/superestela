@@ -26,28 +26,29 @@ const find = async (id: string, season: number) => {
 }
 
 describe('el plan de pitcher_00069 2025, el del prototipo', () => {
-  it('se degrada la recta, de 20.7 a 15.0 de IVB; aguanta el slider', async () => {
+  // With the published model (FINAL_v1 with the speed rule, docs/15). Under v0
+  // the prototype's story was «the slider holds»; the final model says the
+  // curveball loses least, and that moving usage to it does not pay.
+  it('se degrada la recta, de 20.7 a 15.0 de IVB; aguanta la curva', async () => {
     const plan = planOf(await find('pitcher_00069', 2025))
     expect(plan?.degrades).toMatchObject({ pitch: 'Four-Seam', ivbSea: 20.7, ivbHh: 15 })
-    expect(plan?.degrades.delta.value).toBeCloseTo(-20.6, 5)
-    expect(plan?.holds.pitch).toBe('Slider')
+    expect(plan?.degrades.delta.value).toBeCloseTo(-16.6, 5)
+    expect(plan?.holds.pitch).toBe('Curveball')
   })
 
-  it('la recta carga sola el deficit: 0.713 × (90.4 − 100)', async () => {
+  it('el deficit se reparte: la recta aporta 0.713 × (98.6 − 100) y no carga sola', async () => {
     const card = await find('pitcher_00069', 2025)
     const fastball = contributions(card).find((c) => c.pitch === 'Four-Seam')
-    expect(fastball?.contribution.value).toBeCloseTo(-6.8448, 4)
-    expect(planOf(card)?.culprit?.pitch).toBe('Four-Seam')
+    expect(fastball?.contribution.value).toBeCloseTo(0.713 * (98.6 - 100), 4)
+    expect(planOf(card)?.culprit).toBeNull()
   })
 
-  it('bajar la recta a 50% sube el Stuff+ en altitud extrema ponderado de 93.3 a 95.3', async () => {
+  it('pasarle uso a la curva no compensa: pierde menos, pero en altitud rinde menos que la recta', async () => {
     const plan = planOf(await find('pitcher_00069', 2025))
     if (plan === null) throw new Error('sin plan')
+    expect(shiftHelps(plan)).toBe(false)
     const shift = shiftUsage(plan, 21.3)
-    expect(shift.before.value).toBeCloseTo(93.3, 1)
-    expect(shift.after.value).toBeCloseTo(95.3, 1)
-    expect(shift.after.se).toBeGreaterThan(0)
-    expect(shiftHelps(plan)).toBe(true)
+    expect(shift.after.value).toBeLessThan(shift.before.value)
   })
 })
 

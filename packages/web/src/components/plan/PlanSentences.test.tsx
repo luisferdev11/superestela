@@ -16,11 +16,12 @@ const plans = async () =>
     .map((card) => ({ card, plan: planOf(card) }))
 
 describe('las frases del Plan', () => {
-  it('pitcher_00069: al elegir 30 puntos, la frase trae el ponderado de 30 puntos', async () => {
+  it('al elegir 30 puntos, la frase trae el ponderado de 30 puntos', async () => {
+    // The first card whose plan moves usage and has 30 points to move.
     const found = (await plans()).find(
-      ({ card }) => card.pitcherId === 'pitcher_00069' && card.season === 2025,
+      ({ plan }) => plan !== null && shiftHelps(plan) && shiftOptions(plan).includes(30),
     )
-    if (found?.plan == null) throw new Error('sin plan para pitcher_00069 2025')
+    if (found?.plan == null) throw new Error('ningun plan con 30 puntos que mover')
     render(<PlanSentences plan={found.plan} simulatorHref={null} />)
     fireEvent.click(screen.getByRole('button', { name: es.plan.points('30') }))
     const after = formatMetric(shiftUsage(found.plan, 30).after)

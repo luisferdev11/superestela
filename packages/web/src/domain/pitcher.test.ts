@@ -30,9 +30,9 @@ describe('la Ficha de pitcher_00069', () => {
     const { cards } = await load()
     const card = pickSeason(cardsOf(cards, 'pitcher_00069'))
     expect(card?.season).toBe(2025)
-    expect(card?.stuffPlusHh).toEqual({ value: 93.3, se: 0.7 })
-    expect(card?.stuffPlusSea).toEqual({ value: 110.5, se: 0.8 })
-    expect(card?.stuffPlusDelta).toBe(-17.2)
+    expect(card?.stuffPlusHh).toEqual({ value: 97.7, se: 0.8 })
+    expect(card?.stuffPlusSea).toEqual({ value: 110.8, se: 0.9 })
+    expect(card?.stuffPlusDelta).toBe(-13)
     expect(card?.altitudeTax).toBeNull()
     // The artifact's standard error (2.70) is shown as the 95% half-width.
     expect(card?.altitudeTaxMeasured?.value).toBe(4.55)

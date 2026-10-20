@@ -1000,6 +1000,39 @@
     "oof_r2": 0.00283,
     "note": "v0 baseline for prototype realism - not the final model"
   },
+  "stuff_plus_model": {
+    "model_id": "1.1.0+19966f3",
+    "scale": "100 = el pitch promedio de su tipo en la liga (xRV fuera de fold del modelo final con la regla de velocidad); 10 puntos = una desviación estándar del xRV del tipo",
+    "scale_kind": "league",
+    "n_scored": 619756,
+    "n_unscored": 126,
+    "xrv_by_type": {
+      "Changeup": [
+        -0.0153744667925542,
+        0.0170889336349076
+      ],
+      "Curveball": [
+        -0.0216436765284177,
+        0.0104379954281347
+      ],
+      "Cutter": [
+        -0.0134830621185295,
+        0.0162883994222938
+      ],
+      "Four-Seam": [
+        -0.006109036607647,
+        0.0223258104666115
+      ],
+      "Sinker": [
+        0.0018050154922153,
+        0.0121047631443934
+      ],
+      "Slider": [
+        -0.0204455892613701,
+        0.0108261113211584
+      ]
+    }
+  },
   "seasons": {
     "seasons_in_dataset": [
       2024,
@@ -1088,7 +1121,7 @@
     "n_cards": 370,
     "n_pitchers": 296,
     "min_pitches_each_environment": 100,
-    "n_traps": 58
+    "n_traps": 62
   },
   "target_learnability": {
     "P(whiff | swing)": {
