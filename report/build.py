@@ -30,7 +30,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OUTPUTS = ROOT / "analysis" / "outputs"
 TABLES = ROOT / "report" / "tables"
 
-SOURCES = ("evidence.json", "simulator_validation.json")
+SOURCES = ("evidence.json", "simulator_validation.json", "speed_rule.json")
 
 
 def load_artifacts(outputs: Path = OUTPUTS) -> Artifacts:

@@ -39,6 +39,7 @@ from core.density import DENSITY_INDEX_EXTREME, DENSITY_INDEX_SEA_LEVEL
 from core.spin import Bounds, Envelope, assess_plausibility
 from core.trajectory import approach
 from core.translate import BREAK_ERROR_IN, break_scaling_factor
+from models.features.arsenal import raw_differentials
 from models.scoring import Scorer, load_scorer, stuff_plus_of, to_arm_side, verdict_path
 from models.stuff.v0_bridge import PITCH_TYPES, fit_bridge
 
@@ -94,6 +95,10 @@ def canonical(df):
             "speed_drop": d.SpeedDrop,
             "vaa": d.VertApprAngle,
             "plate_height": d.PlateLocHeight,
+            # Against the primary fastball, for a model that reads the arsenal.
+            "speed_diff": d.speed_diff,
+            "ivb_diff": d.ivb_diff,
+            "hb_diff": d.hb_diff,
         },
         index=d.index,
     )
@@ -110,6 +115,14 @@ def gate(gid, name, value, threshold, passed, note=""):
     }
 
 
+def scale_of(model, pitch_types):
+    """The (mean, sd) of xRV behind each row's Stuff+: per type when the scale is."""
+    by_type = getattr(model.scale, "by_type", None) or {}
+    mean = pitch_types.map(lambda t: by_type.get(t, (model.scale.mean_xrv,))[0])
+    sd = pitch_types.map(lambda t: by_type.get(t, (0.0, model.scale.sd_xrv))[1])
+    return mean.to_numpy(dtype=float), sd.to_numpy(dtype=float)
+
+
 def pitcher_means(frame, keys, min_n):
     cols = [
         "release_speed",
@@ -120,6 +133,9 @@ def pitcher_means(frame, keys, min_n):
         "extension",
         "release_height",
         "release_side",
+        "speed_diff",
+        "ivb_diff",
+        "hb_diff",
     ]
     g = frame.groupby(keys)
     means = (
@@ -275,7 +291,8 @@ def score_gates(model: Scorer, frame, oob):
 
     finite = np.isfinite(oob)
     f = frame[finite].assign(oob=oob[finite])
-    f = f.assign(stuff=100 - 10 * (f.oob - model.scale.mean_xrv) / model.scale.sd_xrv)
+    mean, sd = scale_of(model, f.pitch_type)
+    f = f.assign(stuff=100 - 10 * (f.oob - mean) / sd)
     deciles = f.groupby(pd.qcut(f.stuff, 10, labels=False)).run_value.mean()
     calib = float(pd.Series(range(10)).corr(pd.Series(-deciles.to_numpy()), method="spearman"))
 
@@ -393,6 +410,9 @@ def natural_experiment(model, frame, rng, min_n=50, min_swings=30):
         sea.assign(
             ivb=sea.ivb * k,
             horizontal_break=sea.horizontal_break * k,
+            # The fastball loses break by the same factor, so the gaps shrink too.
+            ivb_diff=sea.ivb_diff * k,
+            hb_diff=sea.hb_diff * k,
             density_index=DENSITY_INDEX_EXTREME,
         ),
     )[0]
@@ -419,6 +439,7 @@ def natural_experiment(model, frame, rng, min_n=50, min_swings=30):
 
 def main():
     df = E.load()
+    df = df.join(raw_differentials(df))  # every row, before filters, as in training
     df = df[df.altitude_category.notna()].dropna(
         subset=["vx0", "vy0", "vz0", "ax0", "ay0", "az0", "pitcher_anon_id", "game_anon_id"]
     )
@@ -434,11 +455,17 @@ def main():
         model, verdict = load_scorer(given), verdict_path(given)
         E.log(f"Judging {model.model_id} from {given}; nothing is fitted")
         # The expected run value the model implies, inverted from its own scale.
-        value = stuff_plus_of(model, frame[frame.pitch_type.isin(model.pitch_types)])[0]
+        scored = frame.pitch_type.isin(model.pitch_types)
+        if model.uses_arsenal:
+            # Every row here has its arsenal key; a NaN gap is a reference
+            # without a measure, which the model reads as missing (docs/15).
+            scored &= frame[["pitcher_id", "year", "environment"]].notna().all(axis=1)
+            frame = frame[scored | ~frame.pitch_type.isin(model.pitch_types)]
+            scored = scored[frame.index]
+        value = stuff_plus_of(model, frame[scored])[0]
+        mean, sd = scale_of(model, frame.pitch_type[scored])
         oob = np.full(len(frame), np.nan)
-        oob[frame.pitch_type.isin(model.pitch_types).to_numpy()] = (
-            model.scale.mean_xrv + (100.0 - value) / 10.0 * model.scale.sd_xrv
-        )
+        oob[scored.to_numpy()] = mean + (100.0 - value) / 10.0 * sd
     else:
         sha = subprocess.run(
             ["git", "rev-parse", "--short=7", "HEAD"], capture_output=True, text=True, check=True

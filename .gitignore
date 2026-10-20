@@ -43,3 +43,6 @@ artifacts/
 *.swp
 .idea/
 .vscode/
+
+# Worktrees of Claude Code's agents (isolated copies of this repo)
+.claude/worktrees/

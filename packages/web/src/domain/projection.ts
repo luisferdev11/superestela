@@ -38,9 +38,6 @@ export type Projections = {
   readonly pitchers: ReadonlyMap<string, PitcherProjection>
 }
 
-/** 1.96 errores estandar: la banda al 95% con la que se compara lo medido. */
-const Z95 = 1.96
-
 /** Los pitches que se proyectan: los que tienen muestra a nivel del mar para partir. */
 export const projectedPitches = (p: PitcherProjection): readonly ProjectedPitch[] =>
   p.pitches.filter((x) => x.n >= MIN_PITCHES_FOR_BASELINE).sort((a, b) => b.usage - a.usage)
@@ -51,9 +48,12 @@ export type Check = {
   readonly horizontalBreakInBand: boolean
 }
 
-/** Si lo medido cae dentro de la banda al 95% de lo proyectado. */
+/**
+ * Whether the measurement falls inside the projection's 95% band. `se` is
+ * already the 95% half-width: the sources convert the standard error.
+ */
 export const inBand = (measured: number, projected: Metric): boolean =>
-  Math.abs(measured - projected.value) <= Z95 * projected.se
+  Math.abs(measured - projected.value) <= projected.se
 
 /**
  * Lo medido en altitud extrema contra lo proyectado, eje por eje, solo si hay

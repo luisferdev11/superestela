@@ -57,9 +57,15 @@ export const PitcherKpis = ({
     <Tile
       label={es.ficha.kpi.tax}
       note={
-        card.altitudeTax === null && card.altitudeTaxMeasured !== null
-          ? es.ficha.kpi.taxMeasured(formatSignedMetric(card.altitudeTaxMeasured, 2))
-          : undefined
+        [
+          card.altitudeTax === null && card.altitudeTaxMeasured !== null
+            ? es.ficha.kpi.taxMeasured(formatSignedMetric(card.altitudeTaxMeasured, 2))
+            : '',
+          // RA/9 sits next to it and does not reconcile: say they measure different things.
+          runs === null ? '' : es.ficha.kpi.taxDefinition,
+        ]
+          .filter(Boolean)
+          .join(' ') || undefined
       }
     >
       {card.altitudeTax === null ? (

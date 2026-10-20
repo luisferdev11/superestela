@@ -69,9 +69,9 @@ describe('la Ficha de pitcher_00069', () => {
   it('el impuesto dice no concluyente y ademas cuanto midio', async () => {
     const { card } = await load('pitcher_00069')
     render(<PitcherKpis card={card} rank={{ sea: 1, hh: 1, of: 1 }} />)
-    expect(screen.getByLabelText('93.3 ± 0.7')).toBeInTheDocument()
-    expect(screen.getByLabelText('110.5 ± 0.8')).toBeInTheDocument()
-    expect(screen.getByText(es.ficha.kpi.taxMeasured('+4.55 ± 2.70'))).toBeInTheDocument()
+    expect(screen.getByLabelText('97.7 ± 0.8')).toBeInTheDocument()
+    expect(screen.getByLabelText('110.8 ± 0.9')).toBeInTheDocument()
+    expect(screen.getByText(es.ficha.kpi.taxMeasured('+4.55 ± 5.29'))).toBeInTheDocument()
   })
 })
 
@@ -97,6 +97,20 @@ describe('las carreras permitidas de pitcher_00069 (RA/9, no ERA)', () => {
     expect(screen.getByLabelText('3.20 ± 2.20')).toBeInTheDocument()
   })
 
+  it('junto al RA/9, el impuesto dice que mide otra cosa', async () => {
+    const { card } = await load('pitcher_00069')
+    render(
+      <PitcherKpis
+        card={card}
+        rank={{ sea: 1, hh: 1, of: 1 }}
+        runs={{ minInnings: 10, pitcher: null }}
+      />,
+    )
+    expect(
+      screen.getByText(`${es.ficha.kpi.taxMeasured('+4.55 ± 5.29')} ${es.ficha.kpi.taxDefinition}`),
+    ).toBeInTheDocument()
+  })
+
   it('sin el artefacto, la Ficha no muestra el recuadro', async () => {
     const { card } = await load('pitcher_00069')
     render(<PitcherKpis card={card} rank={{ sea: 1, hh: 1, of: 1 }} runs={null} />)
@@ -115,12 +129,14 @@ describe('el hueco en la tabla de temporadas', () => {
 })
 
 describe('la lectura del sistema', () => {
-  it('pitcher_00069: no al precio de nivel del mar, la palanca es el slider, y la regla se declara', async () => {
+  it('pitcher_00069: no al precio de nivel del mar, la palanca es la curva, y la regla se declara', async () => {
     const { card } = await load('pitcher_00069')
     render(<PitcherReading card={card} />)
     expect(screen.getByText(es.ficha.reading.verdict.notAtSeaLevelPrice)).toBeInTheDocument()
     expect(
-      screen.getByText(es.ficha.reading.lever('Slider', '−1.7 ± 1.3', 'Four-Seam', '−20.6 ± 1.1')),
+      screen.getByText(
+        es.ficha.reading.lever('Curveball', '−6.6 ± 1.7', 'Four-Seam', '−16.6 ± 1.3'),
+      ),
     ).toBeInTheDocument()
     expect(screen.getByText(es.ficha.reading.rule)).toBeInTheDocument()
   })

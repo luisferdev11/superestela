@@ -42,3 +42,18 @@ class ToyScorer:
     ) -> Score:
         d = self.draws([pitch], [density_index])
         return Score(value=float(d.mean()), se=float(d.std(ddof=1)), model_id=self.model_id)
+
+
+class ToyArsenalScorer(ToyScorer):
+    """Stuff+ = 100 - speed_diff: it reads the arsenal, and refuses a pitch without it."""
+
+    model_id: str = "9.9.9+toyarse"
+    uses_arsenal: bool = True
+
+    def draws(
+        self, pitches: Sequence[PitchInput], density_indices: Sequence[float]
+    ) -> npt.NDArray[np.float64]:
+        if any(p.speed_diff is None for p in pitches):
+            raise ValueError("a pitch without its fastball differentials")
+        centre = np.array([100.0 - float(p.speed_diff or 0.0) for p in pitches])
+        return np.stack([centre - 1.0, centre, centre + 1.0])

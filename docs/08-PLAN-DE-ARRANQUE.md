@@ -53,6 +53,18 @@ las pantallas, y el Traductor es para quien no está en los datos (`docs/12` §2
 
 **Checklist, en orden.** Cada tarea tiene su criterio de hecho.
 
+- [x] **19 oct · Modelos finales de datos en el producto** (`docs/15`, ADR 0011). Stuff+ `FINAL_v1` y
+      Location+ `L3` cargan desde los runs de datos (`scripts/build_final_models.py`), pasan por la
+      costura única con arsenal y escala por tipo, y responden en `POST /api/v1/pitches/score`.
+      ✔ `verify_final_models.py`: paridad exacta de diferenciales y valores en carreras; Location+
+      r 0.989 contra datos; API real = cálculo directo en 1 296 lanzamientos.
+- [x] **20 oct · Publicar `FINAL_v1` en pantallas, con la regla de velocidad** (`docs/15` §3, ⚠️
+      hallazgo importante). `FINAL_v1` fallaba S1: en 14.7% de las rectas, +1 mph le bajaba el
+      Stuff+. Se publica destilado con la restricción monótona en velocidad (`1.1.0+19966f3`): S1–S6
+      pasan, y empata o mejora a `FINAL_v1` en la evaluación de datos. Folds re-entrenados con el
+      código de datos; todo en MLflow.
+      ✔ `simulator_validation.json` con `model_id` `1.1.0+19966f3` y `stuff_plus_shown: true`;
+      `report.build --check` con las afirmaciones `speed-rule-*`.
 - [x] **15 oct · Segunda ronda de ajustes.** Los mapas de movimiento se leen (letra en unidades del
       lienzo para el tamaño al que se dibujan) y todos tienen «¿Cómo leer este mapa?» con dos diagramas
       dibujados; la Ficha tiene selector de temporada en todas sus pestañas (solo las del lanzador);
@@ -120,10 +132,13 @@ las pantallas, y el Traductor es para quien no está en los datos (`docs/12` §2
       del mar: la recta y la curva caen en la banda, el slider no (IVB 5.4 ± 1.2 proyectado, 2.7
       medido), y eso es una pregunta para datos. Queda por decidir si los tipos con muy poca muestra
       entran a la tabla.
-- [ ] **5 · Aplicar la convención del «±».** **Decidida el 1 de octubre: la banda al 95% en todas las
-      pantallas** (`docs/12` §2.1). Hoy, en el Radar y la Ficha ya es la banda; en el Impuesto, el
-      Simulador, el Traductor y la Proyección es un error estándar, y hay que pasarlos a la banda.
-      ✔ Ninguna pantalla muestra un error estándar como «±», y la guía del Radar dice la convención.
+- [x] **5 · Aplicar la convención del «±».** **Decidida el 1 de octubre: la banda al 95% en todas las
+      pantallas** (`docs/12` §2.1). El Impuesto, el Simulador, el Traductor y la Proyección traían un
+      error estándar; ahora se convierte a la banda (1.96 errores) en la frontera de cada fuente
+      (`adapter.ts`, `simulateResponse.ts`, `projectionSource.ts`; `domain/band.ts`), y «en banda»
+      compara contra esa misma banda.
+      ✔ Ninguna pantalla muestra un error estándar como «±», y la guía del Radar dice la convención
+      (`domain/band.test.ts` lo vigila en la copia).
 - [ ] **6 · Cifras de los documentos sin corrida** (tabla abajo, en «Revisión de código»): se
       calculan en `evidence.py` o se quitan de los documentos.
       ✔ `grep` de cada una en `docs/` solo devuelve citas con su artefacto.

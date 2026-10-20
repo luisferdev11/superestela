@@ -13,7 +13,23 @@ const PITCHES: MapPitch[] = [
     league: { ivb: 17.1, hb: 9.45 },
   },
   // Solo con muestra en altura: se dibuja el punto, sin flecha.
-  { pitchType: 'Changeup', usage: 0.05, sea: null, hh: { ivb: 6, hb: 12 }, league: null },
+  {
+    pitchType: 'Changeup',
+    usage: null,
+    seaBelowMinimum: false,
+    sea: null,
+    hh: { ivb: 6, hb: 12 },
+    league: null,
+  },
+  // Thrown at sea level but below the minimum: usage from the sea, no sea point.
+  {
+    pitchType: 'Sinker',
+    usage: 0.12,
+    seaBelowMinimum: true,
+    sea: null,
+    hh: { ivb: 8, hb: 14 },
+    league: null,
+  },
 ]
 
 describe('el mapa de movimiento del arsenal', () => {
@@ -24,6 +40,12 @@ describe('el mapa de movimiento del arsenal', () => {
       es.ficha.map.label('Four-Seam', '20.7″ IVB, 8.2″ HB', '15.0″ IVB, 5.2″ HB'),
     )
     expect(map.getAttribute('aria-label')).toContain(es.ficha.map.none)
+  })
+
+  it('sin muestra a nivel del mar no inventa un uso, y dice por que falta un punto', () => {
+    render(<ArsenalMap pitches={PITCHES} />)
+    expect(screen.getByText(es.ficha.map.noSeaUsage)).toBeInTheDocument()
+    expect(screen.getByText(es.ficha.map.belowMinimum('Sinker', 30))).toBeInTheDocument()
   })
 
   it('una flecha solo donde hay forma en los dos entornos', () => {

@@ -2,6 +2,7 @@ import { act, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { ManyPitchers } from './ManyPitchers'
 import { TranslatorModes } from './TranslatorModes'
+import { formatMetric } from '@/domain/format'
 import { es } from '@/i18n/es'
 
 /** El Traductor con varios lanzadores, con la API simulada: la tabla, el orden y lo que se dice. */
@@ -79,6 +80,45 @@ describe('el Traductor con varios lanzadores', () => {
     expect(
       screen.getByText(es.translator.many.taxNote(370, '0.14', '1.87', '1.53')),
     ).toBeInTheDocument()
+  })
+
+  it('el whiff lleva su banda al 95%, como promete la nota', async () => {
+    render(<ManyPitchers />)
+    await upload()
+    expect(screen.getAllByLabelText(formatMetric({ value: 25, se: 5 }))).toHaveLength(3)
+  })
+
+  it('tras un archivo que falla, la tabla anterior se va y el motivo es el del archivo', async () => {
+    render(<ManyPitchers />)
+    await upload()
+    expect(document.querySelectorAll('tbody tr')).toHaveLength(3)
+    vi.mocked(fetch).mockImplementation(() =>
+      Promise.resolve(new Response(JSON.stringify({ detail: [] }), { status: 422 })),
+    )
+    await upload()
+    expect(document.querySelectorAll('tbody tr')).toHaveLength(0)
+    expect(screen.getByText(es.translator.upload.problems.unreadable)).toBeInTheDocument()
+  })
+
+  it('sin filtros y sin filas, dice que nadie llega al minimo de lanzamientos', async () => {
+    vi.mocked(fetch).mockImplementation(() =>
+      Promise.resolve(
+        new Response(JSON.stringify({ ...SCORES, pitchers: [], fewPitches: 3 }), { status: 200 }),
+      ),
+    )
+    render(<ManyPitchers />)
+    await upload()
+    expect(screen.getByText(es.translator.many.noneScored(100))).toBeInTheDocument()
+    expect(screen.queryByText(es.translator.many.empty)).toBeNull()
+  })
+
+  it('con un filtro que deja la tabla vacia, dice que nadie cumple el filtro', async () => {
+    render(<ManyPitchers />)
+    await upload()
+    fireEvent.change(screen.getByLabelText(es.translator.many.search), {
+      target: { value: 'nadie' },
+    })
+    expect(screen.getByText(es.translator.many.empty)).toBeInTheDocument()
   })
 
   it('filtra por mano', async () => {

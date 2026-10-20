@@ -1,5 +1,6 @@
 import { dominantPitch } from './arsenal'
 import { sortRows, type SortDirection, type SortState, type SortValue } from './tableSort'
+import type { RadarCard } from './cohort'
 import type { Environment, Metric, PitcherSeason } from './types'
 
 /**
@@ -78,7 +79,7 @@ export const focusOf = (card: PitcherSeason, pitch: string | null): RadarFocus =
 
 const valueOf =
   (key: RadarSortKey, pitch: string | null) =>
-  (card: PitcherSeason): SortValue => {
+  (card: RadarCard): SortValue => {
     const focus = focusOf(card, pitch)
     switch (key) {
       case 'pitcher':
@@ -95,10 +96,11 @@ const valueOf =
       // ordenar por ruido (ADR 0003). Los no concluyentes van al final.
       case 'tax':
         return card.altitudeTax?.value ?? null
+      // Extreme altitude, as shown; below the sample minimum it sorts last.
       case 'kMinusBb':
-        return card.outcomes.kMinusBbPct?.value ?? null
+        return card.ratesHh.kMinusBbPct?.value ?? null
       case 'whiff':
-        return card.outcomes.whiffPerSwing?.value ?? null
+        return card.ratesHh.whiffPerSwing?.value ?? null
       case 'usage':
         return focus.usagePct
     }
@@ -109,11 +111,11 @@ const valueOf =
  * extrema, de mayor a menor: se ordena primero por el y luego, estable, por la
  * columna pedida.
  */
-export const sortRadar = (
-  cards: readonly PitcherSeason[],
+export const sortRadar = <T extends RadarCard>(
+  cards: readonly T[],
   sort: SortState<RadarSortKey>,
   pitch: string | null = null,
-): readonly PitcherSeason[] =>
+): readonly T[] =>
   sortRows(sortRows(cards, valueOf('hh', pitch), 'desc'), valueOf(sort.key, pitch), sort.direction)
 
 /** Correlacion de rangos de Spearman entre los dos ordenes. */

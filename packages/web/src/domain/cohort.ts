@@ -1,4 +1,4 @@
-import type { PitcherSeason, SeasonEntry } from './types'
+import type { Outcomes, PitcherSeason, SeasonEntry } from './types'
 
 /**
  * La cohorte de la P1: cada candidato en **su ultima temporada jugada con
@@ -11,13 +11,23 @@ export const lastScoredSeason = (seasons: readonly SeasonEntry[]): number | null
   return scored.length > 0 ? Math.max(...scored) : null
 }
 
+/**
+ * A Radar row: the card plus the rates of that season in extreme altitude,
+ * the environment the Radar ranks by. They are the same numbers the Ficha's
+ * outcomes table shows for that season and environment, band and sample
+ * minimum included.
+ */
+export type RadarCard = PitcherSeason & { readonly ratesHh: Outcomes }
+
 export const selectRadarCohort = (
   cards: readonly PitcherSeason[],
   seasonsByPitcher: ReadonlyMap<string, readonly SeasonEntry[]>,
-): readonly PitcherSeason[] =>
-  cards.filter((card) => {
+): readonly RadarCard[] =>
+  cards.flatMap((card) => {
     const seasons = seasonsByPitcher.get(card.pitcherId)
-    return seasons !== undefined && lastScoredSeason(seasons) === card.season
+    if (seasons === undefined || lastScoredSeason(seasons) !== card.season) return []
+    const entry = seasons.find((season) => season.season === card.season)
+    return entry === undefined ? [] : [{ ...card, ratesHh: entry.outcomesHh }]
   })
 
 export type CohortSummary = {

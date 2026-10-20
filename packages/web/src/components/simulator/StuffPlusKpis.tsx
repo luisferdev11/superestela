@@ -60,8 +60,15 @@ export const StuffPlusKpis = ({
               </span>
             </div>
             <div className="text-xs text-(--color-text-faint) tabular-nums">
-              {formatSignedMetric(delta.shape)} {es.sim.kpi.shape} ·{' '}
-              {formatSignedMetric(delta.environment)} {es.sim.kpi.environment}
+              {delta.environment.value === 0 && delta.environment.se === 0 ? (
+                // A model that does not read the air (FINAL_v1): the whole delta is the shape's.
+                es.sim.kpi.shapeOnly
+              ) : (
+                <>
+                  {formatSignedMetric(delta.shape)} {es.sim.kpi.shape} ·{' '}
+                  {formatSignedMetric(delta.environment)} {es.sim.kpi.environment}
+                </>
+              )}
             </div>
           </>
         )}

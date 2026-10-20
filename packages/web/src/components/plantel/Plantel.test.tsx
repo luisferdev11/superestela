@@ -32,6 +32,20 @@ describe('el plantel', () => {
     expect(screen.getAllByRole('link')).toHaveLength(scored.length)
   })
 
+  it('por rol, cada grupo abre con su nombre, y «Todos» no lleva encabezados', async () => {
+    const p = await props()
+    render(<Plantel ids={p.ids} cards={p.cards} seasons={p.seasons} latestSeason={2026} />)
+    const groups = new Set(
+      rosterRows(p.ids, p.cards, p.seasonsByPitcher, 'role').map((r) => r.group),
+    )
+    const headings = screen.getAllByRole('rowheader').map((h) => h.textContent)
+    expect(headings).toEqual(
+      [...groups].map((g) => (g === null ? es.unknownRole : es.rolePlural[g])),
+    )
+    fireEvent.click(screen.getByRole('button', { name: es.plantel.groupings.all }))
+    expect(screen.queryAllByRole('rowheader')).toHaveLength(0)
+  })
+
   it('«Todos» ordena por lanzador sin agrupar por rol', async () => {
     const p = await props()
     render(<Plantel ids={p.ids} cards={p.cards} seasons={p.seasons} latestSeason={2026} />)

@@ -21,8 +21,8 @@ describe('la tabla del arsenal de pitcher_00069', () => {
     render(<ArsenalTable card={await card()} simulatorHrefs={{}} />)
     const fastball = screen.getByText('Four-Seam').closest('tr')
     if (fastball === null) throw new Error('sin fila de la recta')
-    expect(within(fastball).getByLabelText('111.0 ± 1.0')).toBeInTheDocument()
-    expect(within(fastball).getByLabelText('90.4 ± 0.5')).toBeInTheDocument()
+    expect(within(fastball).getByLabelText('115.2 ± 0.9')).toBeInTheDocument()
+    expect(within(fastball).getByLabelText('98.6 ± 1.0')).toBeInTheDocument()
   })
 
   it('una fila por pitch, en orden de uso', async () => {

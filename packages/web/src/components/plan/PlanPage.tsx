@@ -13,7 +13,8 @@ import {
   planHref,
   projectionHref,
 } from '@/domain/pitcher'
-import { planOf } from '@/domain/plan'
+import { planOf, weightedToday } from '@/domain/plan'
+import { formatMetric } from '@/domain/format'
 import { canSimulate, simulatorHref } from '@/domain/simulator'
 import { loadDataset } from '@/sources/mockupSource'
 import { loadSimulatorDataset } from '@/sources/simulatorSource'
@@ -31,10 +32,8 @@ export const PlanPage = async ({
   readonly pitcherId: string
   readonly season?: number
 }) => {
-  const [{ scale, cards, density, nPitches, seasons }, { arsenals }] = await Promise.all([
-    loadDataset(),
-    loadSimulatorDataset(),
-  ])
+  const [{ scale, cards, density, nPitches, seasons, runBridge, seasonsByPitcher }, { arsenals }] =
+    await Promise.all([loadDataset(), loadSimulatorDataset()])
   const own = cardsOf(cards, pitcherId)
   const card = pickSeason(own, season)
   if (card === null) notFound()
@@ -51,6 +50,7 @@ export const PlanPage = async ({
       <PitcherHeader
         card={card}
         seasons={own.map((c) => c.season)}
+        history={seasonsByPitcher.get(pitcherId) ?? []}
         tab="plan"
         tabHrefs={{
           summary: fichaHref(pitcherId, card.season),
@@ -65,14 +65,30 @@ export const PlanPage = async ({
           <p className="mt-0.5 text-[13px] text-(--color-text-muted)">{es.plan.subtitle}</p>
         </div>
         <div className="flex items-center gap-6">
-          <div className="flex items-baseline gap-2.5">
-            <span className="text-[10px] font-bold tracking-widest text-(--color-text-muted) uppercase">
-              {es.plan.today}
-            </span>
-            <span className="text-[26px]">
-              <MetricValue metric={card.stuffPlusHh} />
-            </span>
-          </div>
+          {plan === null ? (
+            <div className="flex items-baseline gap-2.5">
+              <span className="text-[10px] font-bold tracking-widest text-(--color-text-muted) uppercase">
+                {es.plan.todayCard}
+              </span>
+              <span className="text-[26px]">
+                <MetricValue metric={card.stuffPlusHh} />
+              </span>
+            </div>
+          ) : (
+            <div className="flex max-w-[360px] flex-col items-end gap-0.5">
+              <div className="flex items-baseline gap-2.5">
+                <span className="text-[10px] font-bold tracking-widest text-(--color-text-muted) uppercase">
+                  {es.plan.today}
+                </span>
+                <span className="text-[26px]">
+                  <MetricValue metric={weightedToday(plan)} />
+                </span>
+              </div>
+              <p className="m-0 text-right text-[11px] text-(--color-text-muted)">
+                {es.plan.todayNote(formatMetric(card.stuffPlusHh))}
+              </p>
+            </div>
+          )}
         </div>
       </div>
       {plan === null ? (
@@ -82,14 +98,16 @@ export const PlanPage = async ({
       ) : (
         <>
           <PlanDeficit plan={plan} />
-          <PlanSentences plan={plan} simulatorHref={tryHref} scale={scale} />
+          <PlanSentences plan={plan} simulatorHref={tryHref} scale={scale} runBridge={runBridge} />
         </>
       )}
       <aside className="flex gap-4 border-l-[3px] border-(--color-diablos) bg-(--color-diablos-wash) px-4.5 py-3.5">
         <span className="shrink-0 pt-0.5 text-[10px] font-bold tracking-widest text-(--color-diablos) uppercase">
           {es.plan.limitTitle}
         </span>
-        <p className="m-0 text-[12px] leading-relaxed">{es.plan.limit}</p>
+        <p className="m-0 text-[12px] leading-relaxed">
+          {runBridge === null ? es.plan.limit : es.plan.limitWithBridge(runBridge.modelId)}
+        </p>
       </aside>
     </PageShell>
   )
