@@ -86,12 +86,29 @@ def prepare(raw: pd.DataFrame, run_values: pd.DataFrame, nb: ModuleType) -> pd.D
     return nb.prepare_extra_features(df)
 
 
-def retrain(name: str, df: pd.DataFrame, nb: ModuleType, tracking_uri: str) -> dict[str, object]:
-    """Run one of data's runs again and keep what it trains."""
-    folder = RUNS / name
-    cfg = json.loads((folder / "config.json").read_text())
+def retrain(
+    name: str,
+    df: pd.DataFrame,
+    nb: ModuleType,
+    tracking_uri: str,
+    overrides: dict[str, object] | None = None,
+) -> dict[str, object]:
+    """Run one of data's runs again and keep what it trains.
+
+    With ``overrides`` (another of data's PARAM_SETS, another seed), the run
+    is repeated with them and saved as a new run folder next to data's,
+    ``<name>_<key><value>...``.
+    """
+    source = RUNS / name
+    cfg = json.loads((source / "config.json").read_text())
     cfg = {k: v for k, v in cfg.items() if k not in CONFIG_ONLY}
-    cfg["name"] = f"{name}_folds"
+    folder = source
+    if overrides:
+        cfg.update(overrides)
+        suffix = "_".join(f"{k}{v}" if k == "seed" else str(v) for k, v in overrides.items())
+        folder = RUNS / f"{name}_{suffix}"
+        folder.mkdir(exist_ok=True)
+    cfg["name"] = f"{folder.name}_folds"
     nb._MODEL_CACHE.clear()
     out_dir = folder / "retrained"
     metrics, parts = nb.run_experiment(
@@ -127,6 +144,10 @@ def retrain(name: str, df: pd.DataFrame, nb: ModuleType, tracking_uri: str) -> d
         stats_path = folder / "xrv_media_desviacion_por_pitch.retrained.csv"
     stats.to_csv(stats_path, index=False)
     parts["folds"].to_csv(folder / "fold_summary.retrained.csv", index=False)
+    if overrides:  # a variant has no run folder from data: this run is it
+        run_dir = out_dir / cfg["name"]
+        for file in ("config.json", "metrics.json", "rv_values.csv", "pitcher_table.csv"):
+            (folder / file).write_bytes((run_dir / file).read_bytes())
     return {"run": name, "boosters_saved": saved, "metrics": metrics, "stats": str(stats_path)}
 
 
@@ -136,6 +157,8 @@ def main() -> None:
     parser.add_argument("--notebook", type=Path, required=True)
     parser.add_argument("--tracking-db", type=Path, required=True)
     parser.add_argument("--runs", nargs="+", default=list(EXPERIMENTS))
+    parser.add_argument("--params", help="another of data's PARAM_SETS, e.g. shallow")
+    parser.add_argument("--seed", type=int, help="another seed: other folds, other boosters")
     args = parser.parse_args()
 
     nb = load_notebook(args.notebook.resolve())
@@ -144,7 +167,12 @@ def main() -> None:
     # MLflow writes run artifacts under ./mlruns: next to the database.
     os.chdir(args.tracking_db.resolve().parent)
     for name in args.runs:
-        record = retrain(name, df, nb, tracking_uri)
+        overrides: dict[str, object] = {}
+        if args.params:
+            overrides["params"] = args.params
+        if args.seed is not None:
+            overrides["seed"] = args.seed
+        record = retrain(name, df, nb, tracking_uri, overrides or None)
         print(json.dumps({k: v for k, v in record.items() if k != "metrics"}))
 
 

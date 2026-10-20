@@ -3,6 +3,7 @@
     uv run python scripts/regenerate.py                                  # today's numbers, v0
     uv run python scripts/regenerate.py --model artifacts/<m>.joblib     # a data team's model
     uv run python scripts/regenerate.py --model artifacts/<m>.joblib --publish
+    uv run python scripts/regenerate.py --cards-model artifacts/<m>.joblib --publish  # docs/15
 
 The order matters, because each step reads what the one before wrote:
 
@@ -51,6 +52,11 @@ def main() -> None:
     parser.add_argument("--model", type=Path, help="a Scorer joblib; default: today's v0")
     parser.add_argument("--publish", action="store_true", help="write simulator_validation.json")
     parser.add_argument("--no-gates", action="store_true", help="skip the gates (no refit)")
+    parser.add_argument(
+        "--cards-model",
+        type=Path,
+        help="a Scorer for the cards only; the Simulator keeps --model or the bridge (docs/15)",
+    )
     args = parser.parse_args()
 
     if not (ROOT / "data" / "stuff_model_df.parquet").exists():
@@ -59,8 +65,17 @@ def main() -> None:
     if args.model and not args.model.exists():
         sys.exit(f"{args.model} does not exist.")
 
+    cards = model
+    if args.cards_model is not None:
+        if not args.cards_model.exists():
+            sys.exit(f"{args.cards_model} does not exist.")
+        # A model that passed the cards' tests but not the Simulator's display
+        # gates scores the real pitches; the gates then judge the Simulator's
+        # model against these cards (S4), as the screens will show them.
+        cards = ["--model", str(args.cards_model.resolve())]
+
     python = [sys.executable]
-    run("evidence", [*python, "evidence.py", *model], ANALYSIS)
+    run("evidence", [*python, "evidence.py", *cards], ANALYSIS)
     run("projections", [*python, "projection_evidence.py"], ANALYSIS)
     run("runs", [*python, "pitcher_runs.py"], ANALYSIS)
     run("locations", [*python, "pitcher_locations.py"], ANALYSIS)

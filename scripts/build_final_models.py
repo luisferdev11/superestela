@@ -27,19 +27,22 @@ from __future__ import annotations
 
 import argparse
 import json
+from dataclasses import replace
 from pathlib import Path
 
 import joblib
 import numpy as np
 import pandas as pd
+import xgboost as xgb
 
 from contracts.mapping import normalize_columns
 from models import outcomes
 from models.features.arsenal import frame_differentials
 from models.location import final as location
-from models.runs import read_run
+from models.runs import DataRun, read_run
 from models.scoring import ScaleSpec
 from models.stuff import final as stuff
+from models.stuff.monotone import MonotoneStuffScorer
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "stuff_model_df.parquet"
@@ -64,8 +67,12 @@ COMPARED = {
     "auc_whiff": "higher",
 }
 STUFF_CANDIDATES = ("FINAL_v1", "FIN_B_all8", "FIN_C_allcq")
+SEEDS_NOTE = (
+    " La validación cruzada se repitió con {n} semillas (5 folds cada una): su promedio es el "
+    "Stuff+, como las 20 bolsas del puente v0."
+)
 FOLDS_NOTE = (
-    " La banda es la dispersión entre los 5 boosters de la validación cruzada, re-entrenados con "
+    " La banda es la dispersión entre los boosters de la validación cruzada, re-entrenados con "
     "el código y la configuración de datos (scripts/retrain_final_folds.py, registrado en MLflow)."
 )
 
@@ -139,10 +146,21 @@ def check_run_values(name: str, ours: np.ndarray, path: Path) -> float:
 
 
 def build_stuff(
-    frame: pd.DataFrame, path: Path, sha: str
+    frame: pd.DataFrame, path: Path, sha: str, seeds: tuple[int, ...] = ()
 ) -> tuple[stuff.FinalStuffScorer, dict[str, object]]:
-    """Package FINAL_v1 with the clip quantiles and hand-neutral weights it needs."""
+    """Package FINAL_v1 with the clip quantiles and hand-neutral weights it needs.
+
+    ``seeds`` adds the fold boosters of the same run repeated with other seeds
+    (``<run>_seed<n>``, scripts/retrain_final_folds.py): more draws, the same
+    model, a smoother average (gate S1, docs/15).
+    """
     run = read_run(str(path), stuff.CLASSES)
+    for seed in seeds:
+        extra = read_run(str(path.parent / f"{path.name}_seed{seed}"), stuff.CLASSES)
+        run = replace(
+            run,
+            boosters={t: run.boosters[t] + extra.boosters[t] for t in run.boosters},
+        )
     neutral, _ = outcomes.run_value_table(
         frame["swing_class"],
         frame["delta_run_exp"],
@@ -189,6 +207,7 @@ def build_stuff(
             "Elegido por el equipo de datos el 19 de octubre como modelo principal. Entre los "
             f"candidatos es el mejor en: {', '.join(leads(run.name, rivals))}."
             + (FOLDS_NOTE if run.has_folds else "")
+            + (SEEDS_NOTE.format(n=1 + len(seeds)) if seeds else "")
         ),
         "candidates": rivals,
     }
@@ -277,25 +296,100 @@ def build_location(
     }
 
 
+def build_monotone(
+    teacher: stuff.FinalStuffScorer, path: Path
+) -> tuple[MonotoneStuffScorer, dict[str, object]]:
+    """Package the distilled FINAL_v1 (scripts/distill_monotone.py) on the teacher's features.
+
+    The clip quantiles and the arsenal rule are the teacher's; the boosters
+    are the five fold regressors and the scale their out-of-fold xRV.
+    """
+    config = json.loads((path / "config.json").read_text())
+    boosters: dict[str, tuple[xgb.Booster, ...]] = {}
+    for t in teacher.pitch_types:
+        loaded = []
+        for k in range(int(config["folds"])):
+            b = xgb.Booster()
+            b.load_model(str(path / "models" / "folds" / f"stuff_{t}_f{k}.json"))
+            loaded.append(b)
+        boosters[t] = tuple(loaded)
+    run = DataRun(
+        name=str(config["name"]),
+        features=tuple(config["features_resolved"]),
+        classes=(),
+        boosters=boosters,
+        rv_neutral=(),
+        has_folds=True,
+    )
+    oof = pd.read_csv(path / "xrv_media_desviacion_por_pitch.csv").set_index("AutoPitchType")
+    by_type = {
+        t: (float(oof.loc[t, "media_xRV"]), float(oof.loc[t, "desviacion_xRV"]))
+        for t in teacher.pitch_types
+    }
+    w = oof.loc[list(teacher.pitch_types), "n"].to_numpy(dtype=float)
+    metrics = json.loads((path / "metrics.json").read_text())
+    scale = ScaleSpec(
+        description=(
+            "100 = el pitch promedio de su tipo en la liga (xRV fuera de fold del modelo final "
+            "con la regla de velocidad); 10 puntos = una desviación estándar del xRV del tipo"
+        ),
+        mean_xrv=float(np.average(oof.loc[list(teacher.pitch_types), "media_xRV"], weights=w)),
+        sd_xrv=float(np.average(oof.loc[list(teacher.pitch_types), "desviacion_xRV"], weights=w)),
+        kind="league",
+        by_type=by_type,
+    )
+    provenance = {
+        **dict(teacher.provenance),
+        "run": run.name,
+        "selection": (
+            "FINAL_v1 (elegido por datos) destilado con una regla: más velocidad nunca resta "
+            "Stuff+ (restricción monótona de XGBoost sobre RelSpeed). Sin la regla, en 14.7% "
+            "de las rectas reales +1 mph bajaba su Stuff+ (compuerta S1). Con ella, en la "
+            "evaluación de datos empata o mejora a FINAL_v1; coincide con él en r "
+            f"{metrics['agreement_pitcher_season_r_n100']:.2f} por lanzador, temporada y tipo. "
+            "La banda es la dispersión entre los 5 regresores por fold (docs/15 §6)."
+        ),
+    }
+    major, minor, _ = teacher.model_id.split("+")[0].split(".")
+    model = MonotoneStuffScorer(
+        model_id=f"{major}.{int(minor) + 1}.0+{teacher.model_id.split('+')[1]}",
+        scale=scale,
+        pitch_types=teacher.pitch_types,
+        run=run,
+        p_same=teacher.p_same,
+        clip=teacher.clip,
+        provenance=provenance,
+    )
+    return model, {"run": run.name, "has_folds": True, "metrics": metrics}
+
+
 def main() -> None:
     """Build both models and write them with the record of what was computed."""
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("--runs", type=Path, default=RUNS)
     parser.add_argument("--out", type=Path, default=ROOT / "artifacts")
+    parser.add_argument("--seeds", type=int, nargs="*", default=[], help="extra FINAL_v1 seeds")
     args = parser.parse_args()
 
     sha = (args.runs / "SOURCE_COMMIT").read_text().strip()
     frame = prepare(pd.read_parquet(DATA), pd.read_csv(args.runs / "runValues.csv"))
-    stuff_model, stuff_record = build_stuff(frame, args.runs / "FINAL_v1", sha)
+    stuff_model, stuff_record = build_stuff(frame, args.runs / "FINAL_v1", sha, tuple(args.seeds))
     location_model, location_record = build_location(frame, args.runs / "L3_loc_count_hand", sha)
 
     joblib.dump(stuff_model, args.out / "stuff_plus_final_v1.joblib")
     joblib.dump(location_model, args.out / "location_plus_l3.joblib")
+    monotone_record = None
+    if (args.runs / "FINAL_v1_monotone" / "config.json").exists():
+        monotone_model, monotone_record = build_monotone(
+            stuff_model, args.runs / "FINAL_v1_monotone"
+        )
+        joblib.dump(monotone_model, args.out / "stuff_plus_final_v1_monotone.joblib")
     record = {
         "source_commit": sha,
         "rows": len(frame),
         "stuff": stuff_record,
         "location": location_record,
+        "monotone": monotone_record,
     }
     (args.out / "final_models.build.json").write_text(json.dumps(record, indent=2) + "\n")
     print(json.dumps({k: v for k, v in record.items() if k != "location"}, indent=2)[:2000])
