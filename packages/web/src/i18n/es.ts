@@ -294,6 +294,8 @@ export const es = {
       more: 'm\u00e1s',
       stats: (height: string, zone: string, whiff: string): string =>
         `Altura media ${height} pulgadas \u00b7 ${zone}% en zona \u00b7 ${whiff}% de whiff por swing.`,
+      locationPlus: (value: string): string =>
+        `Location+ ${value}: qué tan bien la puso para el conteo y el bateador (100 = el promedio de su tipo). Describe cómo ubicó; no proyecta.`,
       pending: 'Pendiente: la ubicaci\u00f3n la entrega el equipo de datos con Location+.',
       pendingDetail:
         'Aqu\u00ed va d\u00f3nde pone sus lanzamientos en cada entorno, su altura media, su porcentaje en zona y su whiff.',

@@ -7,6 +7,7 @@ const panel = (height: number, zone: number, n = 1000): LocationPanel => ({
   plateHeightSdFt: 0.9,
   zoneShare: zone,
   whiffPerSwing: 0.25,
+  locationPlus: null,
   grid: [[1]],
   sideRangeFt: [-2, 2],
   heightRangeFt: [0.5, 4.5],

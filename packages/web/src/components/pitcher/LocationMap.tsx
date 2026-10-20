@@ -1,5 +1,5 @@
 import { meanPlateHeightIn, STRIKE_ZONE, type LocationPanel } from '@/domain/location'
-import { formatNumber } from '@/domain/format'
+import { formatMetric, formatNumber } from '@/domain/format'
 import { es } from '@/i18n/es'
 
 const W = 220
@@ -80,6 +80,11 @@ export const LocationMap = ({
               formatNumber(100 * panel.whiffPerSwing),
             )}
       </p>
+      {panel?.locationPlus == null ? null : (
+        <p className="text-[11px] leading-snug text-(--color-text-muted)">
+          {es.ficha.location.locationPlus(formatMetric(panel.locationPlus))}
+        </p>
+      )}
     </figure>
   )
 }

@@ -1,3 +1,5 @@
+import type { Metric } from './types'
+
 /**
  * El contrato de la ubicacion que la pestana Arsenal de la Ficha espera del
  * equipo de datos (`docs/11`). Vista del catcher: `side` en pies, positivo
@@ -12,6 +14,8 @@ export type LocationPanel = {
   readonly zoneShare: number
   /** Entre 0 y 1. */
   readonly whiffPerSwing: number
+  /** Location+ de datos (L3) con su banda al 95%; null sin modelo o sin muestra. */
+  readonly locationPlus: Metric | null
   /** Densidad por celda, filas de arriba abajo; cada fila de izquierda a derecha. */
   readonly grid: readonly (readonly number[])[]
   readonly sideRangeFt: readonly [number, number]

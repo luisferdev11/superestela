@@ -17,17 +17,23 @@ Kept apart from evidence.py, like pitcher_runs.py. ``scripts/regenerate.py`` run
 import json
 import os
 
+import joblib
 import numpy as np
 import pandas as pd
 from evidence import MAIN_PITCHES, STUFF_FEATURES
 
+from contracts.mapping import CANONICAL_TO_VENDOR, normalize_columns
 from contracts.schemas import MIN_PITCHES_FOR_SCORE
+from models.location.final import REQUIRED as LOCATION_REQUIRED
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 PARQUET = os.path.join(ROOT, "data", "stuff_model_df.parquet")
 ARSENALS = os.path.join(HERE, "outputs", "arsenals.json")
 OUT = os.path.join(HERE, "outputs", "locations.json")
+# data's final Location+ (docs/15); without it the maps still draw, without the score.
+LOCATION_MODEL = os.path.join(ROOT, "artifacts", "location_plus_l3.joblib")
+HANDS = ("Right", "Left")
 
 ENVIRONMENTS = {"No Altitude": "sea", "Extreme Altitude": "hh"}
 # The rows evidence.py scores for the cards (main(): trajectory, pitcher and
@@ -53,6 +59,27 @@ HEIGHT_RANGE_FT = (0.5, 4.5)
 # Cells of 0.4 ft, about a ball and a half: fine enough to see a pitcher who
 # works the edges, coarse enough that 100 pitches do not read as noise.
 CELLS = 10
+
+
+def location_plus(df: pd.DataFrame, model_path: str) -> pd.Series:
+    """Location+ of every row from data's final L3 (models.location.final), NaN where it cannot be.
+
+    Each pitch needs its plate location, the count and both hands; a row that
+    lacks one, or whose type the model was not trained on, gets no score.
+    """
+    model = joblib.load(model_path)
+    frame = normalize_columns(df[[CANONICAL_TO_VENDOR.get(c, c) for c in LOCATION_REQUIRED]])
+    for c in ("pitch_type", "pitcher_hand", "batter_hand"):
+        frame[c] = frame[c].astype(object)
+    ok = (
+        frame.notna().all(axis=1)
+        & frame["pitch_type"].isin(model.pitch_types)
+        & frame["pitcher_hand"].isin(HANDS)
+        & frame["batter_hand"].isin(HANDS)
+    )
+    value = pd.Series(np.nan, index=df.index)
+    value[ok] = model.draws(frame[ok].reset_index(drop=True)).mean(axis=0)
+    return value
 
 
 def panel(group: pd.DataFrame, swings: int, whiffs: int) -> dict | None:
@@ -83,10 +110,21 @@ def panel(group: pd.DataFrame, swings: int, whiffs: int) -> dict | None:
         "plate_height_sd_ft": round(float(np.nanstd(height, ddof=1)), 3),
         "zone_share": round(float(group.in_strike_zone.fillna(0).astype(float).mean()), 4),
         "whiff_per_swing": round(whiffs / swings, 4),
+        # data's L3, averaged over the panel's pitches with its 95% band, as the
+        # cards' Stuff+ is; None without the model or below the minimum sample.
+        "location_plus": _mean_band(group["location_plus"]) if "location_plus" in group else None,
         "grid": [[round(float(v), 5) for v in row] for row in grid],
         "side_range_ft": list(SIDE_RANGE_FT),
         "height_range_ft": list(HEIGHT_RANGE_FT),
     }
+
+
+def _mean_band(values: pd.Series) -> dict | None:
+    scored = values.dropna()
+    if len(scored) < MIN_PITCHES_FOR_SCORE:
+        return None
+    half = 1.96 * float(scored.std()) / np.sqrt(len(scored))
+    return {"value": round(float(scored.mean()), 1), "ci95": round(half, 1)}
 
 
 def pitcher_locations(df: pd.DataFrame, keys: set[str]) -> dict:
@@ -126,6 +164,10 @@ def main() -> None:
             "is_swing",
             "is_whiff",
             "AutoPitchType",
+            "BatterSide",
+            "PitcherThrows",
+            "Balls",
+            "Strikes",
             *KEPT_IF_PRESENT[:6],
             "game_anon_id",
             *STUFF_FEATURES,
@@ -133,6 +175,8 @@ def main() -> None:
     )
     with open(ARSENALS) as fh:
         keys = set(json.load(fh))
+    if os.path.exists(LOCATION_MODEL):
+        df = df.assign(location_plus=location_plus(df, LOCATION_MODEL))
     locations = pitcher_locations(df, keys)
     with open(OUT, "w") as fh:
         json.dump(locations, fh, separators=(",", ":"), ensure_ascii=False, allow_nan=False)
