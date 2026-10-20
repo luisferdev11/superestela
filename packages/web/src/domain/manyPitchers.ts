@@ -1,4 +1,5 @@
 import { sortRows, type SortDirection, type SortState, type SortValue } from './tableSort'
+import { toBand95 as band95 } from './band'
 import type { Metric } from './types'
 
 /**
@@ -27,12 +28,9 @@ export const DEFAULT_MANY_SORT: SortState<ManySortKey> = { key: 'hh', direction:
 export const firstManyDirection = (key: ManySortKey): SortDirection =>
   key === 'pitcher' ? 'asc' : 'desc'
 
-/** 1.96 errores estandar: la banda al 95%, la unica convencion del «±» (`docs/12` §2.1). */
-const Z95 = 1.96
-
 /** Un error estandar de la API como la banda al 95% que muestra la pantalla. */
 export const toBand95 = (metric: Metric | null): Metric | null =>
-  metric === null ? null : { value: metric.value, se: Z95 * metric.se }
+  metric === null ? null : band95(metric)
 
 const valueOf =
   (key: ManySortKey) =>

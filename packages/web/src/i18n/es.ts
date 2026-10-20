@@ -127,7 +127,7 @@ export const es = {
   },
   sortHint: 'Haz clic en el nombre de una columna para ordenar; otro clic invierte el orden.',
   taxExplainer:
-    'Impuesto de Altitud: cu\u00e1ntas carreras de m\u00e1s permite por cada 9 entradas en altitud extrema, contra nivel del mar, medido en sus propios lanzamientos. Solo se muestra cuando la diferencia es concluyente; si no, dice \u00abno concl.\u00bb.',
+    'Impuesto de Altitud: cu\u00e1ntas carreras de m\u00e1s permite por cada 9 entradas en altitud extrema, contra nivel del mar, medido con el valor en carreras de sus propios lanzamientos. Solo se muestra cuando la banda al 95% no cruza el cero; si la cruza, dice \u00abno concl.\u00bb.',
   pitchColumns: {
     hh: (pitch: string): string => `${pitch} alt. extrema`,
     sea: (pitch: string): string => `${pitch} n. del mar`,
@@ -140,7 +140,7 @@ export const es = {
     'Mano con la que lanza.',
     'Calidad de su arsenal en altitud extrema, ponderada por uso, con su banda al 95%.',
     'La misma medida a nivel del mar, con su banda al 95%.',
-    'Carreras de más por 9 entradas en altitud extrema, ± un error estándar. «No concl.» si no es significativo al 95%.',
+    'Carreras de más por 9 entradas en altitud extrema, con su banda al 95%, según el valor en carreras de sus lanzamientos. «No concl.» si la banda cruza el cero.',
     'Ponches menos bases por bolas, por cada 100 turnos, en altitud extrema en esa temporada, con su banda al 95%. Es la misma cifra que la Ficha; debajo del mínimo de turnos, «muestra insuf.».',
     'Swings abanicados por cada 100 swings, en altitud extrema en esa temporada, con su banda al 95%. Es la misma cifra que la Ficha; debajo del mínimo de swings, «muestra insuf.».',
     'Abridor o relevista, por cómo entra a los juegos.',
@@ -156,7 +156,7 @@ export const es = {
     items: [
       {
         term: 'La banda «±»',
-        text: 'Cuánto podría moverse el número con más lanzamientos. En el Radar y la Ficha, el ± del Stuff+ y de las tasas es la banda al 95%; el del Impuesto, el Simulador y el Traductor es un error estándar. Si dos lanzadores se traslapan, no hay diferencia que defender.',
+        text: 'Cuánto podría moverse el número con más lanzamientos. En todas las pantallas, el ± es la banda al 95%. Si dos lanzadores se traslapan, no hay diferencia que defender.',
       },
       {
         term: 'Altitud extrema',
@@ -164,7 +164,7 @@ export const es = {
       },
       {
         term: 'Impuesto de Altitud',
-        text: 'Las carreras de más que permite por cada 9 entradas cuando lanza en altitud extrema, contra lo que permite a nivel del mar. Sale de sus propios lanzamientos en los dos entornos, no del modelo. Si la diferencia no es concluyente al 95%, se dice así en vez de dar un número.',
+        text: 'Las carreras de más que permite por cada 9 entradas cuando lanza en altitud extrema, contra lo que permite a nivel del mar. Sale del valor en carreras de sus propios lanzamientos en los dos entornos, no del modelo ni del marcador: por eso no es la resta de sus RA/9. Si la banda al 95% cruza el cero, se dice «no concluyente» en vez de dar un número.',
       },
       {
         term: 'Sufre en la altura ▌',
@@ -219,7 +219,9 @@ export const es = {
       delta: 'Δ por altitud',
       tax: 'Impuesto de Altitud',
       taxMeasured: (measured: string): string =>
-        `mide ${measured} c/9 ent.; la banda cruza el cero`,
+        `Mide ${measured} c/9 ent. con banda al 95%: cruza el cero.`,
+      taxDefinition:
+        'Valor en carreras de sus lanzamientos, llevado a 9 entradas: no es la resta de sus RA/9, que cuentan las carreras anotadas.',
       runs: 'Carreras permitidas c/9 ent.',
       runsIn: { hh: 'alt. extrema', sea: 'nivel del mar' } satisfies Record<Environment, string>,
       runsNote: (minInnings: number): string =>
@@ -410,7 +412,7 @@ export const es = {
     inBand: 's\u00ed, en banda',
     outOfBand: 'no, fuera',
     noSample: 'sin muestra',
-    note: 'Pulgadas; HB del lado del brazo. El \u00b1 es un error est\u00e1ndar: el error medido de la ley por tipo de pitch, el mismo que muestra el Simulador. \u00abEn banda\u00bb compara lo medido contra la banda al 95%, \u00b11.96 errores, en los dos ejes.',
+    note: 'Pulgadas; HB del lado del brazo. El \u00b1 es la banda al 95%, del error medido de la ley por tipo de pitch, la misma que muestra el Simulador. \u00abEn banda\u00bb: lo medido cae dentro de esa banda en los dos ejes.',
     none: 'Sin muestra a nivel del mar para proyectar esta temporada.',
   },
   roster: {
@@ -793,7 +795,7 @@ export const es = {
       unusualNote:
         'Marcado como forma inusual: esa combinación no se ha lanzado en la LMB, y su Stuff+ es una extrapolación.',
       openInSimulator: 'Abrir en el Simulador',
-      note: 'Pulgadas; HB del lado del brazo. El ± es un error estándar: el de la ley por tipo de pitch, el mismo que muestra el Simulador. El Stuff+ es el del Simulador para la misma forma.',
+      note: 'Pulgadas; HB del lado del brazo. El ± es la banda al 95% de la ley por tipo de pitch, la misma que muestra el Simulador. El Stuff+ es el del Simulador para la misma forma.',
     },
     map: {
       sea: 'a nivel del mar',

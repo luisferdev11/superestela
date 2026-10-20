@@ -34,7 +34,9 @@ describe('la Ficha de pitcher_00069', () => {
     expect(card?.stuffPlusSea).toEqual({ value: 110.5, se: 0.8 })
     expect(card?.stuffPlusDelta).toBe(-17.2)
     expect(card?.altitudeTax).toBeNull()
-    expect(card?.altitudeTaxMeasured).toEqual({ value: 4.55, se: 2.7 })
+    // The artifact's standard error (2.70) is shown as the 95% half-width.
+    expect(card?.altitudeTaxMeasured?.value).toBe(4.55)
+    expect(card?.altitudeTaxMeasured?.se).toBeCloseTo(1.96 * 2.7, 9)
     expect(card?.role).toBe('starter')
     expect(card?.altitudeTrap).toBe(true)
   })

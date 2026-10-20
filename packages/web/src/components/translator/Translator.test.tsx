@@ -133,10 +133,11 @@ describe('el Traductor', () => {
   it('pondera el arsenal por uso con lo que contesta la API', async () => {
     renderTranslator()
     await settle()
-    // 0.75 × 94 + 0.25 × 106 = 97.0; la banda, independiente: hypot(3, 1) = 3.2.
-    expect(screen.getByText('97.0 ± 3.2')).toBeInTheDocument()
+    // 0.75 × 94 + 0.25 × 106 = 97.0. The API's SE of 4 is a 95% half-width of 7.84;
+    // independent pitches: hypot(0.75, 0.25) × 7.84 = 6.2. IVB: 1.96 × 0.9 = 1.8.
+    expect(screen.getByText('97.0 ± 6.2')).toBeInTheDocument()
     // Dos en la traduccion y dos en la validacion, que pone lo proyectado junto a lo medido.
-    expect(screen.getAllByText('15.6 ± 0.9')).toHaveLength(4)
+    expect(screen.getAllByText('15.6 ± 1.8')).toHaveLength(4)
   })
 
   it('cambiar el origen vuelve a preguntar con la densidad de altitud media y avisa que extrapola', async () => {
@@ -176,14 +177,14 @@ describe('el Traductor', () => {
     vi.spyOn(console, 'error').mockImplementation(() => undefined)
     renderTranslator()
     await settle()
-    expect(screen.getByText('97.0 ± 3.2')).toBeInTheDocument()
+    expect(screen.getByText('97.0 ± 6.2')).toBeInTheDocument()
     vi.mocked(fetch).mockImplementation(() => Promise.reject(new Error('down')))
     fireEvent.change(screen.getByLabelText(`${es.translator.editor.pitch} 2`), {
       target: { value: 'Curveball' },
     })
     await settle()
     expect(screen.getByText(es.sim.status.unreachable)).toBeInTheDocument()
-    expect(screen.queryByText('97.0 ± 3.2')).not.toBeInTheDocument()
+    expect(screen.queryByText('97.0 ± 6.2')).not.toBeInTheDocument()
   })
 
   it('si la API no contesta lo dice, y la tabla sigue editable', async () => {

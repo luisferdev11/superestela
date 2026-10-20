@@ -71,7 +71,7 @@ describe('la Ficha de pitcher_00069', () => {
     render(<PitcherKpis card={card} rank={{ sea: 1, hh: 1, of: 1 }} />)
     expect(screen.getByLabelText('93.3 ± 0.7')).toBeInTheDocument()
     expect(screen.getByLabelText('110.5 ± 0.8')).toBeInTheDocument()
-    expect(screen.getByText(es.ficha.kpi.taxMeasured('+4.55 ± 2.70'))).toBeInTheDocument()
+    expect(screen.getByText(es.ficha.kpi.taxMeasured('+4.55 ± 5.29'))).toBeInTheDocument()
   })
 })
 
@@ -95,6 +95,20 @@ describe('las carreras permitidas de pitcher_00069 (RA/9, no ERA)', () => {
     // analysis/outputs/pitcher_runs.json: 7.13 en altura, 3.20 a nivel del mar.
     expect(screen.getByLabelText('7.13 ± 3.87')).toBeInTheDocument()
     expect(screen.getByLabelText('3.20 ± 2.20')).toBeInTheDocument()
+  })
+
+  it('junto al RA/9, el impuesto dice que mide otra cosa', async () => {
+    const { card } = await load('pitcher_00069')
+    render(
+      <PitcherKpis
+        card={card}
+        rank={{ sea: 1, hh: 1, of: 1 }}
+        runs={{ minInnings: 10, pitcher: null }}
+      />,
+    )
+    expect(
+      screen.getByText(`${es.ficha.kpi.taxMeasured('+4.55 ± 5.29')} ${es.ficha.kpi.taxDefinition}`),
+    ).toBeInTheDocument()
   })
 
   it('sin el artefacto, la Ficha no muestra el recuadro', async () => {
