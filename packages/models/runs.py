@@ -11,7 +11,7 @@ the licensed data (CONVENTIONS.md 8.4).
 A type may also carry its cross-validation boosters as
 ``models/folds/stuff_<pitch type>_f<k>.json``. With them, the scorers draw one
 score per fold and the spread is the band; without them there is one booster
-and no band (docs/14).
+and no band (docs/15).
 """
 
 from __future__ import annotations

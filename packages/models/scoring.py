@@ -76,7 +76,7 @@ class ScaleSpec:
     # delta from it. Optional: a model pickled before the field reads "league".
     kind: str = "league"
     # Per pitch type ``(mean_xrv, sd_xrv)`` when 100 is set within each type
-    # (data's FINAL_v1, docs/14). ``mean_xrv``/``sd_xrv`` then hold the pooled
+    # (data's FINAL_v1, docs/15). ``mean_xrv``/``sd_xrv`` then hold the pooled
     # values, for the few readers that need one number.
     by_type: Mapping[str, tuple[float, float]] | None = None
 

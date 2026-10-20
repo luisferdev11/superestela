@@ -1,4 +1,4 @@
-"""Data's final Location+ (``L3_loc_count_hand``). docs/14.
+"""Data's final Location+ (``L3_loc_count_hand``). docs/15.
 
 It answers a different question from Stuff+ and does not go through
 ``models.scoring.Scorer``: Stuff+ grades a shape, Location+ grades where a
@@ -16,7 +16,7 @@ own inputs, its own validation and its own vector, never Stuff+'s:
 - **Scale.** ``100 - 10 * (xRV - mean) / sd`` per pitch type. Data did not
   hand over this run's mean and sd; scripts/build_final_models.py computes
   them from the final booster on the training rows, not out of fold, and
-  docs/14 says so.
+  docs/15 says so.
 
 What the numbers support (L3's metrics.json): split-half r 0.53 and no
 correlation with next season's runs. Location+ describes how a pitcher

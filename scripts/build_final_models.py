@@ -1,4 +1,4 @@
-"""Package data's final runs as models the product can load. docs/14.
+"""Package data's final runs as models the product can load. docs/15.
 
     uv run python scripts/build_final_models.py                  # artifacts/data-runs -> artifacts/
 
@@ -53,7 +53,7 @@ HANDS = ("Right", "Left")
 
 # The metrics the API shows to compare runs, higher is better for every one
 # but next_rv_r_stuff, where more negative is better: delta_run_exp is the
-# batter's, so a better Stuff+ predicts fewer runs (docs/14).
+# batter's, so a better Stuff+ predicts fewer runs (docs/15).
 COMPARED = {
     "calib_slope": "higher",
     "splithalf_r_mean": "higher",

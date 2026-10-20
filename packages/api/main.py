@@ -252,7 +252,7 @@ def score_pitch_rows(
     service: Annotated[SimulatorService, Depends(simulator_service)],
     location: Annotated[FinalLocationScorer | None, Depends(location_scorer)],
 ) -> PitchScoresResponse | JSONResponse:
-    """Stuff+ and Location+ of each pitch, each model on its own inputs (docs/14).
+    """Stuff+ and Location+ of each pitch, each model on its own inputs (docs/15).
 
     The Stuff+ model is the one the Simulator serves (``SUPERESTELA_MODEL``).
     Unlike the Simulator, the score comes back even before the model has

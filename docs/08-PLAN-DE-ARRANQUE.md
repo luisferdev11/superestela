@@ -53,6 +53,16 @@ las pantallas, y el Traductor es para quien no está en los datos (`docs/12` §2
 
 **Checklist, en orden.** Cada tarea tiene su criterio de hecho.
 
+- [x] **19 oct · Modelos finales de datos en el producto** (`docs/15`, ADR 0011). Stuff+ `FINAL_v1` y
+      Location+ `L3` cargan desde los runs de datos (`scripts/build_final_models.py`), pasan por la
+      costura única con arsenal y escala por tipo, y responden en `POST /api/v1/pitches/score`.
+      ✔ `verify_final_models.py`: paridad exacta de diferenciales y valores en carreras; Location+
+      r 0.989 contra datos; API real = cálculo directo en 1 296 lanzamientos.
+- [ ] **Publicar `FINAL_v1` en pantallas** (bloqueado por datos: 5 boosters por fold de `FINAL_v1` y
+      `L3`, docs/15 §5). Con ellos: bandas, S1/S3, `regenerate.py --model … --publish` y los 11 tests
+      web que fijan v0.
+      ✔ `simulator_validation.json` con `model_id` `1.0.0+…` y `stuff_plus_shown: true`.
+
 - [x] **15 oct · Segunda ronda de ajustes.** Los mapas de movimiento se leen (letra en unidades del
       lienzo para el tamaño al que se dibujan) y todos tienen «¿Cómo leer este mapa?» con dos diagramas
       dibujados; la Ficha tiene selector de temporada en todas sus pestañas (solo las del lanzador);

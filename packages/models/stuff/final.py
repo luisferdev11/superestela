@@ -1,4 +1,4 @@
-"""Data's final Stuff+ (``FINAL_v1``), served through the scoring contract. docs/14.
+"""Data's final Stuff+ (``FINAL_v1``), served through the scoring contract. docs/15.
 
 What data trained, and what this class reproduces at inference:
 

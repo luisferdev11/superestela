@@ -1,4 +1,4 @@
-"""Check the packaged final models against what data computed. docs/14.
+"""Check the packaged final models against what data computed. docs/15.
 
     uv run python scripts/verify_final_models.py \
         --notebook ../superestela-datos/notebooks/experimentos_stuff.py

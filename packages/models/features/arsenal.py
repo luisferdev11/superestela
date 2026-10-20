@@ -1,6 +1,6 @@
 """A pitch against its pitcher's primary fastball, as the final Stuff+ was trained.
 
-Data's ``FINAL_v1`` (docs/14) grades every pitch by how it differs from the
+Data's ``FINAL_v1`` (docs/15) grades every pitch by how it differs from the
 pitcher's primary fastball in the same season and altitude category
 (``speed_diff_env``, ``ivb_diff_env``, ``hb_diff_env``). The scores only mean
 what they meant in training if the reference is picked the same way, so this

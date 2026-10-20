@@ -306,7 +306,7 @@ class ArsenalScoresResponse(Wire):
 
 
 # ---------------------------------------------------------------- pitch scores
-# POST /api/v1/pitches/score (docs/14): data's final Stuff+ and Location+ on
+# POST /api/v1/pitches/score (docs/15): data's final Stuff+ and Location+ on
 # any pitches, each with the inputs it needs and nothing borrowed from the other.
 
 ScoreStatus = Literal[
@@ -362,7 +362,7 @@ class PitchScoresRequest(Wire):
 
 
 class ScoreOut(Wire):
-    """A score, its band when the model has one (``se`` null: no band yet, docs/14)."""
+    """A score, its band when the model has one (``se`` null: no band yet, docs/15)."""
 
     value: float
     se: float | None

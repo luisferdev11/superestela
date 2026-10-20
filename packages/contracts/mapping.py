@@ -29,7 +29,7 @@ VENDOR_TO_CANONICAL: dict[str, str] = {
     "BatterSide": "batter_hand",
     "altitude_category": "environment",
     "PitchUID": "pitch_id",
-    # The count, which Location+ reads (docs/14).
+    # The count, which Location+ reads (docs/15).
     "Balls": "balls",
     "Strikes": "strikes",
 }

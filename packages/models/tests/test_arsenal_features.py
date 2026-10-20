@@ -1,4 +1,4 @@
-"""The fastball differentials, ported from data's _fb_diffs (docs/14).
+"""The fastball differentials, ported from data's _fb_diffs (docs/15).
 
 The parity with data's own function on the real dataset is checked by
 scripts/verify_final_models.py; these pin the rules on small frames.

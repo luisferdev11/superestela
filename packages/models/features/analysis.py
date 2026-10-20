@@ -1,4 +1,4 @@
-"""Descriptive features data computed alongside the final models. docs/14.
+"""Descriptive features data computed alongside the final models. docs/15.
 
 ``prepare_extra_features`` in data's ``experimentos_stuff.py`` adds these to
 every pitch. Neither final model reads them (``FINAL_v1`` and

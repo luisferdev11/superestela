@@ -1,4 +1,4 @@
-"""Score pitches with data's final Stuff+ and Location+, each on its own inputs. docs/14.
+"""Score pitches with data's final Stuff+ and Location+, each on its own inputs. docs/15.
 
 ``POST /api/v1/pitches/score``. The two models answer different questions
 and read different columns, so each is validated on its own: a pitch with a

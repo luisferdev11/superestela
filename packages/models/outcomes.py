@@ -1,6 +1,6 @@
 """The outcome of every pitch and its run value, as data built them for training.
 
-The final models (docs/14) were trained on classes and run values derived
+The final models (docs/15) were trained on classes and run values derived
 from ``PitchCall`` and ``play_result`` in data's notebook
 (``superestela_experimentos.ipynb`` cells 8, 11 and 20, and ``build_labels``
 in ``experimentos_stuff.py``). The product needs the same derivation twice:
