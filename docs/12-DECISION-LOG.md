@@ -136,6 +136,26 @@ auditable: qué se decidió, contra qué y con qué evidencia.
 | Impuesto en el Traductor de varios lanzadores | «Impuesto proyectado»: la caída de Stuff+ del modelo pasada a carreras c/9 ent. invirtiendo su escala (Δ/10 · sd_xrv · 9 · lanzamientos por entrada en altitud extrema). Siempre rotulado como proyectado | Para quien nunca lanzó en la altura no hay Impuesto medido. Revisado contra el medido en las 370 tarjetas (`analysis/projected_tax_check.py`, corrida del 14 de octubre con el puente `0.1.0+56a5842`): coincide en promedio (1.87 contra 1.53 c/9 ent.), ordena poco (r = 0.14). La pantalla cita la revisión **del modelo que contestó**, nunca la de otro; sin ella dice que no se ha revisado. Decidido el 14 de octubre | `api/arsenal_batch.py` |
 | Densidad por juego | 50 lanzamientos o más | Con 50 el error de la media es una cuarta parte de la variación entre juegos | `models/batch.py`, ADR 0009 |
 
+### 2.3 La integración de los modelos finales de datos (19 y 20 de octubre)
+
+El detalle y las cifras están en `docs/15`. Cada corrida está en MLflow: los re-entrenamientos en
+`superestela/A-target/final-folds` y `superestela/B-location/final-folds`; lo que producto comprobó
+en `superestela/product/integration`.
+
+| Decisión | Alternativa descartada | Evidencia | Quién |
+|---|---|---|---|
+| Stuff+ es `FINAL_v1` y Location+ es `L3_loc_count_hand` | Los otros candidatos (`FIN_B_all8`, `FIN_C_allcq`) | `FINAL_v1` gana en calibración, split-half, whiff y carreras siguientes y S6 (`docs/15` §1) | Datos, 19 oct |
+| La rama de datos no se fusiona; sus modelos viven en `artifacts/` y el código de producto los sirve | Fusionar su rama | Sube 95 CSV por lanzador y los modelos ajustados (CONVENTIONS §8.4) | Producto, 19 oct |
+| Producto re-entrena los folds con **el código, la configuración y la semilla de datos** (`scripts/retrain_final_folds.py`) | Esperar a datos; publicar un solo booster sin banda | No había bandas sin folds y la entrega es el 22. Reproduce a datos: fuera de fold contra fuera de fold, r 0.981 (`FINAL_v1`) y 0.9986 (L3) | Usuario, 20 oct |
+| Se repite la validación cruzada de `FINAL_v1` con 4 semillas (20 boosters) | 5 folds; las variantes `shallow` y `slow` de datos | Más draws, el mismo modelo. S3 pasa con 5 folds; S1 no pasa con ninguna variante (13.0–14.7%) | Producto, 20 oct |
+| Mezclar modelos: tarjetas con `FINAL_v1`, Simulador y Traductor con el puente v0 — **probado y descartado** | — | Rompe S4: el Simulador y la Ficha se contradicen para el mismo pitch (r 0.57, 6.8 puntos de diferencia media). Es justo lo que un scout ve al dar clic en «abrir en el Simulador» | Producto, 20 oct |
+| **⚠️ Importante · Stuff+ en pantallas: `FINAL_v1` destilado con la regla «más velocidad nunca resta»** (`docs/15` §6) | `FINAL_v1` tal cual (falla S1); quedarse con v0; ocultar Stuff+ en el Simulador | `FINAL_v1` falla S1: en 14.7% de las rectas reales, +1 mph le baja el Stuff+. Un modelo multiclase no admite esa regla; un regresor por tipo sobre el xRV de `FINAL_v1`, con restricción monótona en velocidad y sin fuga entre folds, sí. Pasa S1 con 0% y S1–S6 completas, y en la evaluación de datos empata o mejora a `FINAL_v1`. Registrado en MLflow (`superestela/A-target/final-monotone`) | Usuario («lo que veas… que considere la regla y siga siendo preciso») y producto, 20 oct |
+| La compuerta S1 no se redefinió | Medir S1 subiendo solo ese pitch respecto a su arsenal (pasaría: 8.3%) | Cambiar la prueba después de ver el resultado es mover la portería; la regla se metió en el modelo | Producto, 20 oct |
+| Un arsenal conocido cuya referencia no tiene la medida (una sola Four-Seam sin IVB) se lee como faltante | Rechazar el pitch | Así lo trató el entrenamiento de datos; rechazarlo borraba la tarjeta de pitcher_01099 2025 (260 lanzamientos en la liga). Sin arsenal conocido, se sigue rechazando | Producto, 20 oct |
+| La escala de Location+ es la fuera de fold del re-entrenamiento | La del booster final sobre sus propias filas | Datos no la entregó; la fuera de fold es como se definió la de Stuff+ | Producto, 20 oct |
+| `FINAL_v1` se entrenó sobre una versión del dataset con unas 850 rectas menos que la nuestra | — (pregunta abierta a datos) | `xrv_media_desviacion_por_pitch.csv`: 215 998 Four-Seam contra 216 850 | Abierta |
+| La ubicación de la Ficha (mapas y lectura) se cuenta sobre las mismas filas que las tarjetas | Todas las filas con ubicación | Así la cabecera y el mapa dicen el mismo número (0 diferencias en 370 tarjetas) | Producto, 20 oct |
+
 ### 2.2 Lo que decidió el Q&A con Diablos (30 de septiembre)
 
 El detalle está en `docs/10` §5. Lo que cambió decisiones:

@@ -11,7 +11,8 @@ Two panels, from the same 300 real sea-level four-seams gate S1 uses:
 2. What +1 mph does to each of the 300: the share that loses Stuff+ is the
    gate's number (at most 10% to be shown).
 
-Out: ``docs/figures/regla-de-velocidad.png`` and the same file in MLflow,
+Out: ``docs/figures/regla-de-velocidad.png``, ``analysis/outputs/speed_rule.json`` (the numbers
+the technical report cites, report/claims.toml) and the figure in MLflow,
 ``superestela/A-target/final-monotone``. Only model curves and aggregates are
 drawn, never a row of the dataset.
 """
@@ -20,6 +21,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import json
 import os
 import sys
 from pathlib import Path
@@ -123,6 +125,47 @@ def main() -> None:
     OUT.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(OUT, dpi=150)
     print(f"Wrote {OUT.relative_to(ROOT)}: {share}")
+
+    distilled = json.loads(
+        (ROOT / "artifacts" / "data-runs" / "FINAL_v1_monotone" / "metrics.json").read_text()
+    )
+    bins = pd.cut(base.release_speed, [0, 89.2, 91.0, 92.5, 94.2, 200])
+    record = {
+        "note": (
+            "Gate S1 (+1 mph on 300 sea-level four-seams) for FINAL_v1 and its distilled "
+            "version (docs/15 section 3)."
+        ),
+        "final_v1": {
+            "model_id": teacher.model_id,
+            "s1_violation_share": round(share["FINAL_v1"], 3),
+            "s1_violation_pct": round(100 * share["FINAL_v1"], 1),
+            "s1_mean_lift": round(float(np.mean(lift["FINAL_v1"])), 2),
+            "s1_violation_pct_by_speed": {
+                str(k): round(100 * float(v))
+                for k, v in (
+                    pd.Series(lift["FINAL_v1"] < 0, index=base.index)
+                    .groupby(bins, observed=True)
+                    .mean()
+                ).items()
+            },
+        },
+        "monotone": {
+            "model_id": student.model_id,
+            "s1_violation_share": round(share["monotone"], 3),
+            "s1_violation_pct": round(100 * share["monotone"], 1),
+            "s1_mean_lift": round(float(np.mean(lift["monotone"])), 2),
+        },
+        "evaluation": {
+            "teacher": {k: round(float(v), 3) for k, v in distilled["teacher"].items()},
+            "student": {k: round(float(v), 3) for k, v in distilled["student"].items()},
+            "agreement_pitcher_season_r": round(
+                float(distilled["agreement_pitcher_season_r_n100"]), 3
+            ),
+        },
+    }
+    (ROOT / "analysis" / "outputs" / "speed_rule.json").write_text(
+        json.dumps(record, indent=1) + "\n"
+    )
 
     os.chdir(db.parent)
     mlflow.set_tracking_uri(f"sqlite:///{db}")

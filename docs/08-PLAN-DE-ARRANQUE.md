@@ -58,11 +58,13 @@ las pantallas, y el Traductor es para quien no está en los datos (`docs/12` §2
       costura única con arsenal y escala por tipo, y responden en `POST /api/v1/pitches/score`.
       ✔ `verify_final_models.py`: paridad exacta de diferenciales y valores en carreras; Location+
       r 0.989 contra datos; API real = cálculo directo en 1 296 lanzamientos.
-- [ ] **Publicar `FINAL_v1` en pantallas** (bloqueado por datos: 5 boosters por fold de `FINAL_v1` y
-      `L3`, docs/15 §5). Con ellos: bandas, S1/S3, `regenerate.py --model … --publish` y los 11 tests
-      web que fijan v0.
-      ✔ `simulator_validation.json` con `model_id` `1.0.0+…` y `stuff_plus_shown: true`.
-
+- [x] **20 oct · Publicar `FINAL_v1` en pantallas, con la regla de velocidad** (`docs/15` §3, ⚠️
+      hallazgo importante). `FINAL_v1` fallaba S1: en 14.7% de las rectas, +1 mph le bajaba el
+      Stuff+. Se publica destilado con la restricción monótona en velocidad (`1.1.0+19966f3`): S1–S6
+      pasan, y empata o mejora a `FINAL_v1` en la evaluación de datos. Folds re-entrenados con el
+      código de datos; todo en MLflow.
+      ✔ `simulator_validation.json` con `model_id` `1.1.0+19966f3` y `stuff_plus_shown: true`;
+      `report.build --check` con las afirmaciones `speed-rule-*`.
 - [x] **15 oct · Segunda ronda de ajustes.** Los mapas de movimiento se leen (letra en unidades del
       lienzo para el tamaño al que se dibujan) y todos tienen «¿Cómo leer este mapa?» con dos diagramas
       dibujados; la Ficha tiene selector de temporada en todas sus pestañas (solo las del lanzador);

@@ -2,7 +2,7 @@
 
 > Generado por `report/build.py` desde `report/claims.toml`. No se edita a mano.
 
-24 de 30 afirmaciones tienen corrida. Las marcadas en rojo no se pueden escribir en el documento hasta que exista la corrida que esperan.
+32 de 37 afirmaciones tienen corrida. Las marcadas en rojo no se pueden escribir en el documento hasta que exista la corrida que esperan.
 
 | Afirmación | § | De dónde sale | Valor | Estado |
 | :--- | :--- | :--- | :--- | :--- |
@@ -30,9 +30,16 @@
 | Lo que sobrevive la altitud es el poco ride: correlación +0.531 entre \|IVB\| y Stuff+ perdido | §6 | sin corrida todavía | espera su cálculo en analysis/evidence.py (hoy solo está en docs/01 §8.5) | 🔴 no va en el documento |
 | El modelo del Simulador pasa las compuertas que deciden si se muestra | §7 | `simulator_validation.json` → `stuff_plus_shown` | sí | ✅ |
 | Y no le gana al modelo nulo del reto, el run value por conteo (S7) | §7 | `simulator_validation.json` → `gates → id=S7 → passed` | no | ✅ |
-| Un cambio de Stuff+ vale carreras | §7 | sin corrida todavía | espera A3 (equipo de datos) | 🔴 no va en el documento |
+| Un cambio de Stuff+ vale carreras: el xRV del modelo publicado correlaciona 0.365 con las carreras observadas por lanzador y temporada | §7 | `speed_rule.json` → `evaluation → student → xrv_vs_observed_r` | 0.365 | ✅ |
 | El modelo generaliza a lanzadores y temporadas nuevas | §7 | sin corrida todavía | espera F4–F5 y el holdout de Diablos (postemporada 2026) | 🔴 no va en el documento |
 | La física traduce el IVB de la recta con error de 0.92 pulgadas en holdout | §8 | `evidence.json` → `translator → by_pitch → Four-Seam → ivb → holdout_rmse_physics_in` | 0.92 | ✅ |
 | Sin traducir, el error sería de 3.88 pulgadas | §8 | `evidence.json` → `translator → by_pitch → Four-Seam → ivb → holdout_rmse_naive_in` | 3.88 | ✅ |
 | El resultado casi no se repite: las carreras permitidas, con r = 0.216 | §4 | `evidence.json` → `season_stability → result_persistence_ra9` | 0.216 | ✅ |
 | Se midieron 268 lanzadores con la recta en los dos entornos | §2 | `evidence.json` → `within_pitcher → Four-Seam → n_pitchers` | 268 | ✅ |
+| Con el modelo de datos tal cual, en 14.7% de las rectas reales subir 1 mph le baja el Stuff+ (compuerta S1) | §7 | `speed_rule.json` → `final_v1 → s1_violation_pct` | 14.7 | ✅ |
+| Entre las rectas de menos de 89.2 mph le pasa al 36% | §7 | `speed_rule.json` → `final_v1 → s1_violation_pct_by_speed → (0.0, 89.2]` | 36 | ✅ |
+| Con la regla de velocidad le pasa al 0.0% | §7 | `speed_rule.json` → `monotone → s1_violation_pct` | 0.0 | ✅ |
+| Y la calibración no empeora: 0.841 contra 0.808 del modelo de datos | §4 | `speed_rule.json` → `evaluation → student → calib_slope` | 0.841 | ✅ |
+| El modelo de datos calibra 0.808 | §4 | `speed_rule.json` → `evaluation → teacher → calib_slope` | 0.808 | ✅ |
+| Por lanzador, temporada y tipo coincide con el modelo de datos en r 0.994 | §4 | `speed_rule.json` → `evaluation → agreement_pitcher_season_r` | 0.994 | ✅ |
+| El Simulador y el Radar coinciden para el mismo pitch: r 0.942 (S4) | §7 | `simulator_validation.json` → `gates → id=S4 → value → r` | 0.942 | ✅ |

@@ -1,0 +1,49 @@
+{
+ "note": "Gate S1 (+1 mph on 300 sea-level four-seams) for FINAL_v1 and its distilled version (docs/15 section 3).",
+ "final_v1": {
+  "model_id": "1.0.0+19966f3",
+  "s1_violation_share": 0.147,
+  "s1_violation_pct": 14.7,
+  "s1_mean_lift": 1.29,
+  "s1_violation_pct_by_speed": {
+   "(0.0, 89.2]": 36,
+   "(89.2, 91.0]": 0,
+   "(91.0, 92.5]": 3,
+   "(92.5, 94.2]": 12,
+   "(94.2, 200.0]": 22
+  }
+ },
+ "monotone": {
+  "model_id": "1.1.0+19966f3",
+  "s1_violation_share": 0.0,
+  "s1_violation_pct": 0.0,
+  "s1_mean_lift": 1.41
+ },
+ "evaluation": {
+  "teacher": {
+   "calib_slope": 0.808,
+   "calib_slope_extreme": 0.705,
+   "calib_slope_sea": 0.614,
+   "splithalf_r_mean": 0.95,
+   "next_whiff_r_stuff": 0.291,
+   "next_rv_r_stuff": -0.134,
+   "xrv_vs_observed_r": 0.361,
+   "xrv_next_season_rv_r": 0.191,
+   "s6_r_dstuff_dwhiff": 0.188,
+   "s6_mean_dstuff": -7.495
+  },
+  "student": {
+   "calib_slope": 0.841,
+   "calib_slope_extreme": 0.761,
+   "calib_slope_sea": 0.657,
+   "splithalf_r_mean": 0.953,
+   "next_whiff_r_stuff": 0.296,
+   "next_rv_r_stuff": -0.132,
+   "xrv_vs_observed_r": 0.365,
+   "xrv_next_season_rv_r": 0.188,
+   "s6_r_dstuff_dwhiff": 0.194,
+   "s6_mean_dstuff": -7.659
+  },
+  "agreement_pitcher_season_r": 0.994
+ }
+}
