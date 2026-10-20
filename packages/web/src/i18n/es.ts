@@ -54,7 +54,12 @@ export const es = {
   extremeParks:
     'Promedio de cinco parques: Puebla, Ciudad de México, Aguascalientes, Querétaro y León. El dataset no distingue entre ellos.',
   baselineNote: (pitches: number, seasons: number): string =>
-    `Stuff+ v0 baseline \u00b7 ${pitches.toLocaleString('es-MX')} lanzamientos \u00b7 ${String(seasons)} temporadas`,
+    `Stuff+ medido sobre ${pitches.toLocaleString('es-MX')} lanzamientos \u00b7 ${String(seasons)} temporadas`,
+  notFound: {
+    title: 'Esta p\u00e1gina no existe',
+    body: 'El enlace puede estar mal escrito, o el lanzador o la temporada no tienen muestra en los dos entornos.',
+    back: 'Volver al Radar de candidatos \u2192',
+  },
   filter: 'Filtrar',
   all: 'Todos',
   trapsOnly: 'Solo los que sufren en la altura',
@@ -500,7 +505,8 @@ export const es = {
     },
     controls: {
       releaseSpeed: 'Velocidad de salida',
-      ivb: 'Induced vertical break',
+      // CONVENTIONS §2.2: IVB is the term of art and stays as is in the UI.
+      ivb: 'IVB',
       horizontalBreak: 'Break horizontal',
       extension: 'Extensión',
       releaseHeight: 'Altura de liberación',
