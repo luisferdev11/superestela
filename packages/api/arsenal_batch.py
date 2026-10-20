@@ -38,7 +38,8 @@ from core.density import DENSITY_INDEX_EXTREME, DENSITY_INDEX_SEA_LEVEL
 from core.rates import rate_band
 from core.translate import break_scaling_factor
 from models.batch import CATEGORY_DENSITY, NUMERIC, PITCHER, REQUIRED
-from models.scoring import PitchInput, Scorer, to_arm_side
+from models.features.arsenal import frame_differentials
+from models.scoring import PitchInput, Scorer, implied_xrv, to_arm_side
 
 FloatArray = npt.NDArray[np.float64]
 
@@ -87,7 +88,23 @@ def _band(draws: FloatArray) -> Band:
     return Band(value=float(draws.mean()), se=float(draws.std(ddof=1)))
 
 
-def _inputs(frame: pd.DataFrame, ivb: FloatArray, hb: FloatArray) -> list[PitchInput]:
+def _inputs(
+    frame: pd.DataFrame, ivb: FloatArray, hb: FloatArray, scale: float | FloatArray = 1.0
+) -> list[PitchInput]:
+    # The fastball loses break with the pitch, so the movement gaps scale with it.
+    gaps = (
+        [
+            {"speed_diff": float(v), "ivb_diff": float(i), "hb_diff": float(h)}
+            for v, i, h in zip(
+                frame["speed_diff"],
+                frame["ivb_diff"] * scale,
+                frame["hb_diff"] * scale,
+                strict=True,
+            )
+        ]
+        if "speed_diff" in frame
+        else [{} for _ in range(len(frame))]
+    )
     return [
         PitchInput(
             pitch_type=str(pt),
@@ -100,21 +117,42 @@ def _inputs(frame: pd.DataFrame, ivb: FloatArray, hb: FloatArray) -> list[PitchI
             extension=float(ext),
             release_height=float(height),
             release_side=float(side),
+            **gap,
         )
-        for pt, hand, speed, i, h, spin, axis, ext, height, side in zip(
-            frame["pitch_type"],
-            frame["pitcher_hand"],
-            frame["release_speed"],
-            ivb,
-            hb,
-            frame["spin_rate"],
-            frame["spin_axis"],
-            frame["extension"],
-            frame["release_height"],
-            frame["release_side"],
+        for (pt, hand, speed, i, h, spin, axis, ext, height, side), gap in zip(
+            zip(
+                frame["pitch_type"],
+                frame["pitcher_hand"],
+                frame["release_speed"],
+                ivb,
+                hb,
+                frame["spin_rate"],
+                frame["spin_axis"],
+                frame["extension"],
+                frame["release_height"],
+                frame["release_side"],
+                strict=True,
+            ),
+            gaps,
             strict=True,
         )
     ]
+
+
+def _with_differentials(df: pd.DataFrame) -> pd.DataFrame:
+    """Each pitch against its pitcher's primary fastball, from every row of the file.
+
+    A file without season or altitude category is one arsenal per pitcher.
+    """
+    environment = df["environment"] if "environment" in df else pd.Series("file", index=df.index)
+    frame = df.assign(year=df.get("year", 0), environment=environment.fillna("file"))
+    sign = np.where(frame["pitcher_hand"] == "Left", -1.0, 1.0)
+    diffs = frame_differentials(
+        frame.assign(horizontal_break=frame["horizontal_break"] * sign).astype(
+            {"pitch_type": object, "environment": object}
+        )
+    )
+    return df.join(diffs)
 
 
 def _whiff(group: pd.DataFrame) -> tuple[tuple[float, float] | None, int]:
@@ -164,9 +202,13 @@ def score_pitchers(
         raise ArsenalFileError("too_many_pitchers")
 
     df = df.assign(**{c: pd.to_numeric(df[c], errors="coerce") for c in NUMERIC})
+    needed = list(NUMERIC)
+    if scorer is not None and scorer.uses_arsenal:
+        df = _with_differentials(df)
+        needed += ["speed_diff", "ivb_diff", "hb_diff"]
     types = scorer.pitch_types if scorer is not None else tuple(df["pitch_type"].dropna().unique())
     supported = df["pitch_type"].isin(types) & df["pitcher_hand"].isin(["Right", "Left"])
-    complete = df[list(NUMERIC)].notna().all(axis=1) & df[PITCHER].notna()
+    complete = df[needed].notna().all(axis=1) & df[PITCHER].notna()
     usable = df[supported & complete].reset_index(drop=True)
 
     counts = usable[PITCHER].value_counts()
@@ -192,8 +234,8 @@ def score_pitchers(
         to_high = break_scaling_factor(DENSITY_INDEX_SEA_LEVEL, DENSITY_INDEX_EXTREME)
         ivb_sea = usable["ivb"].to_numpy(dtype=float) * to_sea
         hb_sea = usable["horizontal_break"].to_numpy(dtype=float) * to_sea
-        sea = _inputs(usable, ivb_sea, hb_sea)
-        high = _inputs(usable, ivb_sea * to_high, hb_sea * to_high)
+        sea = _inputs(usable, ivb_sea, hb_sea, to_sea)
+        high = _inputs(usable, ivb_sea * to_high, hb_sea * to_high, to_sea * to_high)
         n = len(usable)
         # One call: the two airs share every draw, so the delta's band is honest.
         draws = scorer.draws(
@@ -212,7 +254,17 @@ def score_pitchers(
             change = at_high - at_sea
             # A Stuff+ point is a tenth of a standard deviation of expected run
             # value, and lower Stuff+ means more runs: invert the scale.
-            runs_per_pitch = -change / 10.0 * scorer.scale.sd_xrv
+            # With a scale per type, each pitch's point is worth its own type's sd:
+            # ten points below 100 is one sd more xRV.
+            sd_rows = np.array(
+                [
+                    float(implied_xrv(scorer.scale, str(t), 90.0))
+                    - float(implied_xrv(scorer.scale, str(t), 100.0))
+                    for t in group["pitch_type"]
+                ]
+            )
+            change_rows = draws[:, idx + n] - draws[:, idx]
+            runs_per_pitch = -(change_rows / 10.0 * sd_rows).mean(axis=1)
             sea_b, high_b, delta_b = _band(at_sea), _band(at_high), _band(change)
             tax_b = _band(9.0 * pitches_per_inning * runs_per_pitch)
         pitchers.append(

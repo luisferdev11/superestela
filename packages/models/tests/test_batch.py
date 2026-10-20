@@ -6,8 +6,6 @@ These pin the mechanics: one row out per row in, a band on every score, and a
 reason on every row without one.
 """
 
-from dataclasses import replace
-
 import numpy as np
 import pandas as pd
 import pytest
@@ -24,6 +22,7 @@ from models.batch import (
 from models.scoring import PitchInput, Scorer
 from models.stuff.v0_bridge import PITCH_TYPES
 from models.tests.pitches import REFERENCE, raw_pitches
+from models.tests.toy_scorer import ToyArsenalScorer
 
 
 def test_the_bridge_answers_the_runtime_contract(model):
@@ -119,9 +118,34 @@ def test_a_file_missing_a_required_column_is_refused_by_its_vendor_name(model):
         score_frame(raw_pitches().drop(columns=["InducedVertBreak"]), model, REFERENCE)
 
 
-def test_a_model_that_needs_the_arsenal_is_refused(model):
-    with pytest.raises(NotImplementedError, match="ADR 0009"):
-        score_frame(raw_pitches(), replace(model, uses_arsenal=True), REFERENCE)
+def _with_arsenals(raw: pd.DataFrame) -> pd.DataFrame:
+    return raw.assign(pitcher_anon_id=[f"p{i % 3}" for i in range(len(raw))], year=2025)
+
+
+def test_a_model_that_needs_the_arsenal_names_the_columns_that_find_it():
+    with pytest.raises(MissingColumnsError, match="pitcher_anon_id, year"):
+        score_frame(raw_pitches(), ToyArsenalScorer(), REFERENCE)
+
+
+def test_a_model_that_needs_the_arsenal_gets_each_pitch_against_its_fastball():
+    raw = _with_arsenals(raw_pitches())
+    out = score_frame(raw, ToyArsenalScorer(), REFERENCE)
+    scored = out[out.status == SCORED]
+    ref = raw.assign(diff=np.nan)
+    for _, g in raw.groupby(["pitcher_anon_id", "altitude_category"]):
+        fastballs = g[g.AutoPitchType.isin(["Four-Seam", "Sinker"])]
+        top = fastballs.AutoPitchType.value_counts().index[0]
+        ref.loc[g.index, "diff"] = g.RelSpeed - g[g.AutoPitchType == top].RelSpeed.mean()
+    assert len(scored) > 0
+    assert np.allclose(scored.stuff_plus, 100 - ref.loc[scored.index, "diff"])
+
+
+def test_a_pitch_whose_arsenal_is_unknown_is_not_scored_as_a_zero_gap():
+    raw = _with_arsenals(raw_pitches())
+    raw.loc[0, "pitcher_anon_id"] = None
+    out = score_frame(raw, ToyArsenalScorer(), REFERENCE)
+    assert out.loc[0, "status"] in (MISSING_FEATURES, UNSUPPORTED_PITCH_TYPE)
+    assert pd.isna(out.loc[0, "stuff_plus"])
 
 
 def test_scoring_in_chunks_gives_the_same_scores(model):

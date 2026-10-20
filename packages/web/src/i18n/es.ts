@@ -524,6 +524,8 @@ export const es = {
       model_unavailable: 'Modelo no disponible. La física sigue contestando.',
       model_not_gated: 'Este modelo no pasó por las compuertas: su Stuff+ no se muestra.',
       gates_failed: 'El modelo no pasó sus compuertas de coherencia: su Stuff+ no se muestra.',
+      missing_arsenal:
+        'Este modelo mide cada pitch contra la recta del lanzador: elige un lanzador real para ver su Stuff+.',
     } satisfies Record<StuffPlusReason, string>,
     physics: {
       title: 'Qué le hace la altura a esta forma',

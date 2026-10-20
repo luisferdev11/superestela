@@ -36,7 +36,12 @@ const environment = z.object({
   ),
 })
 
-export const STUFF_PLUS_REASONS = ['model_unavailable', 'model_not_gated', 'gates_failed'] as const
+export const STUFF_PLUS_REASONS = [
+  'model_unavailable',
+  'model_not_gated',
+  'gates_failed',
+  'missing_arsenal',
+] as const
 export type StuffPlusReason = (typeof STUFF_PLUS_REASONS)[number]
 
 export const simulateResponseSchema = z.object({

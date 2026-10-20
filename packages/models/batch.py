@@ -37,6 +37,7 @@ from core.density import (
     compute_density_index,
     decompose_trajectory,
 )
+from models.features.arsenal import ARSENAL_KEY, DIFF_COLUMNS, frame_differentials
 from models.scoring import PitchInput, Scorer, to_arm_side
 
 # What a row needs to be scored, in canonical names (CONVENTIONS.md 2.2).
@@ -162,26 +163,30 @@ def score_frame(
         chunk_size: Rows per call to the model, to bound memory.
 
     Raises:
-        MissingColumnsError: If a column every row needs is absent.
-        NotImplementedError: If the model needs the arsenal; the contract's
-            ``draws`` does not carry it yet (ADR 0009).
+        MissingColumnsError: If a column every row needs is absent. A model
+            that uses the arsenal also needs the pitcher, the season and the
+            altitude category, to find each pitch's primary fastball.
     """
-    if scorer.uses_arsenal:
-        raise NotImplementedError(
-            f"{scorer.model_id} uses the arsenal, and Scorer.draws does not take one yet. "
-            "Extend the contract first (ADR 0009); do not score without it."
-        )
     frame = normalize_columns(raw.reset_index(drop=True))
-    absent = [c for c in REQUIRED if c not in frame]
+    required = REQUIRED + (ARSENAL_KEY if scorer.uses_arsenal else ())
+    absent = [c for c in required if c not in frame]
     if absent:
         names = ", ".join(CANONICAL_TO_VENDOR.get(c, c) for c in absent)
         raise MissingColumnsError(f"the file has no column {names}; every row needs it")
+    if scorer.uses_arsenal:
+        # Against the file's own arsenals, from every row, before any is set
+        # aside: in training an unscored pitch still counted for its pitcher
+        # (models.features.arsenal). Horizontals go to the arm side first.
+        sign = np.where(frame["pitcher_hand"] == "Left", -1.0, 1.0)
+        arm = frame.assign(horizontal_break=frame["horizontal_break"] * sign)
+        frame = frame.join(frame_differentials(arm))
 
     rho, rho_source = density_index(frame, reference_game_drag_k)
     status = pd.Series(SCORED, index=frame.index, dtype=object)
     status[rho.isna()] = MISSING_DENSITY
     status[~frame["pitcher_hand"].isin(["Right", "Left"])] = UNKNOWN_HAND
-    status[frame[list(NUMERIC)].isna().any(axis=1)] = MISSING_FEATURES
+    numeric = list(NUMERIC) + (list(DIFF_COLUMNS) if scorer.uses_arsenal else [])
+    status[frame[numeric].isna().any(axis=1)] = MISSING_FEATURES
     status[~frame["pitch_type"].isin(scorer.pitch_types)] = UNSUPPORTED_PITCH_TYPE
 
     # Several problems on one row report the first of: unsupported type,
@@ -224,6 +229,19 @@ def _pitch_inputs(frame: pd.DataFrame) -> Sequence[PitchInput]:
     hb, side, axis = to_arm_side(
         frame["pitcher_hand"], frame["horizontal_break"], frame["release_side"], frame["spin_axis"]
     )
+    shapes = zip(
+        frame["pitch_type"],
+        frame["pitcher_hand"],
+        frame["release_speed"],
+        frame["ivb"],
+        hb,
+        frame["spin_rate"],
+        axis,
+        frame["extension"],
+        frame["release_height"],
+        side,
+        strict=True,
+    )
     return [
         PitchInput(
             pitch_type=str(pt),
@@ -236,18 +254,19 @@ def _pitch_inputs(frame: pd.DataFrame) -> Sequence[PitchInput]:
             extension=float(ext),
             release_height=float(height),
             release_side=float(s),
+            **diffs,
         )
-        for pt, hand, speed, ivb, h, spin, a, ext, height, s in zip(
-            frame["pitch_type"],
-            frame["pitcher_hand"],
-            frame["release_speed"],
-            frame["ivb"],
-            hb,
-            frame["spin_rate"],
-            axis,
-            frame["extension"],
-            frame["release_height"],
-            side,
-            strict=True,
+        for (pt, hand, speed, ivb, h, spin, a, ext, height, s), diffs in zip(
+            shapes, _diffs(frame), strict=True
         )
+    ]
+
+
+def _diffs(frame: pd.DataFrame) -> list[dict[str, float]]:
+    """The arsenal fields of each row, or nothing for a model that does not read them."""
+    if not set(DIFF_COLUMNS) <= set(frame.columns):
+        return [{} for _ in range(len(frame))]
+    return [
+        {str(k): float(v) for k, v in r.items()}
+        for r in frame[list(DIFF_COLUMNS)].to_dict("records")
     ]

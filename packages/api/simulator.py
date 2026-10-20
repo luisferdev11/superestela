@@ -23,10 +23,13 @@ from core.density import DENSITY_INDEX_EXTREME, DENSITY_INDEX_SEA_LEVEL
 from core.spin import Bounds, Envelope, assess_plausibility, movement_per_krpm, percentile_rank
 from core.trajectory import approach
 from core.translate import PitchShape, break_scaling_factor, translate
+from models.features.arsenal import arsenal_differentials
 from models.scoring import PitchInput, Scorer, load_scorer, verdict_path
 
 SEA, EXT = "No Altitude", "Extreme Altitude"
-Reason = Literal["model_unavailable", "model_not_gated", "gates_failed"]
+# missing_arsenal: the model grades a pitch against its pitcher's fastball, and
+# the request brought no arsenal (the laboratory). Per request, not per model.
+Reason = Literal["model_unavailable", "model_not_gated", "gates_failed", "missing_arsenal"]
 
 # Comparables: the closest real versions of the pitch, per environment. Below
 # 30 pitches a pitcher's mean shape is too noisy to call his pitch "like" this.
@@ -71,7 +74,15 @@ class SimulatorService:
         high_hb_se = moved.horizontal_break_se * to_high
 
         fastball, sea_diff, high_diff = self._differentials(req, factor)
-        stuff_sea, stuff_high, delta = self._score(p, high)
+        reason = self.reason
+        gaps = self._gaps(req, factor) if self.scorer and self.scorer.uses_arsenal else ({}, {})
+        if reason is None and gaps is None:
+            reason = "missing_arsenal"
+        stuff_sea, stuff_high, delta = (
+            self._score(p, high, *gaps)
+            if reason is None and gaps is not None
+            else (None, None, None)
+        )
         plaus = self._plausibility(p)
         per_krpm = movement_per_krpm(p.ivb, p.horizontal_break, p.spin_rate)
         percentiles = self.evidence["plausibility"][p.pitch_type]["movement_per_krpm_percentiles"]
@@ -80,8 +91,8 @@ class SimulatorService:
             origin_density_index=req.origin_density_index,
             model_id=self.scorer.model_id if self.scorer else None,
             uses_arsenal=bool(self.scorer and self.scorer.uses_arsenal),
-            stuff_plus_shown=self.reason is None,
-            stuff_plus_reason=self.reason,
+            stuff_plus_shown=reason is None,
+            stuff_plus_reason=reason,
             sea=self._environment(
                 "sea",
                 SEA,
@@ -145,12 +156,31 @@ class SimulatorService:
             comparables=self._comparables(pitch, env, exclude),
         )
 
+    def _gaps(
+        self, req: s.SimulateRequest, factor: float
+    ) -> tuple[dict[str, float], dict[str, float]] | None:
+        """The pitch against its fastball at sea level and at altitude, as the model reads it."""
+        arsenal = [ArsenalPitch(**a.model_dump()) for a in req.arsenal or []]
+        p = req.pitch
+        at_sea = arsenal_differentials(p.release_speed, p.ivb, p.horizontal_break, arsenal)
+        if at_sea is None:
+            return None
+        sea = at_sea.__dict__
+        # Both pitches lose break by the same factor: the movement gaps shrink with them.
+        high = {**sea, "ivb_diff": sea["ivb_diff"] * factor, "hb_diff": sea["hb_diff"] * factor}
+        return sea, high
+
     def _score(
-        self, sea: s.PitchIn, high: s.PitchIn
+        self,
+        sea: s.PitchIn,
+        high: s.PitchIn,
+        sea_gaps: dict[str, float],
+        high_gaps: dict[str, float],
     ) -> tuple[s.Metric | None, s.Metric | None, s.AltitudeDelta | None]:
         if self.scorer is None or self.reason is not None:
             return None, None, None
-        a, b = _pitch_input(sea), _pitch_input(high)
+        a = replace(_pitch_input(sea), **sea_gaps)  # type: ignore[arg-type]
+        b = replace(_pitch_input(high), **high_gaps)  # type: ignore[arg-type]
         # Column 1 is the altitude shape in sea-level air: it splits the delta
         # into what the shape loses and what the environment adds (docs/09 3.9).
         d = self.scorer.draws(

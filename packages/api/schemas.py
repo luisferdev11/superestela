@@ -291,7 +291,9 @@ class ArsenalScoresResponse(Wire):
 
     model_id: str | None
     stuff_plus_shown: bool
-    stuff_plus_reason: Literal["model_unavailable", "model_not_gated", "gates_failed"] | None
+    stuff_plus_reason: (
+        Literal["model_unavailable", "model_not_gated", "gates_failed", "missing_arsenal"] | None
+    )
     n_rows: int
     pitchers: list[PitcherScoreOut]
     few_pitches: int
