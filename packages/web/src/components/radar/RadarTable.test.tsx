@@ -97,6 +97,17 @@ describe('la tabla del Radar', { timeout: 30_000 }, () => {
     ).toBeInTheDocument()
   })
 
+  it('el Stuff+ a nivel del mar lleva su banda, como el de altitud extrema', async () => {
+    const cards = await renderTable()
+    const [first] = cards
+    if (first === undefined) throw new Error('cohorte vacia')
+    fireEvent.change(screen.getByLabelText(es.filterBar.search), {
+      target: { value: first.pitcherId },
+    })
+    const row = document.querySelector('tbody tr') as HTMLElement
+    expect(within(row).getByLabelText(formatMetric(first.stuffPlusSea))).toBeInTheDocument()
+  })
+
   it('explica el Impuesto de Altitud en pantalla', async () => {
     await renderTable()
     expect(screen.getByText(es.taxExplainer)).toBeInTheDocument()

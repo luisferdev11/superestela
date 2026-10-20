@@ -57,7 +57,7 @@ export const RadarRow = ({
         {focus.hh === null ? es.noSampleShort : <MetricValue metric={focus.hh} />}
       </td>
       <td className={`${cell} text-(--color-text-muted)`}>
-        {focus.sea === null ? es.noSampleShort : formatNumber(focus.sea.value)}
+        {focus.sea === null ? es.noSampleShort : <MetricValue metric={focus.sea} />}
       </td>
       <td className={`${cell} ${isLargeDelta ? 'font-semibold text-(--color-diablos)' : ''}`}>
         {focus.delta === null ? '' : formatSigned(focus.delta)}
