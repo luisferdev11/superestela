@@ -12,7 +12,7 @@ what CONVENTIONS.md section 8.2 requires of anything the product shows.
 from __future__ import annotations
 
 import os
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from typing import Protocol, runtime_checkable
 
@@ -22,6 +22,8 @@ import numpy.typing as npt
 import pandas as pd
 
 from core.arsenal import ArsenalPitch
+
+FloatArray = npt.NDArray[np.float64]
 
 
 @dataclass(frozen=True)
@@ -43,6 +45,12 @@ class PitchInput:
     extension: float  # feet
     release_height: float  # feet
     release_side: float  # feet, arm side positive
+    # Against the pitcher's primary fastball, for a model with ``uses_arsenal``
+    # (models.features.arsenal). None when the caller had no arsenal: such a
+    # model must refuse the pitch, never read the gap as zero.
+    speed_diff: float | None = None  # mph
+    ivb_diff: float | None = None  # inches
+    hb_diff: float | None = None  # inches, arm side
 
 
 @dataclass(frozen=True)
@@ -67,6 +75,23 @@ class ScaleSpec:
     # in each altitude category, as Diablos asked; docs/11). The web words the
     # delta from it. Optional: a model pickled before the field reads "league".
     kind: str = "league"
+    # Per pitch type ``(mean_xrv, sd_xrv)`` when 100 is set within each type
+    # (data's FINAL_v1, docs/14). ``mean_xrv``/``sd_xrv`` then hold the pooled
+    # values, for the few readers that need one number.
+    by_type: Mapping[str, tuple[float, float]] | None = None
+
+
+def implied_xrv(scale: ScaleSpec, pitch_type: str, stuff_plus: npt.ArrayLike) -> FloatArray:
+    """Turn a Stuff+ back into the xRV per pitch it stands for, under its scale.
+
+    The gates and the projected tax read run values off a Stuff+. With a scale
+    set per pitch type, the same Stuff+ means a different xRV for a slider
+    than for a four-seam, so the inversion has to know the type.
+    """
+    mean, sd = scale.mean_xrv, scale.sd_xrv
+    if scale.by_type is not None and pitch_type in scale.by_type:
+        mean, sd = scale.by_type[pitch_type]
+    return mean + (100.0 - np.asarray(stuff_plus, dtype=float)) / 10.0 * sd
 
 
 @dataclass(frozen=True)
@@ -114,9 +139,6 @@ class Scorer(Protocol):
         honour this, or the API and the file scorer would disagree.
         """
         ...
-
-
-FloatArray = npt.NDArray[np.float64]
 
 
 def to_arm_side(
@@ -175,6 +197,16 @@ def load_scorer(path: str) -> Scorer:
     return model
 
 
+# The PitchInput fields a model with ``uses_arsenal`` reads.
+DIFF_FIELDS = ("speed_diff", "ivb_diff", "hb_diff")
+
+
+def _optional(value: object) -> float | None:
+    """A frame's NaN as the contract's None: a missing gap is not a zero gap."""
+    number = float(value)  # type: ignore[arg-type]
+    return None if np.isnan(number) else number
+
+
 # Pitches per call to the model: bounds the memory of the draws, not the result.
 CHUNK_SIZE = 50_000
 
@@ -183,10 +215,12 @@ def stuff_plus_of(scorer: Scorer, frame: pd.DataFrame) -> tuple[FloatArray, Floa
     """Stuff+ and its se for every row of a canonical frame, through the contract.
 
     ``frame`` is already on the arm side, with the ``PitchInput`` columns and
-    ``density_index``. Like the API and ``models.score``, the Stuff+ is the mean
-    of the draws and the se their standard deviation, so a pitch is worth the
-    same in every screen.
+    ``density_index``, plus ``speed_diff``/``ivb_diff``/``hb_diff`` for a model
+    that uses the arsenal. Like the API and ``models.score``, the Stuff+ is the
+    mean of the draws and the se their standard deviation, so a pitch is worth
+    the same in every screen.
     """
+    diffs = [c for c in DIFF_FIELDS if c in frame]
     value = np.full(len(frame), np.nan)
     se = np.full(len(frame), np.nan)
     for start in range(0, len(frame), CHUNK_SIZE):
@@ -203,6 +237,7 @@ def stuff_plus_of(scorer: Scorer, frame: pd.DataFrame) -> tuple[FloatArray, Floa
                 extension=float(r["extension"]),
                 release_height=float(r["release_height"]),
                 release_side=float(r["release_side"]),
+                **{c: _optional(r[c]) for c in diffs},
             )
             for r in part.to_dict("records")
         ]
