@@ -59,6 +59,7 @@ describe('las frases del Plan', () => {
   it('solo dice «menos ride que perder» cuando de verdad tiene menos', async () => {
     for (const { plan } of await plans()) {
       if (plan === null || plan.holds.ivbSea === null || plan.degrades.ivbSea === null) continue
+      if (plan.holds.ivbSea < 0) continue // a pitch that drops is worded apart, below
       const { unmount } = render(<PlanSentences plan={plan} simulatorHref={null} />)
       const args = [
         formatNumber(Math.abs(plan.holds.ivbSea)),
@@ -82,5 +83,28 @@ describe('las frases del Plan', () => {
       screen.getByText(es.plan.noShift(found.plan.holds.pitch, found.plan.degrades.pitch)),
     ).toBeInTheDocument()
     expect(screen.queryByRole('button')).toBeNull()
+  })
+
+  it('a un pitch de caida no le atribuye «ride»: pitcher_00069 2025 aguanta con la curva', async () => {
+    const found = (await plans()).find(
+      ({ card }) => card.pitcherId === 'pitcher_00069' && card.season === 2025,
+    )
+    const plan = found?.plan
+    if (plan == null || plan.holds.ivbSea === null || plan.holds.ivbHh === null) {
+      throw new Error('sin plan para pitcher_00069 2025')
+    }
+    expect(plan.holds.ivbSea).toBeLessThan(0)
+    render(<PlanSentences plan={plan} simulatorHref={null} />)
+    const text = document.body.textContent ?? ''
+    expect(text).not.toContain('menos ride')
+    expect(text).toContain(
+      es.plan.holdsDrops(
+        formatNumber(plan.holds.ivbSea),
+        formatNumber(plan.holds.ivbHh),
+        plan.degrades.pitch,
+        formatNumber(plan.degrades.ivbSea ?? 0),
+        formatNumber(plan.degrades.ivbHh ?? 0),
+      ),
+    )
   })
 })

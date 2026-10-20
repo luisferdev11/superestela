@@ -106,11 +106,20 @@ export const PlanSentences = ({
               formatNumber(hhOf(holds, plan)),
               holds.ivbSea === null || degrades.ivbSea === null
                 ? ''
-                : (holdsWithLessRide(plan) ? es.plan.holdsWhy : es.plan.holdsDespiteRide)(
-                    formatNumber(Math.abs(holds.ivbSea)),
-                    formatNumber(Math.abs(degrades.ivbSea)),
-                    degrades.pitch,
-                  ),
+                : holds.ivbSea < 0 && holds.ivbHh !== null && degrades.ivbHh !== null
+                  ? // A pitch that drops has no ride to compare: say what the air does to each.
+                    es.plan.holdsDrops(
+                      formatNumber(holds.ivbSea),
+                      formatNumber(holds.ivbHh),
+                      degrades.pitch,
+                      formatNumber(degrades.ivbSea),
+                      formatNumber(degrades.ivbHh),
+                    )
+                  : (holdsWithLessRide(plan) ? es.plan.holdsWhy : es.plan.holdsDespiteRide)(
+                      formatNumber(Math.abs(holds.ivbSea)),
+                      formatNumber(Math.abs(degrades.ivbSea)),
+                      degrades.pitch,
+                    ),
             )}
           </p>
         </Row>

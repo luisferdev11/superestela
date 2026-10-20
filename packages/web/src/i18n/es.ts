@@ -374,6 +374,14 @@ export const es = {
     ivb: (sea: string, hh: string): string => `Su IVB pasa de ${sea}\u2033 a ${hh}\u2033.`,
     holdsWhy: (ivb: string, worstIvb: string, worst: string): string =>
       `Tiene menos ride que perder: ${ivb}\u2033 de IVB contra ${worstIvb}\u2033 del ${worst}, y el aire delgado se lleva sobre todo el break.`,
+    holdsDrops: (
+      sea: string,
+      hh: string,
+      worst: string,
+      worstSea: string,
+      worstHh: string,
+    ): string =>
+      `Es un pitch de caída, no de ride: en la altura su IVB pasa de ${sea}\u2033 a ${hh}\u2033, mientras el ${worst} pasa de ${worstSea}\u2033 a ${worstHh}\u2033. El aire delgado encoge el break en las dos direcciones.`,
     holdsDespiteRide: (ivb: string, worstIvb: string, worst: string): string =>
       `Conserva m\u00e1s aunque tiene m\u00e1s ride que perder: ${ivb}\u2033 de IVB contra ${worstIvb}\u2033 del ${worst}.`,
     changes: (
