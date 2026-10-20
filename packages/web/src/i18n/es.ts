@@ -332,7 +332,10 @@ export const es = {
   plan: {
     title: 'Plan de Desarrollo',
     subtitle: 'Qu\u00e9 cambiar de su arsenal para que sobreviva en casa, en orden de impacto.',
-    today: 'Stuff+ alt. extrema hoy',
+    today: 'Stuff+ ponderado alt. extrema hoy',
+    todayCard: 'Stuff+ alt. extrema hoy',
+    todayNote: (card: string): string =>
+      `Promedio de sus tipos de pitch con score, ponderado por uso: es la cifra que mueve el plan. La Ficha da ${card}, el promedio de todos sus lanzamientos.`,
     pitcher: 'Lanzador',
     deficitTitle: (deficit: string): string =>
       `D\u00f3nde se pierde \u00b7 contribuci\u00f3n de cada lanzamiento al d\u00e9ficit de ${deficit} puntos`,
@@ -347,6 +350,8 @@ export const es = {
     ivb: (sea: string, hh: string): string => `Su IVB pasa de ${sea}\u2033 a ${hh}\u2033.`,
     holdsWhy: (ivb: string, worstIvb: string, worst: string): string =>
       `Tiene menos ride que perder: ${ivb}\u2033 de IVB contra ${worstIvb}\u2033 del ${worst}, y el aire delgado se lleva sobre todo el break.`,
+    holdsDespiteRide: (ivb: string, worstIvb: string, worst: string): string =>
+      `Conserva m\u00e1s aunque tiene m\u00e1s ride que perder: ${ivb}\u2033 de IVB contra ${worstIvb}\u2033 del ${worst}.`,
     changes: (
       from: string,
       fromBefore: string,
@@ -359,7 +364,8 @@ export const es = {
     noShift: (to: string, from: string): string =>
       `Mover uso no lo compensa: el ${to} pierde menos, pero en altitud extrema sigue rindiendo menos que el ${from}. La palanca aqu\u00ed no es el reparto.`,
     shiftBy: 'Mover',
-    points: (n: number): string => `${String(n)} pts`,
+    points: (n: string): string => `${n} pts`,
+    allOf: (n: string): string => `todo su uso (${n} pts)`,
     tryInSimulator: (pitch: string): string => `Probar el ${pitch} en el Simulador \u2192`,
     none: 'No hay plan que proponer: hace falta al menos dos pitches con score en los dos entornos.',
     limitTitle: 'L\u00edmite del modelo',

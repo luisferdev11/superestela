@@ -5,10 +5,12 @@ import Link from 'next/link'
 import { useState, type ReactNode } from 'react'
 import { formatNumber, formatSignedMetric, formatMetric } from '@/domain/format'
 import {
-  DEFAULT_SHIFT,
-  SHIFT_STEPS,
+  defaultShift,
+  holdsWithLessRide,
   shiftHelps,
+  shiftOptions,
   shiftUsage,
+  SHIFT_STEPS,
   type Plan,
   type ShapeLoss,
 } from '@/domain/plan'
@@ -62,7 +64,7 @@ export const PlanSentences = ({
   /** Para probar en el Simulador el pitch que aguanta, si tiene de donde partir. */
   readonly simulatorHref: Route | null
 }) => {
-  const [points, setPoints] = useState<number>(DEFAULT_SHIFT)
+  const [points, setPoints] = useState<number>(() => defaultShift(plan))
   const { degrades, holds } = plan
   const shift = shiftUsage(plan, points)
   const helps = shiftHelps(plan)
@@ -90,13 +92,13 @@ export const PlanSentences = ({
               formatSignedMetric(holds.delta),
               formatNumber(seaOf(holds, plan)),
               formatNumber(hhOf(holds, plan)),
-              holds.ivbSea !== null && degrades.ivbSea !== null
-                ? es.plan.holdsWhy(
+              holds.ivbSea === null || degrades.ivbSea === null
+                ? ''
+                : (holdsWithLessRide(plan) ? es.plan.holdsWhy : es.plan.holdsDespiteRide)(
                     formatNumber(Math.abs(holds.ivbSea)),
                     formatNumber(Math.abs(degrades.ivbSea)),
                     degrades.pitch,
-                  )
-                : '',
+                  ),
             )}
           </p>
         </Row>
@@ -105,7 +107,7 @@ export const PlanSentences = ({
             <>
               <div className="flex items-center gap-2 text-[12px]">
                 <span className="text-(--color-text-muted)">{es.plan.shiftBy}</span>
-                {SHIFT_STEPS.map((step) => (
+                {shiftOptions(plan).map((step) => (
                   <button
                     key={step}
                     type="button"
@@ -119,7 +121,9 @@ export const PlanSentences = ({
                         : 'cursor-pointer border border-(--color-border) bg-(--color-surface-card) px-2.5 py-1'
                     }
                   >
-                    {es.plan.points(step)}
+                    {(SHIFT_STEPS as readonly number[]).includes(step)
+                      ? es.plan.points(formatNumber(step, 0))
+                      : es.plan.allOf(formatNumber(step))}
                   </button>
                 ))}
               </div>

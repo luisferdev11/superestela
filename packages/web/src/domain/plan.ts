@@ -151,6 +151,38 @@ export const SHIFT_STEPS = [10, 20, 30] as const
 export const DEFAULT_SHIFT = 20
 
 /**
+ * Today's usage-weighted Stuff+ over the pitch types with a score: the number
+ * the deficit and the usage shift move. It is not the card's Stuff+, which
+ * averages every pitch, so the screen labels it as what it is.
+ */
+export const weightedToday = (plan: Plan): Metric =>
+  weightedStuffPlus(plan.contributions, new Map(plan.contributions.map((c) => [c.pitch, c.share])))
+
+/**
+ * The steps the screen offers. A step can never move more usage than the
+ * degrading pitch has: the steps beyond it collapse into one «all of it» step,
+ * with the actual points it moves.
+ */
+export const shiftOptions = (plan: Plan): readonly number[] => {
+  const available =
+    100 * (plan.contributions.find((c) => c.pitch === plan.degrades.pitch)?.share ?? 0)
+  const below = SHIFT_STEPS.filter((step) => step < available)
+  return below.length === SHIFT_STEPS.length ? below : [...below, available]
+}
+
+/** The default step: 20 points, or the largest the pitch allows. */
+export const defaultShift = (plan: Plan): number => {
+  const options = shiftOptions(plan)
+  return options.includes(DEFAULT_SHIFT) ? DEFAULT_SHIFT : (options.at(-1) ?? 0)
+}
+
+/** Whether the degrading pitch has more ride (|IVB| at sea level) than the one that holds. */
+export const holdsWithLessRide = (plan: Plan): boolean | null =>
+  plan.holds.ivbSea === null || plan.degrades.ivbSea === null
+    ? null
+    : Math.abs(plan.holds.ivbSea) < Math.abs(plan.degrades.ivbSea)
+
+/**
  * Pasarle uso al que aguanta solo compensa si ademas rinde mas en altura. Si
  * el que menos pierde sigue por debajo del que mas pierde, mover uso empeora
  * el arsenal, y la pantalla lo dice en vez de proponerlo.
