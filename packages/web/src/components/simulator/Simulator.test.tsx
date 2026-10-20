@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { Simulator } from './Simulator'
+import { StuffPlusKpis } from './StuffPlusKpis'
 import type { Distributions, PitcherArsenal, PitchValues } from '@/domain/simulator'
 import { CONTROLS, PITCH_TYPES, simulatorHref } from '@/domain/simulator'
 import type { DensityScale } from '@/domain/density'
@@ -257,5 +258,17 @@ describe('el Simulador', () => {
     expect(screen.getByRole('dialog', { name: es.sim.map.help.title })).toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: es.sim.map.help.close }))
     expect(screen.queryByRole('dialog')).toBeNull()
+  })
+})
+
+describe('el Δ por altitud de un modelo que no lee el aire', () => {
+  it('dice que todo es la forma en vez de mostrar «+0.0 ± 0.0 por el entorno»', () => {
+    const shapeOnly: SimulateResponse = {
+      ...RESPONSE,
+      altitudeDelta: { total: m(-16.7, 3.8), shape: m(-16.7, 3.8), environment: m(0, 0) },
+    }
+    render(<StuffPlusKpis result={shapeOnly} baseline={null} />)
+    expect(screen.getByText(es.sim.kpi.shapeOnly)).toBeInTheDocument()
+    expect(screen.queryByText(new RegExp(es.sim.kpi.environment))).toBeNull()
   })
 })

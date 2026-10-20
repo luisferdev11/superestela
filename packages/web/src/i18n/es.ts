@@ -551,6 +551,8 @@ export const es = {
       delta: 'Δ por altitud',
       shape: 'por la forma',
       environment: 'por el entorno',
+      shapeOnly:
+        'todo por la forma: el modelo mide la altura por cuánto se encoge el pitch, no por el aire',
       real: 'su pitch real',
     },
     reasons: {
