@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   outputFileTracingRoot: path.join(import.meta.dirname, '..', '..'),
   typedRoutes: true,
+  experimental: {
+    // With src/proxy.ts every request body is buffered, 10 MB by default; the
+    // translator takes files of up to 20 MB, sent as JSON.
+    proxyClientMaxBodySize: '25mb',
+  },
 }
 
 export default nextConfig
