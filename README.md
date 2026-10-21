@@ -12,6 +12,16 @@ El contexto completo está en [`docs/00-PRODUCTO.md`](docs/00-PRODUCTO.md).
 
 ---
 
+## Ver la app completa (cualquier computadora)
+
+```bash
+uv sync --all-extras
+uv run python scripts/fetch_models.py     # instala los modelos publicados, verificados (gh auth login antes)
+uv run python scripts/start.py            # API y web; --prod para la versión de la demo
+```
+
+No hace falta el dataset. Los detalles y el porqué están en [`docs/16`](docs/16-CORRER-SUPERESTELA.md).
+
 ## Arrancar, una sola vez
 
 ```bash
