@@ -257,6 +257,17 @@ def test_the_verdict_beside_the_model_decides_and_the_published_record_does_not(
     assert load_service(str(tmp_path), model_path).reason is None
 
 
+def test_an_installed_model_uses_the_published_verdict_when_it_names_that_model(model, tmp_path):
+    # A model installed by scripts/fetch_models.py brings no verdict beside it (docs/16).
+    _outputs(tmp_path)
+    (tmp_path / "simulator_validation.json").write_text(
+        json.dumps({"model_id": model.model_id, "stuff_plus_shown": True})
+    )
+    model_path = str(tmp_path / "bridge.joblib")
+    model.save(model_path)
+    assert load_service(str(tmp_path), model_path).reason is None
+
+
 def test_translate_moves_a_shape_with_its_band():
     shape = {
         "releaseSpeed": 91.7,

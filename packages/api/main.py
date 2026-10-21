@@ -8,6 +8,7 @@ SUPERESTELA_MODEL, defaulting to the repository layout.
 from __future__ import annotations
 
 import json
+import logging
 import os
 from functools import lru_cache
 from pathlib import Path
@@ -44,9 +45,13 @@ from api.schemas import (
 from api.simulator import SimulatorService, load_service
 from contracts.schemas import MIN_PITCHES_FOR_SCORE
 from core.translate import PitchShape, break_scaling_factor, translate
+from models import portable
 from models.location.final import FinalLocationScorer
+from models.portable import BRIDGE_MODEL, LOCATION_MODEL, MODELS_DIR, STUFF_MODEL, published
 
 REPO = Path(__file__).resolve().parents[2]
+
+logger = logging.getLogger("superestela.api")
 
 app = FastAPI(title="SuperEstela API", version="0.2.0")
 
@@ -64,17 +69,22 @@ def health() -> Health:
     return Health(status="ok", version=app.version)
 
 
-# The model analysis/outputs/simulator_validation.json was published for
-# (docs/15): FINAL_v1 with the speed rule. Without it on disk (a fresh clone:
-# artifacts/ is not in git), the v0 bridge, which says it is not gated.
-PUBLISHED_MODEL = "stuff_plus_final_v1_monotone.joblib"
-BRIDGE_MODEL = "stuff_plus_v0_bridge.joblib"
-
-
 def default_model() -> str:
-    """The published model if it is in artifacts/, else the v0 bridge."""
-    published = REPO / "artifacts" / PUBLISHED_MODEL
-    return str(published if published.exists() else REPO / "artifacts" / BRIDGE_MODEL)
+    """The model simulator_validation.json was published for, else the v0 bridge.
+
+    The published one is FINAL_v1 with the speed rule (docs/15), installed by
+    ``scripts/fetch_models.py``. Without it (a fresh clone: artifacts/ is not in
+    git) the bridge answers and says it is not gated, and the log says why.
+    """
+    found = published(REPO / "artifacts", STUFF_MODEL)
+    if found is None:
+        logger.warning(
+            "No published model in %s: run `uv run python scripts/fetch_models.py`. "
+            "Serving the v0 bridge.",
+            REPO / "artifacts" / MODELS_DIR / STUFF_MODEL,
+        )
+        return str(REPO / "artifacts" / BRIDGE_MODEL)
+    return str(found)
 
 
 @lru_cache(maxsize=1)
@@ -239,12 +249,12 @@ def score_arsenal_file(
 @lru_cache(maxsize=1)
 def location_scorer() -> FinalLocationScorer | None:
     """Load data's final Location+ once per process, or None when it is not there."""
-    path = os.environ.get(
-        "SUPERESTELA_LOCATION_MODEL", str(REPO / "artifacts" / "location_plus_l3.joblib")
-    )
-    if not os.path.exists(path):
+    found = published(REPO / "artifacts", LOCATION_MODEL)
+    path = os.environ.get("SUPERESTELA_LOCATION_MODEL", str(found) if found else "")
+    if not path or not os.path.exists(path):
+        logger.warning("No Location+ model (%s): run `scripts/fetch_models.py`.", path or "none")
         return None
-    model = joblib.load(path)
+    model = portable.load(path) if portable.is_portable(path) else joblib.load(path)
     if not isinstance(model, FinalLocationScorer):
         raise TypeError(f"{path} does not hold a FinalLocationScorer")
     return model

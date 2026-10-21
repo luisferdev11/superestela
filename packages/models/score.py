@@ -30,17 +30,13 @@ from typing import Any
 import pandas as pd
 
 from models.batch import MissingColumnsError, score_frame
+from models.portable import BRIDGE_MODEL, STUFF_MODEL, published
 from models.scoring import Scorer, load_scorer, verdict_path
 
 ROOT = Path(__file__).resolve().parents[2]
-# The published model (docs/15) when it is on disk, else the v0 bridge: the
-# holdout is scored with what the screens show.
-PUBLISHED_MODEL = ROOT / "artifacts" / "stuff_plus_final_v1_monotone.joblib"
-DEFAULT_MODEL = (
-    PUBLISHED_MODEL
-    if PUBLISHED_MODEL.exists()
-    else ROOT / "artifacts" / "stuff_plus_v0_bridge.joblib"
-)
+# The published model (docs/15) when it is installed (scripts/fetch_models.py),
+# else the v0 bridge: the holdout is scored with what the screens show.
+DEFAULT_MODEL = published(ROOT / "artifacts", STUFF_MODEL) or ROOT / "artifacts" / BRIDGE_MODEL
 DEFAULT_EVIDENCE = ROOT / "analysis" / "outputs" / "evidence.json"
 
 

@@ -331,11 +331,13 @@ def _diff(d: Differentials) -> s.Differentials:
 
 
 def load_service(outputs_dir: str, model_path: str) -> SimulatorService:
-    """Read the evidence, the arsenals, the model and the verdict next to it, once.
+    """Read the evidence, the arsenals, the model and its gates' verdict, once.
 
-    The verdict is the one written beside the model by the run that fitted it,
-    not the published record in analysis/outputs: that one describes whatever
-    model was last published, which is not necessarily the one on this machine.
+    The verdict is the one written beside the model by the run that fitted it.
+    Without one (a model installed by scripts/fetch_models.py, docs/16), the
+    published record in analysis/outputs counts, but only if it names this
+    very model: it describes whatever model was last published, which is not
+    necessarily the one on this machine.
     """
 
     def read(name: str) -> dict[str, Any]:
@@ -347,8 +349,11 @@ def load_service(outputs_dir: str, model_path: str) -> SimulatorService:
         return SimulatorService(None, "model_unavailable", evidence, arsenals)
     # Any model that answers the contract, not only the v0 bridge (ADR 0010).
     model = load_scorer(model_path)
+    beside = verdict_path(model_path)
+    published = os.path.join(outputs_dir, "simulator_validation.json")
+    source = beside if os.path.exists(beside) else published
     try:
-        with open(verdict_path(model_path)) as fh:
+        with open(source) as fh:
             verdict = dict(json.load(fh))
     except FileNotFoundError:
         return SimulatorService(model, "model_not_gated", evidence, arsenals)

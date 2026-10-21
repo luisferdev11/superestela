@@ -1,0 +1,10 @@
+{
+  "release": "models-1.1.0",
+  "file": "superestela-models-1.1.0.zip",
+  "sha256": "4d5c1013ed8fe849dfbdda68293281df35095fb1d0e45df9bf1dc164d7312d41",
+  "models": {
+    "stuff_plus_final_v1_monotone": "1.1.0+19966f3",
+    "location_plus_l3": "1.0.0+19966f3"
+  },
+  "note": "Installed by scripts/fetch_models.py into artifacts/models/ (docs/16)."
+}
