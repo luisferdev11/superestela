@@ -34,7 +34,8 @@ RUN --mount=type=secret,id=GH_TOKEN,mode=0444,required=true \
 
 # ---- 2. The web's production build --------------------------------------
 FROM node:22-slim AS web
-RUN corepack enable
+# The pnpm the lockfile was written with (engines: >=10 <11); corepack's latest is not.
+RUN corepack enable && corepack prepare pnpm@10.18.0 --activate
 WORKDIR /app
 COPY --from=source /src/repo /app
 WORKDIR /app/packages/web
