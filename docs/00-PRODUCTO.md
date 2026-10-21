@@ -75,7 +75,7 @@ Son activos de marca tanto como métricas. Aparecen con nombre propio en app, de
 | **Stuff+ en altitud extrema** | Stuff+ en las condiciones de la altitud extrema: el promedio de **cinco parques** (Puebla, CDMX, Aguascalientes, Querétaro y León), no solo el Harp Helú ([`reference/categorias-altitud.md`](reference/categorias-altitud.md)). En el v0, 100 = pitch promedio de la LMB, los dos entornos juntos. | Pitching coach |
 | **Impuesto de Altitud** | Carreras adicionales concedidas **por cada 9 entradas** al mover a este pitcher a CDMX. Con error estándar; donde no alcanza significancia se muestra *no concluyente*, nunca un número. | Director deportivo |
 | **Índice de Densidad** | Densidad del aire **medida** desde la trayectoria de la bola, juego a juego. Sea level = 1.000. | Credibilidad científica |
-| **Sufre en la altura** (antes «Trampa de Altitud») | Bandera roja: se ve fuerte a nivel del mar, colapsa en CDMX. **58 de 370 temporadas** de la cohorte. | Director deportivo |
+| **Sufre en la altura** (antes «Trampa de Altitud») | Bandera roja: se ve fuerte a nivel del mar, colapsa en CDMX. **105 de 710 temporadas** de la cohorte. | Director deportivo |
 
 > **Por qué el Impuesto va en carreras por 9 entradas.** Nueve entradas es la unidad que el béisbol ya lee; *por 100 lanzamientos* no se la sabe nadie. La conversión usa los 18.63 lanzamientos por entrada medidos en altitud, no un número redondo.
 >
@@ -97,7 +97,7 @@ Entra el arsenal de un pitcher medido en cualquier parte → sale su forma proye
 ### 2. Radar de Fichajes
 Ranking de candidatos por valor proyectado **en altitud extrema**, no por sus números crudos. Columnas de temporada, rol, Stuff+ en altitud extrema, Stuff+ a nivel del mar, Δ, Impuesto de Altitud y bandera de Trampa. Ordena por lo que importa aquí.
 
-Cada candidato aparece con su **última temporada jugada**, y la temporada es una columna visible: de los 296 lanzadores con score, 95 tienen 2024 como última, 134 el 2025 y solo 67 el 2026. Un candidato cuyo último dato es de hace dos años no es comparable con uno de este año, y la pantalla no lo puede esconder.
+Cada candidato aparece con su **última temporada jugada**, y la temporada es una columna visible: de los 514 lanzadores con score, 145 tienen 2024 como última, 205 el 2025 y 164 el 2026. Un candidato cuyo último dato es de hace dos años no es comparable con uno de este año, y la pantalla no lo puede esconder.
 
 ### 3. Simulador de Pitch *(entregable 4 obligatorio)*
 Parte de **un pitch real de un lanzador** (o del promedio de la liga, en modo laboratorio). Controles de los features físicos que el reto nombra: velocidad, IVB, HB, spin rate y eje, extensión, altura y lado de release, tipo y mano. Sale **lado a lado, Harp Helú vs nivel del mar**: Stuff+ con banda, la forma proyectada, el VAA y la velocidad al plato, y los diferenciales contra la recta del lanzador en cada entorno. Incluye el **mapa de movimiento de los pitches más y menos efectivos** que pide el reto, construido con whiff observado. Fundamento, fórmulas y criterios de aceptación en [`docs/09`](09-SIMULADOR.md).
@@ -108,7 +108,7 @@ Para un pitcher ya en roster: qué lanzamiento se degrada más, cuál aguanta, y
 ### 5. Tablero de Despliegue
 Selector de estadio → el roster ordenado por Stuff+ de **ese** entorno, agrupado por rol: abridores y relevistas. **No sugiere orden de pitcheo**: esa decisión es del mánager y no es nuestra para automatizar.
 
-Que el tablero exista lo justifica el dato: la correlación de orden entre casa y gira es **0.638** (Spearman), el cambio mediano es de **40 posiciones**, y **8 de los 10 mejores en casa no están entre los 10 mejores de gira**, sobre los 296 lanzadores del Radar en su última temporada. Lo calcula `orderShift` (`packages/web/src/domain/roster.ts`) desde `mockup_data.json`, y un test lo cruza con una corrida en Python. La versión anterior de este párrafo decía 0.700, 38 y 6, de una corrida vieja.
+Que el tablero exista lo justifica el dato: la correlación de orden entre casa y gira es **0.773** (Spearman), el cambio mediano es de **57.5 posiciones**, y **6 de los 10 mejores en casa no están entre los 10 mejores de gira**, sobre los 514 lanzadores del Radar en su última temporada (modelo final, mínimo de 50 lanzamientos, 20 oct). Lo calcula `orderShift` (`packages/web/src/domain/roster.ts`) desde `mockup_data.json`, y un test lo cruza con una corrida en Python. La versión anterior de este párrafo decía 0.700, 38 y 6, de una corrida vieja.
 
 El rol se infiere de la entrada en que el lanzador entra al juego — una regla medida, no un modelo. **No incluye "cerrador":** un cerrador se define por entrar en situación de salvamento y el dataset no trae marcador.
 
