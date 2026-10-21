@@ -115,7 +115,8 @@ export const ArsenalEditor = ({
                       type="button"
                       disabled={rows.length <= 1}
                       aria-label={es.translator.editor.remove(r.pitchType)}
-                      className="cursor-pointer border-0 bg-transparent px-1 text-(--color-text-muted) disabled:cursor-not-allowed disabled:opacity-30"
+                      title={es.translator.editor.remove(r.pitchType)}
+                      className="flex h-8 w-8 cursor-pointer items-center justify-center border border-(--color-border-strong) bg-(--color-surface-card) text-[20px] leading-none text-(--color-text) hover:border-(--color-diablos) hover:text-(--color-diablos) disabled:cursor-not-allowed disabled:opacity-30"
                       onClick={() => {
                         onChange(
                           rows.filter((_, j) => j !== i),

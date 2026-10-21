@@ -1,4 +1,5 @@
-import type { Outcomes, PitcherSeason, SeasonEntry } from './types'
+import { locationKey, type PitcherLocation } from './location'
+import type { Metric, Outcomes, PitcherSeason, SeasonEntry } from './types'
 
 /**
  * La cohorte de la P1: cada candidato en **su ultima temporada jugada con
@@ -15,19 +16,32 @@ export const lastScoredSeason = (seasons: readonly SeasonEntry[]): number | null
  * A Radar row: the card plus the rates of that season in extreme altitude,
  * the environment the Radar ranks by. They are the same numbers the Ficha's
  * outcomes table shows for that season and environment, band and sample
- * minimum included.
+ * minimum included. And its Location+ in extreme altitude (data's L3), `null`
+ * without the model or the sample.
  */
-export type RadarCard = PitcherSeason & { readonly ratesHh: Outcomes }
+export type RadarCard = PitcherSeason & {
+  readonly ratesHh: Outcomes
+  readonly locationPlusHh: Metric | null
+}
 
 export const selectRadarCohort = (
   cards: readonly PitcherSeason[],
   seasonsByPitcher: ReadonlyMap<string, readonly SeasonEntry[]>,
+  locations: ReadonlyMap<string, PitcherLocation> | null = null,
 ): readonly RadarCard[] =>
   cards.flatMap((card) => {
     const seasons = seasonsByPitcher.get(card.pitcherId)
     if (seasons === undefined || lastScoredSeason(seasons) !== card.season) return []
     const entry = seasons.find((season) => season.season === card.season)
-    return entry === undefined ? [] : [{ ...card, ratesHh: entry.outcomesHh }]
+    if (entry === undefined) return []
+    const location = locations?.get(locationKey(card.pitcherId, card.season))
+    return [
+      {
+        ...card,
+        ratesHh: entry.outcomesHh,
+        locationPlusHh: location?.hh?.locationPlus ?? null,
+      },
+    ]
   })
 
 export type CohortSummary = {

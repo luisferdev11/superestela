@@ -1050,18 +1050,18 @@
       "2026": 216
     },
     "pitchers_with_a_gap": 28,
-    "qualifying_pitcher_seasons_tracked": 379,
-    "scored_pitcher_seasons": 370,
-    "scored_pitchers": 296,
+    "qualifying_pitcher_seasons_tracked": 763,
+    "scored_pitcher_seasons": 757,
+    "scored_pitchers": 538,
     "scored_seasons_per_pitcher": {
-      "1": 230,
-      "2": 58,
-      "3": 8
+      "1": 358,
+      "2": 141,
+      "3": 39
     },
     "last_scored_season": {
-      "2024": 95,
-      "2025": 134,
-      "2026": 67
+      "2024": 148,
+      "2025": 207,
+      "2026": 183
     }
   },
   "roles": {
@@ -1114,14 +1114,14 @@
   },
   "cohort": {
     "altitude_tax_runs_per_9": {
-      "mean": 1.53,
-      "median": 1.37,
-      "n_significant": 40
+      "mean": 1.47,
+      "median": 1.38,
+      "n_significant": 72
     },
-    "n_cards": 370,
-    "n_pitchers": 296,
-    "min_pitches_each_environment": 100,
-    "n_traps": 62
+    "n_cards": 710,
+    "n_pitchers": 514,
+    "min_pitches_each_environment": 50,
+    "n_traps": 105
   },
   "target_learnability": {
     "P(whiff | swing)": {

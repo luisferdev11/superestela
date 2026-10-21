@@ -4,11 +4,12 @@
  * insuficiente". Un test lee la constante de Python y compara, para que las dos
  * no se separen en silencio.
  */
-export const MIN_PITCHES_FOR_SCORE = 100
+export const MIN_PITCHES_FOR_SCORE = 50
 
 /**
  * Los minimos de las tasas descriptivas (K%, BB%, K-BB% y whiff por swing).
  * Espejo de `packages/contracts/schemas.py`, con el mismo test de deriva.
+ * Desde el 20 oct la tasa se da aunque no llegue: debajo se marca como muestra chica.
  */
 export const MIN_PLATE_APPEARANCES_FOR_RATE = 50
 export const MIN_SWINGS_FOR_RATE = 50

@@ -13,7 +13,7 @@ import { FilePicker } from './FilePicker'
 import { es } from '@/i18n/es'
 
 /** El mismo tope que la API (`MAX_ARSENAL_FILE_CHARS`): mas grande no se manda. */
-export const MAX_FILE_BYTES = 10_000_000
+export const MAX_FILE_BYTES = 20_000_000
 
 type Upload =
   | { readonly status: 'idle' }

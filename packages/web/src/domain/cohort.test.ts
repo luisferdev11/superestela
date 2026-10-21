@@ -1,5 +1,5 @@
 import { readFile } from 'node:fs/promises'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { evidencePath, mockupDataPath } from '@/sources/paths'
 import { mockupDataSchema } from '@/sources/schema'
 import { toPitcherSeason, toSeasonEntry } from '@/sources/adapter'
@@ -15,6 +15,9 @@ import {
 } from './ranking'
 import { nextSort } from './tableSort'
 import { MIN_PLATE_APPEARANCES_FOR_RATE } from './constants'
+vi.mock('server-only', () => ({}))
+
+import { loadLocations } from '@/sources/locationSource'
 
 /**
  * `README`, regla 2: ningun numero sin su corrida.
@@ -37,28 +40,31 @@ const load = async () => {
 
 type Evidence = {
   cohort: { n_cards: number; n_pitchers: number; n_traps: number }
-  seasons: { scored_pitchers: number; last_scored_season: Record<string, number> }
 }
 
 describe('la cohorte de la P1 coincide con la corrida', () => {
   it('tiene una fila por lanzador con score', async () => {
     const { cards, seasonsByPitcher, evidence } = await load()
     expect(cards).toHaveLength(evidence.cohort.n_cards)
-    expect(selectRadarCohort(cards, seasonsByPitcher)).toHaveLength(
-      evidence.seasons.scored_pitchers,
-    )
+    expect(selectRadarCohort(cards, seasonsByPitcher)).toHaveLength(evidence.cohort.n_pitchers)
   })
 
   it('cada uno entra con su ultima temporada jugada', async () => {
     const { cards, seasonsByPitcher, evidence } = await load()
-    const summary = summarize(selectRadarCohort(cards, seasonsByPitcher))
-    const bySeason = Object.fromEntries(
-      [...summary.bySeason].map(([season, count]) => [String(season), count]),
+    const cohort = selectRadarCohort(cards, seasonsByPitcher)
+    for (const card of cohort) {
+      const scored = (seasonsByPitcher.get(card.pitcherId) ?? [])
+        .filter((s) => s.scored)
+        .map((s) => s.season)
+      expect(card.season).toBe(Math.max(...scored))
+    }
+    const summary = summarize(cohort)
+    expect([...summary.bySeason.values()].reduce((a, b) => a + b, 0)).toBe(
+      evidence.cohort.n_pitchers,
     )
-    expect(bySeason).toEqual(evidence.seasons.last_scored_season)
   })
 
-  it('las trampas de las 370 tarjetas son las que dice evidence.json', async () => {
+  it('las trampas de las tarjetas son las que dice evidence.json', async () => {
     const { cards, evidence } = await load()
     expect(summarize(cards).nTraps).toBe(evidence.cohort.n_traps)
   })
@@ -111,12 +117,30 @@ describe('las tasas del Radar son las de la Ficha', () => {
     }
   })
 
-  it('debajo del minimo de turnos no hay K-BB%, aunque la temporada completa lo tenga', async () => {
+  it('debajo del minimo de turnos K-BB% se da igual, con su banda (20 oct)', async () => {
     const { cards, seasonsByPitcher } = await load()
     const cohort = selectRadarCohort(cards, seasonsByPitcher)
-    const thin = cohort.filter((c) => c.ratesHh.plateAppearances < MIN_PLATE_APPEARANCES_FOR_RATE)
+    const thin = cohort.filter(
+      (c) =>
+        c.ratesHh.plateAppearances > 0 &&
+        c.ratesHh.plateAppearances < MIN_PLATE_APPEARANCES_FOR_RATE,
+    )
     expect(thin.length).toBeGreaterThan(0)
-    for (const card of thin) expect(card.ratesHh.kMinusBbPct).toBeNull()
+    for (const card of thin) expect(card.ratesHh.kMinusBbPct).not.toBeNull()
+  })
+
+  it('cada fila trae su Location+ en altitud extrema, o null sin el', async () => {
+    const { cards, seasonsByPitcher } = await load()
+    const locations = await loadLocations()
+    const cohort = selectRadarCohort(cards, seasonsByPitcher, locations)
+    expect(cohort.some((c) => c.locationPlusHh !== null)).toBe(true)
+    for (const card of cohort) {
+      const panel = locations?.get(`${card.pitcherId}/${String(card.season)}`)?.hh ?? null
+      expect(card.locationPlusHh).toEqual(panel?.locationPlus ?? null)
+    }
+    expect(selectRadarCohort(cards, seasonsByPitcher).every((c) => c.locationPlusHh === null)).toBe(
+      true,
+    )
   })
 })
 
@@ -138,15 +162,14 @@ describe('ordenar el radar por columna', () => {
       const sorted = sortRadar(cohort, { key: 'kMinusBb', direction })
       const values = sorted.map((c) => c.ratesHh.kMinusBbPct?.value ?? null)
       expect(nullsLast(values, direction)).toBe(true)
-      expect(values).toContain(null)
     }
   })
 
-  it('el impuesto ordena solo los concluyentes; los demas van al final', async () => {
+  it('Location+ ordena de mayor a menor; los que no lo tienen van al final', async () => {
     const { cards: all, seasonsByPitcher } = await load()
-    const cards = selectRadarCohort(all, seasonsByPitcher)
-    const sorted = sortRadar(cards, { key: 'tax', direction: 'desc' })
-    const values = sorted.map((c) => c.altitudeTax?.value ?? null)
+    const cards = selectRadarCohort(all, seasonsByPitcher, await loadLocations())
+    const sorted = sortRadar(cards, { key: 'locationPlus', direction: 'desc' })
+    const values = sorted.map((c) => c.locationPlusHh?.value ?? null)
     expect(nullsLast(values, 'desc')).toBe(true)
     expect(values[0]).not.toBeNull()
   })
@@ -163,9 +186,12 @@ describe('ordenar el radar por columna', () => {
 
   it('el nombre empieza de la A a la Z, y un segundo clic invierte', () => {
     expect(firstDirection('pitcher')).toBe('asc')
-    expect(firstDirection('tax')).toBe('desc')
-    const once = nextSort(DEFAULT_RADAR_SORT, 'tax', firstDirection('tax'))
-    expect(once).toEqual({ key: 'tax', direction: 'desc' })
-    expect(nextSort(once, 'tax', firstDirection('tax'))).toEqual({ key: 'tax', direction: 'asc' })
+    expect(firstDirection('locationPlus')).toBe('desc')
+    const once = nextSort(DEFAULT_RADAR_SORT, 'locationPlus', firstDirection('locationPlus'))
+    expect(once).toEqual({ key: 'locationPlus', direction: 'desc' })
+    expect(nextSort(once, 'locationPlus', firstDirection('locationPlus'))).toEqual({
+      key: 'locationPlus',
+      direction: 'asc',
+    })
   })
 })

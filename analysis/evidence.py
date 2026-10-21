@@ -32,7 +32,7 @@ from sklearn.ensemble import HistGradientBoostingRegressor
 from sklearn.model_selection import GroupKFold
 
 from contracts.mapping import normalize_columns
-from contracts.schemas import MIN_PLATE_APPEARANCES_FOR_RATE, MIN_SWINGS_FOR_RATE
+from contracts.schemas import MIN_PITCHES_FOR_SCORE
 from core.rates import difference_band, rate_band
 from models.features.arsenal import DIFF_COLUMNS, raw_differentials
 from models.features.role import STARTER_FIRST_INNING_SHARE, classify_roles
@@ -47,13 +47,10 @@ OUT = os.path.join(HERE, "outputs")
 
 GRAVITY = 32.174  # ft/s^2
 
-# Product rule, mirrored from contracts.schemas.MIN_PITCHES_FOR_SCORE: below
-# this in EITHER environment there is no comparison to show.
-MIN_PITCHES = 100
-# Product rules from contracts.schemas, imported so they cannot drift: below
-# these a rate is "muestra insuficiente".
-MIN_PLATE_APPEARANCES = MIN_PLATE_APPEARANCES_FOR_RATE
-MIN_SWINGS = MIN_SWINGS_FOR_RATE
+# Product rule from contracts.schemas: below this in EITHER environment there
+# is no comparison to show. The rates' minimums (MIN_PLATE_APPEARANCES_FOR_RATE,
+# MIN_SWINGS_FOR_RATE) only mark a small sample on the screen since 20 oct.
+MIN_PITCHES = MIN_PITCHES_FOR_SCORE
 
 # The dataset has no plate-appearance id. A plate appearance ends on the pitch
 # whose result closes it; a fieldable foul only when it made an out (73 of 1,917).
@@ -870,13 +867,14 @@ def outcome_rates(row):
 
     The bands are Agresti-Coull (core.rates): a plain binomial band collapses to
     zero at a rate of 0, and "BB% 0.0 +- 0.0" claims a certainty nobody has.
-    Below the product minimum a rate is None, never a number with a band
-    nobody could read.
+    Below the product minimum the rate is still given (the team asked to see
+    every number, 20 oct): its wide band says how little it means, and the
+    screen marks it. Only an empty denominator gives None.
     """
     pa, k, bb = int(row["pa"]), int(row["k"]), int(row["bb"])
     swings, whiffs = int(row["swings"]), int(row["whiffs"])
     out = {"pa": pa, "swings": swings}
-    if pa >= MIN_PLATE_APPEARANCES:
+    if pa > 0:
         (pk, hk), (pb, hb) = rate_band(k, pa), rate_band(bb, pa)
         dk, hd = difference_band(k, bb, pa)
         out.update(
@@ -896,7 +894,7 @@ def outcome_rates(row):
             k_minus_bb_pct=None,
             k_minus_bb_pct_ci95=None,
         )
-    if swings >= MIN_SWINGS:
+    if swings > 0:
         pw, hw = rate_band(whiffs, swings)
         out.update(whiff_per_swing=round(100 * pw, 1), whiff_per_swing_ci95=round(100 * hw, 1))
     else:
@@ -1287,7 +1285,9 @@ def main():
                 "density": R["density"],
             },
             f,
-            indent=2,
+            # One space: 710 cards since the 50-pitch minimum, and indent=2 passed
+            # the repository's 2 MB file limit.
+            indent=1,
             ensure_ascii=False,
         )
         f.write("\n")

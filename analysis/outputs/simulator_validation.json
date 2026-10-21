@@ -237,9 +237,9 @@
       "id": "S4",
       "name": "simulator score of a real arsenal pitch against the Radar's number",
       "value": {
-        "n": 2153,
-        "r": 0.942,
-        "mean_abs_delta": 2.312
+        "n": 3270,
+        "r": 0.94,
+        "mean_abs_delta": 2.31
       },
       "threshold": "r >= 0.9 and mean |delta| <= 3",
       "passed": true,

@@ -22,12 +22,14 @@ import pandera.pandas as pa
 from pandera.typing import Series
 
 # Product rule: below this sample size we suppress the score entirely.
-MIN_PITCHES_FOR_SCORE = 100  # product rule, docs/07 section 1.2
+# docs/07 section 1.2 set 100; lowered to 50 on 20 oct at the team's request,
+# so more pitcher-seasons get a card. The 95% band widens to say so.
+MIN_PITCHES_FOR_SCORE = 50
 
 # Product rules for the descriptive rates Diablos reads (Q&A, 30 sep): K%, BB%
 # and K-BB% need this many plate appearances, whiff per swing this many swings.
-# At 50 a K% of 20 still carries a 95% band of +-11 points; below it the screen
-# says "muestra insuficiente".
+# At 50 a K% of 20 still carries a 95% band of +-11 points. Since 20 oct a rate
+# below the minimum is still computed and shown, marked as a small sample.
 MIN_PLATE_APPEARANCES_FOR_RATE = 50
 MIN_SWINGS_FOR_RATE = 50
 

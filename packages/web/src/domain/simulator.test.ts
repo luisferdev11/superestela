@@ -3,6 +3,7 @@ import {
   buildRequest,
   canSimulate,
   changedControls,
+  labArsenal,
   leagueMedian,
   parseSimulatorStart,
   simulatorHref,
@@ -57,6 +58,30 @@ describe('el laboratorio parte del pitch mediano de la liga', () => {
     const d = { 'Four-Seam': Object.fromEntries(Object.keys(FOUR_SEAM).map((k) => [k, q])) }
     const median = leagueMedian(d as unknown as Distributions, 'Four-Seam')
     expect(Object.values(median).every((v) => v === 5)).toBe(true)
+  })
+})
+
+describe('la recta de referencia del laboratorio (20 oct)', () => {
+  const q = { p5: 0, p50: 5, p95: 10 }
+  const d = {
+    'Four-Seam': Object.fromEntries(Object.keys(FOUR_SEAM).map((k) => [k, q])),
+  } as unknown as Distributions
+  const reference = { releaseSpeed: 93, ivb: 16, horizontalBreak: 8 }
+
+  it('es una recta: la mediana de la liga con la velocidad y el movimiento elegidos', () => {
+    const [fastball, ...rest] = labArsenal(d, reference)
+    expect(rest).toHaveLength(0)
+    expect(fastball).toMatchObject({ pitchType: 'Four-Seam', ...reference, extension: 5 })
+  })
+
+  it('va en la peticion contra el pitch simulado; si se simula la recta, la reemplaza', () => {
+    const slider = { ...FOUR_SEAM, releaseSpeed: 85, ivb: 1, horizontalBreak: -4 }
+    expect(buildRequest(slider, 'Slider', 'Right', labArsenal(d, reference)).arsenal).toEqual([
+      expect.objectContaining({ pitchType: 'Four-Seam', releaseSpeed: 93, ivb: 16 }),
+    ])
+    expect(buildRequest(slider, 'Four-Seam', 'Right', labArsenal(d, reference)).arsenal).toEqual([
+      expect.objectContaining({ pitchType: 'Four-Seam', releaseSpeed: 85, ivb: 1 }),
+    ])
   })
 })
 

@@ -28,7 +28,7 @@ export const RADAR_SORT_KEYS = [
   'hh',
   'sea',
   'delta',
-  'tax',
+  'locationPlus',
   'kMinusBb',
   'whiff',
   'usage',
@@ -92,10 +92,9 @@ const valueOf =
         return focus.sea?.value ?? null
       case 'delta':
         return focus.delta
-      // Solo el impuesto concluyente: ordenar por uno que cruza el cero seria
-      // ordenar por ruido (ADR 0003). Los no concluyentes van al final.
-      case 'tax':
-        return card.altitudeTax?.value ?? null
+      // Without Location+ (no model or no sample) it sorts last.
+      case 'locationPlus':
+        return card.locationPlusHh?.value ?? null
       // Extreme altitude, as shown; below the sample minimum it sorts last.
       case 'kMinusBb':
         return card.ratesHh.kMinusBbPct?.value ?? null

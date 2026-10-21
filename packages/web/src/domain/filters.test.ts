@@ -106,3 +106,21 @@ describe('los filtros del radar', () => {
     }
   })
 })
+
+describe('el filtro de Location+ (20 oct)', () => {
+  const metric = (value: number) => ({ value, se: 1 })
+
+  it('arriba deja a los de 100 o mas; debajo, a los de menos; sin Location+ solo pasa «Todos»', async () => {
+    const [a, b, c] = await cohort()
+    if (a === undefined || b === undefined || c === undefined) throw new Error('cohorte corta')
+    const cards = [
+      { ...a, locationPlusHh: metric(100) },
+      { ...b, locationPlusHh: metric(99.9) },
+      { ...c, locationPlusHh: null },
+    ]
+    expect(applyFilters(cards, { ...NO_FILTERS, locationPlus: 'above' })).toEqual([cards[0]])
+    expect(applyFilters(cards, { ...NO_FILTERS, locationPlus: 'below' })).toEqual([cards[1]])
+    expect(applyFilters(cards, NO_FILTERS)).toHaveLength(3)
+    expect(isFiltered({ ...NO_FILTERS, locationPlus: 'above' })).toBe(true)
+  })
+})

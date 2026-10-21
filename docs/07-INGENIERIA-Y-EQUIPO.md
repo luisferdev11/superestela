@@ -46,7 +46,7 @@ Lo que datos entrega, producto consume. Formato parquet, validado con Pandera en
 | `altitude_tax_significant` | **Obligatorio de respetar.** Falso en 246 de 286; ahí el producto muestra *no concluyente*, no un número |
 | `arsenal[]` | Por tipo: uso, velo, ivb, hb, spin, stuff_plus, whiff |
 
-**Regla de producto:** por debajo de **100 lanzamientos en cada entorno** no se muestra score; se muestra "muestra insuficiente". Es preferible callar que mentir con una banda enorme.
+**Regla de producto:** por debajo de **50 lanzamientos en cada entorno** (100 hasta el 20 oct) no se muestra score; se muestra "muestra insuficiente". Es preferible callar que mentir con una banda enorme.
 
 **Por qué la temporada va en la llave.** Un lanzador que estuvo en 2024, se fue en 2025 y volvió en 2026 no es un promedio: son dos mediciones. En el dataset hay **28 casos exactos** de eso. Y el hueco se paga en precisión —la forma correlaciona 0.78–0.83 entre temporadas consecutivas y **0.674** con un año de por medio—, así que mezclarlas describe a alguien que no existe. Detalle en `docs/adr/0005`.
 

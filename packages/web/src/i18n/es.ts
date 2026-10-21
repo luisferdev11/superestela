@@ -26,6 +26,7 @@ export const es = {
   handShort: { Right: 'D', Left: 'Z' } as Record<string, string | undefined>,
   handLong: { Right: 'Diestro', Left: 'Zurdo' } as Record<string, string | undefined>,
   inconclusive: 'no concluyente',
+  smallSample: 'muestra chica: debajo del mínimo de turnos o swings, léelo con su banda',
   inconclusiveShort: 'no concl.',
   noSampleShort: 'sin muestra',
   brand: { top: 'SUPER', bottom: 'ESTELA' },
@@ -69,8 +70,6 @@ export const es = {
   sortBy: 'Ordenar por',
   legend: {
     trap: 'Sufre en la altura \u2014 se ve fuerte a nivel del mar y su Stuff+ cae mucho en altitud extrema.',
-    inconclusive: (significant: number, total: number): string =>
-      `\u2014 el Impuesto no alcanza significancia: solo ${String(significant)} de ${String(total)} la alcanzan.`,
     stale:
       'Temporada en \u00e1mbar \u2014 su \u00faltimo dato no es de la temporada m\u00e1s reciente.',
     showing: (shown: number, total: number): string =>
@@ -124,6 +123,9 @@ export const es = {
     pitchOption: (pitch: string, count: number): string => `${pitch} (${String(count)})`,
     search: 'Buscar lanzador',
     searchPlaceholder: 'pitcher_00069',
+    locationPlus: 'Location+ alt.',
+    locationAbove: 'Arriba del promedio (≥ 100)',
+    locationBelow: 'Debajo del promedio (< 100)',
     clear: 'Limpiar filtros',
     results: (shown: number, total: number): string =>
       `${String(shown)} de ${String(total)} lanzadores`,
@@ -131,8 +133,6 @@ export const es = {
       `Todos los que tiran ${pitch} con al menos 25 en altitud extrema, ordenados por el Stuff+ de su ${pitch}. Las columnas de Stuff+, \u0394 y uso son las de ese pitch.`,
   },
   sortHint: 'Haz clic en el nombre de una columna para ordenar; otro clic invierte el orden.',
-  taxExplainer:
-    'Impuesto de Altitud: cu\u00e1ntas carreras de m\u00e1s permite por cada 9 entradas en altitud extrema, contra nivel del mar, medido con el valor en carreras de sus propios lanzamientos. Solo se muestra cuando la banda al 95% no cruza el cero; si la cruza, dice \u00abno concl.\u00bb.',
   pitchColumns: {
     hh: (pitch: string): string => `${pitch} alt. extrema`,
     sea: (pitch: string): string => `${pitch} n. del mar`,
@@ -145,9 +145,9 @@ export const es = {
     'Mano con la que lanza.',
     'Calidad de su arsenal en altitud extrema, ponderada por uso, con su banda al 95%.',
     'La misma medida a nivel del mar, con su banda al 95%.',
-    'Carreras de más por 9 entradas en altitud extrema, con su banda al 95%, según el valor en carreras de sus lanzamientos. «No concl.» si la banda cruza el cero.',
-    'Ponches menos bases por bolas, por cada 100 turnos, en altitud extrema en esa temporada, con su banda al 95%. Es la misma cifra que la Ficha; debajo del mínimo de turnos, «muestra insuf.».',
-    'Swings abanicados por cada 100 swings, en altitud extrema en esa temporada, con su banda al 95%. Es la misma cifra que la Ficha; debajo del mínimo de swings, «muestra insuf.».',
+    'Location+ en altitud extrema, con su banda al 95%: qué tan bien ubicó sus lanzamientos para el conteo y el bateador. 100 es el promedio de su tipo de pitch. Describe cómo ubicó; no proyecta.',
+    'Ponches menos bases por bolas, por cada 100 turnos, en altitud extrema en esa temporada, con su banda al 95%. Es la misma cifra que la Ficha; con * si no llega al mínimo de turnos.',
+    'Swings abanicados por cada 100 swings, en altitud extrema en esa temporada, con su banda al 95%. Es la misma cifra que la Ficha; con * si no llega al mínimo de swings.',
     'Abridor o relevista, por cómo entra a los juegos.',
     'El pitch que más usa.',
     'Qué tanto lo usa.',
@@ -157,7 +157,7 @@ export const es = {
     stuffPlusTerm: 'Stuff+',
     insufficient: { term: 'Muestra insuficiente' },
     insufficientText: (pitches: number, pa: number, swings: number): string =>
-      `Menos de ${String(pitches)} lanzamientos en un entorno, de ${String(pa)} turnos para K\u2212BB% o de ${String(swings)} swings para el whiff. No se muestra un número con una banda tan ancha que no diga nada.`,
+      `Con menos de ${String(pitches)} lanzamientos en un entorno no hay Stuff+: su banda sería tan ancha que no diría nada. K\u2212BB% y whiff se dan siempre; con * si salen de menos de ${String(pa)} turnos o ${String(swings)} swings.`,
     items: [
       {
         term: 'La banda «±»',
@@ -168,8 +168,8 @@ export const es = {
         text: 'Cinco parques: Puebla, Ciudad de México, Aguascalientes, Querétaro y León. El aire es más delgado y la pelota se mueve menos.',
       },
       {
-        term: 'Impuesto de Altitud',
-        text: 'Las carreras de más que permite por cada 9 entradas cuando lanza en altitud extrema, contra lo que permite a nivel del mar. Sale del valor en carreras de sus propios lanzamientos en los dos entornos, no del modelo ni del marcador: por eso no es la resta de sus RA/9. Si la banda al 95% cruza el cero, se dice «no concluyente» en vez de dar un número.',
+        term: 'Location+',
+        text: 'Qué tan bien ubicó sus lanzamientos en altitud extrema, según la altura y el lado en el plato, el conteo y el bateador. 100 es el promedio de su tipo de pitch; más es mejor. Lo da el modelo del equipo de datos. Stuff+ dice qué tan bueno es el pitch; Location+, dónde lo puso.',
       },
       {
         term: 'Sufre en la altura ▌',
@@ -188,7 +188,7 @@ export const es = {
     'Stuff+ alt. extrema',
     'Nivel del mar',
     '\u0394',
-    'Impuesto c/9 ent.',
+    'Location+ alt.',
     'K\u2212BB% alt.',
     'Whiff% alt.',
     'Rol',
@@ -199,7 +199,6 @@ export const es = {
   subtitle:
     'Candidatos en su \u00faltima temporada jugada, ordenados por su valor en altitud extrema, la de la casa de Diablos.',
   evaluated: 'Evaluados',
-  conclusiveTax: 'Impuesto concluyente',
   traps: 'Sufren en la altura',
   outOf: (total: number): string => `de ${String(total)}`,
   trap: 'Sufre en la altura',
@@ -292,13 +291,25 @@ export const es = {
         `${n.toLocaleString('es-MX')} lanzamientos suyos con ubicaci\u00f3n registrada.`,
       panel: { sea: 'Nivel del mar', hh: 'Altitud extrema' } satisfies Record<Environment, string>,
       pitches: (n: number): string => `${n.toLocaleString('es-MX')} lanzamientos`,
-      view: 'vista del c\u00e1tcher',
+      view: 'vista del c\u00e1tcher, mirando al lanzador',
+      sides: {
+        left: '◂ 3a · bateador diestro',
+        right: 'bateador zurdo · 1a ▸',
+      },
+      filter: 'Ver pitch',
+      allPitches: 'Todos',
+      onlyType: (pitch: string): string =>
+        `Solo su ${pitch}. La altura media, la zona y el whiff de abajo son de todo su arsenal.`,
+      fewOfType: (pitch: string): string =>
+        `Menos de 15 ${pitch} en este entorno: no se dibuja un mapa con tan pocos.`,
+      locationPlusTitle: 'Location+',
+      locationPlusNone: 'Sin Location+: falta el modelo o la muestra.',
+      locationPlusHelp:
+        'Qué tan bien la puso para el conteo y el bateador. 100 = el promedio de su tipo; más es mejor. Describe cómo ubicó; no proyecta.',
       less: 'menos',
       more: 'm\u00e1s',
       stats: (height: string, zone: string, whiff: string): string =>
         `Altura media ${height} pulgadas \u00b7 ${zone}% en zona \u00b7 ${whiff}% de whiff por swing.`,
-      locationPlus: (value: string): string =>
-        `Location+ ${value}: qué tan bien la puso para el conteo y el bateador (100 = el promedio de su tipo). Describe cómo ubicó; no proyecta.`,
       pending: 'Pendiente: la ubicaci\u00f3n la entrega el equipo de datos con Location+.',
       pendingDetail:
         'Aqu\u00ed va d\u00f3nde pone sus lanzamientos en cada entorno, su altura media, su porcentaje en zona y su whiff.',
@@ -333,7 +344,7 @@ export const es = {
       league: (env: string, kbb: string, whiff: string): string =>
         `Liga en ${env}: K\u2212BB% ${kbb}, whiff por swing ${whiff}.`,
       rule: (pa: number, swings: number): string =>
-        `${String(pa)} turnos para K% y BB%, ${String(swings)} swings para el whiff. Banda al 95%. Es conteo, no modelo.`,
+        `Banda al 95%. Es conteo, no modelo. Con * y en gris: menos de ${String(pa)} turnos (K%, BB%) o de ${String(swings)} swings (whiff); se da el número, pero su banda es ancha.`,
     },
     seasons: {
       title: 'Sus temporadas',
@@ -344,12 +355,15 @@ export const es = {
         shortSea: 'muestra insuficiente',
         shortHh: 'muestra insuficiente',
         shortBoth: 'muestra insuficiente',
+        thinArsenal: 'muestra insuficiente',
         absent: 'no lanzó',
       } satisfies Record<SeasonStatus, string>,
       shortSea: (season: number, hh: number, sea: number): string =>
         `En ${String(season)} lanzó ${String(hh)} veces en altitud, pero solo ${String(sea)} a nivel del mar: no hay comparación que hacer.`,
       shortHh: (season: number, hh: number, sea: number): string =>
         `En ${String(season)} lanzó ${String(sea)} veces a nivel del mar, pero solo ${String(hh)} en altitud: no hay comparación que hacer.`,
+      thinArsenal: (season: number, hh: number): string =>
+        `En ${String(season)} lanzó ${String(hh)} veces en altitud, pero ningún pitch llega a 25 allí: no hay arsenal que comparar.`,
       gap: (season: number): string =>
         `En ${String(season)} no lanzó. La Ficha no promedia alrededor del hueco: son dos mediciones distintas.`,
       gapContext: (n: number): string =>
@@ -521,6 +535,23 @@ export const es = {
     subtitle:
       'Parte del pitch real de un lanzador, muévelo y compara lo que vale a nivel del mar y en altitud extrema.',
     modes: { pitcher: 'Desde un lanzador', lab: 'Laboratorio' } satisfies Record<SimMode, string>,
+    own: {
+      title: (pitch: string): string => `Dónde pone sus ${pitch} más y menos efectivos`,
+      subtitle:
+        'Sus propios lanzamientos de esa temporada, los dos entornos juntos. Más efectivos: abanicados y los que sacaron el out. Menos efectivos: los que dieron hit, base por bolas o golpe. Vista del cátcher, mirando al lanzador. Es conteo, no modelo.',
+      most: 'Más efectivos',
+      least: 'Menos efectivos',
+      count: (n: number): string => `${n.toLocaleString('es-MX')} lanzamientos`,
+      label: (title: string, pitch: string, n: number): string =>
+        `${title}: ubicación de ${String(n)} ${pitch} suyos, vista del cátcher`,
+      none: (pitch: string): string =>
+        `Tiene menos de 15 ${pitch} en esta temporada: no hay mapa que dibujar.`,
+    },
+    reference: {
+      title: 'Su recta (referencia)',
+      note: 'El modelo mide cada pitch contra la recta del lanzador. Parte de la recta mediana de la liga; si evalúas a un novato, pon la suya.',
+      reset: 'Usar la de la liga',
+    },
     pitcher: 'Lanzador',
     pitcherOption: (id: string, season: number): string => `${id} · ${String(season)}`,
     pitch: 'Pitch',
@@ -573,7 +604,7 @@ export const es = {
       model_not_gated: 'Este modelo no pasó por las compuertas: su Stuff+ no se muestra.',
       gates_failed: 'El modelo no pasó sus compuertas de coherencia: su Stuff+ no se muestra.',
       missing_arsenal:
-        'Este modelo mide cada pitch contra la recta del lanzador: elige un lanzador real para ver su Stuff+.',
+        'Este modelo mide cada pitch contra la recta del lanzador: falta la recta de referencia.',
     } satisfies Record<StuffPlusReason, string>,
     physics: {
       title: 'Qué le hace la altura a esta forma',
@@ -618,7 +649,7 @@ export const es = {
         `${env}: la liga casi no lanza esta forma; no hay muestra en la zona.`,
       label: (pitchType: string, env: string, ivb: string, hb: string): string =>
         `Mapa de movimiento de ${pitchType} en ${env}. El pitch simulado cae en IVB ${ivb} y break horizontal ${hb} pulgadas.`,
-      showExtremes: 'Mostrar los pitches más y menos efectivos de la liga',
+      showExtremes: 'Mostrar los lanzadores con el pitch más y menos efectivo de la liga',
       help: {
         open: '¿Cómo leer este mapa?',
         eyebrow: 'Antes de la física',
@@ -760,7 +791,7 @@ export const es = {
         mixed_hands: 'La mano del lanzador (PitcherThrows) debe ser una sola, Right o Left.',
         too_many_pitchers:
           'El archivo trae demasiados lanzadores para una pantalla: div\u00eddelo en partes de hasta 400.',
-        tooLarge: 'El archivo pasa de 10 MB: sube una temporada de un lanzador.',
+        tooLarge: 'El archivo pasa de 20 MB: divídelo en partes más chicas.',
         unreachable: 'No se pudo contactar a la API para leer el archivo.',
       } satisfies Record<FileProblem | 'tooLarge' | 'unreachable', string>,
     },

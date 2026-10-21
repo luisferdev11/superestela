@@ -2,7 +2,7 @@ import type { CohortSummary } from '@/domain/cohort'
 import { es } from '@/i18n/es'
 
 /**
- * Los tres numeros del encabezado, **derivados de lo que la tabla esta
+ * Los dos numeros del encabezado, **derivados de lo que la tabla esta
  * mostrando ahora**. Cuando hay filtro se muestra tambien el total, porque un
  * "12" sin denominador no dice si es mucho o poco — y porque el "296
  * evaluados" de la cohorte completa sigue siendo la cifra que respalda el
@@ -45,7 +45,6 @@ export const RadarSummary = ({
       value={shown.nPitchers}
       of={filtered ? cohort.nPitchers : undefined}
     />
-    <Tile label={es.conclusiveTax} value={shown.nConclusiveTax} of={shown.nPitchers} />
     <Tile label={es.traps} value={shown.nTraps} of={shown.nPitchers} />
   </div>
 )

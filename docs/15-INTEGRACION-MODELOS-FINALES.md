@@ -297,13 +297,14 @@ está en disco, como en un clon nuevo, sirve el puente v0 y dice que no pasó po
 ## 6. Qué cambió en pantallas
 
 - **Todas las cifras de Stuff+** (Radar, Ficha, Plan, Plantel, Despliegue, Simulador, Traductor) salen
-  del modelo publicado, con banda real. El Simulador y la Ficha coinciden (S4 r 0.942).
+  del modelo publicado, con banda real. El Simulador y la Ficha coinciden (S4 r 0.94 sobre 3 270 pitches desde el mínimo de 50; 0.942 sobre 2 153 con el de 100).
 - **El Plan habla en carreras.** Si un cambio de uso compensa, dice cuántas carreras por 9 entradas en
   altitud extrema ahorra. Cada lanzamiento movido vale el xRV de su propio tipo (`domain/runBridge.ts`).
 - **La ubicación de la Ficha** (mapas y lectura «¿sobrecompensa?») cuenta los mismos lanzamientos que
   la cabecera, y el whiff igual que la tabla de resultados.
-- **Despliegue:** el orden en casa y de gira correlaciona 0.786 con el modelo final (0.638 con v0). El
-  cambio mediano es de 30.75 posiciones y 5 de los 10 mejores cambian.
+- **Despliegue:** el orden en casa y de gira correlaciona 0.773 con el modelo final sobre los 514
+  lanzadores del Radar (desde el mínimo de 50 lanzamientos, 20 oct; antes 0.786 sobre 296, y 0.638 con
+  v0). El cambio mediano es de 57.5 posiciones y 6 de los 10 mejores cambian.
 - **El recorrido de pantallas del 20 de octubre** encontró 14 problemas visibles. Se corrigieron
   todos (merge «the fixes from the screen audit»), menos los que dependían del modelo, que este
   documento resuelve. Entre ellos, todo «±» es ahora la banda al 95%, con lo que la tarea 5 de

@@ -53,21 +53,25 @@ describe('el artefacto de analisis cumple el contrato', () => {
     }
   })
 
-  it('`scored` significa exactamente el umbral en ambos entornos', async () => {
+  // Only one direction: at the 50-pitch minimum, 22 seasons reach 50 tracked
+  // pitches but fewer than 50 the model can score (analysis/evidence.py counts
+  // n_pitches_* before scoring), so they have no card. At 100 the two agreed.
+  it('`scored` exige el umbral en ambos entornos', async () => {
     const parsed = mockupDataSchema.parse(await readMockup())
     for (const seasons of Object.values(parsed.pitcher_seasons)) {
       for (const season of seasons) {
         const qualifies =
           season.n_pitches_hh >= MIN_PITCHES_FOR_SCORE &&
           season.n_pitches_sea >= MIN_PITCHES_FOR_SCORE
-        expect(season.scored).toBe(qualifies)
+        if (season.scored) expect(qualifies).toBe(true)
       }
     }
   })
 })
 
 describe('las tasas que lee Diablos', () => {
-  it('hay K% y K-BB% justo cuando hay turnos suficientes, y siempre con banda', async () => {
+  // Since 20 oct a rate is given below the minimum too; only an empty denominator is null.
+  it('hay K% y K-BB% siempre que hay turnos, y siempre con banda', async () => {
     const parsed = mockupDataSchema.parse(await readMockup())
     const all = [
       ...parsed.pitchers.map((c) => c.outcomes),
@@ -76,11 +80,13 @@ describe('las tasas que lee Diablos', () => {
       ),
     ]
     for (const o of all) {
-      const enough = o.pa >= MIN_PLATE_APPEARANCES_FOR_RATE
-      expect(o.k_pct !== null, `pa=${String(o.pa)}`).toBe(enough)
-      expect(o.k_minus_bb_pct_ci95 !== null).toBe(enough)
-      expect(o.whiff_per_swing !== null).toBe(o.swings >= MIN_SWINGS_FOR_RATE)
+      expect(o.k_pct !== null, `pa=${String(o.pa)}`).toBe(o.pa > 0)
+      expect(o.k_minus_bb_pct_ci95 !== null).toBe(o.pa > 0)
+      expect(o.whiff_per_swing !== null).toBe(o.swings > 0)
     }
+    // And some of them are below the minimum: the case the screen marks with «*».
+    expect(all.some((o) => o.pa > 0 && o.pa < MIN_PLATE_APPEARANCES_FOR_RATE)).toBe(true)
+    expect(all.some((o) => o.swings > 0 && o.swings < MIN_SWINGS_FOR_RATE)).toBe(true)
   })
 
   it('K-BB% es K% menos BB%, al decimal que se publica', async () => {

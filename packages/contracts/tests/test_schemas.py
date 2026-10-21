@@ -60,8 +60,8 @@ def test_the_glossary_covers_every_vendor_name_we_rename():
 
 
 def test_minimum_sample_is_the_documented_product_rule():
-    # docs/07 section 1.2. If this number moves, the UI copy moves with it.
-    assert MIN_PITCHES_FOR_SCORE == 100
+    # docs/07 section 1.2, lowered from 100 on 20 oct. If it moves, the UI copy moves with it.
+    assert MIN_PITCHES_FOR_SCORE == 50
 
 
 def test_a_role_outside_the_enum_is_rejected():
