@@ -43,9 +43,10 @@ from models.scoring import PitchInput, Scorer, implied_xrv, to_arm_side
 
 FloatArray = npt.NDArray[np.float64]
 
-# A file of a league's season is a few hundred pitchers; past this the request
-# is a batch job, not a screen.
-MAX_PITCHERS = 400
+# A file of a league's season is several hundred pitcher-seasons (710 with a
+# card since the minimum went to 50 pitches, 20 oct); past this the request is
+# a batch job, not a screen.
+MAX_PITCHERS = 1000
 
 
 @dataclass(frozen=True)

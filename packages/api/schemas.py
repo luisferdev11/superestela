@@ -194,8 +194,8 @@ class TranslateResponse(Wire):
 
 
 # A pitcher-season export is a few thousand rows of some 80 columns, about
-# 3 MB; ten leaves room for a long season without accepting anything.
-MAX_ARSENAL_FILE_CHARS = 10_000_000
+# 3 MB. Twenty, since 20 oct: a file of twenty-odd pitchers passed ten.
+MAX_ARSENAL_FILE_CHARS = 20_000_000
 
 
 class ArsenalFileRequest(Wire):

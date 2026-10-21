@@ -42,4 +42,4 @@
 | Y la calibración no empeora: 0.841 contra 0.808 del modelo de datos | §4 | `speed_rule.json` → `evaluation → student → calib_slope` | 0.841 | ✅ |
 | El modelo de datos calibra 0.808 | §4 | `speed_rule.json` → `evaluation → teacher → calib_slope` | 0.808 | ✅ |
 | Por lanzador, temporada y tipo coincide con el modelo de datos en r 0.994 | §4 | `speed_rule.json` → `evaluation → agreement_pitcher_season_r` | 0.994 | ✅ |
-| El Simulador y el Radar coinciden para el mismo pitch: r 0.942 (S4) | §7 | `simulator_validation.json` → `gates → id=S4 → value → r` | 0.942 | ✅ |
+| El Simulador y el Radar coinciden para el mismo pitch: r 0.94 (S4) | §7 | `simulator_validation.json` → `gates → id=S4 → value → r` | 0.94 | ✅ |

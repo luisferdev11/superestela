@@ -306,8 +306,8 @@ value = "0.994"
 
 [[claim]]
 id = "gate-s4-consistency"
-text = "El Simulador y el Radar coinciden para el mismo pitch: r 0.942 (S4)"
+text = "El Simulador y el Radar coinciden para el mismo pitch: r 0.94 (S4)"
 section = "§7"
 source = "simulator_validation.json"
 path = ["gates", "id=S4", "value", "r"]
-value = "0.942"
+value = "0.94"
