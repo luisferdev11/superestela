@@ -4,7 +4,7 @@ import { PageShell } from '@/components/chrome/PageShell'
 import { PitcherHeader } from './PitcherHeader'
 import { ArsenalMap } from './ArsenalMap'
 import { ArsenalTable } from './ArsenalTable'
-import { LocationMap } from './LocationMap'
+import { LocationExplorer } from './LocationExplorer'
 import { LocationReadingText } from './LocationReadingText'
 import { PitcherKpis } from './PitcherKpis'
 import { PitcherPhysics } from './PitcherPhysics'
@@ -12,7 +12,7 @@ import { PitcherReading } from './PitcherReading'
 import { SeasonTable } from './SeasonTable'
 import { OutcomesTable } from './OutcomesTable'
 import { arsenalMapPitches } from '@/domain/arsenalMap'
-import { locationKey, readLocation, sharedMax } from '@/domain/location'
+import { locationKey, readLocation } from '@/domain/location'
 import type { FichaTab } from '@/domain/navigation'
 import {
   cardsOf,
@@ -90,7 +90,6 @@ export const FichaPage = async ({
     const location = locations?.get(locationKey(pitcherId, card.season)) ?? null
     const sea = location?.sea ?? null
     const hh = location?.hh ?? null
-    const max = sharedMax([sea, hh])
     return (
       <PageShell density={density} nPitches={nPitches} seasons={seasons} current="/radar">
         {header}
@@ -100,10 +99,12 @@ export const FichaPage = async ({
             ? null
             : es.ficha.location.withSample(sea.nPitches + hh.nPitches)}
         </p>
-        <section className="flex flex-wrap gap-6 border border-(--color-border) bg-(--color-surface-card) p-5">
-          <LocationMap title={es.ficha.location.panel.sea} panel={sea} max={max} />
-          <LocationMap title={es.ficha.location.panel.hh} panel={hh} max={max} />
-        </section>
+        <LocationExplorer
+          sea={sea}
+          hh={hh}
+          pitches={location?.pitches ?? {}}
+          order={[...card.arsenal].sort((a, b) => b.usagePct - a.usagePct).map((e) => e.pitch)}
+        />
         <ArsenalTable card={card} simulatorHrefs={simulatorHrefs} />
         <section className="flex flex-col gap-1.5 border border-(--color-border) bg-(--color-surface-card) p-5">
           <h2 className="text-[15px] font-bold">{es.ficha.location.readTitle}</h2>

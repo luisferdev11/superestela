@@ -39,6 +39,7 @@ export const RadarFilters = ({
     throws: useId(),
     role: useId(),
     season: useId(),
+    location: useId(),
     search: useId(),
   }
   const set = (patch: Partial<Filters>): void => {
@@ -133,6 +134,23 @@ export const RadarFilters = ({
               {season}
             </option>
           ))}
+        </select>
+      </div>
+
+      <div className="flex flex-col gap-1">
+        {label(ids.location, es.filterBar.locationPlus)}
+        <select
+          id={ids.location}
+          className={control}
+          value={filters.locationPlus ?? ''}
+          onChange={(event) => {
+            const value = event.target.value
+            set({ locationPlus: value === 'above' || value === 'below' ? value : null })
+          }}
+        >
+          <option value="">{es.filterBar.all}</option>
+          <option value="above">{es.filterBar.locationAbove}</option>
+          <option value="below">{es.filterBar.locationBelow}</option>
         </select>
       </div>
 

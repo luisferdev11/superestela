@@ -49,21 +49,21 @@ El **mapa de movimiento** (break horizontal vs vertical) es el gráfico insignia
 
 **Pregunta:** *¿A quién deberíamos estar mirando?*
 
-Tabla densa y ordenable, 296 lanzadores reales en su última temporada jugada.
+Tabla densa y ordenable, 514 lanzadores reales en su última temporada jugada (296 hasta que el mínimo bajó a 50 lanzamientos, 20 oct).
 
 | Columna | Ejemplo | Nota |
 |---|---|---|
 | Pitcher | `pitcher_00069` | IDs anonimizados por diseño del reto |
-| **Temporada** | 2025 | **Su última temporada jugada.** 95 candidatos tienen 2024, 134 el 2025, 67 el 2026 — no es un pie de página |
+| **Temporada** | 2025 | **Su última temporada jugada.** 145 candidatos tienen 2024, 205 el 2025, 164 el 2026 — no es un pie de página |
 | Mano | Right / Left | |
 | **Stuff+ alt. extrema** | 92.0 ± 0.7 | El número principal. Siempre con su banda |
 | Stuff+ nivel del mar | 111.1 | La referencia engañosa |
 | **Δ** | −19.1 | Codificado en la escala de altitud |
-| **Impuesto de Altitud** | +5.93 ± 2.18 | Carreras por 9 entradas. **Solo 35 de los 296 candidatos del Radar son significativos; los otros 261 dicen *no concluyente*, no un número.** Sobre las 370 tarjetas, 40 |
+| **Location+ alt.** | 99.7 ± 2.7 | Qué tan bien ubicó en altitud extrema (L3 de datos). Sustituye al Impuesto el 20 oct: solo 54 de 514 candidatos tenían un Impuesto significativo y el resto decía *no concluyente*. El Impuesto sigue en la Ficha |
 | **Rol** | `Abridor` | Dos valores, abridor o relevista. Inferido de la entrada de ingreso, y **por temporada** (`docs/adr/0004`) |
-| **Trampa** | 🚩 | 58 de 370 temporadas |
+| **Trampa** | 🚩 | 105 de 710 temporadas; 74 de los 514 del Radar |
 
-Rangos reales de la cohorte: Stuff+ alt. extrema **87.9 – 109.5** · Impuesto **−10.62 a +14.40** carreras/9 entradas sobre las 370 tarjetas.
+Rangos reales de la cohorte: Stuff+ alt. extrema **77.3 – 106.4** · Impuesto **−17.12 a +18.35** carreras/9 entradas sobre las 710 tarjetas.
 
 > Ninguna de estas cifras se escribe en la interfaz. La pantalla las deriva de `analysis/outputs/mockup_data.json` al renderizar y un test las compara contra `evidence.json`, que es la corrida que las respalda. Están aquí para leer el diseño, no para copiarlas al código.
 
@@ -168,7 +168,7 @@ Selector de entorno → el roster ordenado por Stuff+ de **ese** estadio, **agru
 
 El rol se infiere de la entrada en que el lanzador entra al juego — una regla medida sobre 22,569 apariciones, no un modelo: 469 lanzadores abren menos del 10% de las veces, 119 más del 90%, y el valle está en 40–50%. **Son dos categorías y nada más:** no hay "cerrador" —se define por situación de salvamento y no hay marcador— ni un tercer nivel por entrada tardía, porque la entrada de ingreso de los relevistas es unimodal con su moda justo en la séptima (`docs/adr/0004`).
 
-Lo que justifica la pantalla: la correlación de orden entre casa y gira es **0.638** (Spearman), el cambio mediano es de **40 posiciones**, y **8 de los 10 mejores en casa no están entre los 10 mejores de gira**, sobre los 296 lanzadores del Radar en su última temporada. Lo calcula `orderShift` (`packages/web/src/domain/roster.ts`) desde `mockup_data.json`, y un test lo cruza con una corrida en Python. La versión anterior de este párrafo decía 0.700, 38 y 6, de una corrida vieja.
+Lo que justifica la pantalla: la correlación de orden entre casa y gira es **0.773** (Spearman), el cambio mediano es de **57.5 posiciones**, y **6 de los 10 mejores en casa no están entre los 10 mejores de gira**, sobre los 514 lanzadores del Radar en su última temporada (modelo final, mínimo de 50 lanzamientos, 20 oct). Lo calcula `orderShift` (`packages/web/src/domain/roster.ts`) desde `mockup_data.json`, y un test lo cruza con una corrida en Python. La versión anterior de este párrafo decía 0.700, 38 y 6, de una corrida vieja.
 
 ---
 
@@ -260,7 +260,7 @@ Contenido: identidad · rol · Stuff+ alt. extrema con banda · Impuesto de Alti
 
 ```
 analysis/outputs/mockup_data.json
-  pitchers[]        370 tarjetas lanzador-temporada con arsenal, Stuff+, impuesto/9, rol, trampa
+  pitchers[]        710 tarjetas lanzador-temporada con arsenal, Stuff+, impuesto/9, rol, trampa
   pitch_profiles{}  niveles y deltas por tipo de pitch y entorno
   density{}         índice de densidad por entorno
 

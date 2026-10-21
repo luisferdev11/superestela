@@ -1,4 +1,4 @@
-import type { PitcherSeason, Role } from './types'
+import type { Metric, PitcherSeason, Role } from './types'
 
 /**
  * Los filtros de la P1 (`docs/02` seccion 2), como una barra clasica de menus:
@@ -19,12 +19,19 @@ import type { PitcherSeason, Role } from './types'
  */
 export type RoleFilter = Role | 'unknown'
 
+/**
+ * Location+ in extreme altitude against 100, its type's average: above, below,
+ * or anyone. A pitcher without Location+ only passes «Todos».
+ */
+export type LocationFilter = 'above' | 'below'
+
 export type RadarFilters = {
   readonly throws: string | null
   readonly role: RoleFilter | null
   readonly season: number | null
   readonly pitch: string | null
   readonly trapsOnly: boolean
+  readonly locationPlus: LocationFilter | null
   /** Parte del id del lanzador, sin distinguir mayusculas. */
   readonly query: string
 }
@@ -35,6 +42,7 @@ export const NO_FILTERS: RadarFilters = {
   season: null,
   pitch: null,
   trapsOnly: false,
+  locationPlus: null,
   query: '',
 }
 
@@ -44,13 +52,17 @@ export const isFiltered = (filters: RadarFilters): boolean =>
   filters.season !== null ||
   filters.pitch !== null ||
   filters.trapsOnly ||
+  filters.locationPlus !== null ||
   filters.query.trim() !== ''
 
 /** Si el lanzador tira ese pitch: esta en su arsenal, que exige muestra en altitud extrema. */
 export const throwsPitch = (card: PitcherSeason, pitch: string): boolean =>
   card.arsenal.some((entry) => entry.pitch === pitch)
 
-export const applyFilters = <T extends PitcherSeason>(
+const passesLocation = (value: Metric | null | undefined, filter: LocationFilter): boolean =>
+  value != null && (filter === 'above' ? value.value >= 100 : value.value < 100)
+
+export const applyFilters = <T extends PitcherSeason & { readonly locationPlusHh?: Metric | null }>(
   cards: readonly T[],
   filters: RadarFilters,
 ): readonly T[] => {
@@ -61,6 +73,8 @@ export const applyFilters = <T extends PitcherSeason>(
     if (filters.season !== null && card.season !== filters.season) return false
     if (filters.trapsOnly && !card.altitudeTrap) return false
     if (filters.pitch !== null && !throwsPitch(card, filters.pitch)) return false
+    if (filters.locationPlus !== null && !passesLocation(card.locationPlusHh, filters.locationPlus))
+      return false
     if (query !== '' && !card.pitcherId.toLowerCase().includes(query)) return false
     return true
   })

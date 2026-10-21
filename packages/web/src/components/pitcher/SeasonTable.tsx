@@ -15,6 +15,7 @@ const explain = (row: SeasonRow): string | null => {
   if (row.nPitchesHh === null || row.nPitchesSea === null) return null
   if (row.status === 'shortSea')
     return es.ficha.seasons.shortSea(row.season, row.nPitchesHh, row.nPitchesSea)
+  if (row.status === 'thinArsenal') return es.ficha.seasons.thinArsenal(row.season, row.nPitchesHh)
   if (row.status === 'shortHh')
     return es.ficha.seasons.shortHh(row.season, row.nPitchesHh, row.nPitchesSea)
   return null

@@ -187,8 +187,8 @@ Diez pantallas de aplicación y trece láminas de deck, con datos reales de `ana
    se remonta a una corrida de MLflow o a `analysis/evidence.py`.
 3. **Ningún score sin su banda.** `stuff_plus_se` es obligatorio, y el esquema
    —no la disciplina— es quien lo exige.
-4. **Debajo de 100 lanzamientos se dice "muestra insuficiente"**, nunca un
-   número con una banda enorme.
+4. **Debajo de 50 lanzamientos en un entorno no hay Stuff+** ("muestra
+   insuficiente"), nunca un número con una banda enorme. Era 100 hasta el 20 oct.
 
 Todo lo demás está en [`CONVENTIONS.md`](CONVENTIONS.md), que gana sobre los
 defaults de cualquier herramienta o agente.

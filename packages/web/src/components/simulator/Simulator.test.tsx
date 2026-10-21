@@ -83,11 +83,25 @@ const RESPONSE: SimulateResponse = {
 
 type Sent = { pitch: Record<string, unknown>; arsenal: unknown[] }
 
+// Only the POSTs to /api/simulate; the GET for the pitcher's own map has no body.
 const bodies = (): Sent[] =>
-  vi.mocked(fetch).mock.calls.map((call) => {
+  vi.mocked(fetch).mock.calls.flatMap((call) => {
     const body = call[1]?.body
-    return JSON.parse(typeof body === 'string' ? body : '{}') as Sent
+    return typeof body === 'string' ? [JSON.parse(body) as Sent] : []
   })
+
+const cells = {
+  nPitches: 22,
+  counts: [
+    [0, 2],
+    [1, 0],
+  ],
+  locationPlus: null,
+}
+// /api/pitch-effectiveness for pitcher_00069/2025: his own Four-Seam.
+const EFFECTIVENESS = {
+  'Four-Seam': { most: cells, least: { ...cells, nPitches: 12 } },
+}
 
 const renderSimulator = (validation: Validation | null = null) =>
   render(
@@ -113,7 +127,14 @@ beforeEach(() => {
   vi.useFakeTimers()
   vi.stubGlobal(
     'fetch',
-    vi.fn(() => Promise.resolve(new Response(JSON.stringify(RESPONSE), { status: 200 }))),
+    vi.fn((url: string) =>
+      Promise.resolve(
+        new Response(
+          JSON.stringify(url.startsWith('/api/pitch-effectiveness') ? EFFECTIVENESS : RESPONSE),
+          { status: 200 },
+        ),
+      ),
+    ),
   )
 })
 afterEach(() => {
@@ -174,12 +195,41 @@ describe('el Simulador', () => {
     expect(bodies().at(-1)?.pitch.releaseSpeed).toBe(95)
   })
 
-  it('en el laboratorio no hay arsenal contra el cual medir', async () => {
+  it('en el laboratorio mide contra una recta de referencia, la mediana de la liga', async () => {
     renderSimulator()
     fireEvent.click(screen.getByRole('button', { name: es.sim.modes.lab }))
+    fireEvent.click(screen.getByRole('button', { name: 'Slider' }))
     await settle()
-    expect(bodies().at(-1)?.arsenal).toEqual([])
-    expect(bodies().at(-1)?.pitch.releaseSpeed).toBe(50)
+    const last = bodies().at(-1)
+    expect(last?.pitch).toMatchObject({ pitchType: 'Slider', releaseSpeed: 50 })
+    expect(last?.arsenal).toEqual([
+      expect.objectContaining({ pitchType: 'Four-Seam', releaseSpeed: 50, ivb: 50 }),
+    ])
+  })
+
+  it('en el laboratorio la recta de referencia se puede cambiar por la de un novato', async () => {
+    renderSimulator()
+    fireEvent.click(screen.getByRole('button', { name: es.sim.modes.lab }))
+    fireEvent.click(screen.getByRole('button', { name: 'Slider' }))
+    const speed = `${es.sim.controls.releaseSpeed} (${es.sim.units.releaseSpeed})`
+    fireEvent.change(screen.getByLabelText(speed), { target: { value: '94' } })
+    await settle()
+    expect(bodies().at(-1)?.arsenal).toEqual([
+      expect.objectContaining({ pitchType: 'Four-Seam', releaseSpeed: 94 }),
+    ])
+    fireEvent.click(screen.getByRole('button', { name: es.sim.reference.reset }))
+    await settle()
+    expect(bodies().at(-1)?.arsenal).toEqual([
+      expect.objectContaining({ pitchType: 'Four-Seam', releaseSpeed: 50 }),
+    ])
+  })
+
+  it('si la recta es el pitch simulado, no pide referencia aparte', async () => {
+    renderSimulator()
+    fireEvent.click(screen.getByRole('button', { name: es.sim.modes.lab }))
+    fireEvent.click(screen.getByRole('button', { name: 'Four-Seam' }))
+    await settle()
+    expect(screen.queryByText(es.sim.reference.title)).toBeNull()
   })
 
   it('si la API no contesta lo dice, en vez de dibujar un numero', async () => {
@@ -206,22 +256,43 @@ describe('el Simulador', () => {
     ).toBeInTheDocument()
   })
 
-  it('con un lanzador, una casilla muestra u oculta los pitches mas y menos efectivos', async () => {
+  it('los lanzadores mas y menos efectivos de la liga salen apagados, y una casilla los muestra', async () => {
     renderSimulator()
     await settle()
     const box = screen.getByLabelText(es.sim.map.showExtremes)
-    expect(box).toBeChecked()
-    expect(screen.getByText(es.sim.map.legend.most)).toBeInTheDocument()
-    fireEvent.click(box)
+    expect(box).not.toBeChecked()
     expect(screen.queryByText(es.sim.map.legend.most)).toBeNull()
+    fireEvent.click(box)
+    expect(screen.getByText(es.sim.map.legend.most)).toBeInTheDocument()
   })
 
-  it('en el laboratorio no hay puntos de la liga ni casilla', async () => {
+  it('en el laboratorio tambien esta la casilla', async () => {
     renderSimulator()
     fireEvent.click(screen.getByRole('button', { name: es.sim.modes.lab }))
     await settle()
-    expect(screen.queryByLabelText(es.sim.map.showExtremes)).toBeNull()
-    expect(screen.queryByText(es.sim.map.legend.most)).toBeNull()
+    expect(screen.getByLabelText(es.sim.map.showExtremes)).not.toBeChecked()
+  })
+
+  it('con un lanzador, dibuja donde pone sus propios pitches mas y menos efectivos', async () => {
+    renderSimulator()
+    await settle()
+    expect(vi.mocked(fetch)).toHaveBeenCalledWith(
+      '/api/pitch-effectiveness?key=pitcher_00069%2F2025',
+    )
+    expect(screen.getByText(es.sim.own.title('Four-Seam'))).toBeInTheDocument()
+    expect(
+      screen.getByRole('img', { name: es.sim.own.label(es.sim.own.most, 'Four-Seam', 22) }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('img', { name: es.sim.own.label(es.sim.own.least, 'Four-Seam', 12) }),
+    ).toBeInTheDocument()
+  })
+
+  it('en el laboratorio no hay mapa propio: no hay lanzador', async () => {
+    renderSimulator()
+    fireEvent.click(screen.getByRole('button', { name: es.sim.modes.lab }))
+    await settle()
+    expect(screen.queryByText(es.sim.own.title('Four-Seam'))).toBeNull()
   })
 
   it('en el laboratorio, los pitches parecidos quedan en un plegable cerrado', async () => {

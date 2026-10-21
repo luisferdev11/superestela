@@ -70,14 +70,16 @@ describe('el tablero de despliegue', () => {
 })
 
 describe('lo que justifica la pantalla, sobre la cohorte del Radar', () => {
-  it('el orden cambia entre casa y gira: Spearman 0.786, cambio mediano 30.75, 5 de 10', async () => {
+  it('el orden cambia entre casa y gira: Spearman 0.773, cambio mediano 57.5, 6 de 10', async () => {
     const { cards, seasonsByPitcher } = await loadDataset()
     const shift = orderShift(selectRadarCohort(cards, seasonsByPitcher))
-    expect(shift.n).toBe(296)
-    // Cruzado con una corrida independiente en Python, con rangos promedio.
-    expect(shift.rankCorrelation).toBeCloseTo(0.7863, 4)
-    expect(shift.medianMove).toBe(30.75)
-    expect(shift.topTenTurnover).toBe(5)
+    // 514 since the minimum went to 50 pitches (20 oct); 296 with 100.
+    expect(shift.n).toBe(514)
+    // Pinned because docs/15 quotes them; the 296-card figures were
+    // cross-checked with an independent Python run, these were not yet.
+    expect(shift.rankCorrelation).toBeCloseTo(0.7733, 4)
+    expect(shift.medianMove).toBe(57.5)
+    expect(shift.topTenTurnover).toBe(6)
   })
 })
 

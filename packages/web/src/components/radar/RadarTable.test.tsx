@@ -1,13 +1,17 @@
 import { readFile } from 'node:fs/promises'
 import { fireEvent, render, screen, within } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { RadarTable } from './RadarTable'
 import { mockupDataPath } from '@/sources/paths'
 import { mockupDataSchema } from '@/sources/schema'
 import { toPitcherSeason, toSeasonEntry } from '@/sources/adapter'
 import { selectRadarCohort, summarize } from '@/domain/cohort'
 import { formatMetric } from '@/domain/format'
+import { MIN_PLATE_APPEARANCES_FOR_RATE } from '@/domain/constants'
+import { loadLocations } from '@/sources/locationSource'
 import { es } from '@/i18n/es'
+
+vi.mock('server-only', () => ({}))
 
 /**
  * La tabla del Radar como la usa un scout: ordenar con un clic en el
@@ -24,6 +28,7 @@ const cohort = async () => {
         seasons.map(toSeasonEntry),
       ]),
     ),
+    await loadLocations(),
   )
 }
 
@@ -55,11 +60,24 @@ describe('la tabla del Radar', { timeout: 30_000 }, () => {
     expect(firstRowId()).toBe(sortedIds.at(-1))
   })
 
-  it('el impuesto de mayor a menor deja arriba un impuesto concluyente', async () => {
+  it('Location+ de mayor a menor deja arriba el Location+ mas alto', async () => {
     const cards = await renderTable()
-    fireEvent.click(header('Impuesto'))
+    fireEvent.click(header('Location+'))
+    const best = Math.max(
+      ...cards.flatMap((c) => (c.locationPlusHh ? [c.locationPlusHh.value] : [])),
+    )
     const top = cards.find((c) => c.pitcherId === firstRowId())
-    expect(top?.altitudeTax).not.toBeNull()
+    expect(top?.locationPlusHh?.value).toBe(best)
+  })
+
+  it('el filtro de Location+ deja solo a los de 100 o mas', async () => {
+    const cards = await renderTable()
+    fireEvent.change(screen.getByLabelText(es.filterBar.locationPlus), {
+      target: { value: 'above' },
+    })
+    const above = cards.filter((c) => c.locationPlusHh !== null && c.locationPlusHh.value >= 100)
+    expect(above.length).toBeGreaterThan(0)
+    expect(screen.getByText(es.filterBar.results(above.length, cards.length))).toBeInTheDocument()
   })
 
   it('con un tipo de pitch, todos los que lo tiran y las columnas de ese pitch', async () => {
@@ -81,20 +99,20 @@ describe('la tabla del Radar', { timeout: 30_000 }, () => {
     expect(screen.getByText(es.filterBar.results(cards.length, cards.length))).toBeInTheDocument()
   })
 
-  it('las tasas de una fila son las de la Ficha en altitud extrema, con su banda', async () => {
+  it('las tasas de una fila son las de la Ficha; con muestra chica, se dan con «*»', async () => {
     const cards = await renderTable()
     const thin = cards.find(
-      (c) => c.ratesHh.kMinusBbPct === null && c.ratesHh.whiffPerSwing !== null,
+      (c) =>
+        c.ratesHh.kMinusBbPct !== null &&
+        c.ratesHh.plateAppearances < MIN_PLATE_APPEARANCES_FOR_RATE,
     )
-    if (thin?.ratesHh.whiffPerSwing == null) throw new Error('falta un caso con muestra corta')
+    if (thin?.ratesHh.kMinusBbPct == null) throw new Error('falta un caso con muestra corta')
     fireEvent.change(screen.getByLabelText(es.filterBar.search), {
       target: { value: thin.pitcherId },
     })
-    const row = document.querySelector('tbody tr')
-    expect(row?.textContent).toContain(es.insufficientSampleShort)
-    expect(
-      within(row as HTMLElement).getByLabelText(formatMetric(thin.ratesHh.whiffPerSwing)),
-    ).toBeInTheDocument()
+    const row = within(document.querySelector('tbody tr') as HTMLElement)
+    expect(row.getByLabelText(formatMetric(thin.ratesHh.kMinusBbPct))).toBeInTheDocument()
+    expect(row.getAllByLabelText(es.smallSample).length).toBeGreaterThan(0)
   })
 
   it('el Stuff+ a nivel del mar lleva su banda, como el de altitud extrema', async () => {
@@ -108,8 +126,8 @@ describe('la tabla del Radar', { timeout: 30_000 }, () => {
     expect(within(row).getByLabelText(formatMetric(first.stuffPlusSea))).toBeInTheDocument()
   })
 
-  it('explica el Impuesto de Altitud en pantalla', async () => {
+  it('ya no muestra la columna del Impuesto (20 oct)', async () => {
     await renderTable()
-    expect(screen.getByText(es.taxExplainer)).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /Impuesto/ })).toBeNull()
   })
 })

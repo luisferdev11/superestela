@@ -7,15 +7,18 @@ import { AltitudePhysics } from './AltitudePhysics'
 import { MovementMapPair } from './MovementMapPair'
 import { ArsenalContext } from './ArsenalContext'
 import { Comparables } from './Comparables'
+import { OwnEffectiveness } from './OwnEffectiveness'
 import { useSimulation } from './useSimulation'
 import {
   CONTROL_GROUPS,
   DEFAULT_PITCHER,
   HANDS,
   PITCH_TYPES,
+  REFERENCE_CONTROLS,
   baselinePitches,
   buildRequest,
   changedControls,
+  labArsenal,
   leagueMedian,
   simulatorHref,
   sliderSpec,
@@ -25,6 +28,7 @@ import {
   type PitchType,
   type PitchValues,
   type PitcherArsenal,
+  type ReferenceControl,
   type SimMode,
   type SimulatorStart,
 } from '@/domain/simulator'
@@ -119,8 +123,18 @@ export const Simulator = ({
         }
   const [selection, setSelection] = useState<Selection>(initial)
   const [values, setValues] = useState<PitchValues>(() => baselineOf(initial))
-  // Los puntos de los pitches mas y menos efectivos: solo en modo lanzador, y a eleccion.
-  const [showExtremes, setShowExtremes] = useState(true)
+  // Los lanzadores con el pitch mas y menos efectivo de la liga: a eleccion, apagados
+  // de entrada; lo especifico del lanzador va en su propia seccion (20 oct).
+  const [showExtremes, setShowExtremes] = useState(false)
+  const leagueFastball = (): Record<ReferenceControl, number> => {
+    const median = leagueMedian(distributions, 'Four-Seam')
+    return {
+      releaseSpeed: median.releaseSpeed,
+      ivb: median.ivb,
+      horizontalBreak: median.horizontalBreak,
+    }
+  }
+  const [reference, setReference] = useState(leagueFastball)
 
   const select = (next: Partial<Selection>): void => {
     const merged = { ...selection, ...next }
@@ -148,7 +162,7 @@ export const Simulator = ({
   const hand = inPitcherMode ? arsenal.hand : selection.labHand
   const pitches = inPitcherMode ? baselinePitches(arsenal.sea).map((p) => p.pitchType) : PITCH_TYPES
   const baseline = baselineOf(selection)
-  const context = inPitcherMode ? arsenal.sea : []
+  const context = inPitcherMode ? arsenal.sea : labArsenal(distributions, reference)
   const pitcherId = inPitcherMode ? arsenal.pitcherId : null
 
   const simulation = useSimulation(
@@ -265,6 +279,42 @@ export const Simulator = ({
               ) : null}
             </fieldset>
           ))}
+          {inPitcherMode || selection.pitchType === 'Four-Seam' ? null : (
+            <fieldset className="flex flex-col gap-2 border-0 p-0">
+              <legend className="w-full border-b border-(--color-border-hairline) pb-1.5 text-[10px] font-bold tracking-widest text-(--color-text-muted) uppercase">
+                {es.sim.reference.title}
+              </legend>
+              <p className="text-[11px] leading-snug text-(--color-text-muted)">
+                {es.sim.reference.note}
+              </p>
+              <div className="grid grid-cols-3 gap-2">
+                {REFERENCE_CONTROLS.map((c) => (
+                  <label key={c} className="flex flex-col gap-1 text-[11px]">
+                    {`${es.sim.controls[c]} (${es.sim.units[c]})`}
+                    <input
+                      type="number"
+                      step={0.5}
+                      value={reference[c]}
+                      onChange={(e) => {
+                        const v = Number(e.target.value)
+                        if (Number.isFinite(v)) setReference((r) => ({ ...r, [c]: v }))
+                      }}
+                      className="h-8 w-full border border-(--color-border-strong) bg-(--color-surface-card) px-2 text-[13px] tabular-nums"
+                    />
+                  </label>
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setReference(leagueFastball())
+                }}
+                className="cursor-pointer self-start border-0 bg-transparent p-0 text-[11px] underline"
+              >
+                {es.sim.reference.reset}
+              </button>
+            </fieldset>
+          )}
           <p className="text-[11px] text-(--color-text-muted)">{es.sim.armSideNote}</p>
           <button
             type="button"
@@ -308,14 +358,22 @@ export const Simulator = ({
                     pitchType={selection.pitchType}
                     panels={maps[selection.pitchType]}
                     result={result}
-                    showExtremes={inPitcherMode && showExtremes}
-                    onShowExtremesChange={inPitcherMode ? setShowExtremes : undefined}
+                    showExtremes={showExtremes}
+                    onShowExtremesChange={setShowExtremes}
                   />
                 </div>
                 <div className="border border-(--color-border) bg-(--color-surface-card) p-4">
                   <AltitudePhysics result={result} scale={scale} spinRate={values.spinRate} />
                 </div>
               </div>
+              {inPitcherMode ? (
+                <div className="border border-(--color-border) bg-(--color-surface-card) p-4">
+                  <OwnEffectiveness
+                    pitcherKey={selection.pitcherKey}
+                    pitchType={selection.pitchType}
+                  />
+                </div>
+              ) : null}
               {inPitcherMode ? (
                 <div className="border border-(--color-border) bg-(--color-surface-card) p-5">
                   <ArsenalContext result={result} pitchType={selection.pitchType} />

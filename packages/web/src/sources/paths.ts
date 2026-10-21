@@ -40,3 +40,9 @@ export const projectionsPath = (): string => path.join(dataDir(), 'projections.j
 
 /** RA/9 por lanzador-temporada y entorno, para la Ficha (`analysis/pitcher_runs.py`). No es ERA. */
 export const pitcherRunsPath = (): string => path.join(dataDir(), 'pitcher_runs.json')
+
+/** Cada tipo de pitch de cada lanzador-temporada, por entorno (`analysis/pitcher_locations.py`). */
+export const pitchLocationsPath = (): string => path.join(dataDir(), 'pitch_locations.json')
+
+/** Donde caen sus pitches mas y menos efectivos de cada tipo, para el Simulador. */
+export const pitchEffectivenessPath = (): string => path.join(dataDir(), 'pitch_effectiveness.json')

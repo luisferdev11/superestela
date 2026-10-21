@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import { MetricValue } from '@/components/metric/MetricValue'
-import { InconclusiveValue } from '@/components/metric/InconclusiveValue'
 import { RateValue } from '@/components/metric/RateValue'
 import { RoleChip } from '@/components/chip/RoleChip'
 import { TrapFlag } from '@/components/chip/TrapFlag'
 import { LARGE_DELTA, isStaleSeason } from '@/domain/emphasis'
+import { MIN_PLATE_APPEARANCES_FOR_RATE, MIN_SWINGS_FOR_RATE } from '@/domain/constants'
 import { formatNumber, formatSigned } from '@/domain/format'
 import { fichaHref } from '@/domain/pitcher'
 import { focusOf } from '@/domain/ranking'
@@ -63,17 +63,25 @@ export const RadarRow = ({
         {focus.delta === null ? '' : formatSigned(focus.delta)}
       </td>
       <td className={cell}>
-        {card.altitudeTax === null ? (
-          <InconclusiveValue short />
+        {card.locationPlusHh === null ? (
+          es.noSampleShort
         ) : (
-          <MetricValue metric={card.altitudeTax} digits={2} />
+          <MetricValue metric={card.locationPlusHh} />
         )}
       </td>
       <td className={cell}>
-        <RateValue metric={card.ratesHh.kMinusBbPct} compact />
+        <RateValue
+          metric={card.ratesHh.kMinusBbPct}
+          compact
+          small={card.ratesHh.plateAppearances < MIN_PLATE_APPEARANCES_FOR_RATE}
+        />
       </td>
       <td className={cell}>
-        <RateValue metric={card.ratesHh.whiffPerSwing} compact />
+        <RateValue
+          metric={card.ratesHh.whiffPerSwing}
+          compact
+          small={card.ratesHh.swings < MIN_SWINGS_FOR_RATE}
+        />
       </td>
       <td className={cellLeft}>
         <RoleChip role={card.role} />

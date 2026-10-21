@@ -13,6 +13,7 @@ import {
   rankInSeason,
   seasonTimeline,
 } from './pitcher'
+import { MIN_PITCHES_FOR_SCORE } from './constants'
 
 /** Sobre el `mockup_data.json` real: las cifras de la Ficha son las del artefacto. */
 const load = async () => {
@@ -26,9 +27,15 @@ const load = async () => {
 }
 
 describe('la Ficha de pitcher_00069', () => {
-  it('sin temporada pedida abre la ultima con score, y trae las cifras del artefacto', async () => {
+  it('sin temporada pedida abre la ultima con score', async () => {
+    const { cards, seasons } = await load()
+    const scored = (seasons.get('pitcher_00069') ?? []).filter((e) => e.scored).map((e) => e.season)
+    expect(pickSeason(cardsOf(cards, 'pitcher_00069'))?.season).toBe(Math.max(...scored))
+  })
+
+  it('su 2025 trae las cifras del artefacto', async () => {
     const { cards } = await load()
-    const card = pickSeason(cardsOf(cards, 'pitcher_00069'))
+    const card = pickSeason(cardsOf(cards, 'pitcher_00069'), 2025)
     expect(card?.season).toBe(2025)
     expect(card?.stuffPlusHh).toEqual({ value: 97.7, se: 0.8 })
     expect(card?.stuffPlusSea).toEqual({ value: 110.8, se: 0.9 })
@@ -41,13 +48,50 @@ describe('la Ficha de pitcher_00069', () => {
     expect(card?.altitudeTrap).toBe(true)
   })
 
-  it('2026 aparece como temporada sin score porque falta el nivel del mar', async () => {
+  it('con el minimo de 50, su 2026 (86 a nivel del mar) ya tiene score', async () => {
     const { cards, seasons } = await load()
     const rows = seasonTimeline(seasons.get('pitcher_00069') ?? [], cardsOf(cards, 'pitcher_00069'))
     expect(rows.map((r) => [r.season, r.status])).toEqual([
       [2025, 'scored'],
-      [2026, 'shortSea'],
+      [2026, 'scored'],
     ])
+  })
+
+  it('una temporada debajo de 50 a nivel del mar sale como sin score por el nivel del mar', async () => {
+    const { cards, seasons } = await load()
+    const short = [...seasons].flatMap(([id, entries]) =>
+      entries
+        .filter(
+          (e) =>
+            !e.scored &&
+            e.nPitchesSea < MIN_PITCHES_FOR_SCORE &&
+            e.nPitchesHh >= MIN_PITCHES_FOR_SCORE,
+        )
+        .map((e) => ({ id, season: e.season })),
+    )
+    expect(short.length).toBeGreaterThan(0)
+    for (const { id, season } of short) {
+      const row = seasonTimeline(seasons.get(id) ?? [], cardsOf(cards, id)).find(
+        (r) => r.season === season,
+      )
+      expect(row?.status).toBe('shortSea')
+    }
+  })
+
+  it('con muestra en los dos entornos pero sin arsenal que puntuar dice por que, no que falta muestra', async () => {
+    const { cards, seasons } = await load()
+    const thin = [...seasons].flatMap(([id, entries]) =>
+      entries
+        .filter((e) => !e.scored && Math.min(e.nPitchesSea, e.nPitchesHh) >= MIN_PITCHES_FOR_SCORE)
+        .map((e) => ({ id, season: e.season })),
+    )
+    expect(thin.length).toBeGreaterThan(0)
+    for (const { id, season } of thin) {
+      const row = seasonTimeline(seasons.get(id) ?? [], cardsOf(cards, id)).find(
+        (r) => r.season === season,
+      )
+      expect(row?.status).toBe('thinArsenal')
+    }
   })
 
   it('una temporada que no existe no se inventa', async () => {
