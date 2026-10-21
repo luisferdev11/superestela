@@ -189,10 +189,18 @@ def load_scorer(path: str) -> Scorer:
     loads here is a model the whole product can show. Any class works, as
     long as it satisfies ``Scorer``.
 
+    ``path`` is a portable model folder (``models.portable``: XGBoost JSON and a
+    manifest, the same on every machine) or a ``.joblib`` pickle.
+
     Raises:
         TypeError: If the file holds something that is not a ``Scorer``.
     """
-    model = joblib.load(path)
+    if os.path.isdir(path):
+        from models.portable import load  # the final models import this module
+
+        model: object = load(path)
+    else:
+        model = joblib.load(path)
     if not isinstance(model, Scorer):
         raise TypeError(f"{path} does not hold a models.scoring.Scorer")
     return model
