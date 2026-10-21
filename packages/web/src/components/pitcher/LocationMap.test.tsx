@@ -37,13 +37,58 @@ describe('el mapa de ubicacion', () => {
     expect(screen.getByText(es.ficha.location.stats('31.7', '42.4', '26.4'))).toBeInTheDocument()
   })
 
-  it('dice el Location+ con su banda y que describe, no proyecta', () => {
-    render(<LocationMap title="Nivel del mar" panel={PANEL} max={4} />)
-    expect(screen.getByText(es.ficha.location.locationPlus('101.5 ± 0.9'))).toBeInTheDocument()
+  it('dice el Location+ en grande, con su banda y que describe, no proyecta', () => {
+    const { container } = render(<LocationMap title="Nivel del mar" panel={PANEL} max={4} />)
+    expect(screen.getByText('101.5')).toBeInTheDocument()
+    expect(container.textContent).toContain('± 0.9')
+    expect(screen.getByText(es.ficha.location.locationPlusHelp)).toBeInTheDocument()
   })
 
   it('sin Location+ no inventa uno', () => {
-    render(<LocationMap title="Nivel del mar" panel={{ ...PANEL, locationPlus: null }} max={4} />)
-    expect(screen.queryByText(/Location\+ /)).toBeNull()
+    const { container } = render(
+      <LocationMap title="Nivel del mar" panel={{ ...PANEL, locationPlus: null }} max={4} />,
+    )
+    expect(screen.getByText(es.ficha.location.locationPlusNone)).toBeInTheDocument()
+    expect(container.textContent).not.toContain('101.5')
+  })
+
+  it('escribe los dos lados de la zona: el mapa es la vista del catcher', () => {
+    render(<LocationMap title="Nivel del mar" panel={PANEL} max={4} />)
+    expect(screen.getByText(es.ficha.location.sides.left)).toBeInTheDocument()
+    expect(screen.getByText(es.ficha.location.sides.right)).toBeInTheDocument()
+  })
+
+  it('con un tipo de pitch dibuja solo ese, con su muestra y su Location+', () => {
+    const focus = {
+      pitch: 'Slider',
+      map: {
+        nPitches: 40,
+        counts: [
+          [0, 3],
+          [1, 0],
+        ],
+        locationPlus: { value: 97.2, se: 2.1 },
+      },
+    }
+    const { container } = render(
+      <LocationMap title="Nivel del mar" panel={PANEL} max={1} focus={focus} />,
+    )
+    expect(container.querySelectorAll('rect[fill-opacity]')).toHaveLength(4)
+    expect(screen.getByText(es.ficha.location.pitches(40))).toBeInTheDocument()
+    expect(screen.getByText('97.2')).toBeInTheDocument()
+    expect(screen.getByText(es.ficha.location.onlyType('Slider'))).toBeInTheDocument()
+  })
+
+  it('con pocos de ese tipo no dibuja un mapa y lo dice', () => {
+    render(
+      <LocationMap
+        title="Nivel del mar"
+        panel={PANEL}
+        max={1}
+        focus={{ pitch: 'Cutter', map: null }}
+      />,
+    )
+    expect(screen.getByText(es.ficha.location.fewOfType('Cutter'))).toBeInTheDocument()
+    expect(screen.getByText(es.ficha.location.locationPlusNone)).toBeInTheDocument()
   })
 })

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { loadSimulatorDataset } from './simulatorSource'
+import { loadDataset } from './mockupSource'
 import { CONTROLS, PITCH_TYPES } from '@/domain/simulator'
 
 /**
@@ -23,9 +24,9 @@ describe('los artefactos del Simulador cumplen su contrato', () => {
   })
 
   it('cada lanzador del Radar tiene un arsenal a nivel del mar de donde partir', async () => {
-    const { arsenals } = await loadSimulatorDataset()
-    // 370 tarjetas en el Radar; todas califican con muestra en ambos entornos.
-    expect(arsenals.length).toBe(370)
+    const [{ arsenals }, { cards }] = await Promise.all([loadSimulatorDataset(), loadDataset()])
+    // Una por tarjeta: todas califican con muestra en ambos entornos.
+    expect(arsenals.length).toBe(cards.length)
     for (const a of arsenals) {
       const usage = a.sea.reduce((sum, p) => sum + p.usage, 0)
       expect(usage).toBeCloseTo(1, 1)

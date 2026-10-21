@@ -1,4 +1,5 @@
 import { loadDataset } from '@/sources/mockupSource'
+import { loadLocations } from '@/sources/locationSource'
 import { selectRadarCohort, summarize } from '@/domain/cohort'
 import { NavRail } from '@/components/chrome/NavRail'
 import { RadarTable } from '@/components/radar/RadarTable'
@@ -14,8 +15,9 @@ import { es } from '@/i18n/es'
 export const dynamic = 'force-static'
 
 export default async function RadarPage() {
-  const { scale, cards, seasonsByPitcher, density, nPitches, seasons } = await loadDataset()
-  const cohort = selectRadarCohort(cards, seasonsByPitcher)
+  const [{ scale, cards, seasonsByPitcher, density, nPitches, seasons }, locations] =
+    await Promise.all([loadDataset(), loadLocations()])
+  const cohort = selectRadarCohort(cards, seasonsByPitcher, locations)
   const summary = summarize(cohort)
 
   return (

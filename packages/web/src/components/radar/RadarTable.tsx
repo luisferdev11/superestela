@@ -30,7 +30,7 @@ const SORT_KEYS: readonly (RadarSortKey | null)[] = [
   'hh',
   'sea',
   'delta',
-  'tax',
+  'locationPlus',
   'kMinusBb',
   'whiff',
   null,
@@ -102,7 +102,6 @@ export const RadarTable = ({
         <div className="mb-1">
           <TrapLegend />
         </div>
-        <p className="mb-1 text-[12px] text-(--color-text)">{es.taxExplainer}</p>
         <p className="mb-3 text-[11px] text-(--color-text-muted)">
           {filters.pitch === null ? es.sortHint : es.filterBar.pitchNote(filters.pitch)}
         </p>
@@ -175,12 +174,7 @@ export const RadarTable = ({
           <p className="py-8 text-center text-sm text-(--color-text-muted)">{es.noMatches}</p>
         ) : null}
 
-        <RadarLegend
-          shown={rows.length}
-          total={cards.length}
-          significant={shown.nConclusiveTax}
-          significantOver={rows.length}
-        />
+        <RadarLegend shown={rows.length} total={cards.length} />
       </div>
     </div>
   )

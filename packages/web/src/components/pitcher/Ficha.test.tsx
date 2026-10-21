@@ -16,11 +16,15 @@ import { es } from '@/i18n/es'
 const push = vi.fn()
 vi.mock('next/navigation', () => ({ useRouter: () => ({ push }) }))
 
-/** Los componentes de la Ficha con las tarjetas reales, no con un fixture. */
-const load = async (pitcherId: string) => {
+/**
+ * Los componentes de la Ficha con las tarjetas reales, no con un fixture.
+ * pitcher_00069 se lee en 2025, la temporada de la historia del deck: desde
+ * el minimo de 50 (20 oct) su 2026 tambien tiene score y la Ficha abre ahi.
+ */
+const load = async (pitcherId: string, season?: number) => {
   const parsed = mockupDataSchema.parse(JSON.parse(await readFile(mockupDataPath(), 'utf8')))
   const own = cardsOf(parsed.pitchers.map(toPitcherSeason), pitcherId)
-  const card = pickSeason(own)
+  const card = pickSeason(own, season)
   if (card === null) throw new Error(`${pitcherId} no tiene tarjeta`)
   const entries = (parsed.pitcher_seasons[pitcherId] ?? []).map(toSeasonEntry)
   return { own, card, rows: seasonTimeline(entries, own) }
@@ -28,7 +32,7 @@ const load = async (pitcherId: string) => {
 
 describe('la Ficha de pitcher_00069', () => {
   it('abre con su temporada, su rol y si sufre en la altura, y solo Resumen es enlace', async () => {
-    const { own, card } = await load('pitcher_00069')
+    const { own, card } = await load('pitcher_00069', 2025)
     render(
       <PitcherHeader
         card={card}
@@ -47,7 +51,7 @@ describe('la Ficha de pitcher_00069', () => {
   })
 
   it('el selector de temporada ofrece solo sus temporadas con score y lleva a la misma pestana', async () => {
-    const { card: base } = await load('pitcher_00069')
+    const { card: base } = await load('pitcher_00069', 2025)
     render(
       <PitcherHeader
         card={base}
@@ -67,7 +71,7 @@ describe('la Ficha de pitcher_00069', () => {
   })
 
   it('el impuesto dice no concluyente y ademas cuanto midio', async () => {
-    const { card } = await load('pitcher_00069')
+    const { card } = await load('pitcher_00069', 2025)
     render(<PitcherKpis card={card} rank={{ sea: 1, hh: 1, of: 1 }} />)
     expect(screen.getByLabelText('97.7 ± 0.8')).toBeInTheDocument()
     expect(screen.getByLabelText('110.8 ± 0.9')).toBeInTheDocument()
@@ -77,7 +81,7 @@ describe('la Ficha de pitcher_00069', () => {
 
 describe('las carreras permitidas de pitcher_00069 (RA/9, no ERA)', () => {
   it('muestra el RA/9 en los dos entornos con su banda, y dice por que no es ERA', async () => {
-    const { card } = await load('pitcher_00069')
+    const { card } = await load('pitcher_00069', 2025)
     const runs = await loadPitcherRuns()
     expect(runs).not.toBeNull()
     render(
@@ -98,7 +102,7 @@ describe('las carreras permitidas de pitcher_00069 (RA/9, no ERA)', () => {
   })
 
   it('junto al RA/9, el impuesto dice que mide otra cosa', async () => {
-    const { card } = await load('pitcher_00069')
+    const { card } = await load('pitcher_00069', 2025)
     render(
       <PitcherKpis
         card={card}
@@ -112,7 +116,7 @@ describe('las carreras permitidas de pitcher_00069 (RA/9, no ERA)', () => {
   })
 
   it('sin el artefacto, la Ficha no muestra el recuadro', async () => {
-    const { card } = await load('pitcher_00069')
+    const { card } = await load('pitcher_00069', 2025)
     render(<PitcherKpis card={card} rank={{ sea: 1, hh: 1, of: 1 }} runs={null} />)
     expect(screen.queryByText(es.ficha.kpi.runs)).toBeNull()
   })
@@ -130,7 +134,7 @@ describe('el hueco en la tabla de temporadas', () => {
 
 describe('la lectura del sistema', () => {
   it('pitcher_00069: no al precio de nivel del mar, la palanca es la curva, y la regla se declara', async () => {
-    const { card } = await load('pitcher_00069')
+    const { card } = await load('pitcher_00069', 2025)
     render(<PitcherReading card={card} />)
     expect(screen.getByText(es.ficha.reading.verdict.notAtSeaLevelPrice)).toBeInTheDocument()
     expect(

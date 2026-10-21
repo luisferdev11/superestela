@@ -28,7 +28,18 @@ export const pickSeason = (
  * Por que una temporada no tiene score. `absent` es el hueco de ADR 0005: no
  * lanzo en todo el ano, y la Ficha lo deja ver en vez de promediar alrededor.
  */
-export type SeasonStatus = 'scored' | 'shortSea' | 'shortHh' | 'shortBoth' | 'absent'
+/**
+ * `thinArsenal`: enough pitches in both environments, but no pitch type
+ * reaches the 25 at altitude a card needs (`analysis/evidence.py`), so there
+ * is no arsenal to score. Rare at 100; 22 seasons since the minimum is 50.
+ */
+export type SeasonStatus =
+  | 'scored'
+  | 'shortSea'
+  | 'shortHh'
+  | 'shortBoth'
+  | 'thinArsenal'
+  | 'absent'
 
 export type SeasonRow = {
   readonly season: number
@@ -43,6 +54,7 @@ const statusOf = (entry: SeasonEntry): SeasonStatus => {
   const shortHh = entry.nPitchesHh < MIN_PITCHES_FOR_SCORE
   const shortSea = entry.nPitchesSea < MIN_PITCHES_FOR_SCORE
   if (shortHh && shortSea) return 'shortBoth'
+  if (!shortHh && !shortSea) return 'thinArsenal'
   return shortSea ? 'shortSea' : 'shortHh'
 }
 

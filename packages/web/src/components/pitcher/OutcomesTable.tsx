@@ -51,22 +51,24 @@ export const OutcomesTable = ({
           .flatMap((entry) =>
             ENVIRONMENTS.map((env) => {
               const o = outcomesOf(entry, env)
+              const fewPa = o.plateAppearances < MIN_PLATE_APPEARANCES_FOR_RATE
+              const fewSwings = o.swings < MIN_SWINGS_FOR_RATE
               return (
                 <tr key={`${String(entry.season)}-${env}`}>
                   <td className={cellLeft}>{env === 'hh' ? entry.season : ''}</td>
                   <td className={cellLeft}>{es.ficha.outcomes.environment[env]}</td>
                   <td className={cell}>{o.plateAppearances}</td>
                   <td className={cell}>
-                    <RateValue metric={o.kPct} />
+                    <RateValue metric={o.kPct} small={fewPa} />
                   </td>
                   <td className={cell}>
-                    <RateValue metric={o.bbPct} />
+                    <RateValue metric={o.bbPct} small={fewPa} />
                   </td>
                   <td className={cell}>
-                    <RateValue metric={o.kMinusBbPct} />
+                    <RateValue metric={o.kMinusBbPct} small={fewPa} />
                   </td>
                   <td className={cell}>
-                    <RateValue metric={o.whiffPerSwing} />
+                    <RateValue metric={o.whiffPerSwing} small={fewSwings} />
                   </td>
                 </tr>
               )

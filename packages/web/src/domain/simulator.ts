@@ -103,6 +103,31 @@ export const leagueMedian = (distributions: Distributions, pitchType: PitchType)
   return Object.fromEntries(CONTROLS.map((c) => [c, d[c].p50])) as Record<Control, number>
 }
 
+/** Lo que el laboratorio deja editar de la recta de referencia. */
+export const REFERENCE_CONTROLS = ['releaseSpeed', 'ivb', 'horizontalBreak'] as const
+export type ReferenceControl = (typeof REFERENCE_CONTROLS)[number]
+
+/**
+ * La recta contra la que el laboratorio mide su pitch: el modelo lee cada
+ * pitch contra la recta de su lanzador, y en el laboratorio no hay lanzador.
+ * Parte de la mediana de la liga y se puede cambiar por la de un novato (lo
+ * pidio el equipo, 20 oct). Si el pitch simulado es la recta, ella misma es la
+ * referencia (`buildRequest` la reemplaza).
+ */
+export const labArsenal = (
+  distributions: Distributions,
+  reference: Readonly<Record<ReferenceControl, number>>,
+): readonly ArsenalPitch[] => [
+  {
+    ...leagueMedian(distributions, 'Four-Seam'),
+    ...reference,
+    pitchType: 'Four-Seam',
+    usage: 0.5,
+    n: 0,
+    whiffPerSwing: null,
+  },
+]
+
 /** Un pitch del arsenal real de un lanzador, en un entorno. */
 export type ArsenalPitch = PitchValues & {
   readonly pitchType: PitchType

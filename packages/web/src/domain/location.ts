@@ -22,9 +22,43 @@ export type LocationPanel = {
   readonly heightRangeFt: readonly [number, number]
 }
 
+/** Un mapa como conteos enteros por celda, con el mismo marco que `LocationPanel`. */
+export type CountMap = {
+  readonly nPitches: number
+  readonly counts: readonly (readonly number[])[]
+  /** Location+ de esos lanzamientos, con su banda al 95%; null debajo del minimo. */
+  readonly locationPlus: Metric | null
+}
+
+/** Un tipo de pitch: donde lo pone en cada entorno; null con menos de 15 alli. */
+export type PitchMaps = {
+  readonly sea: CountMap | null
+  readonly hh: CountMap | null
+}
+
+/**
+ * Donde caen sus pitches mas efectivos de un tipo (abanicados y los que
+ * sacaron el out) y los menos (hits, bases por bolas y golpeados), con los
+ * dos entornos juntos: conteo de lo que paso, no modelo.
+ */
+export type PitchEffectiveness = {
+  readonly most: CountMap
+  readonly least: CountMap
+}
+
 export type PitcherLocation = {
   readonly sea: LocationPanel | null
   readonly hh: LocationPanel | null
+  readonly pitches: Readonly<Record<string, PitchMaps>>
+}
+
+/** Los conteos como proporcion del total, como el `grid` de los paneles. */
+export const countShares = (map: CountMap): readonly (readonly number[])[] => {
+  const total = Math.max(
+    1,
+    map.counts.flat().reduce((a, b) => a + b, 0),
+  )
+  return map.counts.map((row) => row.map((v) => v / total))
 }
 
 const INCHES_PER_FOOT = 12
