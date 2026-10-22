@@ -1,5 +1,6 @@
 'use client'
 
+import { apiFetch } from '@/sources/apiClient'
 import { useId, useState } from 'react'
 import { formatNumber } from '@/domain/format'
 import type { FileProblem } from '@/domain/translator'
@@ -40,7 +41,7 @@ export const readText = (file: File): Promise<string> =>
 
 const ask = async (csv: string): Promise<Upload & { readonly status: 'loaded' | 'error' }> => {
   if (isBlank(csv)) return { status: 'error', problem: 'empty', columns: [] }
-  const response = await fetch('/api/arsenals/summarize', {
+  const response = await apiFetch('/api/arsenals/summarize', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ csv }),

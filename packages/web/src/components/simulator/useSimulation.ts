@@ -1,5 +1,6 @@
 'use client'
 
+import { apiFetch } from '@/sources/apiClient'
 import { useEffect, useState } from 'react'
 import type { SimulateRequest } from '@/domain/simulator'
 import { simulateResponseSchema, type SimulateResponse } from '@/sources/simulateResponse'
@@ -39,7 +40,7 @@ export const useSimulation = (request: SimulateRequest): Simulation => {
   useEffect(() => {
     const controller = new AbortController()
     const timer = setTimeout(() => {
-      fetch('/api/simulate', {
+      apiFetch('/api/simulate', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body,

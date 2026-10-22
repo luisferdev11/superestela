@@ -8,6 +8,11 @@ import type { Target } from '@/domain/projection'
 import type { RosterGrouping } from '@/domain/roster'
 import type { FileProblem, Origin } from '@/domain/translator'
 import type { ScaleKind } from '@/domain/scale'
+import { IS_STATIC } from '@/sources/apiClient'
+
+/** In the static site (GitHub Pages) there is no API to answer: the message says why. */
+const STATIC_NO_API =
+  'Versión en línea: este cálculo necesita el servidor del modelo. Lo que ves es lo que el modelo calculó al publicar; para recalcular, corre SuperEstela en tu máquina (README).'
 
 /**
  * El unico archivo con espanol. `CONVENTIONS.md` seccion 2.1 y seccion 4 regla
@@ -16,6 +21,44 @@ import type { ScaleKind } from '@/domain/scale'
  * linea, para que esto siga siendo cierto.
  */
 export const es = {
+  run: {
+    title: 'Cómo correr SuperEstela completo',
+    subtitle:
+      'La versión en línea es estática: muestra lo que el modelo calculó al publicar. En tu máquina corre todo, incluidos el Simulador y el Traductor con el modelo en vivo. Igual en Windows, macOS y Linux; no hace falta el dataset.',
+    needs: {
+      title: 'Lo que necesitas',
+      items: [
+        'Acceso al repositorio del equipo en GitHub, y la CLI de GitHub (gh) con sesión iniciada.',
+        'uv, que trae su propio Python 3.12.',
+        'Node 22 con pnpm 10 (corepack enable).',
+        'Unos 2 GB de disco y 1 GB de memoria libre.',
+      ],
+    },
+    steps: {
+      title: 'Los comandos',
+      commands: [
+        'git clone https://github.com/luisferdev11/superestela.git',
+        'cd superestela',
+        'uv sync --all-extras',
+        'gh auth login',
+        'uv run python scripts/fetch_models.py   # baja los modelos y comprueba su huella',
+        'uv run python scripts/start.py --prod    # API y web; abre el navegador',
+      ],
+      note: 'La app queda en http://localhost:3000. start.py revisa lo que falta y dice cómo conseguirlo; se detiene con Ctrl+C.',
+    },
+    why: {
+      title: 'Por qué no está en línea completa',
+      text: 'El Simulador y el Traductor puntúan cada pitch con el modelo final en un servidor de Python. Con el modelo cargado ocupa cerca de medio giga de memoria y el Traductor recibe archivos de hasta 20 MB: más de lo que dan las capas gratuitas disponibles. Para esta primera entrega nos mantuvimos en capa gratuita, así que en línea se ven los resultados ya calculados.',
+    },
+  },
+  staticSite: {
+    banner: 'Versión en línea, estática.',
+    detail:
+      'Las pantallas muestran resultados reales del modelo final, calculados al publicar. El Simulador y el Traductor no recalculan aquí: su modelo corre en un servidor (≈0.5 GB de memoria y archivos de hasta 20 MB) que no cabe en las capas gratuitas, y esta entrega se mantuvo gratuita. Todo funciona completo en tu máquina con las instrucciones del README.',
+    repo: 'Cómo correrlo',
+    manyExample: (n: number): string =>
+      `Ejemplo precalculado: ${String(n)} lanzadores de la LMB con sus lanzamientos a nivel del mar. Para subir tu archivo, corre SuperEstela en tu máquina.`,
+  },
   role: {
     starter: 'Abridor',
     reliever: 'Relevista',
@@ -535,6 +578,8 @@ export const es = {
     subtitle:
       'Parte del pitch real de un lanzador, muévelo y compara lo que vale a nivel del mar y en altitud extrema.',
     modes: { pitcher: 'Desde un lanzador', lab: 'Laboratorio' } satisfies Record<SimMode, string>,
+    staticNote:
+      'Versión en línea: cada pitch real de cada lanzador y los pitches base del laboratorio ya vienen calculados por el modelo final. Mover un slider pide un cálculo nuevo, y eso necesita correr SuperEstela en tu máquina.',
     own: {
       title: (pitch: string): string => `Dónde pone sus ${pitch} más y menos efectivos`,
       subtitle:
@@ -623,7 +668,9 @@ export const es = {
     },
     status: {
       loading: 'Calculando…',
-      unreachable: 'No se pudo calcular: la API del Simulador no respondió.',
+      unreachable: IS_STATIC
+        ? STATIC_NO_API
+        : 'No se pudo calcular: la API del Simulador no respondió.',
       rejected: 'La API rechazó este pitch. Revisa que los valores sean físicos.',
     },
     noRuns:
@@ -792,7 +839,9 @@ export const es = {
         too_many_pitchers:
           'El archivo trae demasiados lanzadores para una pantalla: div\u00eddelo en partes de hasta 400.',
         tooLarge: 'El archivo pasa de 20 MB: divídelo en partes más chicas.',
-        unreachable: 'No se pudo contactar a la API para leer el archivo.',
+        unreachable: IS_STATIC
+          ? 'Versión en línea: leer un archivo necesita el servidor. Corre SuperEstela en tu máquina para subir el tuyo (README).'
+          : 'No se pudo contactar a la API para leer el archivo.',
       } satisfies Record<FileProblem | 'tooLarge' | 'unreachable', string>,
     },
     example: {

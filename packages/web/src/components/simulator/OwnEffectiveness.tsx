@@ -1,5 +1,6 @@
 'use client'
 
+import { apiFetch } from '@/sources/apiClient'
 import { useEffect, useState } from 'react'
 import { ZoneGrid, sharesOf } from '@/components/pitcher/LocationMap'
 import type { CountMap, PitchEffectiveness } from '@/domain/location'
@@ -53,7 +54,7 @@ export const OwnEffectiveness = ({
   const [state, setState] = useState<State>(null)
   useEffect(() => {
     let live = true
-    fetch(`/api/pitch-effectiveness?${new URLSearchParams({ key: pitcherKey }).toString()}`)
+    apiFetch(`/api/pitch-effectiveness?${new URLSearchParams({ key: pitcherKey }).toString()}`)
       .then((r) => (r.ok ? (r.json() as Promise<Record<string, PitchEffectiveness>>) : null))
       .catch(() => null)
       .then((maps) => {

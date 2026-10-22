@@ -2,3 +2,7 @@
 next-env.d.ts
 *.tsbuildinfo
 .next/
+
+# The static site (scripts/build-static.sh) and the answers it serves: built, never committed.
+out/
+public/precomputed/
