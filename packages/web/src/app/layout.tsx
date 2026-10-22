@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import { Anton, Archivo } from 'next/font/google'
 import './globals.css'
+import { StaticBanner } from '@/components/chrome/StaticBanner'
 
 /*
  * Las dos familias del prototipo, auto-hospedadas por next/font: sin peticion a
@@ -23,7 +24,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="es-MX" className={`${anton.variable} ${archivo.variable}`}>
-      <body>{children}</body>
+      <body>
+        <StaticBanner />
+        {children}
+      </body>
     </html>
   )
 }

@@ -1,0 +1,90 @@
+# The static site on GitHub Pages (docs/17): every screen with the final
+# model's answers, recorded at publish time. The repository stays private;
+# the site is public, by the team's decision of 21 Oct.
+#
+# On every merge to main: install the locked models from the release, start
+# the API, record the answers the screens ask for when they open, export the
+# site and publish it. Nothing licensed is published beyond what the screens
+# already show: no dataset, no models, no code.
+name: pages
+
+on:
+  push:
+    branches: [main]
+  # A pull request that touches the web builds the site, so a broken export
+  # shows up before the merge; only main publishes it.
+  pull_request:
+    paths: [packages/web/**, analysis/outputs/**, .github/workflows/pages.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One publish at a time; a newer merge replaces a pending one.
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: packages/web/pnpm-lock.yaml
+
+      - run: uv sync --extra api
+      # The release is private: the workflow's own token reads it.
+      - name: install the locked models
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: uv run python scripts/fetch_models.py
+      - name: start the API
+        run: |
+          uv run uvicorn api.main:app --app-dir packages --port 8000 --workers 2 &
+          for _ in $(seq 1 60); do
+            curl -fs http://localhost:8000/health && exit 0
+            sleep 2
+          done
+          echo "The API did not start." >&2
+          exit 1
+
+      - working-directory: packages/web
+        run: pnpm install --frozen-lockfile
+      - name: record the model's answers
+        working-directory: packages/web
+        env:
+          SUPERESTELA_RECORD: '1'
+          SUPERESTELA_API_URL: http://localhost:8000
+        run: pnpm exec vitest run src/static/record.test.ts
+      - name: export the static site
+        working-directory: packages/web
+        env:
+          SUPERESTELA_BASE_PATH: /${{ github.event.repository.name }}
+        run: scripts/build-static.sh
+
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: packages/web/out
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

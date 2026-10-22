@@ -8,6 +8,7 @@ import { MovementMapPair } from './MovementMapPair'
 import { ArsenalContext } from './ArsenalContext'
 import { Comparables } from './Comparables'
 import { OwnEffectiveness } from './OwnEffectiveness'
+import { IS_STATIC } from '@/sources/apiClient'
 import { useSimulation } from './useSimulation'
 import {
   CONTROL_GROUPS,
@@ -178,6 +179,11 @@ export const Simulator = ({
 
   return (
     <div className="flex flex-col gap-4">
+      {IS_STATIC ? (
+        <p className="border-l-4 border-(--color-diablos) bg-(--color-surface-card) px-4 py-2 text-[12px]">
+          {es.sim.staticNote}
+        </p>
+      ) : null}
       <div className="flex flex-wrap items-center gap-3">
         <div className="flex border border-(--color-ink)" role="group">
           {(['pitcher', 'lab'] as const).map((m) => (

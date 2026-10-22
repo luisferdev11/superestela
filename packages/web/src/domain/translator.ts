@@ -98,6 +98,10 @@ export const normalizedUsage = (rows: readonly TranslatorRow[]): readonly number
  * Un arsenal real como ejemplo: los pitches con muestra a nivel del mar, del
  * mas usado al menos. Es el boton «cargar ejemplo» de `docs/10` T2.
  */
+/** Los usos capturados como porcentaje: un ejemplo real llega en fracciones. */
+export const asPercent = (rows: readonly TranslatorRow[]): TranslatorRow[] =>
+  rows.map((r) => ({ ...r, usage: Math.round(1000 * r.usage) / 10 }))
+
 export const exampleRows = (arsenal: PitcherArsenal): readonly TranslatorRow[] =>
   baselinePitches(arsenal.sea)
     .slice(0, MAX_ROWS)

@@ -11,6 +11,7 @@ import { ArsenalMap } from '@/components/pitcher/ArsenalMap'
 import { HANDS, type Hand, type PitcherArsenal } from '@/domain/simulator'
 import {
   ORIGINS,
+  asPercent,
   exampleRows,
   fileRows,
   isExtrapolation,
@@ -31,10 +32,6 @@ import { es } from '@/i18n/es'
 export type Densities = { readonly sea: number; readonly medium: number; readonly hh: number }
 /** El factor de Magnus de nivel del mar a cada destino, de `projections.json`. */
 export type Factors = { readonly medium: number; readonly hh: number }
-
-/** Los usos capturados como porcentaje: un ejemplo real llega en fracciones. */
-const asPercent = (rows: readonly TranslatorRow[]): TranslatorRow[] =>
-  rows.map((r) => ({ ...r, usage: Math.round(1000 * r.usage) / 10 }))
 
 const Kpi = ({ label, value }: { readonly label: string; readonly value: string }) => (
   <div className="flex flex-col gap-1 border border-(--color-border) bg-(--color-surface-card) px-5 py-3.5">
