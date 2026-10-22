@@ -1,5 +1,6 @@
 'use client'
 
+import { apiFetch } from '@/sources/apiClient'
 import { useEffect, useState } from 'react'
 import type { TranslatorRequest } from '@/domain/translator'
 import { simulateResponseSchema, type SimulateResponse } from '@/sources/simulateResponse'
@@ -49,7 +50,7 @@ export const useTranslation = (requests: readonly TranslatorRequest[]): Translat
     const controller = new AbortController()
     const timer = setTimeout(() => {
       const ask = (request: TranslatorRequest): Promise<SimulateResponse> =>
-        fetch('/api/simulate', {
+        apiFetch('/api/simulate', {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
           body: JSON.stringify(request),

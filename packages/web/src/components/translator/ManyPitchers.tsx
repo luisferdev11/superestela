@@ -1,6 +1,7 @@
 'use client'
 
-import { useId, useState } from 'react'
+import { apiFetch, BASE_PATH, IS_STATIC } from '@/sources/apiClient'
+import { useEffect, useId, useState } from 'react'
 import { MetricValue } from '@/components/metric/MetricValue'
 import { RateValue } from '@/components/metric/RateValue'
 import {
@@ -56,7 +57,7 @@ const cellLeft = `${base} text-left`
 
 const ask = async (csv: string): Promise<State> => {
   if (isBlank(csv)) return { status: 'error', problem: 'empty', columns: [] }
-  const response = await fetch('/api/arsenals/score', {
+  const response = await apiFetch('/api/arsenals/score', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ csv }),
@@ -77,6 +78,19 @@ export const ManyPitchers = () => {
   const [state, setState] = useState<State>({ status: 'idle' })
   const [sort, setSort] = useState<SortState<ManySortKey>>(DEFAULT_MANY_SORT)
   const [filters, setFilters] = useState<ManyFilters>(NO_MANY_FILTERS)
+
+  // The static site cannot read a file: it opens on an example the model scored at publish time.
+  useEffect(() => {
+    if (!IS_STATIC) return
+    fetch(`${BASE_PATH}/examples/arsenals-score.json`)
+      .then(async (r) => (r.ok ? arsenalScoresSchema.parse(await r.json()) : null))
+      .then((scores) => {
+        if (scores !== null) setState({ status: 'loaded', scores })
+      })
+      .catch((error: unknown) => {
+        console.error(error)
+      })
+  }, [])
 
   const handleFile = async (file: File | undefined): Promise<void> => {
     if (file === undefined) return
@@ -122,6 +136,9 @@ export const ManyPitchers = () => {
           ) : null}
           {scores === null ? null : (
             <>
+              {IS_STATIC ? (
+                <p className="font-semibold">{es.staticSite.manyExample(scores.pitchers.length)}</p>
+              ) : null}
               <p>{copy.summary(scores.pitchers.length, scores.nRows.toLocaleString('es-MX'))}</p>
               <p className="text-(--color-text-muted)">
                 {copy.left(
