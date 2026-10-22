@@ -11,6 +11,10 @@ name: pages
 on:
   push:
     branches: [main]
+  # A pull request that touches the web builds the site, so a broken export
+  # shows up before the merge; only main publishes it.
+  pull_request:
+    paths: [packages/web/**, analysis/outputs/**, .github/workflows/pages.yml]
   workflow_dispatch:
 
 permissions:
@@ -20,7 +24,7 @@ permissions:
 
 # One publish at a time; a newer merge replaces a pending one.
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -75,6 +79,7 @@ jobs:
           path: packages/web/out
 
   deploy:
+    if: github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-24.04
     environment:
