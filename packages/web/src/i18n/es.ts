@@ -12,7 +12,7 @@ import { IS_STATIC } from '@/sources/apiClient'
 
 /** In the static site (GitHub Pages) there is no API to answer: the message says why. */
 const STATIC_NO_API =
-  'Versión en línea: este cálculo necesita el servidor del modelo. Lo que ves es lo que el modelo calculó al publicar; para recalcular, corre SuperEstela en tu máquina (README).'
+  'Versión en línea: este cálculo necesita el servidor del modelo. Lo que ves es lo que el modelo calculó al publicar; para recalcular, corre SuperEstela en tu máquina (ver «Cómo correrlo», arriba).'
 
 /**
  * El unico archivo con espanol. `CONVENTIONS.md` seccion 2.1 y seccion 4 regla
@@ -54,8 +54,8 @@ export const es = {
   staticSite: {
     banner: 'Versión en línea, estática.',
     detail:
-      'Las pantallas muestran resultados reales del modelo final, calculados al publicar. El Simulador y el Traductor no recalculan aquí: su modelo corre en un servidor (≈0.5 GB de memoria y archivos de hasta 20 MB) que no cabe en las capas gratuitas, y esta entrega se mantuvo gratuita. Todo funciona completo en tu máquina con las instrucciones del README.',
-    repo: 'Cómo correrlo',
+      'Las pantallas muestran resultados reales del modelo final, calculados al publicar. El Simulador y el Traductor no recalculan aquí: su modelo corre en un servidor (≈0.5 GB de memoria y archivos de hasta 20 MB) que no cabe en las capas gratuitas, y esta entrega se mantuvo gratuita. En tu máquina funciona todo completo:',
+    repo: 'cómo correrlo →',
     manyExample: (n: number): string =>
       `Ejemplo precalculado: ${String(n)} lanzadores de la LMB con sus lanzamientos a nivel del mar. Para subir tu archivo, corre SuperEstela en tu máquina.`,
   },
@@ -840,7 +840,7 @@ export const es = {
           'El archivo trae demasiados lanzadores para una pantalla: div\u00eddelo en partes de hasta 400.',
         tooLarge: 'El archivo pasa de 20 MB: divídelo en partes más chicas.',
         unreachable: IS_STATIC
-          ? 'Versión en línea: leer un archivo necesita el servidor. Corre SuperEstela en tu máquina para subir el tuyo (README).'
+          ? 'Versión en línea: leer un archivo necesita el servidor. Corre SuperEstela en tu máquina para subir el tuyo (ver «Cómo correrlo», arriba).'
           : 'No se pudo contactar a la API para leer el archivo.',
       } satisfies Record<FileProblem | 'tooLarge' | 'unreachable', string>,
     },

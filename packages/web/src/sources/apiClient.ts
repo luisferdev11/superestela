@@ -32,7 +32,7 @@ export const precomputedKey = (path: string, body: string): string => {
 }
 
 export const apiFetch = async (path: string, init?: RequestInit): Promise<Response> => {
-  if (!IS_STATIC) return fetch(path, init)
+  if (!IS_STATIC) return init === undefined ? fetch(path) : fetch(path, init)
   const body = typeof init?.body === 'string' ? init.body : ''
   const response = await fetch(`${BASE_PATH}/precomputed/${precomputedKey(path, body)}.json`, {
     signal: init?.signal ?? null,

@@ -12,15 +12,33 @@ El contexto completo está en [`docs/00-PRODUCTO.md`](docs/00-PRODUCTO.md).
 
 ---
 
-## Ver la app completa (cualquier computadora)
+## Verla en línea
+
+**https://luisferdev11.github.io/superestela/**: todas las pantallas con los resultados del modelo
+final, calculados al publicar. Es una versión **estática**: el Simulador y el Traductor muestran lo que
+el modelo calculó para cada pitch real y para los ejemplos, pero no recalculan al mover un slider ni al
+subir un archivo. Su modelo corre en un servidor de Python (≈0.5 GB de memoria, archivos de hasta
+20 MB) que no cabe en las capas gratuitas, y esta primera entrega se mantuvo gratuita. Cómo se publica:
+[`docs/17`](docs/17-VERSION-EN-LINEA.md).
+
+## Correrla completa en tu máquina
+
+Requisitos: [uv](https://docs.astral.sh/uv/getting-started/installation/) (trae su propio Python),
+Node 22 con pnpm 10 (`corepack enable`), y la [CLI de GitHub](https://cli.github.com/) con acceso a
+este repositorio. Igual en Windows, macOS y Linux; no hace falta el dataset.
 
 ```bash
+git clone https://github.com/luisferdev11/superestela.git
+cd superestela
 uv sync --all-extras
-uv run python scripts/fetch_models.py     # instala los modelos publicados, verificados (gh auth login antes)
-uv run python scripts/start.py            # API y web; --prod para la versión de la demo
+gh auth login                             # una vez: para bajar los modelos del Release privado
+uv run python scripts/fetch_models.py     # instala los modelos publicados y comprueba su huella
+uv run python scripts/start.py --prod     # API (:8000) y web (:3000); abre el navegador
 ```
 
-No hace falta el dataset. Los detalles y el porqué están en [`docs/16`](docs/16-CORRER-SUPERESTELA.md).
+`start.py` revisa lo que falta y dice cómo conseguirlo; se detiene con Ctrl+C. Sin `--prod` arranca en
+modo desarrollo, que recarga al editar. Los detalles y el porqué están en
+[`docs/16`](docs/16-CORRER-SUPERESTELA.md).
 
 ## Arrancar, una sola vez
 
